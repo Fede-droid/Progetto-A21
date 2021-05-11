@@ -1,6 +1,0 @@
-
-public class BreakoutGame {
-
-//provahyh
-	
-}
