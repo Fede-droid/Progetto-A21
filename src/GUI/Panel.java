@@ -4,7 +4,6 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-import com.sun.prism.paint.Color;
 
 public class Panel extends JPanel{
 	
