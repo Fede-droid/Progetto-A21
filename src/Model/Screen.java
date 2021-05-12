@@ -1,5 +1,22 @@
 package Model;
 
+//screen=bullet
+
 public class Screen {
-//nigga u gay asdfghj!!
+	
+	public void playGame() {
+		
+	}
+	
+	
+		
+		
+	
+	
+
+	
+	
+	
+	
+	
 }
