@@ -30,21 +30,21 @@ public class Ball extends ScreenItem{
 	
 	void move() {
 	
-	    x += xdir;
-	    y += ydir;
+		position[0] += xdir;
+	    position[1] += ydir;
 	
-	    if (x == 0) {
+	    if (position[0] == 0) {
 	
 	        setXDir(1);
 	    }
 	
-	    if (x == Utilities.WIDTH - imageWidth) {
+	    if (position[0] == Utilities.WIDTH - imageWidth) {
 	
 	        System.out.println(imageWidth);
 	        setXDir(-1);
 	    }
 	
-	    if (y == 0) {
+	    if (position[1] == 0) {
 	
 	        setYDir(1);
 	    }
@@ -52,8 +52,8 @@ public class Ball extends ScreenItem{
 	
 	private void resetState() {
 	
-	    x = Utilities.INIT_BALL_X;
-	    y = Utilities.INIT_BALL_Y;
+	    position[0] = Utilities.INIT_BALL_X;
+	    position[1]= Utilities.INIT_BALL_Y;
 	}
 	
 	void setXDir(int x) {

@@ -1,35 +1,26 @@
 package Model.Items;
 
-import com.sun.javafx.geom.Rectangle;
-import com.sun.prism.Image;
+import java.awt.*;
 
 public class ScreenItem {
 	
-	int x;
-    int y;
-    int imageWidth;
-    int imageHeight;
-    java.awt.Image image;
-
-    protected void setX(int x) {
-
-        this.x = x;
+    protected int imageWidth;
+    protected int imageHeight;
+    protected Image image;
+    protected int position[]; // position[0] = x, position[1] = y;
+    
+   
+	protected void setPosition(int x, int y) {
+    	
+    	this.position[0] = x;
+    	this.position[1] = y;
     }
-
-    int getX() {
-
-        return x;
+    
+    protected int[] getPosition() {
+    	
+    	return position;
     }
-
-    protected void setY(int y) {
-
-        this.y = y;
-    }
-
-    int getY() {
-
-        return y;
-    }
+    
 
     int getImageWidth() {
 
@@ -41,14 +32,14 @@ public class ScreenItem {
         return imageHeight;
     }
 
-    java.awt.Image getImage() {
+    protected Image getImage() {
 
         return image;
     }
-
+ 
     Rectangle getRect() {
 
-        return new Rectangle(x, y, image.getWidth(null), image.getHeight(null));
+        return new Rectangle(position[0], position[1], image.getWidth(null), image.getHeight(null));
     }
 
     void getImageDimensions() {

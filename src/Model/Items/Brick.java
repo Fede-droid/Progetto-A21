@@ -13,8 +13,8 @@ public class Brick extends ScreenItem{
 
 	    private void initBrick(int x, int y) {
 
-	        this.x = x;
-	        this.y = y;
+	        this.position[0] = x;
+	        this.position[1] = y;
 
 	        destroyed = false;
 

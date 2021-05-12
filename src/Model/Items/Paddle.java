@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 
-public class Paddle {
+public class Paddle extends ScreenItem{
 	
 	private int dx;
 
@@ -24,59 +24,29 @@ public class Paddle {
 
     private void loadImage() {
 
-        Object ii = new ImageIcon("src/Images/paddle.png");
-        image = ((ImageIcon) ii).getImage();
+        var ii = new ImageIcon("src/Images/paddle.png");
+        image = ii.getImage();
     }
 
-    void move() {
+    public void move() {
 
-        x += dx;
+        position[0] += dx;
 
-        if (x <= 0) {
+        if ( position[0] <= 0) {
 
-            x = 0;
+        	 position[0] = 0;
         }
 
-        if (x >= Utilities.WIDTH - imageWidth) {
+        if ( position[0] >= Utilities.WIDTH - imageWidth) {
 
-            x = Utilities.WIDTH - imageWidth;
-        }
-    }
-
-    void keyPressed(KeyEvent e) {
-
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT) {
-
-            dx = -1;
-        }
-
-        if (key == KeyEvent.VK_RIGHT) {
-
-            dx = 1;
-        }
-    }
-
-    void keyReleased(KeyEvent e) {
-
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT) {
-
-            dx = 0;
-        }
-
-        if (key == KeyEvent.VK_RIGHT) {
-
-            dx = 0;
+        	 position[0] = Utilities.WIDTH - imageWidth;
         }
     }
 
     private void resetState() {
 
-        x = Utilities.INIT_PADDLE_X;
-        y = Utilities.INIT_PADDLE_Y;
+    	 position[0] = Utilities.INIT_PADDLE_X;
+    	 position[1] = Utilities.INIT_PADDLE_Y;
     }
 
 }
