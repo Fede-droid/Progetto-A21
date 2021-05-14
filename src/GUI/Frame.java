@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 public class Frame extends JFrame{
 	
+
 	public Frame() {
 		this.add(new Panel());
 		 //this.setTitle("Snake");

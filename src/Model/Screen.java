@@ -12,7 +12,6 @@ public class Screen {
 	private Brick brick;
 	private Paddle paddle;
 	int i = 0;
-	private int frames=0;
 	
 	// ciclo di gioco
 	public void s() {
