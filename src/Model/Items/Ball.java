@@ -35,18 +35,18 @@ public class Ball extends ScreenItem{
 	
 	    if (position[0] == 0) {
 	
-	        setXDir(1);
+	    	setDirectionX(1);
 	    }
 	
 	    if (position[0] == Utilities.WIDTH - imageWidth) {
 	
 	        System.out.println(imageWidth);
-	        setXDir(-1);
+	        setDirectionX(-1);
 	    }
 	
 	    if (position[1] == 0) {
 	
-	        setYDir(1);
+	    	setDirectionY(1);
 	    }
 	}
 	
@@ -56,12 +56,12 @@ public class Ball extends ScreenItem{
 	    position[1]= Utilities.INIT_BALL_Y;
 	}
 	
-	void setXDir(int x) {
+	void setDirectionX(int x) {
 	
 	    xdir = x;
 	}
 	
-	void setYDir(int y) {
+	void setDirectionY(int y) {
 	
 	    ydir = y;
 	}

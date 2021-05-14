@@ -20,6 +20,9 @@ public class BreakoutGame {
 		frame.setLocationRelativeTo(null);
 				
 		frame.setVisible(true);
+		
+		screen1.s();
+	
 	}
 
 }
