@@ -2,51 +2,57 @@ package Model.Items;
 
 import java.awt.*;
 
-public class ScreenItem {
+// classe astratta per metodi e varibili comuni fra gli oggetti
+public abstract class ScreenItem {
 	
     protected int imageWidth;
     protected int imageHeight;
     protected Image image;
     protected int position[]; // position[0] = x, position[1] = y;
-    
+    protected boolean status;
    
-	protected void setPosition(int x, int y) {
+	public void setPosition(int x, int y) {
     	
     	this.position[0] = x;
     	this.position[1] = y;
     }
     
-    protected int[] getPosition() {
+    public int[] getPosition() {
     	
     	return position;
     }
     
 
-    int getImageWidth() {
+    public int getImageWidth() {
 
         return imageWidth;
     }
 
-    int getImageHeight() {
+    public int getImageHeight() {
 
         return imageHeight;
     }
 
-    protected Image getImage() {
+    public Image getImage() {
 
         return image;
     }
  
-    Rectangle getRect() {
+ 
+    public void setImageWidth(int imageWidth) {
+		this.imageWidth = imageWidth;
+	}
+
+	public void setImageHeight(int imageHeight) {
+		this.imageHeight = imageHeight;
+	}
+
+	Rectangle getRect() {
 
         return new Rectangle(position[0], position[1], image.getWidth(null), image.getHeight(null));
     }
-
-    void getImageDimensions() {
-
-        imageWidth = image.getWidth(null);
-        imageHeight = image.getHeight(null);
-    }
+	
+	
 	
 
 }

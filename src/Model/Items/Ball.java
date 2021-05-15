@@ -1,9 +1,59 @@
 package Model.Items;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
 import javax.swing.ImageIcon;
 
-public class Ball extends ScreenItem{
+public class Ball extends ScreenItem implements Runnable{
 	
+	private int width;
+	private int height;
+	private boolean active;
+	BufferedImage imgBall;
+	private int position[];
+
+    public Ball(BufferedImage image, int width, int height, int[] position) {
+
+    	this.position = position;
+    	this.width = width;
+    	this.height = height;
+    	this.active = true;
+    	this.imgBall = image;
+    }
+    
+
+    @Override
+	public void run() {
+    	active = true;
+    	while(active) {
+		update(); 
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+    	}
+	}
+
+    private void update() {
+    	
+    	position[0]++;
+    	position[1]++;
+    	
+    
+    }
+    
+    public void render(Graphics g) {
+    	
+    	// si disegna
+    	g.drawImage(imgBall, position[0], position[1], width, height, null);
+    	
+    }
+    
+	
+	
+	/*
 	private int xdir;
 	private int ydir;
 	
@@ -18,7 +68,7 @@ public class Ball extends ScreenItem{
 	    ydir = -1;
 	
 	    loadImage();
-	    getImageDimensions();
+	   // getImageDimensions();
 	    resetState();
 	}
 	
@@ -71,6 +121,6 @@ public class Ball extends ScreenItem{
 	    return ydir;
 	}
 		
-		
+		*/
 	
 }

@@ -19,7 +19,7 @@ public class Brick extends ScreenItem{
 	        destroyed = false;
 
 	        loadImage();
-	        getImageDimensions();
+	       // getImageDimensions();
 	    }
 
 	    private void loadImage() {
