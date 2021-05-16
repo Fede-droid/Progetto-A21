@@ -20,7 +20,7 @@ public class BreakoutGame {
 		Dimension dimension_screen = new Dimension(Utilities.SCREEN_WIDTH,Utilities.SCREEN_HEIGHT);
 		GameFrame.setPreferredSize(dimension_screen);
 		GameFrame.setMaximumSize(dimension_screen);
-		GameFrame.setResizable(false);
+		GameFrame.setResizable(true);
 		GameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		

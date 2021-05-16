@@ -6,10 +6,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import GUI.ImagesLoader;
 import Model.Items.Ball;
+import Model.Items.Brick;
 import Model.Items.Paddle;
+import Model.Items.ScreenItem;
 
 public class Screen extends Canvas implements Runnable, KeyListener{
 	
@@ -25,11 +29,12 @@ public class Screen extends Canvas implements Runnable, KeyListener{
 	private boolean gameStatus = false;
 	private Ball objBall;
 	private Paddle objPaddle;
+	private List<Brick> objBricks;
+	private ScreenItem objSfondo;
 	
 	int i = 0;
 	
 	public Screen() {
-		
 		uploadImages();
 		start();
 	}
@@ -90,10 +95,12 @@ public class Screen extends Canvas implements Runnable, KeyListener{
 			
 			Graphics g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si può disegnare
 			
-			g.drawImage(sfondo, 0, 0, 1000, 1000, this);
-			
+			objSfondo.render(g, this);
 			objPaddle.render(g);
 			objBall.render(g);
+			for (Brick tempBrick : objBricks) {
+				tempBrick.render(g);
+			}
 			g.dispose();
 			buffer.show();
 		}
@@ -120,24 +127,43 @@ public class Screen extends Canvas implements Runnable, KeyListener{
 		
 		private void start() {
 			
+			// posizione di partenza dello sfondo
+			int[] posInitSfondo = new int[2];
+			posInitSfondo[0] = 0;
+			posInitSfondo[1] = 0;
+			
+			// creo lo sfondo
+			objSfondo = new ScreenItem(sfondo, 1000, 1000, posInitSfondo);
+			
 			// posizione di partenza paddle
 			int[] posInitPaddle = new int[2];
-			posInitPaddle[0] = 100;
-			posInitPaddle[1] = 200;
+			posInitPaddle[0] = 100;  // x
+			posInitPaddle[1] = 500;  // y
 			
 			// creo un paddle 
-			this.objPaddle = new Paddle(paddle, 150, 75, posInitPaddle);
+			objPaddle = new Paddle(paddle, 100, 50, posInitPaddle);
 		
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
-			posInitBall[0] = 100;
-			posInitBall[1] = 100;
+			posInitBall[0] = 100;  // x
+			posInitBall[1] = 100;  // y
 			
 			// faccio partire il thread corrispondente a ball
-			this.objBall = new Ball(ball, 20, 20, posInitBall);
+			objBall = new Ball(ball, 20, 20, posInitBall);
 			Thread ballThread  = new Thread(objBall);
 			ballThread.start();
+			
+			// posizione di partenza dei Brick
+			int[] posInitBrick = new int[2];
+			posInitBrick[0] = 20;
+			posInitBrick[1] = 20;
+			
+			// creo i Bricks
+			objBricks = new ArrayList<Brick>();
+			objBricks.add(new Brick(brick, 50, 25, posInitBrick));
+			
+			
 		}
 		
 		
