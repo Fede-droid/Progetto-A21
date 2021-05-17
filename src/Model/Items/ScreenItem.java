@@ -45,45 +45,28 @@ public class ScreenItem {
     	this.position[0] = x;
     	this.position[1] = y;
     }
-    
-	/*
-    public int[] getPosition() {
-    	
-    	return position;
-    }
-    
 
-    public int getImageWidth() {
 
-        return imageWidth;
-    }
+	public int getImageWidth() {
+		return imageWidth;
+	}
 
-    public int getImageHeight() {
 
-        return imageHeight;
-    }
-
-    public Image getImage() {
-
-        return image;
-    }
- 
- 
-    public void setImageWidth(int imageWidth) {
+	public void setImageWidth(int imageWidth) {
 		this.imageWidth = imageWidth;
 	}
+
+
+	public int getImageHeight() {
+		return imageHeight;
+	}
+
 
 	public void setImageHeight(int imageHeight) {
 		this.imageHeight = imageHeight;
 	}
+    
 
-	Rectangle getRect() {
-
-        return new Rectangle(position[0], position[1], image.getWidth(null), image.getHeight(null));
-    }
-	
-	
-	*/
 	
 	
 

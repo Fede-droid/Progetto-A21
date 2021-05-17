@@ -14,27 +14,27 @@ import Model.Items.Ball;
 import Model.Items.Brick;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
+import Model.Items.Utilities;
 
-public class Screen extends Canvas implements Runnable, KeyListener{
+public class Screen extends Canvas implements Runnable{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	BufferedImage ball;
-	BufferedImage brick;
-	BufferedImage paddle;
-	BufferedImage sfondo;
+	BufferedImage ball, brick, sfondo;
 	private boolean gameStatus = false;
 	private Ball objBall;
-	private Paddle objPaddle;
 	private List<Brick> objBricks;
 	private ScreenItem objSfondo;
+	private ImagesLoader loader;
+	private Paddle objPaddle;
 	
 	int i = 0;
 	
 	public Screen() {
+		this.objBricks = new ArrayList<Brick>();
 		uploadImages();
 		start();
 	}
@@ -62,7 +62,7 @@ public class Screen extends Canvas implements Runnable, KeyListener{
 
 		while (delta >= ns)
 		{
-		//update();
+		update();
 			
 		delta -= ns;
 		}
@@ -71,16 +71,16 @@ public class Screen extends Canvas implements Runnable, KeyListener{
 		}
 	}
 	
-		
+		// caricamento immagini 
 		private void uploadImages() {
 			
-			ImagesLoader loader = new ImagesLoader();
+			this.loader = new ImagesLoader();
 			this.ball = loader.uploadImage("/Images/ball.png");
 			this.brick = loader.uploadImage("/Images/brick.png");
-			this.paddle = loader.uploadImage("/Images/paddle.png");	
-			this.sfondo = loader.uploadImage("/Images/sfondo.jpeg");	
+			this.sfondo = loader.uploadImage("/Images/sfondo.jpeg");
 		}
 		
+		// disegno di oggetti grafici a schermo 
 		public void render() {
 			
 			// creazione di 2 buffer così che l'immagine venga aggiornata su uno e mostrata sull'altro 
@@ -96,35 +96,31 @@ public class Screen extends Canvas implements Runnable, KeyListener{
 			Graphics g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si può disegnare
 			
 			objSfondo.render(g, this);
-			objPaddle.render(g);
 			objBall.render(g);
+			
+			//for(Player ps : players) {
+				
+			objPaddle.render(g);
+			//}
+			
+			// creazione brick
 			for (Brick tempBrick : objBricks) {
 				tempBrick.render(g);
 			}
+			
 			g.dispose();
 			buffer.show();
 		}
 		
-		@Override
-		public void keyPressed(KeyEvent e) {
+		// aggiornamento ciclo di gioco
+		public void update() {
 			
-			int keycode = e.getKeyCode();
+			objBall.move();
+			checkCollision();
 			
-			switch(keycode) {
-				case KeyEvent.VK_LEFT: objPaddle.moveLeft();
-				break;
-				
-				case KeyEvent.VK_RIGHT: objPaddle.moveRight();
-				break;
-			
-			}
 		}
 		
-		@Override
-		public void keyTyped(KeyEvent e) {}
-		@Override
-		public void keyReleased(KeyEvent e) {}
-		
+		// inzializzazione partita
 		private void start() {
 			
 			// posizione di partenza dello sfondo
@@ -135,14 +131,6 @@ public class Screen extends Canvas implements Runnable, KeyListener{
 			// creo lo sfondo
 			objSfondo = new ScreenItem(sfondo, 1000, 1000, posInitSfondo);
 			
-			// posizione di partenza paddle
-			int[] posInitPaddle = new int[2];
-			posInitPaddle[0] = 100;  // x
-			posInitPaddle[1] = 500;  // y
-			
-			// creo un paddle 
-			objPaddle = new Paddle(paddle, 100, 50, posInitPaddle);
-		
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
@@ -151,21 +139,43 @@ public class Screen extends Canvas implements Runnable, KeyListener{
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
-			Thread ballThread  = new Thread(objBall);
-			ballThread.start();
 			
-			// posizione di partenza dei Brick
-			int[] posInitBrick = new int[2];
-			posInitBrick[0] = 20;
-			posInitBrick[1] = 20;
+			for(int i = 0; i < 10; i++) {
+				// posizione di partenza dei Brick
+				int[] posInitBrick = new int[2];
+				posInitBrick[0] += 10;
+				posInitBrick[1] += 10;
 			
-			// creo i Bricks
-			objBricks = new ArrayList<Brick>();
-			objBricks.add(new Brick(brick, 50, 25, posInitBrick));
+				// creo i Bricks
+				objBricks.add(new Brick(brick, 50, 25, posInitBrick));
 			
+			}
 			
 		}
 		
+		// check collisione tra ball e paddle dei giocatori
+		public void checkCollision() {
+			
+			//for(Player ps: players) {
+				
+				if(objBall.getPosition()[1] == objPaddle.getPosition()[1] && ((objPaddle.getPosition()[0] <= objBall.getPosition()[0] &&  objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
+				
+					objBall.setYdir(-1);
+				}
+				else if(objBall.getPosition()[1] > Utilities.SCREEN_HEIGHT) {
+					gameStatus = false;
+					System.out.println("game over");
+				}
+			//}
+		}
+		
+		//Aggiungo player alla partita
+		
+		public void newPlayer(Player p) {
+			
+			this.objPaddle = p.getObjPaddle();
+			
+		}
 		
 	}
 	

@@ -7,14 +7,13 @@ import javax.imageio.ImageIO;
 
 public class ImagesLoader {
 	
-	
+	// carica immagini nel buffer
 	BufferedImage image;
 	public BufferedImage uploadImage(String position) {
 		
 		try {
 			image = ImageIO.read(getClass().getResource(position));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
