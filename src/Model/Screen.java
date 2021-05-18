@@ -105,7 +105,9 @@ public class Screen extends Canvas implements Runnable{
 			
 			// creazione brick
 			for (Brick tempBrick : objBricks) {
-				tempBrick.render(g);
+				if (!tempBrick.isDestroyed()) {
+					tempBrick.render(g);
+				}
 			}
 			
 			g.dispose();
@@ -134,21 +136,26 @@ public class Screen extends Canvas implements Runnable{
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
-			posInitBall[0] = 100;  // x
-			posInitBall[1] = 100;  // y
+			posInitBall[0] = 250;  // x
+			posInitBall[1] = 250;  // y
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
-			
-			for(int i = 0; i < 10; i++) {
-				// posizione di partenza dei Brick
+
+
+			for(int i = 0; i < 8; i++) {
+				
+				for (int j = 1; j <4; j++) {
+					
 				int[] posInitBrick = new int[2];
-				posInitBrick[0] += 10;
-				posInitBrick[1] += 10;
+
+				// posizione di partenza dei Brick
+				posInitBrick[0] += 62*i;
+				posInitBrick[1] += 10+j*30;
 			
 				// creo i Bricks
 				objBricks.add(new Brick(brick, 50, 25, posInitBrick));
-			
+				}
 			}
 			
 		}
@@ -157,15 +164,26 @@ public class Screen extends Canvas implements Runnable{
 		public void checkCollision() {
 			
 			//for(Player ps: players) {
-				
-				if(objBall.getPosition()[1] == objPaddle.getPosition()[1] && ((objPaddle.getPosition()[0] <= objBall.getPosition()[0] &&  objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
-				
-					objBall.setYdir(-1);
+			for (Brick tempBrick : objBricks) {
+				if(!tempBrick.isDestroyed() && (objBall.getPosition()[1] == tempBrick.getPosition()[1] && ((tempBrick.getPosition()[0] <= objBall.getPosition()[0] &&  objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth()))))) {
+					if (objBall.getPosition()[1] <= tempBrick.getPosition()[1]) {
+							objBall.setYdir(+1);
+					}
+					else if (objBall.getPosition()[1] >= tempBrick.getPosition()[1]) {
+						objBall.setYdir(-1);
+				    }
+					tempBrick.setDestroyed(true);
 				}
-				else if(objBall.getPosition()[1] > Utilities.SCREEN_HEIGHT) {
-					gameStatus = false;
-					System.out.println("game over");
-				}
+			}
+
+			if(objBall.getPosition()[1] == objPaddle.getPosition()[1] && ((objPaddle.getPosition()[0] <= objBall.getPosition()[0] &&  objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
+			
+				objBall.setYdir(-1);
+			}
+			else if(objBall.getPosition()[1] > Utilities.SCREEN_HEIGHT) {
+				gameStatus = false;
+				System.out.println("game over");
+			}
 			//}
 		}
 		
