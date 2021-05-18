@@ -22,22 +22,7 @@ public class Ball extends ScreenItem{
     	
 		position[0] += xdir;
 	    position[1] += ydir;
-	
-	    if (position[0] == 0) {
-	
-	    	xdir = 1;
-	    }
-	
-	    if (position[0] == Utilities.SCREEN_WIDTH - imageWidth) {
-	
-	        xdir = -1;
-	    }
-	
-	    if (position[1] == 0) {
-	
-	    	ydir = 1;
-	    }
-	    }
+	}
 	    
 
 	public int getXdir() {

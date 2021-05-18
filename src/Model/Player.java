@@ -27,7 +27,7 @@ public class Player implements KeyListener{
 		posInitPaddle[1] = 500;  // y
 					
 		// creo un paddle 
-		objPaddle = new Paddle(paddle, 100, 50, posInitPaddle);
+		objPaddle = new Paddle(paddle, 100, 30, posInitPaddle);
 	}
 	
 	public void createImage() {
