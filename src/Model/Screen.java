@@ -165,10 +165,11 @@ public class Screen extends Canvas implements Runnable{
 			
 			//for(Player ps: players) {
 			for (Brick tempBrick : objBricks) {
-				
+				if (!tempBrick.isDestroyed() && ((tempBrick.getPosition()[1]-tempBrick.getImageHeight()) == (objBall.getPosition()[1]-objBall.getImageHeight()/2) && ((tempBrick.getPosition()[0] <= objBall.getPosition()[0] &&  objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth()))))) {
+					objBall.setYdir(-1);
 					tempBrick.setDestroyed(true);
-				
-		
+				}
+			
 				
 			}
 
