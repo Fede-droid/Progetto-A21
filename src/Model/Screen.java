@@ -89,7 +89,7 @@ public class Screen extends Canvas implements Runnable{
 			BufferStrategy buffer = this.getBufferStrategy();
 			
 			if(buffer == null) {
-				createBufferStrategy(2);
+				createBufferStrategy(3);
 				return;	
 			}
 			
