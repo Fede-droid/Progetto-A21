@@ -18,7 +18,6 @@ public class Ball extends ScreenItem{
     }
     
 
-    
     public void move() {
     	
 		position[0] += xdir;
@@ -41,29 +40,6 @@ public class Ball extends ScreenItem{
 	    }
 	    }
 	    
-    public void move2() {
-    	
-    	if(direction == 1 && position[0] > 0 && (position[0] + imageWidth) < Utilities.SCREEN_WIDTH) {
-    		
-    		position[0]++;
-    		
-    		}
-    	
-    	else if (position[0] < 0) {
-    		position[0]++;
-    		direction = 1;
-    	}
-    	
-    	
-    	else if ((position[0] + imageWidth) > Utilities.SCREEN_WIDTH){
-    		direction = -1; 
-    		position[0] -= 1;
-    		}
-    	
-    	
-    }
-
-
 
 	public int getXdir() {
 		return xdir;
