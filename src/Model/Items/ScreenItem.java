@@ -27,7 +27,6 @@ public class ScreenItem {
     }
    
     
-    
     public void render(Graphics g) {
     	
     	// si disegna
@@ -64,10 +63,6 @@ public class ScreenItem {
 
 	public void setImageHeight(int imageHeight) {
 		this.imageHeight = imageHeight;
-	}
-    
-
-	
-	
+	}	
 
 }

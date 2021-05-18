@@ -170,13 +170,13 @@ public class Screen extends Canvas implements Runnable{
 							objBall.setYdir(+1);
 					}
 					else if (objBall.getPosition()[1] >= tempBrick.getPosition()[1]) {
-						objBall.setYdir(-1);
+						objBall.setYdir(+1);
 				    }
 					tempBrick.setDestroyed(true);
 				}
 			}
 
-			if(objBall.getPosition()[1] == objPaddle.getPosition()[1] && ((objPaddle.getPosition()[0] <= objBall.getPosition()[0] &&  objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
+			if(objBall.getPosition()[1] > (objPaddle.getPosition()[1] - ((objBall.getImageHeight()) / 2))  && ((objPaddle.getPosition()[0] <= objBall.getPosition()[0] &&  objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
 			
 				objBall.setYdir(-1);
 			}
