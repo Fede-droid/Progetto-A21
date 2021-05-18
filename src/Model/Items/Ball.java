@@ -30,7 +30,6 @@ public class Ball extends ScreenItem{
 	
 	    if (position[0] == Utilities.SCREEN_WIDTH - imageWidth) {
 	
-	        System.out.println(imageWidth);
 	        xdir = -1;
 	    }
 	

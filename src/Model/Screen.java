@@ -75,7 +75,7 @@ public class Screen extends Canvas implements Runnable{
 		private void uploadImages() {
 			
 			this.loader = new ImagesLoader();
-			this.ball = loader.uploadImage("/Images/fede.png");
+			this.ball = loader.uploadImage("/Images/ball.png");
 			this.brick = loader.uploadImage("/Images/brick.png");
 			this.sfondo = loader.uploadImage("/Images/sfondo.jpeg");
 		}
@@ -140,7 +140,7 @@ public class Screen extends Canvas implements Runnable{
 			posInitBall[1] = 250;  // y
 			
 			// faccio partire il thread corrispondente a ball
-			objBall = new Ball(ball, 90, 90, posInitBall);
+			objBall = new Ball(ball, 20, 20, posInitBall);
 
 
 			for(int i = 0; i < 8; i++) {
