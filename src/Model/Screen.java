@@ -119,6 +119,7 @@ public class Screen extends Canvas implements Runnable{
 			
 			objBall.move();
 			checkCollision();
+			objPaddle.move();
 			
 		}
 		

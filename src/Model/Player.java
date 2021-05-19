@@ -42,6 +42,7 @@ public class Player implements KeyListener{
 		objPaddle.moveLeft();
 	}
 	
+	/*
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keycode = e.getKeyCode();
@@ -54,15 +55,29 @@ public class Player implements KeyListener{
 			break;	
 		}
 	}
+	*/
+	 @Override
+     public void keyReleased(KeyEvent e) {
+
+		 objPaddle.keyReleased(e);
+     }
+
+     @Override
+     public void keyPressed(KeyEvent e) {
+
+    	 objPaddle.keyPressed(e);
+     }
 
 	@Override
 	public void keyTyped(KeyEvent e) {}
 
-	@Override
-	public void keyReleased(KeyEvent e) {}
-
 	public Paddle getObjPaddle() {
+		
 		return objPaddle;
-	}	
+	}
+
+	
+
+	
 
 }
