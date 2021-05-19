@@ -17,7 +17,6 @@ public class BreakoutGame {
 		//creo un giocatore
 		Player p = new Player();
 				
-				
 		// creazione finestra di gioco
 		GameFrame gameFrame = new GameFrame();
 		

@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -21,8 +22,13 @@ public class GameFrame extends JFrame{
 		setTitle("Breakout");
 		Dimension dimension_screen = new Dimension(Utilities.SCREEN_WIDTH,Utilities.SCREEN_HEIGHT);
 		setPreferredSize(dimension_screen);
-		setResizable(false);
+		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	/*	setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setUndecorated(true);
+		setVisible(true);
+		*/
 	}
 	
 	

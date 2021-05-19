@@ -30,8 +30,6 @@ public class Screen extends Canvas implements Runnable{
 	private ScreenItem objSfondo;
 	private ImagesLoader loader;
 	private Paddle objPaddle;
-	private int contatore;
-	
 	
 	int i = 0;
 	
@@ -51,8 +49,6 @@ public class Screen extends Canvas implements Runnable{
 		double fps = 160.0;
 		double ns = 1e9/fps; // numero di nano sec per fps
 		gameStatus = true;
-		
-		
 		
 		while (gameStatus)
 		{
@@ -84,10 +80,10 @@ public class Screen extends Canvas implements Runnable{
 			this.sfondo = loader.uploadImage("/Images/sfondo.jpeg");
 		}
 		
-		// disegno di oggetti grafici a schermo 
+		// disegno di oggetti grafici a schermo oo
 		public void render() {
 			
-			// creazione di 2 buffer cosÃ¬ che l'immagine venga aggiornata su uno e mostrata sull'altro 
+			// creazione di 2 buffer così che l'immagine venga aggiornata su uno e mostrata sull'altro 
 			// modo ciclico, evita gli scatti.
 			
 			BufferStrategy buffer = this.getBufferStrategy();
@@ -97,7 +93,7 @@ public class Screen extends Canvas implements Runnable{
 				return;	
 			}
 			
-			Graphics g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si puÃ² disegnare
+			Graphics g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si può disegnare
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
@@ -121,18 +117,22 @@ public class Screen extends Canvas implements Runnable{
 		// aggiornamento ciclo di gioco
 		public void update() {
 			
-			objBall.move();
-			checkCollision();
+		    objBall.move();
+		    this.gameStatus = objBall.checkBorderCollision();
+			checkCollisionLato(objBall, objPaddle);
+			checkCollision(objBall, objPaddle);
+			for (Brick tempBrick : objBricks) {
+				if (!tempBrick.isDestroyed()) {
+					checkCollisionLato(objBall, tempBrick);
+					checkCollision(objBall, tempBrick);
+				}
+			}
 			objPaddle.move();
-			objBall.setVelocita(velocitaBall());
-			
 			
 		}
 		
 		// inzializzazione partita
 		private void start() {
-			
-			 contatore=0;
 			
 			// posizione di partenza dello sfondo
 			int[] posInitSfondo = new int[2];
@@ -145,16 +145,16 @@ public class Screen extends Canvas implements Runnable{
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
-			posInitBall[0] = (int) (300 + Math.random()*150);  // x
-			posInitBall[1] = (int) (300 + Math.random()*150);  // y
+			posInitBall[0] = (int) (282);  // x
+			posInitBall[1] = (int) (300);  // y
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
 
 
-			for(int i = 0; i < 6; i++) {
+			for(int i = 0; i < 7; i++) {
 				
-				for (int j = 1; j <4; j++) {
+				for (int j = 1; j <5; j++) {
 					
 				int[] posInitBrick = new int[2];
 
@@ -170,96 +170,40 @@ public class Screen extends Canvas implements Runnable{
 		}
 		
 		// check collisione tra ball e paddle dei giocatori e tra brick e ball
-		public void checkCollision() {
-			
-			
-			
-			if (((objBall.getPosition()[1] + objBall.getImageHeight()) >= (objPaddle.getPosition()[1]))  &&  ((objPaddle.getPosition()[0] <= objBall.getPosition()[0]  &&   objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
-				objBall.setYdir(-1);
-			}
-			
-			
-			for (Brick tempBrick : objBricks) {
-				if (!tempBrick.isDestroyed() && objBall.getPosition()[1] == (tempBrick.getPosition()[1]+tempBrick.getImageHeight())  &&  ((objBall.getPosition()[0] >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
-					objBall.setYdir(1);
-				//	objBall.setVelocitaY(velocitaBall());
-					tempBrick.setDestroyed(true);
-					++contatore;
-					System.out.println(contatore);
-				}
-				if (!tempBrick.isDestroyed() && (objBall.getPosition()[1] + objBall.getImageHeight()) == (tempBrick.getPosition()[1])  &&  ((objBall.getPosition()[0] >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
-					objBall.setYdir(-1);
-				//	objBall.setVelocitaY(velocitaBall());
-					tempBrick.setDestroyed(true); 
-					++contatore;
-					System.out.println(contatore);
-					
-				}
-				
-				if (!tempBrick.isDestroyed() && ((objBall.getPosition()[1] + objBall.getImageHeight()) > tempBrick.getPosition()[1]  &&  objBall.getPosition()[1] < (tempBrick.getPosition()[1]+tempBrick.getImageHeight()))) {  
-					if (objBall.getPosition()[0] == (tempBrick.getPosition()[0]+tempBrick.getImageWidth())) {
-						objBall.setXdir(1);
-					//	objBall.setVelocitaX(velocitaBall());
-						tempBrick.setDestroyed(true);
-						++contatore;
-						System.out.println(contatore);
-						
-					}
-					else if ((objBall.getPosition()[0]+objBall.getImageWidth()) == tempBrick.getPosition()[0]) {
-						objBall.setXdir(-1);
-					//	objBall.setVelocitaX(velocitaBall());
-						tempBrick.setDestroyed(true);
-						++contatore;
-						System.out.println(contatore);
-						
-				    }
-					
-					
-				}
-				
-			}
-			
 		
-			if(contatore==18) {
-				
-				gameStatus = false;
-				System.out.println("Hai vinto");
+		public void checkCollisionLato(Ball ball, ScreenItem item) {
+			
+			if ((ball.getPosition()[1] + ball.getImageHeight()) >= item.getPosition()[1]  &&  ball.getPosition()[1] <= (item.getPosition()[1]+item.getImageHeight())) {  
+				if (ball.getPosition()[0] == (item.getPosition()[0]+item.getImageWidth())) {
+					ball.setXdir(1);
+					item.setDestroyed(true);
+				}
+				else if ((ball.getPosition()[0]+ball.getImageWidth()) == item.getPosition()[0]) {
+					ball.setXdir(-1);
+					item.setDestroyed(true);   
+			    }
 			}
-			
-			
-			if ((objBall.getPosition()[1] + objBall.getImageHeight()) >= objPaddle.getPosition()[1] && objBall.getPosition()[1] <= (objPaddle.getPosition()[1] + objPaddle.getImageHeight())) {
-				if (objBall.getPosition()[0] + objBall.getImageWidth() == objPaddle.getPosition()[0])
-					objBall.setXdir(-1);
-				else if (objBall.getPosition()[0] == objPaddle.getPosition()[0] + objPaddle.getImageWidth())
-					objBall.setXdir(+1);
-			}    
-			
-			else if(objBall.getPosition()[1] > Utilities.SCREEN_HEIGHT) {
-				gameStatus = false;
-				System.out.println("game over");
-			}
-			
 		}
+		
+		public void checkCollision(Ball ball, ScreenItem item) {
+			if ((ball.getPosition()[0]+ball.getImageWidth()) >= item.getPosition()[0] && ball.getPosition()[0] <= (item.getPosition()[0] + item.getImageWidth())) {
+				if (ball.getPosition()[1] == (item.getPosition()[1]+item.getImageHeight())) {
+					ball.setYdir(1);
+					item.setDestroyed(true);
+				}
+				else if ((ball.getPosition()[1] + ball.getImageHeight()) == (item.getPosition()[1])) {
+					ball.setYdir(-1);
+					item.setDestroyed(true);
+				}
+			}	
+		}
+		//sfdfsrf
+		
+
 		
 		//Aggiungo player alla partita
 		public void newPlayer(Player p) {
 			this.objPaddle = p.getObjPaddle();
 		}
 		
-		private double velocitaBall() {
-			
-			if(contatore>=5) {
-				return 2;
-			}
-			if(contatore>=10) {
-				return 3;
-			}
-			if(contatore>=15) {
-				return 4;
-			}
-			
-			return 1;
-		}
-		
-		
-}
+	}

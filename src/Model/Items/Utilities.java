@@ -2,7 +2,7 @@ package Model.Items;
 
 public interface Utilities {
 	
-	static final int SCREEN_WIDTH = 500;
+	static final int SCREEN_WIDTH = 510;
 	static final int SCREEN_HEIGHT = 650;
     int BOTTOM_EDGE = 390;
     int N_OF_BRICKS = 30;
