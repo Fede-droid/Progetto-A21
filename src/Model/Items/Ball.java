@@ -39,7 +39,6 @@ public class Ball extends ScreenItem{
          }
          
          if((position[1] + this.imageHeight) > Utilities.SCREEN_HEIGHT) {
-                System.out.println("game over");
                 return false;
          }
          else return true;

@@ -37,14 +37,15 @@ public class Screen extends Canvas implements Runnable{
 	private ImagesLoader loader;
 	private Paddle objPaddle;
 	Clip win,hit;
+	boolean isMusicOn;
 	
 	int i = 0;
 	
 	public Screen() {
 		this.objBricks = new ArrayList<Brick>();
 		uploadImages();
-		uploadMusic();
 		start();
+		this.isMusicOn = true;
 	}
 	
 	
@@ -81,7 +82,7 @@ public class Screen extends Canvas implements Runnable{
 		private void uploadImages() {
 			
 			this.loader = new ImagesLoader();
-			this.ball = loader.uploadImage("/Images/ball.png");
+			this.ball = loader.uploadImage("../Images/ball.png");
 			this.sfondo = loader.uploadImage("/Images/sfondo.jpeg");
 			this.brick = loader.uploadImage("/Images/brick.png");
 			this.brick1 = loader.uploadImage("/Images/brick1.png");
@@ -89,20 +90,29 @@ public class Screen extends Canvas implements Runnable{
 			this.brick3 = loader.uploadImage("/Images/brick3.png");
 		}
 		
-		private void uploadMusic() {
-		    
+		private void setMusic(boolean music) {
+		    this.isMusicOn = music;
 		}
 		
 		public void playMusic(MusicTypes m) {
+			String musicString = null;
 			
-			/*switch (m) {
+			switch (m) {
 				case HIT: {
-					musicString = "/Music/hit.mp3";
+					musicString = "./src/Music/hit.wav";
 					break;
 				}
-			}*/
+				case WIN: {
+					musicString = "./src/Music/gameover.wav";
+					break;
+				}
+				case LOSE: {
+					musicString = "./src/Music/gameover.wav";
+					break;
+				}
+			}
 			
-			String musicString = "C:\\Users\\tomma\\Desktop\\Breakout\\Progetto-A21\\src\\Music\\hit.wav";
+
 			try {
 			    AudioInputStream audio = AudioSystem.getAudioInputStream(new File(musicString).getAbsoluteFile());
 		        this.hit = AudioSystem.getClip();
@@ -112,7 +122,6 @@ public class Screen extends Canvas implements Runnable{
 		        ex.printStackTrace();
 		    }
 	        hit.start();
-
 		}
 		
 		// disegno di oggetti grafici a schermo oo
@@ -177,6 +186,10 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}
 			objPaddle.move();
+			if(!gameStatus) {
+				System.out.println("game over");
+				if (isMusicOn) playMusic(MusicTypes.LOSE);
+			}
 			
 		}
 		
@@ -215,7 +228,6 @@ public class Screen extends Canvas implements Runnable{
 				objBricks.add(new Brick(brick, 65, 25, posInitBrick));
 				}
 			}
-			playMusic(MusicTypes.HIT);
 
 
 		}
@@ -228,12 +240,12 @@ public class Screen extends Canvas implements Runnable{
 				if (ball.getPosition()[0] == (item.getPosition()[0]+item.getImageWidth())) {
 					ball.setXdir(1);
 					item.hit();
-					playMusic(MusicTypes.HIT);
+					if (isMusicOn) playMusic(MusicTypes.HIT);
 				}
 				else if ((ball.getPosition()[0]+ball.getImageWidth()) == item.getPosition()[0]) {
 					ball.setXdir(-1);
 					item.hit(); 
-					playMusic(MusicTypes.HIT);
+					if (isMusicOn) playMusic(MusicTypes.HIT);
 			    }
 			}
 		}
@@ -243,12 +255,12 @@ public class Screen extends Canvas implements Runnable{
 				if (ball.getPosition()[1] == (item.getPosition()[1]+item.getImageHeight())) {
 					ball.setYdir(1);
 					item.hit();
-					playMusic(MusicTypes.HIT);
+					if (isMusicOn) playMusic(MusicTypes.HIT);
 				}
 				else if ((ball.getPosition()[1] + ball.getImageHeight()) == (item.getPosition()[1])) {
 					ball.setYdir(-1);
 					item.hit();
-					playMusic(MusicTypes.HIT);
+					if (isMusicOn) playMusic(MusicTypes.HIT);
 				}
 			}	
 		}

@@ -1,6 +1,6 @@
 package Music;
 
 public enum MusicTypes {
-	HIT,WIN;
+	HIT,WIN,LOSE;
 
 }
