@@ -30,6 +30,8 @@ public class Screen extends Canvas implements Runnable{
 	private ScreenItem objSfondo;
 	private ImagesLoader loader;
 	private Paddle objPaddle;
+	private int contatore;
+	
 	
 	int i = 0;
 	
@@ -49,6 +51,8 @@ public class Screen extends Canvas implements Runnable{
 		double fps = 160.0;
 		double ns = 1e9/fps; // numero di nano sec per fps
 		gameStatus = true;
+		
+		
 		
 		while (gameStatus)
 		{
@@ -80,10 +84,10 @@ public class Screen extends Canvas implements Runnable{
 			this.sfondo = loader.uploadImage("/Images/sfondo.jpeg");
 		}
 		
-		// disegno di oggetti grafici a schermo oo
+		// disegno di oggetti grafici a schermo 
 		public void render() {
 			
-			// creazione di 2 buffer così che l'immagine venga aggiornata su uno e mostrata sull'altro 
+			// creazione di 2 buffer cosÃ¬ che l'immagine venga aggiornata su uno e mostrata sull'altro 
 			// modo ciclico, evita gli scatti.
 			
 			BufferStrategy buffer = this.getBufferStrategy();
@@ -93,7 +97,7 @@ public class Screen extends Canvas implements Runnable{
 				return;	
 			}
 			
-			Graphics g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si può disegnare
+			Graphics g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si puÃ² disegnare
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
@@ -126,6 +130,8 @@ public class Screen extends Canvas implements Runnable{
 		// inzializzazione partita
 		private void start() {
 			
+			 contatore=0;
+			
 			// posizione di partenza dello sfondo
 			int[] posInitSfondo = new int[2];
 			posInitSfondo[0] = 0;
@@ -137,18 +143,16 @@ public class Screen extends Canvas implements Runnable{
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
-			
 			posInitBall[0] = (int) (300 + Math.random()*150);  // x
 			posInitBall[1] = (int) (300 + Math.random()*150);  // y
-
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
 
 
-			for(int i = 0; i < 7; i++) {
+			for(int i = 0; i < 6; i++) {
 				
-				for (int j = 1; j <5; j++) {
+				for (int j = 1; j <4; j++) {
 					
 				int[] posInitBrick = new int[2];
 
@@ -166,7 +170,9 @@ public class Screen extends Canvas implements Runnable{
 		// check collisione tra ball e paddle dei giocatori e tra brick e ball
 		public void checkCollision() {
 			
-			if ((objBall.getPosition()[0]+objBall.getImageWidth()) == Utilities.SCREEN_WIDTH) {
+			
+			
+			if ((objBall.getPosition()[0]+20) >= Utilities.SCREEN_WIDTH) {
 				objBall.setXdir(-1);
 		    }
 			
@@ -178,39 +184,58 @@ public class Screen extends Canvas implements Runnable{
 				objBall.setYdir(1);
 			}
 			
-			if (((objBall.getPosition()[1] + objBall.getImageHeight()) == (objPaddle.getPosition()[1]))  &&  (((objBall.getPosition()[0]+objBall.getImageWidth()) >= objPaddle.getPosition()[0]   &&   objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
-				if(objBall.getPosition()[0] >= (objPaddle.getPosition()[0]+objPaddle.getImageWidth()/2)) {
-					objBall.setYdir(-1);
-					objBall.setXdir(1);
-					
-				}
-				else {
-					objBall.setYdir(-1);
-					objBall.setXdir(-1);	
-				}
+			if (((objBall.getPosition()[1] + objBall.getImageHeight()) == (objPaddle.getPosition()[1]))  &&  ((objPaddle.getPosition()[0] <= objBall.getPosition()[0]  &&   objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
+				objBall.setYdir(-1);
 			}
 			
 			for (Brick tempBrick : objBricks) {
-				if (!tempBrick.isDestroyed() && objBall.getPosition()[1] == (tempBrick.getPosition()[1]+tempBrick.getImageHeight())  &&  (((objBall.getPosition()[0]+objBall.getImageWidth()) >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
+				if (!tempBrick.isDestroyed() && objBall.getPosition()[1] == (tempBrick.getPosition()[1]+tempBrick.getImageHeight())  &&  ((objBall.getPosition()[0] >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
 					objBall.setYdir(1);
-					tempBrick.setDestroyed(true);                
+					objBall.setVelocitaY(velocitaBall());
+					tempBrick.setDestroyed(true);
+					++contatore;
+					System.out.println(contatore);
 				}
-				if (!tempBrick.isDestroyed() && (objBall.getPosition()[1] + objBall.getImageHeight()) == (tempBrick.getPosition()[1])  &&  (((objBall.getPosition()[0]+objBall.getImageWidth()) >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
+				if (!tempBrick.isDestroyed() && (objBall.getPosition()[1] + objBall.getImageHeight()) == (tempBrick.getPosition()[1])  &&  ((objBall.getPosition()[0] >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
 					objBall.setYdir(-1);
-					tempBrick.setDestroyed(true);                
+					objBall.setVelocitaY(velocitaBall());
+					tempBrick.setDestroyed(true); 
+					++contatore;
+					System.out.println(contatore);
+					
 				}
 				
-				if (!tempBrick.isDestroyed() && ((objBall.getPosition()[1] + objBall.getImageHeight()) >= tempBrick.getPosition()[1]  &&  objBall.getPosition()[1] <= (tempBrick.getPosition()[1]+tempBrick.getImageHeight()))) {  
+				if (!tempBrick.isDestroyed() && ((objBall.getPosition()[1] + objBall.getImageHeight()) > tempBrick.getPosition()[1]  &&  objBall.getPosition()[1] < (tempBrick.getPosition()[1]+tempBrick.getImageHeight()))) {  
 					if (objBall.getPosition()[0] == (tempBrick.getPosition()[0]+tempBrick.getImageWidth())) {
 						objBall.setXdir(1);
+						objBall.setVelocitaX(velocitaBall());
 						tempBrick.setDestroyed(true);
+						++contatore;
+						System.out.println(contatore);
+						
 					}
 					else if ((objBall.getPosition()[0]+objBall.getImageWidth()) == tempBrick.getPosition()[0]) {
 						objBall.setXdir(-1);
-						tempBrick.setDestroyed(true);                
+						objBall.setVelocitaX(velocitaBall());
+						tempBrick.setDestroyed(true);
+						++contatore;
+						System.out.println(contatore);
+						
 				    }
+					
+					
 				}
+				
 			}
+			
+			
+			
+			if(contatore==18) {
+				
+				gameStatus = false;
+				System.out.println("Hai vinto");
+			}
+			
 			
 			if ((objBall.getPosition()[1] + objBall.getImageHeight()) >= objPaddle.getPosition()[1] && objBall.getPosition()[1] <= (objPaddle.getPosition()[1] + objPaddle.getImageHeight())) {
 				if (objBall.getPosition()[0] + objBall.getImageWidth() == objPaddle.getPosition()[0])
@@ -223,7 +248,7 @@ public class Screen extends Canvas implements Runnable{
 				gameStatus = false;
 				System.out.println("game over");
 			}
-	
+			//}
 		}
 		
 		//Aggiungo player alla partita
@@ -231,5 +256,20 @@ public class Screen extends Canvas implements Runnable{
 			this.objPaddle = p.getObjPaddle();
 		}
 		
-	}
-	
+		private double velocitaBall() {
+			
+			if(contatore>=5) {
+				return 0.5;
+			}
+			if(contatore>=10) {
+				return 0.8;
+			}
+			if(contatore>=15) {
+				return 1.0;
+			}
+			
+			return 0.0;
+		}
+		
+		
+}

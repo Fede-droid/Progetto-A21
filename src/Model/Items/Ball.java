@@ -6,8 +6,8 @@ public class Ball extends ScreenItem{
 	
 	private boolean active;
 	private int direction;
-	private int xdir;
-	private int ydir;
+	private double xdir;
+	private double ydir;
 
     public Ball(BufferedImage image, int width, int height, int[] position) {
     	super(image, width, height, position);
@@ -25,26 +25,39 @@ public class Ball extends ScreenItem{
 	}
 	    
 
-	public int getXdir() {
+	public double getXdir() {
 		return xdir;
 	}
 
 
 
-	public void setXdir(int xdir) {
-		this.xdir = xdir;
+	public void setXdir(double xdir) {
+		this.xdir *= xdir;
 	}
 
 
 
-	public int getYdir() {
+	public double getYdir() {
 		return ydir;
 	}
 
 
 
-	public void setYdir(int ydir) {
-		this.ydir = ydir;
+	public void setYdir(double ydir) {
+		this.ydir *= ydir;
+	}
+	
+	
+	public void setVelocitaX(double val) {
+		
+		xdir+=val;
+		
+	}
+	
+	public void setVelocitaY(double val) {
+		
+		ydir+=val;
+		
 	}
     
   
