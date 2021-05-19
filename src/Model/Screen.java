@@ -137,8 +137,8 @@ public class Screen extends Canvas implements Runnable{
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
-			posInitBall[0] = 300;  // x
-			posInitBall[1] = 300;  // y
+			posInitBall[0] = (int) (300 + Math.random()*150);  // x
+			posInitBall[1] = (int) (300 + Math.random()*150);  // y
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
@@ -161,7 +161,7 @@ public class Screen extends Canvas implements Runnable{
 			
 		}
 		
-		// check collisione tra ball e paddle dei giocatori
+		// check collisione tra ball e paddle dei giocatori e tra brick e ball
 		public void checkCollision() {
 			
 			if ((objBall.getPosition()[0]+20) == Utilities.SCREEN_WIDTH) {
@@ -217,7 +217,6 @@ public class Screen extends Canvas implements Runnable{
 		}
 		
 		//Aggiungo player alla partita
-		
 		public void newPlayer(Player p) {
 			this.objPaddle = p.getObjPaddle();
 		}

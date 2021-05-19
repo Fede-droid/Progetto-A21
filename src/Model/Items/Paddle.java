@@ -5,17 +5,20 @@ import java.awt.image.BufferedImage;
 
 public class Paddle extends ScreenItem {
 	
+	// velcoità paddle 
 	private static final int VELOCITA = 2;
-    private int dx;
-
+	
+	// direzione paddle
+    private int dr;
 
     public Paddle(BufferedImage image, int width, int height, int[] position) {
     	super(image, width, height, position);
     }
     
+    // richiamato da update, verifica che non si vada fuori dai bordi dx e sx
     public void move() {
 
-        position[0] += dx;
+        position[0] += dr;
 
         if (position[0] <= 0) {
 
@@ -28,38 +31,43 @@ public class Paddle extends ScreenItem {
         }
     }
     
+    // appena si preme il paddle si aggiorna ad ogni frame in base alla velocità impostata
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
 
-        	dx = -VELOCITA;
+        	dr = -VELOCITA;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
 
-        	dx = VELOCITA;
+        	dr = VELOCITA;
         }
     }
 
-    
+    // al rilascio del stato il paddle si ferma, controllo da tastiera utente
     public void keyReleased(KeyEvent e) {
 
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
 
-        	dx = 0;
+        	dr = 0;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
 
-        	dx = 0;
+        	dr = 0;
         }
     }
     
-    // Metodi che muovono il paddle a destra o sinistra
+    
+    /*
+     * METODI INUTILI DA RIMUOVERE IN FUTURO
+     */
+    // Metodi che muovono il paddle a destra o sinistra, per ora INUTILI
     public void moveRight() {
     	
     	// prima del confronto sommo la larghezza dello schermo con la larghezza del paddle, altrimenti esce
