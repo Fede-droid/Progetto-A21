@@ -76,8 +76,8 @@ public class Screen extends Canvas implements Runnable{
 			
 			this.loader = new ImagesLoader();
 			this.ball = loader.uploadImage("/Images/ball.png");
-			this.brick = loader.uploadImage("/Images/brick.png");
 			this.sfondo = loader.uploadImage("/Images/sfondo.jpeg");
+			this.brick = loader.uploadImage("/Images/brick.png");
 			this.brick1 = loader.uploadImage("/Images/brick1.png");
 			this.brick2 = loader.uploadImage("/Images/brick2.png");
 			this.brick3 = loader.uploadImage("/Images/brick3.png");
@@ -214,9 +214,7 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}	
 		}
-		
 
-		
 		//Aggiungo player alla partita
 		public void newPlayer(Player p) {
 			this.objPaddle = p.getObjPaddle();

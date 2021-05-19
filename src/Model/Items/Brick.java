@@ -34,7 +34,6 @@ public class Brick extends ScreenItem{
 	
 	public void setImage(BufferedImage imageUpdated) {
 		this.image = imageUpdated;
-	}
-	
+	}	
 }
 	
