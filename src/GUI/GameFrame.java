@@ -19,9 +19,9 @@ public class GameFrame extends JFrame{
 	public GameFrame() {
 		
 		setTitle("Breakout");
-		Dimension dimension_screen = new Dimension(Utilities.SCREEN_WIDTH,Utilities.SCREEN_HEIGHT);
+		Dimension dimension_screen = new Dimension(Utilities.SCREEN_WIDTH + 10,Utilities.SCREEN_HEIGHT+ 10);
 		setPreferredSize(dimension_screen);
-		setResizable(false);
+		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	

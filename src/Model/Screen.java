@@ -80,10 +80,10 @@ public class Screen extends Canvas implements Runnable{
 			this.sfondo = loader.uploadImage("/Images/sfondo.jpeg");
 		}
 		
-		// disegno di oggetti grafici a schermo 
+		// disegno di oggetti grafici a schermo oo
 		public void render() {
 			
-			// creazione di 2 buffer cosÃ¬ che l'immagine venga aggiornata su uno e mostrata sull'altro 
+			// creazione di 2 buffer così che l'immagine venga aggiornata su uno e mostrata sull'altro 
 			// modo ciclico, evita gli scatti.
 			
 			BufferStrategy buffer = this.getBufferStrategy();
@@ -93,7 +93,7 @@ public class Screen extends Canvas implements Runnable{
 				return;	
 			}
 			
-			Graphics g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si puÃ² disegnare
+			Graphics g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si può disegnare
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
@@ -137,8 +137,8 @@ public class Screen extends Canvas implements Runnable{
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
-			posInitBall[0] = 300;  // x
-			posInitBall[1] = 300;  // y
+			posInitBall[0] = (int) (282);  // x
+			posInitBall[1] = (int) (300);  // y
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
@@ -161,10 +161,10 @@ public class Screen extends Canvas implements Runnable{
 			
 		}
 		
-		// check collisione tra ball e paddle dei giocatori
+		// check collisione tra ball e paddle dei giocatori e tra brick e ball
 		public void checkCollision() {
 			
-			if ((objBall.getPosition()[0]+20) == Utilities.SCREEN_WIDTH) {
+			if ((objBall.getPosition()[0]+objBall.getImageWidth()) == Utilities.SCREEN_WIDTH) {
 				objBall.setXdir(-1);
 		    }
 			
@@ -176,21 +176,29 @@ public class Screen extends Canvas implements Runnable{
 				objBall.setYdir(1);
 			}
 			
-			if (((objBall.getPosition()[1] + objBall.getImageHeight()) == (objPaddle.getPosition()[1]))  &&  ((objPaddle.getPosition()[0] <= objBall.getPosition()[0]  &&   objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
-				objBall.setYdir(-1);
+			if (((objBall.getPosition()[1] + objBall.getImageHeight()) == (objPaddle.getPosition()[1]))  &&  (((objBall.getPosition()[0]+objBall.getImageWidth()) >= objPaddle.getPosition()[0]   &&   objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
+				if(objBall.getPosition()[0] >= (objPaddle.getPosition()[0]+objPaddle.getImageWidth()/2)) {
+					objBall.setYdir(-1);
+					objBall.setXdir(1);
+					
+				}
+				else {
+					objBall.setYdir(-1);
+					objBall.setXdir(-1);	
+				}
 			}
 			
 			for (Brick tempBrick : objBricks) {
-				if (!tempBrick.isDestroyed() && objBall.getPosition()[1] == (tempBrick.getPosition()[1]+tempBrick.getImageHeight())  &&  ((objBall.getPosition()[0] >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
+				if (!tempBrick.isDestroyed() && objBall.getPosition()[1] == (tempBrick.getPosition()[1]+tempBrick.getImageHeight())  &&  (((objBall.getPosition()[0]+objBall.getImageWidth()) >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
 					objBall.setYdir(1);
 					tempBrick.setDestroyed(true);                
 				}
-				if (!tempBrick.isDestroyed() && (objBall.getPosition()[1] + objBall.getImageHeight()) == (tempBrick.getPosition()[1])  &&  ((objBall.getPosition()[0] >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
+				if (!tempBrick.isDestroyed() && (objBall.getPosition()[1] + objBall.getImageHeight()) == (tempBrick.getPosition()[1])  &&  (((objBall.getPosition()[0]+objBall.getImageWidth()) >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
 					objBall.setYdir(-1);
 					tempBrick.setDestroyed(true);                
 				}
 				
-				if (!tempBrick.isDestroyed() && ((objBall.getPosition()[1] + objBall.getImageHeight()) > tempBrick.getPosition()[1]  &&  objBall.getPosition()[1] < (tempBrick.getPosition()[1]+tempBrick.getImageHeight()))) {  
+				if (!tempBrick.isDestroyed() && ((objBall.getPosition()[1] + objBall.getImageHeight()) >= tempBrick.getPosition()[1]  &&  objBall.getPosition()[1] <= (tempBrick.getPosition()[1]+tempBrick.getImageHeight()))) {  
 					if (objBall.getPosition()[0] == (tempBrick.getPosition()[0]+tempBrick.getImageWidth())) {
 						objBall.setXdir(1);
 						tempBrick.setDestroyed(true);
@@ -202,7 +210,7 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}
 			
-			if ((objBall.getPosition()[1] + objBall.getImageHeight()) > objPaddle.getPosition()[1] && objBall.getPosition()[1] < (objPaddle.getPosition()[1] + objPaddle.getImageHeight())) {
+			if ((objBall.getPosition()[1] + objBall.getImageHeight()) >= objPaddle.getPosition()[1] && objBall.getPosition()[1] <= (objPaddle.getPosition()[1] + objPaddle.getImageHeight())) {
 				if (objBall.getPosition()[0] + objBall.getImageWidth() == objPaddle.getPosition()[0])
 					objBall.setXdir(-1);
 				else if (objBall.getPosition()[0] == objPaddle.getPosition()[0] + objPaddle.getImageWidth())
@@ -213,15 +221,13 @@ public class Screen extends Canvas implements Runnable{
 				gameStatus = false;
 				System.out.println("game over");
 			}
-			//}
+	
 		}
 		
 		//Aggiungo player alla partita
-		
 		public void newPlayer(Player p) {
 			this.objPaddle = p.getObjPaddle();
 		}
 		
 	}
 	
-
