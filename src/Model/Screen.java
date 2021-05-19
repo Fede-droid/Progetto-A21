@@ -137,8 +137,10 @@ public class Screen extends Canvas implements Runnable{
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
-			posInitBall[0] = (int) (282);  // x
-			posInitBall[1] = (int) (300);  // y
+			
+			posInitBall[0] = (int) (300 + Math.random()*150);  // x
+			posInitBall[1] = (int) (300 + Math.random()*150);  // y
+
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
