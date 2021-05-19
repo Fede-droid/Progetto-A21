@@ -7,8 +7,8 @@ import GUI.ImagesLoader;
 
 public class Brick extends ScreenItem{
 	
-	private int hitLevel;
-	private boolean destroyed;
+	protected int hitLevel;
+	protected boolean destroyed;
 	
 	public Brick(BufferedImage image, int width, int height, int[] position) {
 		super(image, width, height, position);

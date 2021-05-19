@@ -6,8 +6,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import GUI.ImagesLoader;
 import Model.Items.Ball;
@@ -15,6 +20,7 @@ import Model.Items.Brick;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 import Model.Items.Utilities;
+import Music.MusicTypes;
 
 public class Screen extends Canvas implements Runnable{
 	
@@ -30,12 +36,14 @@ public class Screen extends Canvas implements Runnable{
 	private ScreenItem objSfondo;
 	private ImagesLoader loader;
 	private Paddle objPaddle;
+	Clip win,hit;
 	
 	int i = 0;
 	
 	public Screen() {
 		this.objBricks = new ArrayList<Brick>();
 		uploadImages();
+		uploadMusic();
 		start();
 	}
 	
@@ -58,8 +66,6 @@ public class Screen extends Canvas implements Runnable{
 		previous = current;
 		delta += elapsed;
 
-		//processInput();
-
 		while (delta >= ns)
 		{
 		update();
@@ -81,6 +87,32 @@ public class Screen extends Canvas implements Runnable{
 			this.brick1 = loader.uploadImage("/Images/brick1.png");
 			this.brick2 = loader.uploadImage("/Images/brick2.png");
 			this.brick3 = loader.uploadImage("/Images/brick3.png");
+		}
+		
+		private void uploadMusic() {
+		    
+		}
+		
+		public void playMusic(MusicTypes m) {
+			
+			/*switch (m) {
+				case HIT: {
+					musicString = "/Music/hit.mp3";
+					break;
+				}
+			}*/
+			
+			String musicString = "C:\\Users\\tomma\\Desktop\\Breakout\\Progetto-A21\\src\\Music\\hit.wav";
+			try {
+			    AudioInputStream audio = AudioSystem.getAudioInputStream(new File(musicString).getAbsoluteFile());
+		        this.hit = AudioSystem.getClip();
+		        hit.open(audio);
+		        } catch(Exception ex) {
+		        System.out.println("Error with playing sound.");
+		        ex.printStackTrace();
+		    }
+	        hit.start();
+
 		}
 		
 		// disegno di oggetti grafici a schermo oo
@@ -162,28 +194,30 @@ public class Screen extends Canvas implements Runnable{
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
-			posInitBall[0] = (int) (282);  // x
-			posInitBall[1] = (int) (300);  // y
+			posInitBall[0] = (int) (100 + 50);  // x
+			posInitBall[1] = (int) (550);  // y
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
 
 
-			for(int i = 0; i < 7; i++) {
+			for(int i = 0; i < 5; i++) {
 				
-				for (int j = 1; j <5; j++) {
+				for (int j = 1; j <4; j++) {
 					
 				int[] posInitBrick = new int[2];
 
 				// posizione di partenza dei Brick
-				posInitBrick[0] += 73*i;
+				posInitBrick[0] += 107*i;
 				posInitBrick[1] += 10+j*50;
 			
 				// creo i Bricks
-				objBricks.add(new Brick(brick, 50, 25, posInitBrick));
+				objBricks.add(new Brick(brick, 65, 25, posInitBrick));
 				}
 			}
-			
+			playMusic(MusicTypes.HIT);
+
+
 		}
 		
 		// check collisione tra ball e paddle dei giocatori e tra brick e ball
@@ -194,10 +228,12 @@ public class Screen extends Canvas implements Runnable{
 				if (ball.getPosition()[0] == (item.getPosition()[0]+item.getImageWidth())) {
 					ball.setXdir(1);
 					item.hit();
+					playMusic(MusicTypes.HIT);
 				}
 				else if ((ball.getPosition()[0]+ball.getImageWidth()) == item.getPosition()[0]) {
 					ball.setXdir(-1);
-					item.hit();   
+					item.hit(); 
+					playMusic(MusicTypes.HIT);
 			    }
 			}
 		}
@@ -207,10 +243,12 @@ public class Screen extends Canvas implements Runnable{
 				if (ball.getPosition()[1] == (item.getPosition()[1]+item.getImageHeight())) {
 					ball.setYdir(1);
 					item.hit();
+					playMusic(MusicTypes.HIT);
 				}
 				else if ((ball.getPosition()[1] + ball.getImageHeight()) == (item.getPosition()[1])) {
 					ball.setYdir(-1);
 					item.hit();
+					playMusic(MusicTypes.HIT);
 				}
 			}	
 		}
