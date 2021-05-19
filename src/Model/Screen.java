@@ -202,7 +202,7 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}
 			
-			if ((objBall.getPosition()[1] + objBall.getImageHeight()) > objPaddle.getPosition()[1] && objBall.getPosition()[1] < (objPaddle.getPosition()[1] + objPaddle.getImageHeight())) {
+			if ((objBall.getPosition()[1] + objBall.getImageHeight()) >= objPaddle.getPosition()[1] && objBall.getPosition()[1] <= (objPaddle.getPosition()[1] + objPaddle.getImageHeight())) {
 				if (objBall.getPosition()[0] + objBall.getImageWidth() == objPaddle.getPosition()[0])
 					objBall.setXdir(-1);
 				else if (objBall.getPosition()[0] == objPaddle.getPosition()[0] + objPaddle.getImageWidth())
