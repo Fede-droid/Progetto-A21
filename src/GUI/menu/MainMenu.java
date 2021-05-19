@@ -78,7 +78,7 @@ public class MainMenu extends JPanel {
 		button4.setBorderPainted(false);
 		button4.setIcon(button4Img);
 		backgroundlabel.add(button4);
-		//change
+		//change 
 		
 	}
 	
