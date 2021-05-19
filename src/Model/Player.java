@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import GUI.ImagesLoader;
 import Model.Items.Paddle;
+import Model.Items.Utilities;
 
 public class Player implements KeyListener{
 
@@ -24,7 +25,7 @@ public class Player implements KeyListener{
 		// posizione di partenza paddle
 		int[] posInitPaddle = new int[2];
 		posInitPaddle[0] = 100;  // x
-		posInitPaddle[1] = 500;  // y
+		posInitPaddle[1] = 580;  // y
 					
 		// creo un paddle 
 		objPaddle = new Paddle(paddle, 100, 30, posInitPaddle);

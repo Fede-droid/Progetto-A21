@@ -189,7 +189,7 @@ public class Screen extends Canvas implements Runnable{
 					tempBrick.setDestroyed(true);                
 				}
 				
-				if (!tempBrick.isDestroyed() && (objBall.getPosition()[1] >= tempBrick.getPosition()[1]  &&  objBall.getPosition()[1] <= (tempBrick.getPosition()[1]+tempBrick.getImageHeight()))) {  
+				if (!tempBrick.isDestroyed() && ((objBall.getPosition()[1] + objBall.getImageHeight()) > tempBrick.getPosition()[1]  &&  objBall.getPosition()[1] < (tempBrick.getPosition()[1]+tempBrick.getImageHeight()))) {  
 					if (objBall.getPosition()[0] == (tempBrick.getPosition()[0]+tempBrick.getImageWidth())) {
 						objBall.setXdir(1);
 						tempBrick.setDestroyed(true);
@@ -201,7 +201,7 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}
 			
-			if (objBall.getPosition()[1] > objPaddle.getPosition()[1] && objBall.getPosition()[1] <= (objPaddle.getPosition()[1] + objPaddle.getImageHeight())) {
+			if ((objBall.getPosition()[1] + objBall.getImageHeight()) > objPaddle.getPosition()[1] && objBall.getPosition()[1] < (objPaddle.getPosition()[1] + objPaddle.getImageHeight())) {
 				if (objBall.getPosition()[0] + objBall.getImageWidth() == objPaddle.getPosition()[0])
 					objBall.setXdir(-1);
 				else if (objBall.getPosition()[0] == objPaddle.getPosition()[0] + objPaddle.getImageWidth())
