@@ -16,7 +16,6 @@ public class Brick extends ScreenItem{
 		this.hitLevel = 4;
 	}
 	
-
 	public boolean isDestroyed() {
 		return destroyed;
 	}

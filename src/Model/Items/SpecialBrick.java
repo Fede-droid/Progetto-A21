@@ -9,9 +9,8 @@ public class SpecialBrick extends Brick {
 		this.hitLevel = 1;
 		this.destroyed = false;
 	}
-	
-	
-	
-	
 
+	public boolean isDestroyed() {
+		return destroyed;
+	}	
 }

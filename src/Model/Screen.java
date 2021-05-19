@@ -19,6 +19,7 @@ import Model.Items.Ball;
 import Model.Items.Brick;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
+import Model.Items.SpecialBrick;
 import Model.Items.Utilities;
 import Music.MusicTypes;
 
@@ -29,7 +30,8 @@ public class Screen extends Canvas implements Runnable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	BufferedImage ball, brick, brick1, brick2, brick3, sfondo;
+	BufferedImage ball, brick, brick1, brick2, brick3, specialBrick, sfondo;
+	SpecialBrick objSpecialBrick;
 	private boolean gameStatus = false;
 	private Ball objBall;
 	private List<Brick> objBricks;
@@ -88,6 +90,8 @@ public class Screen extends Canvas implements Runnable{
 			this.brick1 = loader.uploadImage("/Images/brick1.png");
 			this.brick2 = loader.uploadImage("/Images/brick2.png");
 			this.brick3 = loader.uploadImage("/Images/brick3.png");
+			this.specialBrick = loader.uploadImage("/Images/specialBrick.png");
+
 		}
 		
 		private void setMusic(boolean music) {
@@ -147,7 +151,6 @@ public class Screen extends Canvas implements Runnable{
 			objPaddle.render(g);
 			//}
 			
-			// creazione brick
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
 					int hitLevel = tempBrick.getHitLevel();
@@ -168,6 +171,8 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}
 			
+			if (!objSpecialBrick.isDestroyed())objSpecialBrick.render(g);
+			
 			g.dispose();
 			buffer.show();
 		}
@@ -186,6 +191,16 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}
 			objPaddle.move();
+			if (!objSpecialBrick.isDestroyed()) {
+				boolean resize;
+				resize = checkCollisionLato(objBall, objSpecialBrick);
+				resize = checkCollision(objBall, objSpecialBrick);
+				if (resize) {
+					objBall.setImageHeight(10);
+					objBall.setImageWidth(10);
+				}
+			}
+				
 			if(!gameStatus) {
 				System.out.println("game over");
 				if (isMusicOn) playMusic(MusicTypes.LOSE);
@@ -207,8 +222,8 @@ public class Screen extends Canvas implements Runnable{
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
-			posInitBall[0] = (int) (100 + 50);  // x
-			posInitBall[1] = (int) (550);  // y
+			posInitBall[0] = (int) (250);  // x
+			posInitBall[1] = (int) (550-Math.random()*20);  // y
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
@@ -228,41 +243,51 @@ public class Screen extends Canvas implements Runnable{
 				objBricks.add(new Brick(brick, 65, 25, posInitBrick));
 				}
 			}
+			
+			int[] posSpecialBrick = {213,15};
+			objSpecialBrick = new SpecialBrick(specialBrick, 65, 25, posSpecialBrick);
+			
 
 
 		}
 		
 		// check collisione tra ball e paddle dei giocatori e tra brick e ball
 		
-		public void checkCollisionLato(Ball ball, ScreenItem item) {
+		public boolean checkCollisionLato(Ball ball, ScreenItem item) {
 			
 			if ((ball.getPosition()[1] + ball.getImageHeight()) >= item.getPosition()[1]  &&  ball.getPosition()[1] <= (item.getPosition()[1]+item.getImageHeight())) {  
 				if (ball.getPosition()[0] == (item.getPosition()[0]+item.getImageWidth())) {
 					ball.setXdir(1);
 					item.hit();
 					if (isMusicOn) playMusic(MusicTypes.HIT);
+					return true;
 				}
 				else if ((ball.getPosition()[0]+ball.getImageWidth()) == item.getPosition()[0]) {
 					ball.setXdir(-1);
 					item.hit(); 
 					if (isMusicOn) playMusic(MusicTypes.HIT);
+					return true;
 			    }
 			}
+			return false;
 		}
 		
-		public void checkCollision(Ball ball, ScreenItem item) {
+		public boolean checkCollision(Ball ball, ScreenItem item) {
 			if ((ball.getPosition()[0]+ball.getImageWidth()) >= item.getPosition()[0] && ball.getPosition()[0] <= (item.getPosition()[0] + item.getImageWidth())) {
 				if (ball.getPosition()[1] == (item.getPosition()[1]+item.getImageHeight())) {
 					ball.setYdir(1);
 					item.hit();
 					if (isMusicOn) playMusic(MusicTypes.HIT);
+					return true;
 				}
 				else if ((ball.getPosition()[1] + ball.getImageHeight()) == (item.getPosition()[1])) {
 					ball.setYdir(-1);
 					item.hit();
 					if (isMusicOn) playMusic(MusicTypes.HIT);
+					return true;
 				}
-			}	
+			}
+			return false;
 		}
 
 		//Aggiungo player alla partita
