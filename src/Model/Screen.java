@@ -23,7 +23,7 @@ public class Screen extends Canvas implements Runnable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	BufferedImage ball, brick, sfondo;
+	BufferedImage ball, brick, brick1, brick2, brick3, sfondo;
 	private boolean gameStatus = false;
 	private Ball objBall;
 	private List<Brick> objBricks;
@@ -78,6 +78,9 @@ public class Screen extends Canvas implements Runnable{
 			this.ball = loader.uploadImage("/Images/ball.png");
 			this.brick = loader.uploadImage("/Images/brick.png");
 			this.sfondo = loader.uploadImage("/Images/sfondo.jpeg");
+			this.brick1 = loader.uploadImage("/Images/brick1.png");
+			this.brick2 = loader.uploadImage("/Images/brick2.png");
+			this.brick3 = loader.uploadImage("/Images/brick3.png");
 		}
 		
 		// disegno di oggetti grafici a schermo oo
@@ -106,6 +109,20 @@ public class Screen extends Canvas implements Runnable{
 			// creazione brick
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
+					int hitLevel = tempBrick.getHitLevel();
+					switch (hitLevel) {
+						case 1:
+							tempBrick.setImage(brick3); 
+							break;
+						case 2:
+							tempBrick.setImage(brick2); 
+							break;
+						case 3:
+							tempBrick.setImage(brick1); 
+							break;
+					    default:
+					    	tempBrick.setImage(brick);
+					}
 					tempBrick.render(g);
 				}
 			}
@@ -197,7 +214,6 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}	
 		}
-		//sfdfsrf
 		
 
 		
