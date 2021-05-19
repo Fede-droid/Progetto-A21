@@ -124,6 +124,8 @@ public class Screen extends Canvas implements Runnable{
 			objBall.move();
 			checkCollision();
 			objPaddle.move();
+			objBall.setVelocita(velocitaBall());
+			
 			
 		}
 		
@@ -172,33 +174,22 @@ public class Screen extends Canvas implements Runnable{
 			
 			
 			
-			if ((objBall.getPosition()[0]+20) >= Utilities.SCREEN_WIDTH) {
-				objBall.setXdir(-1);
-		    }
-			
-			if (objBall.getPosition()[0] == 0) {
-				objBall.setXdir(1);
-		    }
-			
-			if (objBall.getPosition()[1] == 0) {
-				objBall.setYdir(1);
-			}
-			
-			if (((objBall.getPosition()[1] + objBall.getImageHeight()) == (objPaddle.getPosition()[1]))  &&  ((objPaddle.getPosition()[0] <= objBall.getPosition()[0]  &&   objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
+			if (((objBall.getPosition()[1] + objBall.getImageHeight()) >= (objPaddle.getPosition()[1]))  &&  ((objPaddle.getPosition()[0] <= objBall.getPosition()[0]  &&   objBall.getPosition()[0] <= (objPaddle.getPosition()[0] + objPaddle.getImageWidth())))) {
 				objBall.setYdir(-1);
 			}
+			
 			
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed() && objBall.getPosition()[1] == (tempBrick.getPosition()[1]+tempBrick.getImageHeight())  &&  ((objBall.getPosition()[0] >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
 					objBall.setYdir(1);
-					objBall.setVelocitaY(velocitaBall());
+				//	objBall.setVelocitaY(velocitaBall());
 					tempBrick.setDestroyed(true);
 					++contatore;
 					System.out.println(contatore);
 				}
 				if (!tempBrick.isDestroyed() && (objBall.getPosition()[1] + objBall.getImageHeight()) == (tempBrick.getPosition()[1])  &&  ((objBall.getPosition()[0] >= tempBrick.getPosition()[0]   &&   objBall.getPosition()[0] <= (tempBrick.getPosition()[0] + tempBrick.getImageWidth())))) {
 					objBall.setYdir(-1);
-					objBall.setVelocitaY(velocitaBall());
+				//	objBall.setVelocitaY(velocitaBall());
 					tempBrick.setDestroyed(true); 
 					++contatore;
 					System.out.println(contatore);
@@ -208,7 +199,7 @@ public class Screen extends Canvas implements Runnable{
 				if (!tempBrick.isDestroyed() && ((objBall.getPosition()[1] + objBall.getImageHeight()) > tempBrick.getPosition()[1]  &&  objBall.getPosition()[1] < (tempBrick.getPosition()[1]+tempBrick.getImageHeight()))) {  
 					if (objBall.getPosition()[0] == (tempBrick.getPosition()[0]+tempBrick.getImageWidth())) {
 						objBall.setXdir(1);
-						objBall.setVelocitaX(velocitaBall());
+					//	objBall.setVelocitaX(velocitaBall());
 						tempBrick.setDestroyed(true);
 						++contatore;
 						System.out.println(contatore);
@@ -216,7 +207,7 @@ public class Screen extends Canvas implements Runnable{
 					}
 					else if ((objBall.getPosition()[0]+objBall.getImageWidth()) == tempBrick.getPosition()[0]) {
 						objBall.setXdir(-1);
-						objBall.setVelocitaX(velocitaBall());
+					//	objBall.setVelocitaX(velocitaBall());
 						tempBrick.setDestroyed(true);
 						++contatore;
 						System.out.println(contatore);
@@ -228,8 +219,7 @@ public class Screen extends Canvas implements Runnable{
 				
 			}
 			
-			
-			
+		
 			if(contatore==18) {
 				
 				gameStatus = false;
@@ -248,7 +238,7 @@ public class Screen extends Canvas implements Runnable{
 				gameStatus = false;
 				System.out.println("game over");
 			}
-			//}
+			
 		}
 		
 		//Aggiungo player alla partita
@@ -259,16 +249,16 @@ public class Screen extends Canvas implements Runnable{
 		private double velocitaBall() {
 			
 			if(contatore>=5) {
-				return 0.5;
+				return 2;
 			}
 			if(contatore>=10) {
-				return 0.8;
+				return 3;
 			}
 			if(contatore>=15) {
-				return 1.0;
+				return 4;
 			}
 			
-			return 0.0;
+			return 1;
 		}
 		
 		
