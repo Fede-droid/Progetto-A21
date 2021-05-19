@@ -39,8 +39,7 @@ public class ScreenItem {
         return position;
     }
 
-    public void setDestroyed(boolean val) {
-
+    public void hit() {
     }
 
     public void setPosition(int x, int y) {

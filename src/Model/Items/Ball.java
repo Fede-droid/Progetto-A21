@@ -37,6 +37,7 @@ public class Ball extends ScreenItem{
          if (position[1] == 0) {
              setYdir(1);
          }
+         
          if((position[1] + this.imageHeight) > Utilities.SCREEN_HEIGHT) {
                 System.out.println("game over");
                 return false;

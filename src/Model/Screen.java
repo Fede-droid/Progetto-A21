@@ -176,11 +176,11 @@ public class Screen extends Canvas implements Runnable{
 			if ((ball.getPosition()[1] + ball.getImageHeight()) >= item.getPosition()[1]  &&  ball.getPosition()[1] <= (item.getPosition()[1]+item.getImageHeight())) {  
 				if (ball.getPosition()[0] == (item.getPosition()[0]+item.getImageWidth())) {
 					ball.setXdir(1);
-					item.setDestroyed(true);
+					item.hit();
 				}
 				else if ((ball.getPosition()[0]+ball.getImageWidth()) == item.getPosition()[0]) {
 					ball.setXdir(-1);
-					item.setDestroyed(true);   
+					item.hit();   
 			    }
 			}
 		}
@@ -189,11 +189,11 @@ public class Screen extends Canvas implements Runnable{
 			if ((ball.getPosition()[0]+ball.getImageWidth()) >= item.getPosition()[0] && ball.getPosition()[0] <= (item.getPosition()[0] + item.getImageWidth())) {
 				if (ball.getPosition()[1] == (item.getPosition()[1]+item.getImageHeight())) {
 					ball.setYdir(1);
-					item.setDestroyed(true);
+					item.hit();
 				}
 				else if ((ball.getPosition()[1] + ball.getImageHeight()) == (item.getPosition()[1])) {
 					ball.setYdir(-1);
-					item.setDestroyed(true);
+					item.hit();
 				}
 			}	
 		}
