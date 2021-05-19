@@ -117,11 +117,11 @@ public class Screen extends Canvas implements Runnable{
 			    AudioInputStream audio = AudioSystem.getAudioInputStream(new File(musicString).getAbsoluteFile());
 		        this.hit = AudioSystem.getClip();
 		        hit.open(audio);
+		        hit.start();
 		        } catch(Exception ex) {
 		        System.out.println("Error with playing sound.");
 		        ex.printStackTrace();
 		    }
-	        hit.start();
 		}
 		
 		// disegno di oggetti grafici a schermo oo
