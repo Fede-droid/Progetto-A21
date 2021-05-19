@@ -102,7 +102,7 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}*/
 			
-			String musicString = "C:\\Users\\tomma\\Desktop\\Breakout\\Progetto-A21\\src\\Music\\hit.wav";
+			String musicString = "./src/Music/hit.wav";
 			try {
 			    AudioInputStream audio = AudioSystem.getAudioInputStream(new File(musicString).getAbsoluteFile());
 		        this.hit = AudioSystem.getClip();
