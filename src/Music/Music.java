@@ -32,7 +32,7 @@ public class Music {
 				break;
 			}
 			case WIN: {
-				musicString = "./src/Music/gameover.wav";
+				musicString = "./src/Music/victorysound.wav";
 				break;
 			}
 			case LOSE: {

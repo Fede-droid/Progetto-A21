@@ -65,7 +65,7 @@ public class Screen extends Canvas implements Runnable{
 		double fps = 160.0;
 		double ns = 1e9/fps; // numero di nano sec per fps
 		gameStatus = true;
-		
+		//switchare off/on
 		//if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
 		
 		while (gameStatus)
@@ -96,7 +96,7 @@ public class Screen extends Canvas implements Runnable{
 			this.brick2 = loader.uploadImage("/Images/brick2.png");
 			this.brick3 = loader.uploadImage("/Images/brick3.png");
 			this.specialBrick = loader.uploadImage("/Images/specialBrick.png");
-			youWin = loader.uploadImage("/Images/win.png");
+			youWin = loader.uploadImage("/Images/w3.png");
 			youLose = loader.uploadImage("/Images/lose.png");
 
 		}
@@ -173,6 +173,11 @@ public class Screen extends Canvas implements Runnable{
 			
 			if(!gameStatus) {
 				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOSE);
+				
+			}
+			if(checkWin()) {
+				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.WIN);
+				
 			}
 		}
 		
@@ -201,9 +206,9 @@ public class Screen extends Canvas implements Runnable{
 
 
 			//creazione e posizionamento dei Bricks
-			for(int i = 0; i < 5; i++) { // 5 colonne *
+			for(int i = 0; i < 1; i++) { // 5 colonne *
 				
-				for (int j = 0; j < 6; j++) { // 6 righe = 30 Bricks
+				for (int j = 0; j < 1; j++) { // 6 righe = 30 Bricks
 					
 					int[] posInitBrick = new int[2];
 
@@ -253,6 +258,8 @@ public class Screen extends Canvas implements Runnable{
 			if(checkWin()) {
 				// ho vinto
 				objYouWin = new ScreenItem(youWin, 500, 500, centralPosition);
+				g.drawImage(youWin, 100, 150, 300, 80, null);
+				g.dispose();
 				objYouWin.render(g);
 				gameStatus = false;
 			}
