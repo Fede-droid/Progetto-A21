@@ -4,12 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
-
-import GUI.GameFrame;
-import GUI.menu.Graphics.MainMenu;
 import Model.BreakoutGame;
-import Model.Core.Screen;
-import Model.Logic.Player;
+
 
 public class SinglePlayerListener implements ActionListener{
 

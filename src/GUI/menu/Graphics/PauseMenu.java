@@ -50,8 +50,9 @@ public class PauseMenu extends JPanel {
 		button.setIcon(button1Img);
 		backgroundlabel.add(button);
 		RepeatListener a1 = new RepeatListener(game, this);
-		button.setVisible(win);
-		//button.addActionListener(a1);
+		button.addActionListener(a1);
+		button.setVisible(!win);
+		
 		
 		// bottone 3
 		this.button3 = loader.uploadImage("menu/menuImages/nextLV.png");
@@ -63,8 +64,21 @@ public class PauseMenu extends JPanel {
 		button3.setBorderPainted(false);
 		button3.setIcon(button3Img);
 		backgroundlabel.add(button3);
-		RepeatListener a2 = new RepeatListener(game, this);
-		button.setVisible(!win);
+		//RepeatListener a2 = new RepeatListener(game, this);
+		button3.setVisible(win);
+		//button.addActionListener(a1);
+		
+		// bottone 4
+		this.button4 = loader.uploadImage("menu/menuImages/mainMenupng.png");
+		ImageIcon button4Img = new ImageIcon(button4);
+		backgroundlabel.setLayout(new FlowLayout() );
+		JButton button4 = new JButton();
+		button4.setOpaque(false);
+		button4.setContentAreaFilled(false);
+		button4.setBorderPainted(false);
+		button4.setIcon(button4Img);
+		backgroundlabel.add(button4);
+		//RepeatListener a2 = new RepeatListener(game, this);
 		//button.addActionListener(a1);
 		
 		
