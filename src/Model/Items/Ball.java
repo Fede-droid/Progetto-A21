@@ -25,26 +25,6 @@ public class Ball extends ScreenItem{
 
     }
 
-    public boolean checkBorderCollision() {
-         if ((position[0] + this.imageWidth) == Utilities.SCREEN_WIDTH) {
-             setXdir(-1);
-         }
-
-         if (position[0] == 0) {
-             setXdir(1);
-         }
-
-         if (position[1] == 0) {
-             setYdir(1);
-         }
-         
-         if((position[1] + this.imageHeight) > Utilities.SCREEN_HEIGHT) {
-                return false;
-         }
-         else return true;
-    }
-
-
     public int getXdir() {
         return xdir;
     }
