@@ -3,6 +3,7 @@ package Model.Logic;
 import Model.Items.Ball;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
+import Model.Items.Utilities;
 import Music.Music;
 import Music.MusicTypes;
 
@@ -14,6 +15,25 @@ public class CollisionAdvisor {
 		this.ball = ball;
 		this.collisionMusic = collisionMusic;
 	}
+	
+	public boolean checkBorderCollision() {
+        if ((ball.getPosition()[0] + ball.getImageHeight()) == Utilities.SCREEN_WIDTH) {
+            ball.setXdir(-1);
+        }
+
+        if (ball.getPosition()[0] == 0) {
+            ball.setXdir(1);
+        }
+
+        if (ball.getPosition()[1] == 0) {
+            ball.setYdir(1);
+        }
+        
+        if((ball.getPosition()[1] + ball.getImageHeight()) > Utilities.SCREEN_HEIGHT) {
+               return false;
+        }
+        else return true;
+    }
 	
 	public boolean checkCollisionLato(ScreenItem item) {
 		
