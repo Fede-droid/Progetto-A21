@@ -159,7 +159,7 @@ public class Screen extends Canvas implements Runnable{
 		public void update() {
 			
 		    objBall.move();
-		    ball1.checkBorderCollision();
+		    gameStatus = ball1.checkBorderCollision();
 			ball1.checkCollisionLato(objPaddle);
 			ball1.checkCollision(objPaddle);
 			for (Brick tempBrick : objBricks) {
