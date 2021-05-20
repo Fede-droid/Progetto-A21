@@ -1,6 +1,7 @@
 package Model.Items;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 
 // classe astratta per metodi e varibili comuni fra gli oggetti

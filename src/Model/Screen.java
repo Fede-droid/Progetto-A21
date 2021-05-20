@@ -66,7 +66,7 @@ public class Screen extends Canvas implements Runnable{
 		double ns = 1e9/fps; // numero di nano sec per fps
 		gameStatus = true;
 		
-		if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
+		//if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
 		
 		while (gameStatus)
 		{
@@ -114,7 +114,7 @@ public class Screen extends Canvas implements Runnable{
 				return;	
 			}
 			
-			g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si può disegnare
+			g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si puï¿½ disegnare
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
@@ -164,17 +164,14 @@ public class Screen extends Canvas implements Runnable{
 			}
 			objPaddle.move();
 			if (!objSpecialBrick.isDestroyed()) {
-				boolean resize;
-				resize = ball1.checkCollisionLato(objSpecialBrick);
-				resize = ball1.checkCollision(objSpecialBrick);
-				if (resize) {
-					objBall.setImageHeight(10);
-					objBall.setImageWidth(10);
-				}
+				ball1.checkCollisionLato(objSpecialBrick);
+				ball1.checkCollision(objSpecialBrick);
+			} else {
+				objBall.setImageHeight(10);
+				objBall.setImageWidth(10);
 			}
 			
 			if(!gameStatus) {
-				System.out.println("game over");
 				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOSE);
 			}
 		}
@@ -203,18 +200,19 @@ public class Screen extends Canvas implements Runnable{
 			ball1 = new CollisionAdvisor(objBall, mainMusic);
 
 
-			for(int i = 0; i < 5; i++) {
+			//creazione e posizionamento dei Bricks
+			for(int i = 0; i < 5; i++) { // 5 colonne *
 				
-				for (int j = 1; j <4; j++) {
+				for (int j = 0; j < 6; j++) { // 6 righe = 30 Bricks
 					
-				int[] posInitBrick = new int[2];
+					int[] posInitBrick = new int[2];
 
-				// posizione di partenza dei Brick
-				posInitBrick[0] += 107*i;
-				posInitBrick[1] += 10+j*50;
+					// posizione di partenza dei Brick
+					posInitBrick[0] = i * 70 + 80;  //nell'asse x
+					posInitBrick[1] = j * 50 + 80; //nell'asse y
 			
-				// creo i Bricks
-				objBricks.add(new Brick(brick, 65, 25, posInitBrick));
+					// creo i Bricks
+					objBricks.add(new Brick(brick, 65, 25, posInitBrick));
 				}
 			}
 			
@@ -228,8 +226,8 @@ public class Screen extends Canvas implements Runnable{
 		 * ritorna false se cisono ancora brick da distruggere
 		 */
 		private boolean checkWin() {
-			return objSpecialBrick.isDestroyed();  // Vittoria per distruzione del SPECIAL brick
-			/* Vittoria per Distruzione di tutti i Brick
+			//return objSpecialBrick.isDestroyed();  // Vittoria per distruzione del SPECIAL brick
+			//Vittoria per Distruzione di tutti i Brick
 			int n = 0;
 			for(Brick tempBrick : objBricks) {
 				if(!tempBrick.isDestroyed()) {
@@ -238,7 +236,7 @@ public class Screen extends Canvas implements Runnable{
 			}
 			if(n!=0) return false;
 			else return true;
-			*/
+			
 		}
 		/*
 		 * metodo che viene chiamato alla fine del game

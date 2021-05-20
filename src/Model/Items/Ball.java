@@ -48,7 +48,8 @@ public class Ball extends ScreenItem{
     public int getXdir() {
         return xdir;
     }
-
+    
+    //i metodi setxdir e setydir vengono chiamati quando la pallina colpisce il padle o il mattone
     public void setXdir(int xdir) {
         this.xdir = xdir;
     }
