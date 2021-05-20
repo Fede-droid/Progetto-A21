@@ -39,6 +39,9 @@ public class Music {
 				musicString = "./src/Music/gameover.wav";
 				break;
 			}
+			case LOOP: {
+				musicString = "./src/Music/loop.wav";
+			}
 		}
 		
 

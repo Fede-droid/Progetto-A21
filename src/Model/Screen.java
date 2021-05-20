@@ -66,7 +66,7 @@ public class Screen extends Canvas implements Runnable{
 		double ns = 1e9/fps; // numero di nano sec per fps
 		gameStatus = true;
 		
-		if(isMusicOn)playMusic(MusicTypes.LOOP);
+		if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
 		
 		while (gameStatus)
 		{
@@ -100,45 +100,7 @@ public class Screen extends Canvas implements Runnable{
 			youLose = loader.uploadImage("/Images/lose.png");
 
 		}
-		
-		private void setMusic(boolean music) {
-		    this.isMusicOn = music;
-		}
-		
-		public void playMusic(MusicTypes m) {
-			String musicString = null;
-			
-			switch (m) {
-				case HIT: {
-					musicString = "./src/Music/hit.wav";
-					break;
-				}
-				case WIN: {
-					musicString = "./src/Music/gameover.wav";
-					break;
-				}
-				case LOSE: {
-					musicString = "./src/Music/gameover.wav";
-					break;
-				}
-				case LOOP: {
-					musicString = "./src/Music/loop.wav";
-				}
-			}
-			
 
-			try {
-			    AudioInputStream audio = AudioSystem.getAudioInputStream(new File(musicString).getAbsoluteFile());
-		        this.hit = AudioSystem.getClip();
-		        hit.open(audio);
-		        hit.start();
-		        } catch(Exception ex) {
-		        System.out.println("Error with playing sound.");
-		        ex.printStackTrace();
-		    }
-		}
-
-		
 		// disegno di oggetti grafici a schermo oo
 		public void render() {
 			
@@ -156,9 +118,7 @@ public class Screen extends Canvas implements Runnable{
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
-			
 			//for(Player ps : players) {
-				
 			objPaddle.render(g);
 			//}
 			
@@ -184,8 +144,7 @@ public class Screen extends Canvas implements Runnable{
 			endGame();
 			}
 			
-			if (!objSpecialBrick.isDestroyed())objSpecialBrick.render(g);
-			
+			if (!objSpecialBrick.isDestroyed()) objSpecialBrick.render(g);
 			g.dispose();
 			buffer.show();
 		}
@@ -261,9 +220,6 @@ public class Screen extends Canvas implements Runnable{
 			
 			int[] posSpecialBrick = {213,15};
 			objSpecialBrick = new SpecialBrick(specialBrick, 65, 25, posSpecialBrick);
-			
-
-
 		}
 		
 		/*
