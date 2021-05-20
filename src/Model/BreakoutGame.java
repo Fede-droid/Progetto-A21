@@ -8,7 +8,9 @@ import javax.swing.JFrame;
 import GUI.GameFrame;
 import GUI.menu.Graphics.MainMenu;
 import GUI.menu.Graphics.PauseMenu;
+import Model.Core.Screen;
 import Model.Items.Utilities;
+import Model.Logic.Player;
 
 public class BreakoutGame {
 	

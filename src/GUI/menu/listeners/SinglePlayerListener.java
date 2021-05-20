@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 import GUI.GameFrame;
 import GUI.menu.Graphics.MainMenu;
 import Model.BreakoutGame;
-import Model.Player;
-import Model.Screen;
+import Model.Core.Screen;
+import Model.Logic.Player;
 
 public class SinglePlayerListener implements ActionListener{
 

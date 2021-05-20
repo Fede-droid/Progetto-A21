@@ -1,4 +1,4 @@
-package Model;
+package Model.Logic;
 
 import Model.Items.Ball;
 import Model.Items.ScreenItem;

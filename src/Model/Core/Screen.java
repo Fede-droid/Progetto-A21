@@ -1,4 +1,4 @@
-package Model;
+package Model.Core;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -21,6 +21,8 @@ import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 import Model.Items.SpecialBrick;
 import Model.Items.Utilities;
+import Model.Logic.CollisionAdvisor;
+import Model.Logic.Player;
 import Music.Music;
 import Music.MusicTypes;
 
