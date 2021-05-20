@@ -17,13 +17,14 @@ public class BreakoutGame {
 	public static void main(String[] args) {
 		
 		
+		
 		//creo un giocatore
 		Player p = new Player();
 				
 		// creazione finestra di gioco
 		GameFrame gameFrame = new GameFrame();
 		
-		
+		/*
 		// creazione gioco 
 		Screen screen1 = new Screen();
 		gameFrame.add(screen1);
@@ -38,16 +39,15 @@ public class BreakoutGame {
 		// avvio ciclo di gioco
 		Thread gameThread = new Thread(screen1);
 		gameThread.start();
+		*/
 		
 		
-		
-		/*
-		MainMenu m = new MainMenu();
+		MainMenu m = new MainMenu(gameFrame);
 		gameFrame.add(m);
 		gameFrame.pack();
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
-		*/
+		
 		
 	}
 	

@@ -8,16 +8,19 @@ import GUI.ImagesLoader;
 import Model.Items.Paddle;
 import Model.Items.Utilities;
 
-public class Player implements KeyListener{
+public class Player {
 
 	private Paddle objPaddle;
 	private BufferedImage paddle;
 	private ImagesLoader loader;
+	private InputAdapter inputHandler;
+
 
 	public Player() {
 		
 		createImage();
 		inizialize();
+		this.inputHandler = new InputAdapter(objPaddle);
 	}
 	
 	public void inizialize() {
@@ -41,21 +44,18 @@ public class Player implements KeyListener{
 	public void move() {
 		objPaddle.moveLeft();
 	}
+
+	public InputAdapter getInputHandler() {
+		return inputHandler;
+	}
+
+	public void setInputHandler(InputAdapter inputHandler) {
+		this.inputHandler = inputHandler;
+	}
+	
+	
 	
 	/*
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int keycode = e.getKeyCode();
-		
-		switch(keycode) {
-			case KeyEvent.VK_LEFT: objPaddle.moveLeft();
-			break;
-			
-			case KeyEvent.VK_RIGHT: objPaddle.moveRight();
-			break;	
-		}
-	}
-	*/
 	 @Override
      public void keyReleased(KeyEvent e) {
 
@@ -67,14 +67,17 @@ public class Player implements KeyListener{
 
     	 objPaddle.keyPressed(e);
      }
+     
 
 	@Override
 	public void keyTyped(KeyEvent e) {}
+	*/
 
 	public Paddle getObjPaddle() {
 		
 		return objPaddle;
 	}
+	
 
 	
 

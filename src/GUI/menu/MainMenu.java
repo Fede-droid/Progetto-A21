@@ -14,7 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import GUI.GameFrame;
 import GUI.ImagesLoader;
+import GUI.menu.listeners.SinglePlayerListener;
 import Model.Items.Utilities;
 
 public class MainMenu extends JPanel {
@@ -23,7 +25,7 @@ public class MainMenu extends JPanel {
 	BufferedImage background, button1, button2, button3, button4;
 	ImagesLoader loader;
 	
-	public MainMenu() {
+	public MainMenu(GameFrame f) {
 		
 		this.loader = new ImagesLoader();
 		
@@ -45,6 +47,8 @@ public class MainMenu extends JPanel {
 		button.setBorderPainted(false);
 		button.setIcon(button1Img);
 		backgroundlabel.add(button);
+		SinglePlayerListener a1 = new SinglePlayerListener(f, this);
+		button.addActionListener(a1);
 		
 		// bottone 2 multiplayer
 		this.button2 = loader.uploadImage("menu/menuImages/button2.png");
