@@ -261,6 +261,7 @@ public class Screen extends Canvas implements Runnable{
 				objYouLose = new ScreenItem(youLose, 500, 500, centralPosition);
 				objYouLose.render(g);
 				game.gameWin(false);
+				gameStatus = false;
 				
 			}
 			if(checkWin()) {

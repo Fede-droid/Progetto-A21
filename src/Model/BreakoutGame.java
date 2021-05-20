@@ -15,7 +15,8 @@ import Model.Logic.Player;
 public class BreakoutGame {
 	
 	private GameFrame gameFrame;
-	private Screen screen1;
+	private Screen screen1, screen2;
+	private Boolean music;
 	
 	public BreakoutGame() {
 		
@@ -59,6 +60,32 @@ public class BreakoutGame {
 		gameThread.start();
 	}
 	
+	public void playAgain() {
+		
+		
+		Player p = new Player();
+		this.screen2 = new Screen(this);
+		
+		screen2.newPlayer(p);
+		gameFrame.add(screen2);
+		
+		setSound2(music);
+		
+		gameFrame.requestFocusInWindow();
+	
+
+		// aggiungo controllo da tastiera
+		gameFrame.addKeyListener(p.getInputHandler());
+		
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+		
+		// avvio ciclo di gioco
+		Thread gameThread = new Thread(screen2);
+		gameThread.start();
+				
+	}
+	
 	
 	public void gameWin(boolean win) {
 		
@@ -71,8 +98,16 @@ public class BreakoutGame {
 		
 	}
 	
-	public void setSound(boolean on) {
+	public void setSound(boolean bool) {
 		
-		screen1.setMusic(on);
+		this.music = bool;
+		screen1.setMusic(bool);
 	}
+	
+	public void setSound2(boolean bool2) {
+		
+		screen2.setMusic(bool2);
+	}
+	
+	
 }
