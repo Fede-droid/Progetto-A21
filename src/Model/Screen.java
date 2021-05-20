@@ -21,6 +21,7 @@ import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 import Model.Items.SpecialBrick;
 import Model.Items.Utilities;
+import Music.Music;
 import Music.MusicTypes;
 
 public class Screen extends Canvas implements Runnable{
@@ -38,8 +39,8 @@ public class Screen extends Canvas implements Runnable{
 	private ScreenItem objSfondo;
 	private ImagesLoader loader;
 	private Paddle objPaddle;
-	Clip win,hit;
-	boolean isMusicOn;
+	CollisionAdvisor ball1;
+	Music mainMusic;
 	
 	int i = 0;
 	
@@ -47,7 +48,6 @@ public class Screen extends Canvas implements Runnable{
 		this.objBricks = new ArrayList<Brick>();
 		uploadImages();
 		start();
-		this.isMusicOn = true;
 	}
 	
 	
@@ -94,44 +94,11 @@ public class Screen extends Canvas implements Runnable{
 
 		}
 		
-		private void setMusic(boolean music) {
-		    this.isMusicOn = music;
-		}
-		
-		public void playMusic(MusicTypes m) {
-			String musicString = null;
-			
-			switch (m) {
-				case HIT: {
-					musicString = "./src/Music/hit.wav";
-					break;
-				}
-				case WIN: {
-					musicString = "./src/Music/gameover.wav";
-					break;
-				}
-				case LOSE: {
-					musicString = "./src/Music/gameover.wav";
-					break;
-				}
-			}
-			
-
-			try {
-			    AudioInputStream audio = AudioSystem.getAudioInputStream(new File(musicString).getAbsoluteFile());
-		        this.hit = AudioSystem.getClip();
-		        hit.open(audio);
-		        hit.start();
-		        } catch(Exception ex) {
-		        System.out.println("Error with playing sound.");
-		        ex.printStackTrace();
-		    }
-		}
 		
 		// disegno di oggetti grafici a schermo oo
 		public void render() {
 			
-			// creazione di 2 buffer così che l'immagine venga aggiornata su uno e mostrata sull'altro 
+			// creazione di 2 buffer cosï¿½ che l'immagine venga aggiornata su uno e mostrata sull'altro 
 			// modo ciclico, evita gli scatti.
 			
 			BufferStrategy buffer = this.getBufferStrategy();
@@ -141,7 +108,7 @@ public class Screen extends Canvas implements Runnable{
 				return;	
 			}
 			
-			Graphics g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si può disegnare
+			Graphics g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si puï¿½ disegnare
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
@@ -182,19 +149,19 @@ public class Screen extends Canvas implements Runnable{
 			
 		    objBall.move();
 		    this.gameStatus = objBall.checkBorderCollision();
-			checkCollisionLato(objBall, objPaddle);
-			checkCollision(objBall, objPaddle);
+			ball1.checkCollisionLato(objPaddle);
+			ball1.checkCollision(objPaddle);
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
-					checkCollisionLato(objBall, tempBrick);
-					checkCollision(objBall, tempBrick);
+					ball1.checkCollisionLato(tempBrick);
+					ball1.checkCollision(tempBrick);
 				}
 			}
 			objPaddle.move();
 			if (!objSpecialBrick.isDestroyed()) {
 				boolean resize;
-				resize = checkCollisionLato(objBall, objSpecialBrick);
-				resize = checkCollision(objBall, objSpecialBrick);
+				resize = ball1.checkCollisionLato(objSpecialBrick);
+				resize = ball1.checkCollision(objSpecialBrick);
 				if (resize) {
 					objBall.setImageHeight(10);
 					objBall.setImageWidth(10);
@@ -203,13 +170,14 @@ public class Screen extends Canvas implements Runnable{
 				
 			if(!gameStatus) {
 				System.out.println("game over");
-				if (isMusicOn) playMusic(MusicTypes.LOSE);
+				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOSE);
 			}
 			
 		}
 		
 		// inzializzazione partita
 		private void start() {
+			mainMusic = new Music();
 			
 			// posizione di partenza dello sfondo
 			int[] posInitSfondo = new int[2];
@@ -227,6 +195,8 @@ public class Screen extends Canvas implements Runnable{
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
+			
+			ball1 = new CollisionAdvisor(objBall, mainMusic);
 
 
 			for(int i = 0; i < 5; i++) {
@@ -251,44 +221,6 @@ public class Screen extends Canvas implements Runnable{
 
 		}
 		
-		// check collisione tra ball e paddle dei giocatori e tra brick e ball
-		
-		public boolean checkCollisionLato(Ball ball, ScreenItem item) {
-			
-			if ((ball.getPosition()[1] + ball.getImageHeight()) >= item.getPosition()[1]  &&  ball.getPosition()[1] <= (item.getPosition()[1]+item.getImageHeight())) {  
-				if (ball.getPosition()[0] == (item.getPosition()[0]+item.getImageWidth())) {
-					ball.setXdir(1);
-					item.hit();
-					if (isMusicOn) playMusic(MusicTypes.HIT);
-					return true;
-				}
-				else if ((ball.getPosition()[0]+ball.getImageWidth()) == item.getPosition()[0]) {
-					ball.setXdir(-1);
-					item.hit(); 
-					if (isMusicOn) playMusic(MusicTypes.HIT);
-					return true;
-			    }
-			}
-			return false;
-		}
-		
-		public boolean checkCollision(Ball ball, ScreenItem item) {
-			if ((ball.getPosition()[0]+ball.getImageWidth()) >= item.getPosition()[0] && ball.getPosition()[0] <= (item.getPosition()[0] + item.getImageWidth())) {
-				if (ball.getPosition()[1] == (item.getPosition()[1]+item.getImageHeight())) {
-					ball.setYdir(1);
-					item.hit();
-					if (isMusicOn) playMusic(MusicTypes.HIT);
-					return true;
-				}
-				else if ((ball.getPosition()[1] + ball.getImageHeight()) == (item.getPosition()[1])) {
-					ball.setYdir(-1);
-					item.hit();
-					if (isMusicOn) playMusic(MusicTypes.HIT);
-					return true;
-				}
-			}
-			return false;
-		}
 
 		//Aggiungo player alla partita
 		public void newPlayer(Player p) {
