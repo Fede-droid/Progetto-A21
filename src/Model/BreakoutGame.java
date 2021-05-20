@@ -6,50 +6,67 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 
 import GUI.GameFrame;
-import GUI.menu.MainMenu;
+import GUI.menu.Graphics.MainMenu;
+import GUI.menu.Graphics.PauseMenu;
 import Model.Items.Utilities;
 
 public class BreakoutGame {
 	
-	// dimensione finestra di gioco
+	private GameFrame gameFrame;
+	private Screen screen1;
 	
-	
-	public static void main(String[] args) {
+	public BreakoutGame() {
 		
+		this.gameFrame = new GameFrame();
 		
-		
-		//creo un giocatore
-		Player p = new Player();
-				
-		// creazione finestra di gioco
-		GameFrame gameFrame = new GameFrame();
-		
-		/*
-		// creazione gioco 
-		Screen screen1 = new Screen();
-		gameFrame.add(screen1);
-		
-		// aggiungo controllo da tastiera
-		gameFrame.addKeyListener(p);
-		screen1.newPlayer(p);
-		
-		gameFrame.pack();
-		gameFrame.setVisible(true);
+	}
 
-		// avvio ciclo di gioco
-		Thread gameThread = new Thread(screen1);
-		gameThread.start();
-		*/
+	public void start() {
 		
+		MainMenu m = new MainMenu(this);
 		
-		MainMenu m = new MainMenu(gameFrame);
 		gameFrame.add(m);
 		gameFrame.pack();
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
 		
+	}
+
+	public GameFrame getGameFrame() {
+		return gameFrame;
+	}
+	
+	public void gameSetup() {
 		
+		// creo un giocatore
+		Player p = new Player();
+				
+		// creazione gioco 
+		this.screen1 = new Screen();
+		screen1.newPlayer(p);
+				
+		gameFrame.add(screen1);
+		gameFrame.requestFocusInWindow();
+
+		// aggiungo controllo da tastiera
+		gameFrame.addKeyListener(p.getInputHandler());
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+				
+		// avvio ciclo di gioco
+		Thread gameThread = new Thread(screen1);
+		gameThread.start();
 	}
 	
 	
+	public void gameWin(boolean win) {
+		
+		screen1.setVisible(false);
+		PauseMenu pause = new PauseMenu(this, win);
+		gameFrame.add(pause);
+		gameFrame.pack(); 
+		gameFrame.setVisible(true);
+		gameFrame.repaint();
+		
+	}
 }

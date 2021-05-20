@@ -1,12 +1,6 @@
-package GUI.menu;
+package GUI.menu.Graphics;
 
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Label;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -17,15 +11,19 @@ import javax.swing.JPanel;
 import GUI.GameFrame;
 import GUI.ImagesLoader;
 import GUI.menu.listeners.SinglePlayerListener;
+import Model.BreakoutGame;
 import Model.Items.Utilities;
 
-public class MainMenu extends JPanel {
-	
+public class MainMenu extends JPanel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	BufferedImage background, button1, button2, button3, button4;
 	ImagesLoader loader;
 	
-	public MainMenu(GameFrame f) {
+	public MainMenu(BreakoutGame c) {
 		
 		this.loader = new ImagesLoader();
 		
@@ -47,7 +45,7 @@ public class MainMenu extends JPanel {
 		button.setBorderPainted(false);
 		button.setIcon(button1Img);
 		backgroundlabel.add(button);
-		SinglePlayerListener a1 = new SinglePlayerListener(f, this);
+		SinglePlayerListener a1 = new SinglePlayerListener(c, this);
 		button.addActionListener(a1);
 		
 		// bottone 2 multiplayer

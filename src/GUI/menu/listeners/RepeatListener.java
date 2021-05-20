@@ -6,38 +6,29 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 import GUI.GameFrame;
-import GUI.menu.Graphics.MainMenu;
 import Model.BreakoutGame;
-import Model.Player;
-import Model.Screen;
 
-public class SinglePlayerListener implements ActionListener{
+public class RepeatListener implements ActionListener {
 
 	private BreakoutGame game;
 	private JPanel m;
 	
-	public SinglePlayerListener(BreakoutGame game, JPanel m) {
+	public RepeatListener(BreakoutGame game, JPanel m) {
 		
 		this.game = game;
 		this.m = m;
 		
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		removeOldPanel();
-		game.gameSetup();
+		
 	}
 
 	public void removeOldPanel() {
-		
 		m.removeAll();
 		m.setVisible(false);
-		
 	}
 
-
-	
-	
 }

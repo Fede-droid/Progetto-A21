@@ -25,13 +25,7 @@ public class GameFrame extends JFrame{
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-	/*	setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		setUndecorated(true);
-		setVisible(true);
-		*/
 	}
 	
 	
-	
-
 }
