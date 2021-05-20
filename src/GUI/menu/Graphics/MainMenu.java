@@ -85,7 +85,7 @@ public class MainMenu extends JPanel{
 		SoundListener a4 = new SoundListener(c, this, false);
 		musicButtonON.addActionListener(a4);
 		
-		// bottone music 5 OFF
+		// bottone  5 OFF
 		this.button5 = loader.uploadImage("menu/menuImages/button4OFF.png");
 		ImageIcon button5Img = new ImageIcon(button5);
 		backgroundlabel.setLayout(new FlowLayout() );
