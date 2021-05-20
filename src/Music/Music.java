@@ -43,7 +43,6 @@ public class Music {
 				musicString = "./src/Music/loop.wav";
 			}
 		}
-		
 
 		try {
 		    AudioInputStream audio = AudioSystem.getAudioInputStream(new File(musicString).getAbsoluteFile());

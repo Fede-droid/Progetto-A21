@@ -15,6 +15,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 import GUI.ImagesLoader;
+import Model.BreakoutGame;
 import Model.Items.Ball;
 import Model.Items.Brick;
 import Model.Items.Paddle;
@@ -48,10 +49,13 @@ public class Screen extends Canvas implements Runnable{
 	Graphics g;
 	CollisionAdvisor ball1;
 	Music mainMusic;
+	private BreakoutGame game;
+	
 	
 	int i = 0;
 	
-	public Screen() {
+	public Screen(BreakoutGame game) {
+		this.game = game;
 		this.objBricks = new ArrayList<Brick>();
 		uploadImages();
 		start();
@@ -68,7 +72,7 @@ public class Screen extends Canvas implements Runnable{
 		double ns = 1e9/fps; // numero di nano sec per fps
 		gameStatus = true;
 		//switchare off/on
-		//if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
+		if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
 		
 		while (gameStatus)
 		{
@@ -256,6 +260,8 @@ public class Screen extends Canvas implements Runnable{
 				// ho perso
 				objYouLose = new ScreenItem(youLose, 500, 500, centralPosition);
 				objYouLose.render(g);
+				game.gameWin(false);
+				
 			}
 			if(checkWin()) {
 				// ho vinto
