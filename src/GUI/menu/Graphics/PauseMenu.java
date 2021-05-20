@@ -16,10 +16,15 @@ import Model.BreakoutGame;
 import Model.Items.Utilities;
 import java.awt.image.BufferedImage;
 
-public class PauseMenu extends JPanel  {
+public class PauseMenu extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	BufferedImage background, button1, button2, button3, button4;
 	ImagesLoader loader;
+	
 	private boolean win;
 	
 	public PauseMenu(BreakoutGame game, boolean win) {
@@ -27,7 +32,7 @@ public class PauseMenu extends JPanel  {
 		this.loader = new ImagesLoader();
 		
 		// caricamento sfondo
-		this.background = loader.uploadImage("menu/menuImages/mainMenupng.jpg");
+		this.background = loader.uploadImage("menu/menuImages/background.jpg");
 		JLabel backgroundlabel;
 		ImageIcon image = new ImageIcon(background);
 		backgroundlabel = new JLabel("", image, JLabel.CENTER);
@@ -45,6 +50,7 @@ public class PauseMenu extends JPanel  {
 		button.setIcon(button1Img);
 		backgroundlabel.add(button);
 		RepeatListener a1 = new RepeatListener(game, this);
+		button.setVisible(win);
 		//button.addActionListener(a1);
 		
 		// bottone 3
@@ -58,6 +64,7 @@ public class PauseMenu extends JPanel  {
 		button3.setIcon(button3Img);
 		backgroundlabel.add(button3);
 		RepeatListener a2 = new RepeatListener(game, this);
+		button.setVisible(!win);
 		//button.addActionListener(a1);
 		
 		

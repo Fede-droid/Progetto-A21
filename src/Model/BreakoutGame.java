@@ -20,13 +20,12 @@ public class BreakoutGame {
 	public BreakoutGame() {
 		
 		this.gameFrame = new GameFrame();
-		
 	}
 
 	public void start() {
 		
 		// creazione gioco 
-		this.screen1 = new Screen();
+		this.screen1 = new Screen(this);
 		MainMenu m = new MainMenu(this);
 		
 		gameFrame.add(m);
@@ -45,7 +44,6 @@ public class BreakoutGame {
 		// creo un giocatore
 		Player p = new Player();
 				
-		
 		screen1.newPlayer(p);
 				
 		gameFrame.add(screen1);
