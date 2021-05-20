@@ -23,7 +23,6 @@ public class RepeatListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		
 	}
 
 	public void removeOldPanel() {

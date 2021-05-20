@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import GUI.GameFrame;
 import GUI.ImagesLoader;
 import GUI.menu.listeners.SinglePlayerListener;
+import GUI.menu.listeners.SoundListener;
 import Model.BreakoutGame;
 import Model.Items.Utilities;
 
@@ -20,8 +21,9 @@ public class MainMenu extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	BufferedImage background, button1, button2, button3, button4;
+	BufferedImage background, button1, button2, button3, button4, button5;
 	ImagesLoader loader;
+	private JButton musicButtonON, musicButtonOFF;
 	
 	public MainMenu(BreakoutGame c) {
 		
@@ -70,19 +72,45 @@ public class MainMenu extends JPanel{
 		button3.setIcon(button3Img);
 		backgroundlabel.add(button3);
 		
-		// bottone 4 sounds
+		// bottone 4 ON
 		this.button4 = loader.uploadImage("menu/menuImages/button4ON.png");
 		ImageIcon button4Img = new ImageIcon(button4);
 		backgroundlabel.setLayout(new FlowLayout() );
-		JButton button4 = new JButton();
-		button4.setOpaque(false);
-		button4.setContentAreaFilled(false);
-		button4.setBorderPainted(false);
-		button4.setIcon(button4Img);
-		backgroundlabel.add(button4);
-		//change 
+		this.musicButtonON = new JButton();
+		musicButtonON.setOpaque(false);
+		musicButtonON.setContentAreaFilled(false);
+		musicButtonON.setBorderPainted(false);
+		musicButtonON.setIcon(button4Img);
+		backgroundlabel.add(musicButtonON);
+		SoundListener a4 = new SoundListener(c, this, false);
+		musicButtonON.addActionListener(a4);
+		
+		// bottone 5 OFF
+		this.button5 = loader.uploadImage("menu/menuImages/button4OFF.png");
+		ImageIcon button5Img = new ImageIcon(button5);
+		backgroundlabel.setLayout(new FlowLayout() );
+		this.musicButtonOFF = new JButton();
+		musicButtonOFF.setOpaque(false);
+		musicButtonOFF.setContentAreaFilled(false);
+		musicButtonOFF.setBorderPainted(false);
+		musicButtonOFF.setIcon(button5Img);
+		backgroundlabel.add(musicButtonOFF);
+		SoundListener a5 = new SoundListener(c, this, true);
+		musicButtonOFF.addActionListener(a5);
+		setMusicButton(false);
 		
 	}
+	
+	public void setMusicButton(boolean bool) {
+		
+		musicButtonON.setVisible(!bool);
+		musicButtonOFF.setVisible(bool);
+		
+	}
+	
+	
+	
+	
 	
 	
 	

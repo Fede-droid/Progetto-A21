@@ -3,15 +3,16 @@ package GUI.menu.listeners;
 import javax.swing.JPanel;
 
 import GUI.GameFrame;
+import Model.BreakoutGame;
 
 public abstract class Listener {
 
-	protected GameFrame f;
+	protected BreakoutGame game;
 	protected JPanel m;
 	
-	public Listener(GameFrame f, JPanel m) {
+	public Listener(BreakoutGame game, JPanel m) {
 		
-		this.f = f;
+		this.game = game;
 		this.m = m;
 		
 	}

@@ -23,6 +23,8 @@ public class BreakoutGame {
 
 	public void start() {
 		
+		// creazione gioco 
+		this.screen1 = new Screen();
 		MainMenu m = new MainMenu(this);
 		
 		gameFrame.add(m);
@@ -41,8 +43,7 @@ public class BreakoutGame {
 		// creo un giocatore
 		Player p = new Player();
 				
-		// creazione gioco 
-		this.screen1 = new Screen();
+		
 		screen1.newPlayer(p);
 				
 		gameFrame.add(screen1);
@@ -68,5 +69,10 @@ public class BreakoutGame {
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
 		
+	}
+	
+	public void setSound(boolean on) {
+		
+		screen1.setMusicOn(on);
 	}
 }
