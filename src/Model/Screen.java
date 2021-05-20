@@ -30,16 +30,19 @@ public class Screen extends Canvas implements Runnable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	BufferedImage ball, brick, brick1, brick2, brick3, specialBrick, sfondo;
+	BufferedImage ball, brick, brick1, brick2, brick3, specialBrick, sfondo, youWin, youLose;
 	SpecialBrick objSpecialBrick;
 	private boolean gameStatus = false;
 	private Ball objBall;
 	private List<Brick> objBricks;
 	private ScreenItem objSfondo;
+	private ScreenItem objYouWin;
+	private ScreenItem objYouLose;
 	private ImagesLoader loader;
 	private Paddle objPaddle;
 	Clip win,hit;
 	boolean isMusicOn;
+	Graphics g;
 	
 	int i = 0;
 	
@@ -61,6 +64,8 @@ public class Screen extends Canvas implements Runnable{
 		double ns = 1e9/fps; // numero di nano sec per fps
 		gameStatus = true;
 		
+		if(isMusicOn)playMusic(MusicTypes.LOOP);
+		
 		while (gameStatus)
 		{
 		double current = System.nanoTime();
@@ -71,12 +76,10 @@ public class Screen extends Canvas implements Runnable{
 
 		while (delta >= ns)
 		{
-		update();
-			
-		delta -= ns;
+		   update();	
+		   delta -= ns;
 		}
-
-		render();
+		   render();
 		}
 	}
 	
@@ -91,6 +94,8 @@ public class Screen extends Canvas implements Runnable{
 			this.brick2 = loader.uploadImage("/Images/brick2.png");
 			this.brick3 = loader.uploadImage("/Images/brick3.png");
 			this.specialBrick = loader.uploadImage("/Images/specialBrick.png");
+			youWin = loader.uploadImage("/Images/win.png");
+			youLose = loader.uploadImage("/Images/lose.png");
 
 		}
 		
@@ -113,6 +118,9 @@ public class Screen extends Canvas implements Runnable{
 				case LOSE: {
 					musicString = "./src/Music/gameover.wav";
 					break;
+				}
+				case LOOP: {
+					musicString = "./src/Music/loop.wav";
 				}
 			}
 			
@@ -141,7 +149,7 @@ public class Screen extends Canvas implements Runnable{
 				return;	
 			}
 			
-			Graphics g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si può disegnare
+			g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si può disegnare
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
@@ -169,6 +177,8 @@ public class Screen extends Canvas implements Runnable{
 					}
 					tempBrick.render(g);
 				}
+				
+			endGame();
 			}
 			
 			if (!objSpecialBrick.isDestroyed())objSpecialBrick.render(g);
@@ -200,12 +210,11 @@ public class Screen extends Canvas implements Runnable{
 					objBall.setImageWidth(10);
 				}
 			}
-				
-			if(!gameStatus) {
-				System.out.println("game over");
-				if (isMusicOn) playMusic(MusicTypes.LOSE);
-			}
 			
+			if(!gameStatus) {
+				if (isMusicOn) playMusic(MusicTypes.LOSE);
+				isMusicOn = false;
+			}
 		}
 		
 		// inzializzazione partita
@@ -288,6 +297,44 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}
 			return false;
+		}
+		
+		/*
+		 * controlla la winn condition
+		 * ritorna true se tutti i brick sono distrutti, quindi ho vinto
+		 * ritorna false se cisono ancora brick da distruggere
+		 */
+		private boolean checkWin() {
+			return objSpecialBrick.isDestroyed();  // Vittoria per distruzione del SPECIAL brick
+			/* Vittoria per Distruzione di tutti i Brick
+			int n = 0;
+			for(Brick tempBrick : objBricks) {
+				if(!tempBrick.isDestroyed()) {
+					n++;
+				}
+			}
+			if(n!=0) return false;
+			else return true;
+			*/
+		}
+		/*
+		 * metodo che viene chiamato alla fine del game
+		 */
+		private void endGame() {
+			int[] centralPosition = new int[2];
+			centralPosition[0] = Utilities.SCREEN_WIDTH/2 - 250;
+			centralPosition[1] = Utilities.SCREEN_HEIGHT/2 - 250;
+			if(!gameStatus) {
+				// ho perso
+				objYouLose = new ScreenItem(youLose, 500, 500, centralPosition);
+				objYouLose.render(g);
+			}
+			if(checkWin()) {
+				// ho vinto
+				objYouWin = new ScreenItem(youWin, 500, 500, centralPosition);
+				objYouWin.render(g);
+				gameStatus = false;
+			}
 		}
 
 		//Aggiungo player alla partita

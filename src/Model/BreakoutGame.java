@@ -47,7 +47,6 @@ public class BreakoutGame {
 		gameFrame.pack();
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
-		
 		*/
 		
 	}
