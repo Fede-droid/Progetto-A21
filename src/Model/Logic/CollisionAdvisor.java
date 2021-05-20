@@ -52,7 +52,7 @@ public class CollisionAdvisor {
 		return false;
 	}
 	
-	public boolean checkCollision(Paddle item) {
+	public boolean checkCollisionPaddle(Paddle item) {
 		if ((ball.getPosition()[0]+ball.getImageWidth()) >= item.getPosition()[0] && ball.getPosition()[0] <= (item.getPosition()[0] + item.getImageWidth())) {
 			if ((ball.getPosition()[1] + ball.getImageHeight()) == (item.getPosition()[1])) {
 				if (ball.getPosition()[0] >= (item.getPosition()[0] + item.getImageWidth()/2)) {
