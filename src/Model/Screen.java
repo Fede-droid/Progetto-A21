@@ -270,4 +270,10 @@ public class Screen extends Canvas implements Runnable{
 			this.objPaddle = p.getObjPaddle();
 		}
 		
+		//modifico musica 
+		public void setMusic(Boolean b) {
+			
+			mainMusic.setMusic(b);
+		}
+		
 	}

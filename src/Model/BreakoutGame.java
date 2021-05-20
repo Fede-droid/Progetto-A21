@@ -73,6 +73,6 @@ public class BreakoutGame {
 	
 	public void setSound(boolean on) {
 		
-		screen1.setMusicOn(on);
+		screen1.setMusic(on);
 	}
 }
