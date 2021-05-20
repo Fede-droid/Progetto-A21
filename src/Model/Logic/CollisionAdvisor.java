@@ -17,19 +17,19 @@ public class CollisionAdvisor {
 	}
 	
 	public boolean checkBorderCollision() {
-        if ((ball.getPosition()[0] + ball.getImageHeight()) == Utilities.SCREEN_WIDTH) {
+        if ((ball.getPosition()[0] + ball.getImageHeight()) >= Utilities.SCREEN_WIDTH) {
             ball.setXdir(-1);
         }
 
-        if (ball.getPosition()[0] == 0) {
+        if (ball.getPosition()[0] <= 0) {
             ball.setXdir(1);
         }
 
-        if (ball.getPosition()[1] == 0) {
+        if (ball.getPosition()[1] <= 0) {
             ball.setYdir(1);
         }
         
-        if((ball.getPosition()[1] + ball.getImageHeight()) > Utilities.SCREEN_HEIGHT) {
+        if((ball.getPosition()[1] + ball.getImageHeight()) >= Utilities.SCREEN_HEIGHT) {
                return false;
         }
         else return true;
@@ -72,7 +72,7 @@ public class CollisionAdvisor {
 		return false;
 	}
 	
-	public boolean checkCollisionPaddle(Paddle item) {
+	public boolean checkCollision(Paddle item) {
 		if ((ball.getPosition()[0]+ball.getImageWidth()) >= item.getPosition()[0] && ball.getPosition()[0] <= (item.getPosition()[0] + item.getImageWidth())) {
 			if ((ball.getPosition()[1] + ball.getImageHeight()) == (item.getPosition()[1])) {
 				if (ball.getPosition()[0] >= (item.getPosition()[0] + item.getImageWidth()/2)) {
