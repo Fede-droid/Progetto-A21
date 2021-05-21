@@ -16,7 +16,7 @@ public class BreakoutGame {
 	
 	private GameFrame gameFrame;
 	private Screen screen1, screen2;
-	private Boolean music;
+	private Boolean music = false;
 	
 	public BreakoutGame() {
 		
@@ -61,8 +61,7 @@ public class BreakoutGame {
 	}
 	
 	public void playAgain() {
-		
-		
+			
 		Player p = new Player();
 		this.screen2 = new Screen(this);
 		
@@ -73,7 +72,6 @@ public class BreakoutGame {
 		
 		gameFrame.requestFocusInWindow();
 	
-
 		// aggiungo controllo da tastiera
 		gameFrame.addKeyListener(p.getInputHandler());
 		
@@ -81,8 +79,8 @@ public class BreakoutGame {
 		gameFrame.setVisible(true);
 		
 		// avvio ciclo di gioco
-		Thread gameThread = new Thread(screen2);
-		gameThread.start();
+		Thread gameThread2 = new Thread(screen2);
+		gameThread2.start();
 				
 	}
 	
