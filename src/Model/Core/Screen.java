@@ -34,8 +34,8 @@ public class Screen extends Canvas implements Runnable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	BufferedImage ball, brick, brick1, brick2, brick3, specialBrick, sfondo, youWin, youLose;
-	SpecialBrick objSpecialBrick;
+	BufferedImage ball, brick, brick1, brick2, brick3, fast, flip, sfondo, youWin, youLose;
+	SpecialBrick objFast, objFlip;
 	private boolean gameStatus = false;
 	private Ball objBall;
 	private List<Brick> objBricks;
@@ -94,14 +94,15 @@ public class Screen extends Canvas implements Runnable{
 		// caricamento immagini 
 		private void uploadImages() {
 			
-			this.loader = new ImagesLoader();
-			this.ball = loader.uploadImage("../Images/ball.png");
-			this.sfondo = loader.uploadImage("/Images/sfondo.jpeg");
-			this.brick = loader.uploadImage("/Images/brick.png");
-			this.brick1 = loader.uploadImage("/Images/brick1.png");
-			this.brick2 = loader.uploadImage("/Images/brick2.png");
-			this.brick3 = loader.uploadImage("/Images/brick3.png");
-			this.specialBrick = loader.uploadImage("/Images/specialBrick.png");
+			loader = new ImagesLoader();
+			ball = loader.uploadImage("../Images/ball.png");
+			sfondo = loader.uploadImage("/Images/sfondo.jpeg");
+			brick = loader.uploadImage("/Images/brick.png");
+			brick1 = loader.uploadImage("/Images/brick1.png");
+			brick2 = loader.uploadImage("/Images/brick2.png");
+			brick3 = loader.uploadImage("/Images/brick3.png");
+			fast = loader.uploadImage("/Images/fast.png");
+			flip = loader.uploadImage("/Images/flip.png");
 			youWin = loader.uploadImage("/Images/w3.png");
 			youLose = loader.uploadImage("/Images/lose.png");
 
@@ -150,7 +151,9 @@ public class Screen extends Canvas implements Runnable{
 			endGame();
 			}
 			
-			if (!objSpecialBrick.isDestroyed()) objSpecialBrick.render(g);
+			if (!objFast.isDestroyed()) objFast.render(g);
+			if (!objFlip.isDestroyed()) objFlip.render(g);
+			
 			g.dispose();
 			buffer.show();
 		}
@@ -158,8 +161,6 @@ public class Screen extends Canvas implements Runnable{
 		// aggiornamento ciclo di gioco
 		public void update() {
 			
-			System.out.println(objBall.getYdir());
-			System.out.println(objBall.getXdir());
 		    objBall.move();
 		    gameStatus = ball1.checkBorderCollision();
 			ball1.checkCollisionLato(objPaddle);
@@ -171,11 +172,18 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}
 			objPaddle.move();
-			if (!objSpecialBrick.isDestroyed()) {
+			if (!objFast.isDestroyed()) {
 				boolean speedUp,speedUp1 = false;
-				speedUp = ball1.checkCollisionLato(objSpecialBrick);
-				speedUp1 = ball1.checkCollision(objSpecialBrick);
+				speedUp = ball1.checkCollisionLato(objFast);
+				speedUp1 = ball1.checkCollision(objFast);
 				if (speedUp || speedUp1) objBall.incrSpeed();
+			}
+			
+			if (!objFlip.isDestroyed()) {
+				boolean flip,flip1 = false;
+				flip = ball1.checkCollisionLato(objFlip);
+				flip1 = ball1.checkCollision(objFlip);
+				if (flip || flip1) objPaddle.switchDir();
 			}
 			
 			if(!gameStatus) {
@@ -228,8 +236,11 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}
 			
-			int[] posSpecialBrick = {213,25};
-			objSpecialBrick = new SpecialBrick(specialBrick, 35, 35, posSpecialBrick);
+			int[] posFastBrick = {150,25};
+			objFast = new SpecialBrick(fast, 35, 35, posFastBrick);
+			
+			int[] posFlipBrick = {300,25};
+			objFlip = new SpecialBrick(flip, 35, 35, posFlipBrick);
 		}
 		
 		/*

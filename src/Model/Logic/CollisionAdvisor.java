@@ -51,8 +51,6 @@ public class CollisionAdvisor {
 				return true;
 			}
 		}
-		System.out.println(ballSpeed);
-
 		return false;
 	}
 	

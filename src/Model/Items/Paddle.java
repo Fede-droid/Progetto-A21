@@ -10,15 +10,18 @@ public class Paddle extends ScreenItem {
 	
 	// direzione paddle
     private int dr;
+    private boolean isSwitched;
 
     public Paddle(BufferedImage image, int width, int height, int[] position) {
     	super(image, width, height, position);
+    	isSwitched = false;
     }
     
     // richiamato da update, verifica che non si vada fuori dai bordi dx e sx
     public void move() {
-
-        position[0] += dr;
+    	
+        if (!isSwitched) position[0] += dr;
+        else position[0] -= dr;
 
         if (position[0] <= 0) {
 
@@ -79,6 +82,10 @@ public class Paddle extends ScreenItem {
     	
     	if((position[0]) > 0) position[0]-= VELOCITA;
     	
+    }
+    
+    public void switchDir() {
+    	isSwitched = true;
     }
     
 	
