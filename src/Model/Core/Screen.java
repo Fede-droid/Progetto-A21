@@ -211,35 +211,46 @@ public class Screen extends Canvas implements Runnable{
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
-			posInitBall[0] = (int) (250);  // x
-			posInitBall[1] = (int) (550+Math.random()*15);  // y
+			posInitBall[0] = (int) (250+Math.random()*30);  // x
+			posInitBall[1] = (int) (550);  // y
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
 			
 			ball1 = new CollisionAdvisor(objBall, mainMusic);
-
-
+			
 			//creazione e posizionamento dei Bricks
-			for(int i = 0; i < 4; i++) { // 5 colonne *
-				
-				for (int j = 0; j < 6; j++) { // 6 righe = 30 Bricks
-					
+			for(int i = 0; i < 4; i++) { // 5 colonne 
+				for (int j = 0; j < 3; j++) { // 2 righe 
 					int[] posInitBrick = new int[2];
 
 					// posizione di partenza dei Brick
-					posInitBrick[0] = i * 90 + 60;  //nell'asse x
-					posInitBrick[1] = j * 50 + 80; //nell'asse y
+					posInitBrick[0] = i * 110 + 50;  //nell'asse x
+					posInitBrick[1] = j * 60 + 150; //nell'asse y
 			
 					// creo i Bricks
 					objBricks.add(new Brick(brick, 65, 25, posInitBrick));
 				}
 			}
 			
-			int[] posFastBrick = {150,25};
+			for (int i = 0; i < 3; i++) {
+				int[] posInitBrick = new int[2];
+				posInitBrick[0] = i * 165 + 50;  //nell'asse x
+				posInitBrick[1] = 90; //nell'asse y
+				objBricks.add(new Brick(brick, 65, 25, posInitBrick));
+			}
+			
+			for (int i = 0; i < 4; i++) {
+				int[] posInitBrick = new int[2];
+				posInitBrick[0] = i * 110 + 50;  //nell'asse x
+				posInitBrick[1] = 30; //nell'asse y
+				objBricks.add(new Brick(brick, 65, 25, posInitBrick));
+			}
+					
+			int[] posFastBrick = {150,85};
 			objFast = new SpecialBrick(fast, 35, 35, posFastBrick);
 			
-			int[] posFlipBrick = {300,25};
+			int[] posFlipBrick = {315,85};
 			objFlip = new SpecialBrick(flip, 35, 35, posFlipBrick);
 		}
 		
