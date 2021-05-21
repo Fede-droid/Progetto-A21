@@ -158,6 +158,8 @@ public class Screen extends Canvas implements Runnable{
 		// aggiornamento ciclo di gioco
 		public void update() {
 			
+			System.out.println(objBall.getYdir());
+			System.out.println(objBall.getXdir());
 		    objBall.move();
 		    gameStatus = ball1.checkBorderCollision();
 			ball1.checkCollisionLato(objPaddle);
@@ -170,11 +172,10 @@ public class Screen extends Canvas implements Runnable{
 			}
 			objPaddle.move();
 			if (!objSpecialBrick.isDestroyed()) {
-				ball1.checkCollisionLato(objSpecialBrick);
-				ball1.checkCollision(objSpecialBrick);
-			} else {
-				objBall.setImageHeight(10);
-				objBall.setImageWidth(10);
+				boolean speedUp,speedUp1 = false;
+				speedUp = ball1.checkCollisionLato(objSpecialBrick);
+				speedUp1 = ball1.checkCollision(objSpecialBrick);
+				if (speedUp || speedUp1) objBall.incrSpeed();
 			}
 			
 			if(!gameStatus) {
@@ -203,7 +204,7 @@ public class Screen extends Canvas implements Runnable{
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
 			posInitBall[0] = (int) (250);  // x
-			posInitBall[1] = (int) (550-Math.random()*20);  // y
+			posInitBall[1] = (int) (550+Math.random()*15);  // y
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
@@ -212,14 +213,14 @@ public class Screen extends Canvas implements Runnable{
 
 
 			//creazione e posizionamento dei Bricks
-			for(int i = 0; i < 1; i++) { // 5 colonne *
+			for(int i = 0; i < 4; i++) { // 5 colonne *
 				
-				for (int j = 0; j < 1; j++) { // 6 righe = 30 Bricks
+				for (int j = 0; j < 6; j++) { // 6 righe = 30 Bricks
 					
 					int[] posInitBrick = new int[2];
 
 					// posizione di partenza dei Brick
-					posInitBrick[0] = i * 70 + 80;  //nell'asse x
+					posInitBrick[0] = i * 90 + 60;  //nell'asse x
 					posInitBrick[1] = j * 50 + 80; //nell'asse y
 			
 					// creo i Bricks
@@ -227,8 +228,8 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}
 			
-			int[] posSpecialBrick = {213,15};
-			objSpecialBrick = new SpecialBrick(specialBrick, 65, 25, posSpecialBrick);
+			int[] posSpecialBrick = {213,25};
+			objSpecialBrick = new SpecialBrick(specialBrick, 35, 35, posSpecialBrick);
 		}
 		
 		/*
