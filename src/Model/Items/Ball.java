@@ -13,8 +13,8 @@ public class Ball extends ScreenItem{
         super(image, width, height, position);
         this.active = true;
         this.direction = 1;
-        xdir = 1;
-        ydir = -1;
+        xdir = Utilities.INITIAL_DIRECTION_BALL_X;
+        ydir = Utilities.INITIAL_DIRECTION_BALL_Y;
     }
 
 

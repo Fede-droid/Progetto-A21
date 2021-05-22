@@ -27,8 +27,8 @@ public class Player {
 		
 		// posizione di partenza paddle
 		int[] posInitPaddle = new int[2];
-		posInitPaddle[0] = 200;  // x
-		posInitPaddle[1] = 580;  // y
+		posInitPaddle[0] = Utilities.INITIAL_POSITION_PADDLE_X;  // x
+		posInitPaddle[1] = Utilities.INITIAL_POSITION_PADDLE_Y;  // y
 					
 		// creo un paddle 
 		objPaddle = new Paddle(paddle, 100, 30, posInitPaddle);

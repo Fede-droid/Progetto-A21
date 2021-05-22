@@ -15,7 +15,7 @@ import Model.Logic.Player;
 public class BreakoutGame {
 	
 	private GameFrame gameFrame;
-	private Screen screen1, screen2;
+	private Screen screen;
 	private Boolean music;
 	
 	public BreakoutGame() {
@@ -26,7 +26,7 @@ public class BreakoutGame {
 	public void start() {
 		
 		// creazione gioco 
-		this.screen1 = new Screen(this);
+		this.screen = new Screen(this);
 		MainMenu m = new MainMenu(this);
 		
 		gameFrame.add(m);
@@ -45,9 +45,9 @@ public class BreakoutGame {
 		// creo un giocatore
 		Player p = new Player();
 				
-		screen1.newPlayer(p);
+		screen.newPlayer(p);
 				
-		gameFrame.add(screen1);
+		gameFrame.add(screen);
 		gameFrame.requestFocusInWindow();
 
 		// aggiungo controllo da tastiera
@@ -56,40 +56,21 @@ public class BreakoutGame {
 		gameFrame.setVisible(true);
 				
 		// avvio ciclo di gioco
-		Thread gameThread = new Thread(screen1);
+		Thread gameThread = new Thread(screen);
 		gameThread.start();
 	}
 	
 	public void playAgain() {
 		
-		
-		Player p = new Player();
-		this.screen2 = new Screen(this);
-		
-		screen2.newPlayer(p);
-		gameFrame.add(screen2);
-		
-		setSound2(music);
-		
-		gameFrame.requestFocusInWindow();
-	
-
-		// aggiungo controllo da tastiera
-		gameFrame.addKeyListener(p.getInputHandler());
-		
-		gameFrame.pack();
-		gameFrame.setVisible(true);
-		
-		// avvio ciclo di gioco
-		Thread gameThread = new Thread(screen2);
-		gameThread.start();
-				
+		screen.reset();
+		screen.setVisible(true);
+		screen.run();
 	}
 	
 	
 	public void gameWin(boolean win) {
 		
-		screen1.setVisible(false);
+		screen.setVisible(false);
 		PauseMenu pause = new PauseMenu(this, win);
 		gameFrame.add(pause);
 		gameFrame.pack(); 
@@ -101,13 +82,6 @@ public class BreakoutGame {
 	public void setSound(boolean bool) {
 		
 		this.music = bool;
-		screen1.setMusic(bool);
+		screen.setMusic(bool);
 	}
-	
-	public void setSound2(boolean bool2) {
-		
-		screen2.setMusic(bool2);
-	}
-	
-	
 }

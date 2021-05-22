@@ -33,6 +33,11 @@ public class Brick extends ScreenItem{
 	
 	public void setImage(BufferedImage imageUpdated) {
 		this.image = imageUpdated;
-	}	
+	}
+	
+	public void resfresh() {
+		destroyed = false;
+		hitLevel = 4;
+	}
 }
 	

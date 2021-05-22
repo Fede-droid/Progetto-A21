@@ -72,7 +72,7 @@ public class Screen extends Canvas implements Runnable{
 		double ns = 1e9/fps; // numero di nano sec per fps
 		gameStatus = true;
 		//switchare off/on
-		if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
+		//if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
 		
 		while (gameStatus)
 		{
@@ -202,8 +202,8 @@ public class Screen extends Canvas implements Runnable{
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
-			posInitBall[0] = (int) (250);  // x
-			posInitBall[1] = (int) (550-Math.random()*20);  // y
+			posInitBall[0] = Utilities.INTIAL_POSITION_BALL_X;  // x
+			posInitBall[1] = Utilities.INITIAL_POSITION_BALL_Y;  // y
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
@@ -212,9 +212,9 @@ public class Screen extends Canvas implements Runnable{
 
 
 			//creazione e posizionamento dei Bricks
-			for(int i = 0; i < 1; i++) { // 5 colonne *
+			for(int i = 0; i < 5; i++) { // 5 colonne *
 				
-				for (int j = 0; j < 1; j++) { // 6 righe = 30 Bricks
+				for (int j = 0; j < 6; j++) { // 6 righe = 30 Bricks
 					
 					int[] posInitBrick = new int[2];
 
@@ -281,8 +281,16 @@ public class Screen extends Canvas implements Runnable{
 		
 		//modifico musica 
 		public void setMusic(Boolean b) {
-			
 			mainMusic.setMusic(b);
 		}
 		
+		public void reset() {
+			for(Brick tempBrick : objBricks) {
+				tempBrick.resfresh();
+			}
+			objBall.setPosition(Utilities.INTIAL_POSITION_BALL_X, Utilities.INITIAL_POSITION_BALL_Y);
+			objBall.setXdir(Utilities.INITIAL_DIRECTION_BALL_X);
+			objBall.setYdir(Utilities.INITIAL_DIRECTION_BALL_Y);
+			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
+		}
 	}
