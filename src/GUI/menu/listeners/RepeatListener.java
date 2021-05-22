@@ -19,14 +19,18 @@ public class RepeatListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		removeOldPanel();
 		game.playAgain();
 		
 	}
 
 	public void removeOldPanel() {
+		
 		m.removeAll();
 		m.setVisible(false);
+		m.repaint();
+		
 	}
 
 }

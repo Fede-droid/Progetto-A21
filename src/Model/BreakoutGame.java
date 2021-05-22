@@ -19,8 +19,10 @@ public class BreakoutGame {
 	private GameFrame gameFrame;
 	private Screen screen;
 	private List<Player> players;
-	Thread gameThread;
+	private Thread gameThread, gameThread2;
 	private Boolean music;
+	private Player p;
+	
 	
 	public BreakoutGame() {
 		
@@ -48,7 +50,7 @@ public class BreakoutGame {
 	public void gameSetup() {
 		
 		// creo un giocatore
-		Player p = new Player();
+		this.p = new Player();
 		players.add(p);
 				
 		screen.newPlayer(p);
@@ -62,15 +64,27 @@ public class BreakoutGame {
 		gameFrame.setVisible(true);
 				
 		// avvio ciclo di gioco
-		gameThread = new Thread(screen);
-		gameThread.start();
+		this.gameThread = new Thread(screen);
+		this.gameThread.start();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void playAgain() {
 		
+		gameThread.stop();
+		
 		screen.reset();
-		screen.setVisible(true);
-		screen.run();
+		
+		gameFrame.requestFocusInWindow();
+		gameFrame.pack();
+		
+		gameFrame.setVisible(true);
+		gameFrame.repaint();
+		
+		this.gameThread2 = new Thread(screen);
+		gameThread2.start();
+	
+		
 	}
 	
 	

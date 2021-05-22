@@ -23,8 +23,13 @@ public class GameFrame extends JFrame{
 		Dimension dimension_screen = new Dimension(Utilities.SCREEN_WIDTH,Utilities.SCREEN_HEIGHT);
 		setPreferredSize(dimension_screen);
 		setResizable(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		inzialize();
 		
+	}
+	
+	public void inzialize() {
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	
