@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 public class Paddle extends ScreenItem {
 	
 	// velocità paddle 
-	private static final int VELOCITA = 2;
+	private static final int VELOCITA = 3;
 	
 	// direzione paddle
     private int dr;

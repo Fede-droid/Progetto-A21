@@ -18,7 +18,7 @@ public class BallSpeedUp extends PowerUp {
 
 	@Override
 	public void disactivate() {
-		((Ball)affectedScreenItem).setSpeed(Utilities.DEFAULT_BALL_SPEED);
+		((Ball)affectedScreenItem).setSpeed(Utilities.DEFAULT_SPEED);
 		this.setActive(false);
 	}
 

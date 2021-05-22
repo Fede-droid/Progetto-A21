@@ -16,7 +16,7 @@ public interface Utilities {
     static final int INITIAL_DIRECTION_BALL_Y = -1;
     
     // Velocita iniziale della Ball
-    static final double DEFAULT_BALL_SPEED = 0.5;
+    static final double DEFAULT_SPEED = 1;
     
     // Posizione iniziale del Paddle
     static final int INITIAL_POSITION_PADDLE_X = 200;

@@ -6,6 +6,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.sound.sampled.Clip;
 
@@ -146,8 +147,9 @@ public class Screen extends Canvas implements Runnable{
 					}
 					tempBrick.render(g);
 				}
-				endGame();
+				
 			}
+			endGame();
 			
 			//if (!objFast.isDestroyed()) objFast.render(g);
 			//if (!objFlip.isDestroyed()) objFlip.render(g);
@@ -276,8 +278,9 @@ public class Screen extends Canvas implements Runnable{
 				// ho perso
 				objYouLose = new ScreenItem(youLose, 500, 500, centralPosition);
 				objYouLose.render(g);
+				
 				game.gameWin(false);
-				gameStatus = false;
+			
 				
 			}
 			if(checkWin()) {
@@ -286,7 +289,8 @@ public class Screen extends Canvas implements Runnable{
 				g.drawImage(youWin, 100, 150, 300, 80, null);
 				g.dispose();
 				objYouWin.render(g);
-				gameStatus = false;
+				game.gameWin(true);
+				
 			}
 		}
 
