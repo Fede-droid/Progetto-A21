@@ -1,8 +1,11 @@
 package Model.Items.PowerUp;
 
+import Model.Items.ScreenItem;
+
 public abstract class PowerUp {
 	
-	private boolean active;
+	protected boolean active;
+	protected ScreenItem affectedScreenItem;
 	
 	public PowerUp() {
 		active = false;
@@ -12,8 +15,11 @@ public abstract class PowerUp {
 		return active;
 	}
 	
+	public void setActive(boolean active) {
+		this.active = active ;
+	}
+	
 	public abstract void activate();
 	
 	public abstract void disactivate();
-
 }

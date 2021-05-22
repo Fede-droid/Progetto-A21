@@ -2,16 +2,11 @@ package Model.Core;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 import GUI.ImagesLoader;
@@ -20,8 +15,10 @@ import Model.Items.Ball;
 import Model.Items.Brick;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
-import Model.Items.SpecialBrick;
 import Model.Items.Utilities;
+import Model.Items.PowerUp.BallSpeedUp;
+import Model.Items.PowerUp.PowerUp;
+import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
 import Model.Logic.Player;
 import Music.Music;
@@ -34,15 +31,13 @@ public class Screen extends Canvas implements Runnable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	BufferedImage ball, brick, brick1, brick2, brick3, fast, flip, sfondo, youWin, youLose;
-	SpecialBrick objFlip, objFast;
+	BufferedImage ball, brick, brick1, brick2, brick3, fastBrick, flipBrick, sfondo, youWin, youLose;
+	//SpecialBrick objFlip, objFast;
 	private boolean gameStatus = false;
 	private Ball objBall;
 	private List<Brick> objBricks;
-	private List<SpecialBrick> objSpecialBricks;
-	private ScreenItem objSfondo;
-	private ScreenItem objYouWin;
-	private ScreenItem objYouLose;
+	//private List<SpecialBrick> objSpecialBricks;
+	private ScreenItem objSfondo, objYouWin, objYouLose;
 	private ImagesLoader loader;
 	private Paddle objPaddle;
 	Clip win,hit;
@@ -58,9 +53,8 @@ public class Screen extends Canvas implements Runnable{
 	public Screen(BreakoutGame game) {
 		this.game = game;
 		objBricks = new ArrayList<Brick>();
-		objSpecialBricks = new ArrayList<SpecialBrick>();
+		//objSpecialBricks = new ArrayList<SpecialBrick>();
 		uploadImages();
-		start();
 	}
 	
 	
@@ -73,6 +67,7 @@ public class Screen extends Canvas implements Runnable{
 		double fps = 160.0;
 		double ns = 1e9/fps; // numero di nano sec per fps
 		gameStatus = true;
+		
 		//switchare off/on
 		//if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
 		
@@ -103,8 +98,8 @@ public class Screen extends Canvas implements Runnable{
 			brick1 = loader.uploadImage("/Images/brick1.png");
 			brick2 = loader.uploadImage("/Images/brick2.png");
 			brick3 = loader.uploadImage("/Images/brick3.png");
-			fast = loader.uploadImage("/Images/fast.png");
-			flip = loader.uploadImage("/Images/flip.png");
+			fastBrick = loader.uploadImage("/Images/fast.png");
+			flipBrick = loader.uploadImage("/Images/flip.png");
 			youWin = loader.uploadImage("/Images/w3.png");
 			youLose = loader.uploadImage("/Images/lose.png");
 
@@ -133,28 +128,29 @@ public class Screen extends Canvas implements Runnable{
 			
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
-					int hitLevel = tempBrick.getHitLevel();
-					switch (hitLevel) {
-						case 1:
-							tempBrick.setImage(brick3); 
-							break;
-						case 2:
-							tempBrick.setImage(brick2); 
-							break;
-						case 3:
-							tempBrick.setImage(brick1); 
-							break;
-					    default:
-					    	tempBrick.setImage(brick);
+					if(!tempBrick.getHasPoerUp()) {
+						int hitLevel = tempBrick.getHitLevel();
+						switch (hitLevel) {
+							case 1:
+								tempBrick.setImage(brick3); 
+								break;
+							case 2:
+								tempBrick.setImage(brick2); 
+								break;
+							case 3:
+								tempBrick.setImage(brick1); 
+								break;
+						    default:
+						    	tempBrick.setImage(brick);
+					        }
 					}
 					tempBrick.render(g);
 				}
-				
-			endGame();
+				endGame();
 			}
 			
-			if (!objFast.isDestroyed()) objFast.render(g);
-			if (!objFlip.isDestroyed()) objFlip.render(g);
+			//if (!objFast.isDestroyed()) objFast.render(g);
+			//if (!objFlip.isDestroyed()) objFlip.render(g);
 			
 			g.dispose();
 			buffer.show();
@@ -171,23 +167,10 @@ public class Screen extends Canvas implements Runnable{
 				if (!tempBrick.isDestroyed()) {
 					ball1.checkCollisionLato(tempBrick);
 					ball1.checkCollision(tempBrick);
+					if(tempBrick.isDestroyed()) tempBrick.activatePowerUP();
 				}
 			}
-			objPaddle.move();
-			if (!objFast.isDestroyed()) {
-				boolean speedUp,speedUp1 = false;
-				speedUp = ball1.checkCollisionLato(objFast);
-				speedUp1 = ball1.checkCollision(objFast);
-				if (speedUp || speedUp1) objBall.incrSpeed();
-			}
-			
-			if (!objFlip.isDestroyed()) {
-				boolean flip,flip1 = false;
-				flip = ball1.checkCollisionLato(objFlip);
-				flip1 = ball1.checkCollision(objFlip);
-				if (flip || flip1) objPaddle.switchDir();
-			}
-			
+			objPaddle.move();			
 			if(!gameStatus) {
 				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOSE);
 				
@@ -199,7 +182,7 @@ public class Screen extends Canvas implements Runnable{
 		}
 		
 		// inzializzazione partita
-		private void start() {
+		public void start() {
 			mainMusic = new Music();
 			
 			// posizione di partenza dello sfondo
@@ -224,6 +207,7 @@ public class Screen extends Canvas implements Runnable{
 			
 			//creazione e posizionamento dei Bricks
 
+			/*
 			for(int i = 0; i < 4; i++) {
 				for (int j = 0; j < 3; j++) { 
 					
@@ -234,31 +218,32 @@ public class Screen extends Canvas implements Runnable{
 					posInitBrick[1] = j * 60 + 150; //nell'asse y
 			
 					// creo i Bricks
-					objBricks.add(new Brick(brick, 65, 25, posInitBrick));
+					objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
 				}
 			}
+			*/
 			
 			for (int i = 0; i < 3; i++) {
 				int[] posInitBrick = new int[2];
 				posInitBrick[0] = i * 165 + 50;  //nell'asse x
 				posInitBrick[1] = 90; //nell'asse y
-				objBricks.add(new Brick(brick, 65, 25, posInitBrick));
+				objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
 			}
 			
 			for (int i = 0; i < 4; i++) {
 				int[] posInitBrick = new int[2];
 				posInitBrick[0] = i * 110 + 50;  //nell'asse x
 				posInitBrick[1] = 30; //nell'asse y
-				objBricks.add(new Brick(brick, 65, 25, posInitBrick));
+				objBricks.add(new Brick(brick, 65, 25, posInitBrick,4));
 			}
 					
 			int[] posFastBrick = {150,85};
-			objFast = new SpecialBrick(fast, 35, 35, posFastBrick);
-			objSpecialBricks.add(objFast);
+			PowerUp speedUp = new BallSpeedUp(objBall);
+			objBricks.add(new Brick(fastBrick, 35, 35, posFastBrick,1, speedUp));
 			
 			int[] posFlipBrick = {315,85};
-			objFlip = new SpecialBrick(flip, 35, 35, posFlipBrick);
-			objSpecialBricks.add(objFlip);
+			PowerUp flipUp = new SwitchPaddleDirection(objPaddle);
+			objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, flipUp));
 			
 		}
 		
@@ -318,11 +303,19 @@ public class Screen extends Canvas implements Runnable{
 		public void reset() {
 			for(Brick tempBrick : objBricks) {
 				tempBrick.refresh();
-			}
-			for(Brick tempBrick : objSpecialBricks) {
-				tempBrick.refresh();
+				if(tempBrick.getHasPoerUp()) tempBrick.disactivatePowerUp();
 			}
 			objBall.refresh();
 			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
 		}
+		
+		/*
+		private void addBrickToList(BufferedImage image, int width, int height, int posX, int posY,int hitLevel, PowerUp powerUp) {
+			int[] posInitBrick = new int[2];
+			posInitBrick[0] = posX;
+		    posInitBrick[1] = posY;
+		    Brick tempBrick = new Brick(image, width, height, posInitBrick, hitLevel, powerUp);
+			objBricks.add(tempBrick);
+		}
+		*/
 	}

@@ -55,7 +55,8 @@ public class BreakoutGame {
 		players.add(p);
 				
 		screen.newPlayer(p);
-				
+		
+		screen.start();
 		gameFrame.add(screen);
 		gameFrame.requestFocusInWindow();
 
@@ -78,7 +79,6 @@ public class BreakoutGame {
 		gameFrame.requestFocusInWindow();
 		gameFrame.pack();
 		gameFrame.setVisible(true);
-		
 		this.gameThread2 = new Thread(screen);
 		gameThread2.start();
 	

@@ -1,5 +1,5 @@
 package Model.Items;
-
+/*
 import java.awt.image.BufferedImage;
 
 public class SpecialBrick extends Brick {
@@ -16,3 +16,4 @@ public class SpecialBrick extends Brick {
 		hitLevel = 1;
 	}
 }
+*/

@@ -1,6 +1,5 @@
 package Model;
 
-import GUI.GameFrame;
 import GUI.menu.Graphics.MainMenu;
 
 public class Tester {

@@ -13,7 +13,7 @@ public class Ball extends ScreenItem{
         this.active = true;
         xDirection = 1;
         yDirection = -1;
-        speed = Utilities.DEFAULT_BALL_SPEED;    // costante di incremento velocità
+        speed = (int) Utilities.DEFAULT_BALL_SPEED;    // costante di incremento velocità
     }
 
     public void move() {
@@ -47,16 +47,16 @@ public class Ball extends ScreenItem{
     	return speed;
     }
     
-    public void setSpeed(int speed) {
-    	this.speed = speed ;
+    public void setSpeed(double defaultBallSpeed) {
+    	this.speed = (int) defaultBallSpeed ;
     }
     
     public void refresh() {
-    	position[0] = Utilities.INITIAL_DIRECTION_BALL_X;
-    	position[1] = Utilities.INITIAL_DIRECTION_BALL_Y;
+    	position[0] = Utilities.INITIAL_POSITION_PADDLE_X;
+    	position[1] = Utilities.INITIAL_POSITION_BALL_Y;
     	xDirection = Utilities.INITIAL_DIRECTION_BALL_X;
     	yDirection = Utilities.INITIAL_DIRECTION_BALL_Y;
-    	speed = Utilities.DEFAULT_BALL_SPEED;
+    	speed = (int) Utilities.DEFAULT_BALL_SPEED;
     }
     
     /*
