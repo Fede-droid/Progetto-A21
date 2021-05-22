@@ -79,7 +79,7 @@ public class BreakoutGame {
 		gameFrame.pack();
 		
 		gameFrame.setVisible(true);
-		gameFrame.repaint();
+		
 		
 		this.gameThread2 = new Thread(screen);
 		gameThread2.start();

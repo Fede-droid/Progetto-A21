@@ -29,7 +29,7 @@ public class RepeatListener implements ActionListener {
 		
 		m.removeAll();
 		m.setVisible(false);
-		m.repaint();
+		
 		
 	}
 
