@@ -53,7 +53,6 @@ public class Player {
 		this.inputHandler = inputHandler;
 	}
 	
-	
 	/*
 	 @Override
      public void keyReleased(KeyEvent e) {
@@ -72,8 +71,7 @@ public class Player {
 	public void keyTyped(KeyEvent e) {}
 	*/
 
-	public Paddle getObjPaddle() {
-		
+	public Paddle getObjPaddle() {	
 		return objPaddle;
 	}
 	

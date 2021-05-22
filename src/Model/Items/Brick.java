@@ -35,7 +35,7 @@ public class Brick extends ScreenItem{
 		this.image = imageUpdated;
 	}
 	
-	public void resfresh() {
+	public void refresh() {
 		destroyed = false;
 		hitLevel = 4;
 	}

@@ -2,6 +2,8 @@ package Model;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -16,11 +18,14 @@ public class BreakoutGame {
 	
 	private GameFrame gameFrame;
 	private Screen screen;
+	private List<Player> players;
+	Thread gameThread;
 	private Boolean music;
 	
 	public BreakoutGame() {
 		
 		this.gameFrame = new GameFrame();
+		players = new ArrayList<Player>();
 	}
 
 	public void start() {
@@ -44,6 +49,7 @@ public class BreakoutGame {
 		
 		// creo un giocatore
 		Player p = new Player();
+		players.add(p);
 				
 		screen.newPlayer(p);
 				
@@ -56,7 +62,7 @@ public class BreakoutGame {
 		gameFrame.setVisible(true);
 				
 		// avvio ciclo di gioco
-		Thread gameThread = new Thread(screen);
+		gameThread = new Thread(screen);
 		gameThread.start();
 	}
 	

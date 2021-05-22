@@ -6,11 +6,13 @@ public class SpecialBrick extends Brick {
 
 	public SpecialBrick(BufferedImage image, int width, int height, int[] position) {
 		super(image, width, height, position);
-		this.hitLevel = 1;
-		this.destroyed = false;
+		super.destroyed = false;
+		super.hitLevel = 1;
 	}
-
-	public boolean isDestroyed() {
-		return destroyed;
-	}	
+	
+	@Override
+	public void refresh() {
+		destroyed = false;
+		hitLevel = 1;
+	}
 }
