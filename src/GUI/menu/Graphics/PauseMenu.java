@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import GUI.GameFrame;
 import GUI.ImagesLoader;
 import GUI.menu.listeners.RepeatListener;
 import GUI.menu.listeners.SinglePlayerListener;

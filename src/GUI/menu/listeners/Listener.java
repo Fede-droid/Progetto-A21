@@ -2,7 +2,7 @@ package GUI.menu.listeners;
 
 import javax.swing.JPanel;
 
-import GUI.GameFrame;
+import GUI.menu.Graphics.GameFrame;
 import Model.BreakoutGame;
 
 public abstract class Listener {
@@ -17,6 +17,10 @@ public abstract class Listener {
 		
 	}
 	
-	public abstract void removeOldPanel();
+	public  void removeOldPanel() {
+		
+		m.removeAll();
+		m.setVisible(false);
+	}
 	
 }

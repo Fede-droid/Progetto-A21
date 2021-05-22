@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import GUI.GameFrame;
+import GUI.menu.Graphics.GameFrame;
 import GUI.menu.Graphics.MainMenu;
 import GUI.menu.Graphics.PauseMenu;
 import Model.Core.Screen;
@@ -16,20 +16,23 @@ import Model.Logic.Player;
 
 public class BreakoutGame {
 	
-	private GameFrame gameFrame;
-	private Screen screen;
-	private List<Player> players;
-	private Thread gameThread, gameThread2;
-	private Boolean music;
-	private Player p;
+	// controller tra la logica e la gui
 	
+	private GameFrame gameFrame; //creazione nuova finestra
+	private Screen screen; 
+	private List<Player> players; // definizione dei giocatori
+	private Thread gameThread, gameThread2; // thread di gioco
+	private Boolean music; // setup musica
+	private Player p; 
 	
+	// creazione del controller
 	public BreakoutGame() {
 		
 		this.gameFrame = new GameFrame();
 		players = new ArrayList<Player>();
 	}
 
+	// avvio menu principale e creazione gioco
 	public void start() {
 		
 		// creazione gioco 
@@ -43,10 +46,8 @@ public class BreakoutGame {
 		
 	}
 
-	public GameFrame getGameFrame() {
-		return gameFrame;
-	}
 	
+	// inizializzazione gioco e giocatori a sceonda delle scelte dell'utente
 	public void gameSetup() {
 		
 		// creo un giocatore
@@ -68,18 +69,15 @@ public class BreakoutGame {
 		this.gameThread.start();
 	}
 	
+	// ripetere il livello/partita
 	@SuppressWarnings("deprecation")
 	public void playAgain() {
 		
 		gameThread.stop();
-		
 		screen.reset();
-		
 		gameFrame.requestFocusInWindow();
 		gameFrame.pack();
-		
 		gameFrame.setVisible(true);
-		
 		
 		this.gameThread2 = new Thread(screen);
 		gameThread2.start();
@@ -87,7 +85,7 @@ public class BreakoutGame {
 		
 	}
 	
-	
+	// menu vittoria/sconfitta
 	public void gameWin(boolean win) {
 		
 		screen.setVisible(false);
@@ -97,6 +95,13 @@ public class BreakoutGame {
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
 		
+	}
+	
+	// ritorna al menu 
+	
+	
+	public GameFrame getGameFrame() {
+		return gameFrame;
 	}
 	
 	public void setSound(boolean bool) {

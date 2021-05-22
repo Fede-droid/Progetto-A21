@@ -7,18 +7,14 @@ import javax.swing.JPanel;
 import Model.BreakoutGame;
 
 
-public class SinglePlayerListener implements ActionListener{
+public class SinglePlayerListener extends Listener implements ActionListener{
 
-	private BreakoutGame game;
-	private JPanel m;
 	
 	public SinglePlayerListener(BreakoutGame game, JPanel m) {
-		
-		this.game = game;
-		this.m = m;
+		super(game, m);
 		
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -26,12 +22,6 @@ public class SinglePlayerListener implements ActionListener{
 		game.gameSetup();
 	}
 
-	public void removeOldPanel() {
-		
-		m.removeAll();
-		m.setVisible(false);
-		
-	}
 
 
 	
