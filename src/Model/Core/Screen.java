@@ -45,7 +45,7 @@ public class Screen extends Canvas implements Runnable{
 	boolean isMusicOn;
 	Graphics g;
 	CollisionAdvisor ball1;
-	Music mainMusic;
+	private Music mainMusic;
 	private BreakoutGame game;
 	
 	
@@ -56,6 +56,7 @@ public class Screen extends Canvas implements Runnable{
 		objBricks = new ArrayList<Brick>();
 		//objSpecialBricks = new ArrayList<SpecialBrick>();
 		uploadImages();
+		this.mainMusic = new Music();
 	}
 	
 	
@@ -185,7 +186,7 @@ public class Screen extends Canvas implements Runnable{
 		
 		// inzializzazione partita
 		public void start() {
-			mainMusic = new Music();
+			
 			
 			// posizione di partenza dello sfondo
 			int[] posInitSfondo = new int[2];
