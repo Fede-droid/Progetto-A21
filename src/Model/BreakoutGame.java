@@ -88,12 +88,7 @@ public class BreakoutGame {
 	
 	// menu vittoria/sconfitta
 	public void gameWin(boolean win) {
-		try {
-			TimeUnit.SECONDS.sleep(5);
-		} catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}
+		
 		
 		screen.setVisible(false);
 		PauseMenu pause = new PauseMenu(this, win);

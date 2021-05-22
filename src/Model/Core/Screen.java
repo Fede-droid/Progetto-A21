@@ -226,14 +226,14 @@ public class Screen extends Canvas implements Runnable{
 			}
 			*/
 			
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 0; i++) {
 				int[] posInitBrick = new int[2];
 				posInitBrick[0] = i * 165 + 50;  //nell'asse x
 				posInitBrick[1] = 90; //nell'asse y
 				objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
 			}
 			
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 0; i++) {
 				int[] posInitBrick = new int[2];
 				posInitBrick[0] = i * 110 + 50;  //nell'asse x
 				posInitBrick[1] = 30; //nell'asse y
@@ -279,6 +279,12 @@ public class Screen extends Canvas implements Runnable{
 				// ho perso
 				objYouLose = new ScreenItem(youLose, 500, 500, centralPosition);
 				objYouLose.render(g);
+				try {
+					TimeUnit.SECONDS.sleep(2);
+				} catch (InterruptedException e) {
+					
+					e.printStackTrace();
+				}
 				
 				game.gameWin(false);
 			
@@ -290,7 +296,14 @@ public class Screen extends Canvas implements Runnable{
 				g.drawImage(youWin, 100, 150, 300, 80, null);
 				g.dispose();
 				objYouWin.render(g);
+				try {
+					TimeUnit.SECONDS.sleep(2);
+				} catch (InterruptedException e) {
+					
+					e.printStackTrace();
+				}
 				game.gameWin(true);
+								
 				
 			}
 		}
