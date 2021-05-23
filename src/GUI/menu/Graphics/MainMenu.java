@@ -2,6 +2,7 @@ package GUI.menu.Graphics;
 
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -35,6 +36,8 @@ public class MainMenu extends JPanel{
 		backgroundlabel = new JLabel("", image, JLabel.CENTER);
 		backgroundlabel.setBounds(0, 0, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT);
 		add(backgroundlabel);
+		
+		
 		
 		// bottone 1 pplayer
 		this.button1 = loader.uploadImage("menu/menuImages/button1.png");

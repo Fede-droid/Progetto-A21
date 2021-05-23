@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 
 import GUI.menu.Graphics.GameFrame;
+import GUI.menu.Graphics.GameOver;
 import GUI.menu.Graphics.MainMenu;
 import GUI.menu.Graphics.PauseMenu;
 import Model.Core.Screen;
@@ -94,8 +95,22 @@ public class BreakoutGame {
 	// menu vittoria/sconfitta
 	public void gameWin(boolean win) {
 		
-		
 		screen.setVisible(false);
+		GameOver gameOver = new GameOver();
+		gameFrame.add(gameOver);
+		gameFrame.pack(); 
+		gameFrame.setVisible(true);
+		gameFrame.repaint();
+		
+		try {
+			TimeUnit.SECONDS.sleep(5);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
+		
+		gameOver.setVisible(false);
+		//screen.setVisible(false);
 		PauseMenu pause = new PauseMenu(this, win);
 		gameFrame.add(pause);
 		gameFrame.pack(); 

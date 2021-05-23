@@ -26,6 +26,13 @@ public class ScoreAdvisor {
 		
 	}
 	
+	public void resetPoints(Player p) {
+		
+		p.resetPoints();
+		
+		
+	}
+	
 	public int getScore(Player p) {
 		
 		return p.getPlayerScore();

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.management.timer.Timer;
 import javax.sound.sampled.Clip;
 
 import GUI.ImagesLoader;
@@ -107,12 +108,12 @@ public class Screen extends Canvas implements Runnable{
 			fastBrick = loader.uploadImage("/Images/fast.png");
 			flipBrick = loader.uploadImage("/Images/flip.png");
 			youWin = loader.uploadImage("/Images/w3.png");
-			youLose = loader.uploadImage("/Images/lose.png");
+			//youLose = loader.uploadImage("/Images/lose.png");
 
 		}
 
 		// disegno di oggetti grafici a schermo oo
-		public void render() {
+		synchronized public void render() {
 			
 			// creazione di 2 buffer cos� che l'immagine venga aggiornata su uno e mostrata sull'altro 
 			// modo ciclico, evita gli scatti.
@@ -159,7 +160,12 @@ public class Screen extends Canvas implements Runnable{
 				}
 				
 			}
-			endGame();
+			try {
+				endGame();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			//if (!objFast.isDestroyed()) objFast.render(g);
 			//if (!objFlip.isDestroyed()) objFlip.render(g);
@@ -169,7 +175,7 @@ public class Screen extends Canvas implements Runnable{
 		}
 		
 		// aggiornamento ciclo di gioco
-		public void update() {
+		synchronized public void update() {
 			
 		    objBall.move();
 		    gameStatus = ball1.checkBorderCollision();
@@ -255,24 +261,22 @@ public class Screen extends Canvas implements Runnable{
 		/*
 		 * metodo che viene chiamato alla fine del game
 		 */
-		private void endGame() {
+		synchronized private void endGame() throws InterruptedException {
 			int[] centralPosition = new int[2];
 			centralPosition[0] = Utilities.SCREEN_WIDTH/2 - 250;
 			centralPosition[1] = Utilities.SCREEN_HEIGHT/2 - 250;
 			if(!gameStatus) {
 				// ho perso
-				objYouLose = new ScreenItem(youLose, 500, 500, centralPosition);
-				objYouLose.render(g);
-				try {
-					TimeUnit.SECONDS.sleep(2);
-				} catch (InterruptedException e) {
-					
-					e.printStackTrace();
-				}
+			//	objYouLose = new ScreenItem(youLose, 500, 500, centralPosition);
+			//	objYouLose.render(g);
+				
+				
+			//	g.drawString("Game Over ", 20, Utilities.SCREEN_HEIGHT/2);
+			//	g.dispose();
+				
 				
 				game.gameWin(false);
 			
-				
 			}
 			if(checkWin()) {
 				// ho vinto
@@ -280,6 +284,8 @@ public class Screen extends Canvas implements Runnable{
 				g.drawImage(youWin, 100, 150, 300, 80, null);
 				g.dispose();
 				objYouWin.render(g);
+				
+				
 				try {
 					TimeUnit.SECONDS.sleep(2);
 				} catch (InterruptedException e) {
@@ -312,7 +318,7 @@ public class Screen extends Canvas implements Runnable{
 			}
 			objBall.refresh();
 			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
-			players.get(0).resetPoints();
+			score.resetPoints(players.get(0));
 		}
 
 
