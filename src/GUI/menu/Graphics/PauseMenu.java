@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import GUI.ImagesLoader;
 import GUI.menu.listeners.RepeatListener;
+import GUI.menu.listeners.Return2Main;
 import GUI.menu.listeners.SinglePlayerListener;
 import Model.BreakoutGame;
 import Model.Items.Utilities;
@@ -79,8 +80,8 @@ public class PauseMenu extends JPanel {
 		button4.setBorderPainted(false);
 		button4.setIcon(button4Img);
 		backgroundlabel.add(button4);
-		//RepeatListener a2 = new RepeatListener(game, this);
-		//button.addActionListener(a1);
+		Return2Main return2Main = new Return2Main(game, this);
+		button4.addActionListener(return2Main);
 		
 		JLabel label1 = new JLabel();
 		label1.setFont(new Font("Courier", Font.BOLD, 50)); 

@@ -27,6 +27,7 @@ public class BreakoutGame {
 	private Boolean music; // setup musica
 	private Player p; 
 	private ScoreAdvisor score;
+	private MainMenu m;
 	// creazione del controller
 	public BreakoutGame() {
 		
@@ -40,7 +41,8 @@ public class BreakoutGame {
 		// creazione gioco 
 		this.screen = new Screen(this);
 		this.score = new ScoreAdvisor(screen); 
-		MainMenu m = new MainMenu(this);
+		
+		this.m = new MainMenu(this);
 		
 		gameFrame.add(m);
 		gameFrame.pack();
@@ -128,6 +130,19 @@ public class BreakoutGame {
 		
 		return score;
 	}
+	
+	public void showMain() {
+		
+		
+		gameFrame.add(new MainMenu(this));
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+		gameFrame.repaint();
+		
+		
+	}
+	
+	
 	
 	
 }
