@@ -1,6 +1,7 @@
 package Model.Core;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -36,9 +37,10 @@ public class Screen extends Canvas implements Runnable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, flipBrick, sfondo, youWin, youLose;
+	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, hitBox, flipBrick, sfondo, youWin, youLose;
 	//SpecialBrick objFlip, objFast;
 	private boolean gameStatus = false;
+	private boolean gameOver = false;
 	private Ball objBall;
 	private List<Brick> objBricks;
 	private Box objBox;
@@ -80,20 +82,18 @@ public class Screen extends Canvas implements Runnable{
 		//switchare off/on
 		//if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
 		
-		while (gameStatus)
-		{
-		double current = System.nanoTime();
-		
-		double elapsed = current - previous;
-		previous = current;
-		delta += elapsed;
+		while (gameStatus) {
+			double current = System.nanoTime();
+			
+			double elapsed = current - previous;
+			previous = current;
+			delta += elapsed;
 
-		while (delta >= ns)
-		{
-		   update();	
-		   delta -= ns;
-		}
-		   render();
+				while (delta >= ns) {
+				   update();	
+				   delta -= ns;
+				}
+			render();
 		}
 	}
 	
@@ -101,7 +101,8 @@ public class Screen extends Canvas implements Runnable{
 		private void uploadImages() {
 			
 			loader = new ImagesLoader();
-			box = loader.uploadImage("../Images/wall.png");
+			box = loader.uploadImage("../Images/box.png");
+			hitBox = loader.uploadImage("../Images/hit.png");
 			ball = loader.uploadImage("../Images/ball.png");
 			sfondo = loader.uploadImage("/Images/sfondo.jpeg");
 			brick = loader.uploadImage("/Images/brick.png");
@@ -111,7 +112,7 @@ public class Screen extends Canvas implements Runnable{
 			fastBrick = loader.uploadImage("/Images/fast.png");
 			flipBrick = loader.uploadImage("/Images/flip.png");
 			youWin = loader.uploadImage("/Images/w3.png");
-			//youLose = loader.uploadImage("/Images/lose.png");
+			youLose = loader.uploadImage("/Images/lose.png");
 
 		}
 
@@ -135,11 +136,13 @@ public class Screen extends Canvas implements Runnable{
 			//for(Player ps : players) {
 			objPaddle.render(g);
 			objBox.render(g);
-			
+            g.drawImage(hitBox, 508, 3, 30, 30, null);
+
 		
 			
-			g.setFont(new Font("Courier", Font.BOLD, 70)); 
-			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 420, 560);
+			g.setFont(new Font("Courier", Font.BOLD, 30)); 
+			g.setColor(Color.WHITE);
+			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 505, 58);
 			
 			
 			for (Brick tempBrick : objBricks) {
@@ -171,8 +174,7 @@ public class Screen extends Canvas implements Runnable{
 				e.printStackTrace();
 			}
 			
-			//if (!objFast.isDestroyed()) objFast.render(g);
-			//if (!objFlip.isDestroyed()) objFlip.render(g);
+			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);
 			
 			g.dispose();
 			buffer.show();
@@ -182,8 +184,10 @@ public class Screen extends Canvas implements Runnable{
 		synchronized public void update() {
 			
 		    objBall.move();
+		    gameOver = ball1.checkGameOver();
 		    gameStatus = ball1.checkBorderCollision();
 			ball1.checkCollisionLato(objPaddle);
+			ball1.checkCollisionLato(objBox);
 			ball1.checkCollision(objPaddle);
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
@@ -191,7 +195,6 @@ public class Screen extends Canvas implements Runnable{
 					ball1.checkCollision(tempBrick)){
 			
 						score.addPoint(players.get(0));
-						System.out.println(players.get(0).getPlayerScore());
 							
 					}
 					if(tempBrick.isDestroyed()) tempBrick.activatePowerUP();
@@ -226,9 +229,9 @@ public class Screen extends Canvas implements Runnable{
 			objSfondo = new ScreenItem(sfondo, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT, posInitSfondo);
 			
 			int[] posBox = new int[2];
-			posBox[0] = 300;  //nell'asse x
-			posBox[1] = 50; //nell'asse y
-			objBox = new Box(box, 30, 500, posBox);
+			posBox[0] = 495;  //nell'asse x
+			posBox[1] = 0; //nell'asse y
+			objBox = new Box(box, 80, 700, posBox);
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
@@ -245,6 +248,8 @@ public class Screen extends Canvas implements Runnable{
 			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddle);
 			levels.setLevel(TypeLevels.LEVEL1);
 			objBricks = levels.getBricksDesposition();
+			
+			
 			
 		}
 		
@@ -270,23 +275,18 @@ public class Screen extends Canvas implements Runnable{
 		 * metodo che viene chiamato alla fine del game
 		 */
 		synchronized private void endGame() throws InterruptedException {
-			int[] centralPosition = new int[2];
-			centralPosition[0] = Utilities.SCREEN_WIDTH/2 - 250;
-			centralPosition[1] = Utilities.SCREEN_HEIGHT/2 - 250;
 			if(!gameStatus) {
 				// ho perso
-			//	objYouLose = new ScreenItem(youLose, 500, 500, centralPosition);
-			//	objYouLose.render(g);
-				
-				
-			//	g.drawString("Game Over ", 20, Utilities.SCREEN_HEIGHT/2);
-			//	g.dispose();
-				
-				
+				try {
+					TimeUnit.SECONDS.sleep(2);
+				} catch (InterruptedException e) {
+
+					e.printStackTrace();
+				}	
 				game.gameWin(false);
 			
 			}
-			if(checkWin()) {
+			/*if(checkWin()) {
 				// ho vinto
 				objYouWin = new ScreenItem(youWin, 500, 500, centralPosition);
 				g.drawImage(youWin, 100, 150, 300, 80, null);
@@ -303,7 +303,7 @@ public class Screen extends Canvas implements Runnable{
 				game.gameWin(true);
 								
 				
-			}
+			}*/
 		}
 		
 

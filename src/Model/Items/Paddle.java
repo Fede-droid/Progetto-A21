@@ -29,9 +29,9 @@ public class Paddle extends ScreenItem {
         	position[0] = 0;
         }
 
-        if (position[0] >= Utilities.SCREEN_WIDTH - imageWidth) {
+        if (position[0] >= 495 - imageWidth) {
 
-        	position[0] = Utilities.SCREEN_WIDTH - imageWidth;
+        	position[0] = 495 - imageWidth;
         }
     }
     
@@ -75,7 +75,7 @@ public class Paddle extends ScreenItem {
     public void moveRight() {
     	
     	// prima del confronto sommo la larghezza dello schermo con la larghezza del paddle, altrimenti esce
-    	if((position[0] + imageWidth) < Utilities.SCREEN_WIDTH) position[0]+= VELOCITA;
+    	if((position[0] + imageWidth) < 495) position[0]+= VELOCITA;
     	
     }
     

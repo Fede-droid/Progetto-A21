@@ -18,6 +18,13 @@ public class CollisionAdvisor {
 		this.ballSpeed = ball.getSpeed()-1;
 	}
 	
+	public boolean checkGameOver() {
+		if((ball.getPosition()[1] + ball.getImageHeight()) >= Utilities.SCREEN_HEIGHT-4) {
+            return true;
+        }
+		return false;
+	}
+	
 	public boolean checkBorderCollision() {
 		this.ballSpeed = ball.getSpeed();
         if ((ball.getPosition()[0] + ball.getImageHeight()) >= Utilities.SCREEN_WIDTH) {

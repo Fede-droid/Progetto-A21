@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 
 import GUI.menu.Graphics.GameFrame;
-import GUI.menu.Graphics.GameOver;
 import GUI.menu.Graphics.MainMenu;
 import GUI.menu.Graphics.PauseMenu;
 import GUI.menu.Graphics.YouWin;
@@ -97,32 +96,7 @@ public class BreakoutGame {
 	public void gameWin(boolean win) {
 		
 		screen.setVisible(false);
-		GameOver gameOver = new GameOver();
-		YouWin youWin = new YouWin();
-		if(!win) {
 		
-		gameFrame.add(gameOver);
-		gameFrame.pack(); 
-		gameFrame.setVisible(true);
-		gameFrame.repaint();
-		}
-		else { 
-		
-		gameFrame.add(youWin);
-		gameFrame.pack(); 
-		gameFrame.setVisible(true);
-		gameFrame.repaint();
-		}
-		
-		try {
-			TimeUnit.SECONDS.sleep(3);
-		} catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}
-		
-		gameOver.setVisible(false);
-		youWin.setVisible(false);
 		//screen.setVisible(false);
 		PauseMenu pause = new PauseMenu(this, win);
 		gameFrame.add(pause);

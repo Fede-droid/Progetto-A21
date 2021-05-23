@@ -4,7 +4,7 @@ public interface Utilities {
 	
 	// Dimensioni dello screen
 	
-	static final int SCREEN_WIDTH = 510; 
+	static final int SCREEN_WIDTH = 560; 
 	static final int SCREEN_HEIGHT = 650;
 	
 	// Posizione iniziale della Ball
