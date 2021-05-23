@@ -15,6 +15,7 @@ import javax.sound.sampled.Clip;
 import GUI.ImagesLoader;
 import Model.BreakoutGame;
 import Model.Items.Ball;
+import Model.Items.Box;
 import Model.Items.Brick;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
@@ -35,11 +36,12 @@ public class Screen extends Canvas implements Runnable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	BufferedImage ball, brick, brick1, brick2, brick3, fastBrick, flipBrick, sfondo, youWin, youLose;
+	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, flipBrick, sfondo, youWin, youLose;
 	//SpecialBrick objFlip, objFast;
 	private boolean gameStatus = false;
 	private Ball objBall;
 	private List<Brick> objBricks;
+	private Box objBox;
 	//private List<SpecialBrick> objSpecialBricks;
 	private ScreenItem objSfondo, objYouWin, objYouLose;
 	private ImagesLoader loader;
@@ -71,7 +73,7 @@ public class Screen extends Canvas implements Runnable{
 		
 		double previous = System.nanoTime(); 
 		double delta = 0.0;
-		double fps = 160.0;
+		double fps = 100.0;
 		double ns = 1e9/fps; // numero di nano sec per fps
 		gameStatus = true;
 		
@@ -99,6 +101,7 @@ public class Screen extends Canvas implements Runnable{
 		private void uploadImages() {
 			
 			loader = new ImagesLoader();
+			box = loader.uploadImage("../Images/wall.png");
 			ball = loader.uploadImage("../Images/ball.png");
 			sfondo = loader.uploadImage("/Images/sfondo.jpeg");
 			brick = loader.uploadImage("/Images/brick.png");
@@ -131,8 +134,9 @@ public class Screen extends Canvas implements Runnable{
 			objBall.render(g);
 			//for(Player ps : players) {
 			objPaddle.render(g);
-			//}
+			objBox.render(g);
 			
+		
 			
 			g.setFont(new Font("Courier", Font.BOLD, 70)); 
 			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 420, 560);
@@ -221,6 +225,10 @@ public class Screen extends Canvas implements Runnable{
 			// creo lo sfondo
 			objSfondo = new ScreenItem(sfondo, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT, posInitSfondo);
 			
+			int[] posBox = new int[2];
+			posBox[0] = 300;  //nell'asse x
+			posBox[1] = 50; //nell'asse y
+			objBox = new Box(box, 30, 500, posBox);
 			
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
