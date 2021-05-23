@@ -14,6 +14,7 @@ import GUI.menu.Graphics.PauseMenu;
 import Model.Core.Screen;
 import Model.Items.Utilities;
 import Model.Logic.Player;
+import Model.Logic.ScoreAdvisor;
 
 public class BreakoutGame {
 	
@@ -25,7 +26,7 @@ public class BreakoutGame {
 	private Thread gameThread, gameThread2; // thread di gioco
 	private Boolean music; // setup musica
 	private Player p; 
-	
+	private ScoreAdvisor score;
 	// creazione del controller
 	public BreakoutGame() {
 		
@@ -38,6 +39,7 @@ public class BreakoutGame {
 		
 		// creazione gioco 
 		this.screen = new Screen(this);
+		this.score = new ScoreAdvisor(screen); 
 		MainMenu m = new MainMenu(this);
 		
 		gameFrame.add(m);
@@ -50,11 +52,12 @@ public class BreakoutGame {
 	
 	// inizializzazione gioco e giocatori a sceonda delle scelte dell'utente
 	public void gameSetup() {
+	
 		
 		// creo un giocatore
 		this.p = new Player();
 		players.add(p);
-				
+		
 		screen.newPlayer(p);
 		
 		screen.start();
@@ -113,11 +116,17 @@ public class BreakoutGame {
 	}
 
 	public List<Player> getPlayers() {
+		
 		return players;
 	}
 
 	public void addPlayers(List<Player> players) {
 		this.players = players;
+	}
+	
+	public ScoreAdvisor getScoreAdvisor() {
+		
+		return score;
 	}
 	
 	

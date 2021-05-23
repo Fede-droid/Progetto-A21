@@ -50,8 +50,8 @@ public class Screen extends Canvas implements Runnable{
 	private Music mainMusic;
 	private BreakoutGame game;
 	private ScoreAdvisor score;
-	private Player p;
 	private Levels levels;
+	private List<Player> players;
 	
 	int i = 0;
 	
@@ -124,7 +124,7 @@ public class Screen extends Canvas implements Runnable{
 				return;	
 			}
 			
-			g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si pu� disegnare
+			this.g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si pu� disegnare
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
@@ -134,9 +134,7 @@ public class Screen extends Canvas implements Runnable{
 			
 			
 			g.setFont(new Font("Courier", Font.BOLD, 70)); 
-			g.drawString(String.valueOf(p.getPlayerScore()), 420, 60);
-			
-
+			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 420, 560);
 			
 			
 			for (Brick tempBrick : objBricks) {
@@ -182,8 +180,8 @@ public class Screen extends Canvas implements Runnable{
 					if(ball1.checkCollisionLato(tempBrick) ||
 					ball1.checkCollision(tempBrick)){
 			
-						score.addPoint(p);
-						System.out.println(p.getPlayerScore());
+						score.addPoint(players.get(0));
+						System.out.println(players.get(0).getPlayerScore());
 							
 					}
 					if(tempBrick.isDestroyed()) tempBrick.activatePowerUP();
@@ -207,8 +205,7 @@ public class Screen extends Canvas implements Runnable{
 		// inzializzazione partita
 		public void start() {
 			
-			
-			this.score = new ScoreAdvisor(game);
+			this.score = game.getScoreAdvisor();
 			
 			// posizione di partenza dello sfondo
 			int[] posInitSfondo = new int[2];
@@ -295,12 +292,11 @@ public class Screen extends Canvas implements Runnable{
 			}
 		}
 		
-		// punteggio
 
 		//Aggiungo player alla partita
 		public void newPlayer(Player p) {
-			this.objPaddle = p.getObjPaddle();
-			this.p = p;
+			this.players = game.getPlayers();
+			this.objPaddle = players.get(0).getObjPaddle();
 			
 		}
 		
@@ -316,8 +312,14 @@ public class Screen extends Canvas implements Runnable{
 			}
 			objBall.refresh();
 			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
-			p.resetPoints();
+			players.get(0).resetPoints();
 		}
+
+
+		public Graphics getG() {
+			return g;
+		}
+		
 		
 		/*
 		private void addBrickToList(BufferedImage image, int width, int height, int posX, int posY,int hitLevel, PowerUp powerUp) {

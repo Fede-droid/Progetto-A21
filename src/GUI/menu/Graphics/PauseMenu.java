@@ -1,6 +1,7 @@
 package GUI.menu.Graphics;
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -81,6 +82,13 @@ public class PauseMenu extends JPanel {
 		//RepeatListener a2 = new RepeatListener(game, this);
 		//button.addActionListener(a1);
 		
+		JLabel label1 = new JLabel();
+		label1.setFont(new Font("Courier", Font.BOLD, 50)); 
+		label1.setText("LAST SCORE: " + game.getScoreAdvisor().getScore(game.getPlayers().get(0)));
+		//label1.setBounds(0, 0, 200, 50);
+		label1.setLocation(100, 600);
+		label1.setVisible(true);
+		backgroundlabel.add(label1);
 		
 	}
 

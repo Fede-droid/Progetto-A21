@@ -9,10 +9,13 @@ import Model.Core.Screen;
 public class ScoreAdvisor {
 
 	//private ArrayList<Player> players;
+	private Screen s;
 	
-	public ScoreAdvisor(BreakoutGame g) {
+	public ScoreAdvisor(Screen s) {
 		
 		//this.players = (ArrayList) g.getPlayers();
+		this.s = s;
+		
 	}
 	
 	
@@ -20,12 +23,15 @@ public class ScoreAdvisor {
 		
 		p.addPoint2Player();
 		
+		
 	}
 	
-	public void getScore(Player p) {
+	public int getScore(Player p) {
 		
-		p.getPlayerScore();
+		return p.getPlayerScore();
 	}
+	
+	
 	
 	
 }
