@@ -33,8 +33,7 @@ public class Brick extends ScreenItem{
 		this.powerUp = powerUp;
 		hasPowerUp = true;
 	}
-	
-	
+
 	public boolean isDestroyed() {
 		return destroyed;
 	}
@@ -67,7 +66,7 @@ public class Brick extends ScreenItem{
 		if(powerUp.isActive())powerUp.disactivate();
 	}
 	
-	public boolean getHasPoerUp() {
+	public boolean getHasPowerUp() {
 		return hasPowerUp;
 	}
 }

@@ -15,7 +15,7 @@ public class CollisionAdvisor {
 	public CollisionAdvisor(Ball ball, Music collisionMusic) {
 		this.ball = ball;
 		this.collisionMusic = collisionMusic;
-		this.ballSpeed = ball.getSpeed();
+		this.ballSpeed = ball.getSpeed()-1;
 	}
 	
 	public boolean checkBorderCollision() {

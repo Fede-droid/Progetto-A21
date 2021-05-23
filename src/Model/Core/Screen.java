@@ -51,6 +51,7 @@ public class Screen extends Canvas implements Runnable{
 	private BreakoutGame game;
 	private ScoreAdvisor score;
 	private Player p;
+	private Levels levels;
 	
 	int i = 0;
 	
@@ -140,7 +141,7 @@ public class Screen extends Canvas implements Runnable{
 			
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
-					if(!tempBrick.getHasPoerUp()) {
+					if(!tempBrick.getHasPowerUp()) {
 						int hitLevel = tempBrick.getHitLevel();
 						switch (hitLevel) {
 							case 1:
@@ -230,44 +231,9 @@ public class Screen extends Canvas implements Runnable{
 			ball1 = new CollisionAdvisor(objBall, mainMusic);
 			
 			//creazione e posizionamento dei Bricks
-
-			/*
-			for(int i = 0; i < 4; i++) {
-				for (int j = 0; j < 3; j++) { 
-					
-					int[] posInitBrick = new int[2];
-
-					// posizione di partenza dei Brick
-					posInitBrick[0] = i * 110 + 50;  //nell'asse x
-					posInitBrick[1] = j * 60 + 150; //nell'asse y
-			
-					// creo i Bricks
-					objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
-				}
-			}
-			*/
-			
-			for (int i = 0; i < 3; i++) {
-				int[] posInitBrick = new int[2];
-				posInitBrick[0] = i * 165 + 50;  //nell'asse x
-				posInitBrick[1] = 90; //nell'asse y
-				objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
-			}
-			
-			for (int i = 0; i < 3; i++) {
-				int[] posInitBrick = new int[2];
-				posInitBrick[0] = i * 110 + 50;  //nell'asse x
-				posInitBrick[1] = 30; //nell'asse y
-				objBricks.add(new Brick(brick, 65, 25, posInitBrick,4));
-			}
-					
-			int[] posFastBrick = {150,85};
-			PowerUp speedUp = new BallSpeedUp(objBall);
-			objBricks.add(new Brick(fastBrick, 35, 35, posFastBrick,1, speedUp));
-			
-			int[] posFlipBrick = {315,85};
-			PowerUp flipUp = new SwitchPaddleDirection(objPaddle);
-			objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, flipUp));
+			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddle);
+			levels.setLevel(TypeLevels.LEVEL1);
+			objBricks = levels.getBricksDesposition();
 			
 		}
 		
@@ -346,7 +312,7 @@ public class Screen extends Canvas implements Runnable{
 		public void reset() {
 			for(Brick tempBrick : objBricks) {
 				tempBrick.refresh();
-				if(tempBrick.getHasPoerUp()) tempBrick.disactivatePowerUp();
+				if(tempBrick.getHasPowerUp()) tempBrick.disactivatePowerUp();
 			}
 			objBall.refresh();
 			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
