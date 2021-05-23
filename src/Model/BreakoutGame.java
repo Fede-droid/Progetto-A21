@@ -108,11 +108,9 @@ public class BreakoutGame {
 		}
 		else { 
 		
-		
-		
 		gameFrame.add(youWin);
 		gameFrame.pack(); 
-		gameFrame.setVisible(false);
+		gameFrame.setVisible(true);
 		gameFrame.repaint();
 		}
 		

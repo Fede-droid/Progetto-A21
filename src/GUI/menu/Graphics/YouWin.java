@@ -14,7 +14,7 @@ import Model.Items.Utilities;
 	
 public class YouWin extends JPanel{
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	BufferedImage background, background2; 
 	ImagesLoader loader;
 	private BufferedImage button1;
