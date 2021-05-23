@@ -1,6 +1,7 @@
 package Model.Core;
 
 import java.awt.Canvas;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -22,6 +23,7 @@ import Model.Items.PowerUp.PowerUp;
 import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
 import Model.Logic.Player;
+import Model.Logic.ScoreAdvisor;
 import Music.Music;
 import Music.MusicTypes;
 
@@ -43,11 +45,12 @@ public class Screen extends Canvas implements Runnable{
 	private Paddle objPaddle;
 	Clip win,hit;
 	boolean isMusicOn;
-	Graphics g;
+	private Graphics g;
 	CollisionAdvisor ball1;
 	private Music mainMusic;
 	private BreakoutGame game;
-	
+	private ScoreAdvisor score;
+	private Player p;
 	
 	int i = 0;
 	
@@ -128,6 +131,13 @@ public class Screen extends Canvas implements Runnable{
 			objPaddle.render(g);
 			//}
 			
+			
+			g.setFont(new Font("Courier", Font.BOLD, 70)); 
+			g.drawString(String.valueOf(p.getPlayerScore()), 420, 60);
+			
+
+			
+			
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
 					if(!tempBrick.getHasPoerUp()) {
@@ -168,11 +178,19 @@ public class Screen extends Canvas implements Runnable{
 			ball1.checkCollision(objPaddle);
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
-					ball1.checkCollisionLato(tempBrick);
-					ball1.checkCollision(tempBrick);
+					if(ball1.checkCollisionLato(tempBrick) ||
+					ball1.checkCollision(tempBrick)){
+			
+						score.addPoint(p);
+						System.out.println(p.getPlayerScore());
+							
+					}
 					if(tempBrick.isDestroyed()) tempBrick.activatePowerUP();
 				}
+				
+				
 			}
+			
 			objPaddle.move();			
 			if(!gameStatus) {
 				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOSE);
@@ -182,11 +200,14 @@ public class Screen extends Canvas implements Runnable{
 				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.WIN);
 				
 			}
+			
 		}
 		
 		// inzializzazione partita
 		public void start() {
 			
+			
+			this.score = new ScoreAdvisor(game);
 			
 			// posizione di partenza dello sfondo
 			int[] posInitSfondo = new int[2];
@@ -226,14 +247,14 @@ public class Screen extends Canvas implements Runnable{
 			}
 			*/
 			
-			for (int i = 0; i < 0; i++) {
+			for (int i = 0; i < 3; i++) {
 				int[] posInitBrick = new int[2];
 				posInitBrick[0] = i * 165 + 50;  //nell'asse x
 				posInitBrick[1] = 90; //nell'asse y
 				objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
 			}
 			
-			for (int i = 0; i < 0; i++) {
+			for (int i = 0; i < 3; i++) {
 				int[] posInitBrick = new int[2];
 				posInitBrick[0] = i * 110 + 50;  //nell'asse x
 				posInitBrick[1] = 30; //nell'asse y
@@ -307,10 +328,14 @@ public class Screen extends Canvas implements Runnable{
 				
 			}
 		}
+		
+		// punteggio
 
 		//Aggiungo player alla partita
 		public void newPlayer(Player p) {
 			this.objPaddle = p.getObjPaddle();
+			this.p = p;
+			
 		}
 		
 		//modifico musica 
@@ -325,6 +350,7 @@ public class Screen extends Canvas implements Runnable{
 			}
 			objBall.refresh();
 			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
+			p.resetPoints();
 		}
 		
 		/*

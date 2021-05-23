@@ -14,7 +14,7 @@ public class Player {
 	private BufferedImage paddle;
 	private ImagesLoader loader;
 	private InputAdapter inputHandler;
-
+	private int playerScore;
 
 	public Player() {
 		
@@ -32,6 +32,8 @@ public class Player {
 					
 		// creo un paddle 
 		objPaddle = new Paddle(paddle, 100, 30, posInitPaddle);
+
+		this.playerScore = 0;
 	}
 	
 	public void createImage() {
@@ -53,23 +55,23 @@ public class Player {
 		this.inputHandler = inputHandler;
 	}
 	
-	/*
-	 @Override
-     public void keyReleased(KeyEvent e) {
-
-		 objPaddle.keyReleased(e);
-     }
-
-     @Override
-     public void keyPressed(KeyEvent e) {
-
-    	 objPaddle.keyPressed(e);
-     }
-     
-
-	@Override
-	public void keyTyped(KeyEvent e) {}
-	*/
+	
+	
+	public int getPlayerScore() {
+		
+		return playerScore;
+	}
+	
+	public void addPoint2Player() {
+		
+		playerScore++;
+	}
+	
+	public void resetPoints() {
+		
+		playerScore = 0;
+		
+	}
 
 	public Paddle getObjPaddle() {	
 		return objPaddle;

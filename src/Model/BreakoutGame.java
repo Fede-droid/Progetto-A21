@@ -111,4 +111,14 @@ public class BreakoutGame {
 		this.music = bool;
 		screen.setMusic(bool);
 	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public void addPlayers(List<Player> players) {
+		this.players = players;
+	}
+	
+	
 }
