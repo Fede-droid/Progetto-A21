@@ -75,19 +75,28 @@ public class BreakoutGame {
 		// avvio ciclo di gioco
 		this.gameThread = new Thread(screen);
 		this.gameThread.start();
+		screen.setVisible(true);
 	}
 	
 	// ripetere il livello/partita
-	@SuppressWarnings("deprecation")
+	//@SuppressWarnings("deprecation")
 	public void playAgain() {
 		
-		gameThread.stop();
+		//gameThread.stop();
+		
 		screen.reset();
+		
+		gameFrame.add(screen);
+		
 		gameFrame.requestFocusInWindow();
 		gameFrame.pack();
 		gameFrame.setVisible(true);
+		gameFrame.repaint();
+		
+		
 		this.gameThread2 = new Thread(screen);
 		gameThread2.start();
+		screen.setVisible(true);
 	
 		
 	}
@@ -97,7 +106,6 @@ public class BreakoutGame {
 		
 		screen.setVisible(false);
 		
-		//screen.setVisible(false);
 		PauseMenu pause = new PauseMenu(this, win);
 		gameFrame.add(pause);
 		gameFrame.pack(); 
@@ -107,6 +115,18 @@ public class BreakoutGame {
 	}
 	
 	// ritorna al menu 
+
+	public void showMain() {
+		
+		screen.reset();
+		
+		gameFrame.add(new MainMenu(this));
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+		gameFrame.repaint();
+		
+		
+	}
 	
 	
 	public GameFrame getGameFrame() {
@@ -131,17 +151,6 @@ public class BreakoutGame {
 	public ScoreAdvisor getScoreAdvisor() {
 		
 		return score;
-	}
-	
-	public void showMain() {
-		
-		
-		gameFrame.add(new MainMenu(this));
-		gameFrame.pack();
-		gameFrame.setVisible(true);
-		gameFrame.repaint();
-		
-		
 	}
 	
 	
