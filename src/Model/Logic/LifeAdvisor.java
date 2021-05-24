@@ -28,8 +28,6 @@ public class LifeAdvisor {
 			p.loseLife();
 			if(p.getLife() < 1) return true;
 			ball.refresh();
-			
-			
 		}
 		return false;
 		

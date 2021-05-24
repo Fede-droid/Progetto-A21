@@ -12,7 +12,9 @@ import GUI.menu.Graphics.GameFrame;
 import GUI.menu.Graphics.MainMenu;
 import GUI.menu.Graphics.PauseMenu;
 import GUI.menu.Graphics.YouWin;
+import Model.Core.Levels;
 import Model.Core.Screen;
+import Model.Core.TypeLevels;
 import Model.Items.Utilities;
 import Model.Logic.Player;
 import Model.Logic.ScoreAdvisor;
@@ -29,11 +31,13 @@ public class BreakoutGame {
 	private Player p; 
 	private ScoreAdvisor score;
 	private MainMenu m;
+	private TypeLevels lv;
 	// creazione del controller
 	public BreakoutGame() {
 		
 		this.gameFrame = new GameFrame();
 		players = new ArrayList<Player>();
+		this.lv = TypeLevels.LEVEL1;
 	}
 
 	// avvio menu principale e creazione gioco
@@ -64,6 +68,9 @@ public class BreakoutGame {
 		screen.newPlayer(p);
 		
 		screen.start();
+		
+		screen.setLevel(lv);
+		
 		gameFrame.add(screen);
 		gameFrame.requestFocusInWindow();
 
@@ -152,6 +159,14 @@ public class BreakoutGame {
 		
 		return score;
 	}
+	
+	
+	public void setLevel(TypeLevels level) {
+		
+		this.lv = level;
+		
+	}
+	
 	
 	
 	

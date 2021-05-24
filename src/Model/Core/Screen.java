@@ -299,8 +299,8 @@ public class Screen extends Canvas implements Runnable{
 			
 			//creazione e posizionamento dei Bricks
 			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddle);
-			levels.setLevel(TypeLevels.LEVEL1);
-			objBricks = levels.getBricksDesposition();
+		//	levels.setLevel(TypeLevels.LEVEL1);
+		//	objBricks = levels.getBricksDesposition();
 			this.lifePlayer = new LifeAdvisor(players.get(0), mainMusic, ball1, objBall);
 
 			
@@ -381,6 +381,12 @@ public class Screen extends Canvas implements Runnable{
 			objBall.refresh();
 			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
 			score.resetPoints(players.get(0));
+		}
+		
+		public void setLevel(TypeLevels lv) {
+			
+			levels.setLevel(lv);
+			objBricks = levels.getBricksDesposition();
 		}
 
 

@@ -1,11 +1,13 @@
 package GUI.menu.listeners;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
 
 import GUI.menu.Graphics.GameFrame;
 import Model.BreakoutGame;
 
-public abstract class Listener {
+public abstract class Listener implements ActionListener {
 
 	protected BreakoutGame game;
 	protected JPanel m;
