@@ -71,6 +71,14 @@ public class Levels {
 				objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, flipUp));
 									
 			}
+			case LEVEL2: {
+                for (int i = 0; i < 2; i++) {
+                    int[] posInitBrick = new int[2];
+                    posInitBrick[0] = i * 165 + 50;  //nell'asse x
+                    posInitBrick[1] = 92; //nell'asse y
+                    objBricks.add(new Brick(brick, 65, 25, posInitBrick, 1));
+                }
+            }
 		}
 		return (ArrayList<Brick>) objBricks;
 	}
