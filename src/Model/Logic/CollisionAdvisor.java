@@ -32,14 +32,17 @@ public class CollisionAdvisor {
 		this.ballSpeed = ball.getSpeed();
         if ((ball.getPosition()[0] + ball.getImageHeight()) >= Utilities.SCREEN_WIDTH) {
             ball.setXdir(-1);
+			if (collisionMusic.isMusicOn()) collisionMusic.playMusic(MusicTypes.HIT);
         }
 
         if (ball.getPosition()[0] <= 0) {
             ball.setXdir(1);
+			if (collisionMusic.isMusicOn()) collisionMusic.playMusic(MusicTypes.HIT);
         }
 
         if (ball.getPosition()[1] <= 0) {
             ball.setYdir(1);
+			if (collisionMusic.isMusicOn()) collisionMusic.playMusic(MusicTypes.HIT);
         }
         
         if((ball.getPosition()[1] + ball.getImageHeight()) >= Utilities.SCREEN_HEIGHT) {
