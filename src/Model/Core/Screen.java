@@ -26,6 +26,7 @@ import Model.Items.PowerUp.PowerUp;
 import Model.Items.PowerUp.PowerUpTypes;
 import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
+import Model.Logic.LifeAdvisor;
 import Model.Logic.Player;
 import Model.Logic.ScoreAdvisor;
 import Music.Music;
@@ -38,7 +39,7 @@ public class Screen extends Canvas implements Runnable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, hitBox, flipBrick, sfondo, youWin, youLose, on, off, fastLogo, flipLogo;
+	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, hitBox, flipBrick, sfondo, youWin, youLose, on, off, fastLogo, flipLogo, life;
 	//SpecialBrick objFlip, objFast;
 	private boolean gameStatus = false;
 	private boolean gameOver = false;
@@ -66,6 +67,8 @@ public class Screen extends Canvas implements Runnable{
 	double flipStartTime = 0;
 	double switchStart = 0;
 	int i = 0;
+	private LifeAdvisor lifePlayer;
+
 	
 	public Screen(BreakoutGame game) {
 		this.game = game;
@@ -124,6 +127,7 @@ public class Screen extends Canvas implements Runnable{
 			off = loader.uploadImage("/Images/off.png");
 			fastLogo = loader.uploadImage("/Images/fastLogo.png");
 			flipLogo = loader.uploadImage("/Images/flipLogo.png");
+			life = loader.uploadImage("/Images/life.png");
 		}
 
 		// disegno di oggetti grafici a schermo
@@ -148,12 +152,12 @@ public class Screen extends Canvas implements Runnable{
 			objBox.render(g);
             g.drawImage(hitBox, 508, 3, 30, 30, null);
             
-            g.drawImage(fastLogo, 508, 90, 25, 25, null);
-            if(isFastActive) g.drawImage(on, 508, 123, 25, 15, null);
-            else g.drawImage(off, 508, 123, 25, 15, null);
-            g.drawImage(flipLogo, 508, 165, 25, 20, null);
-            if(isFlipActive) g.drawImage(on, 508, 190, 25, 15, null);
-            else g.drawImage(off, 508, 190, 25, 15, null);
+            g.drawImage(fastLogo, 508, 120, 25, 25, null);
+            if(isFastActive) g.drawImage(on, 508, 153, 25, 15, null);
+            else g.drawImage(off, 508, 153, 25, 15, null);
+            g.drawImage(flipLogo, 508, 195, 25, 20, null);
+            if(isFlipActive) g.drawImage(on, 508, 220, 25, 15, null);
+            else g.drawImage(off, 508, 220, 25, 15, null);
 		
 			g.setFont(new Font("Courier", Font.BOLD, 30)); 
 			g.setColor(Color.WHITE);
@@ -182,6 +186,12 @@ public class Screen extends Canvas implements Runnable{
 				}
 				
 			}
+			
+			switch(players.get(0).getLife()) {
+			case 1:g.drawImage(life, 505, 78, 20, 20, null); break;
+			case 2:g.drawImage(life, 505, 78, 20, 20, null); g.drawImage(life, 505, 88, 20, 20, null); break;
+			case 3:g.drawImage(life, 505, 78, 20, 20, null); g.drawImage(life, 505, 88, 20, 20, null); g.drawImage(life, 505, 98, 20, 20, null);
+			}
 			try {
 				endGame();
 			} catch (InterruptedException e) {
@@ -192,6 +202,7 @@ public class Screen extends Canvas implements Runnable{
 			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);
 			
 			g.dispose();
+			
 			buffer.show();
 		}
 		
@@ -199,8 +210,10 @@ public class Screen extends Canvas implements Runnable{
 		synchronized public void update() {
 			
 		    objBall.move();
-		    gameOver = ball1.checkGameOver();
+		    gameOver = lifePlayer.checkLife();
 		    gameStatus = ball1.checkBorderCollision();
+		    
+		    
 			ball1.checkCollisionLato(objPaddle);
 			ball1.checkCollisionLato(objBox);
 			ball1.checkCollision(objPaddle);
@@ -280,7 +293,8 @@ public class Screen extends Canvas implements Runnable{
 			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddle);
 			levels.setLevel(TypeLevels.LEVEL1);
 			objBricks = levels.getBricksDesposition();
-			
+			this.lifePlayer = new LifeAdvisor(players.get(0), mainMusic, ball1, objBall);
+
 			
 			
 		}

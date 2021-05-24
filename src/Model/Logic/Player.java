@@ -15,12 +15,14 @@ public class Player {
 	private ImagesLoader loader;
 	private InputAdapter inputHandler;
 	private int playerScore;
+	private int life;
 
 	public Player() {
 		
 		createImage();
 		inizialize();
 		this.inputHandler = new InputAdapter(objPaddle);
+		this.life = 3;
 	}
 	
 	public void inizialize() {
@@ -56,7 +58,20 @@ public class Player {
 	}
 	
 	
+	public int getLife() {
+		
+		return life;
+	}
 	
+	public void loseLife() {
+		
+		life --;
+	}
+	
+	public void resetLife() {
+		
+		life = 3;
+	}
 	public int getPlayerScore() {
 		
 		return playerScore;

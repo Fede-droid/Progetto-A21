@@ -59,6 +59,7 @@ public class Ball extends ScreenItem{
     	speed = (int) Utilities.DEFAULT_SPEED;
     }
     
+   
     /*
     //i metodi setxdir e setydir vengono chiamati quando la pallina colpisce il paddle o il mattone
     public void setXdir(int xdir) {

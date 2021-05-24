@@ -42,6 +42,10 @@ public class Music {
 			case LOOP: {
 				musicString = "./src/Music/loop.wav";
 			}
+			
+			case LOSE_LIFE: {
+				musicString = "./src/Music/lose_life.wav";
+			}
 		}
 
 		try {
