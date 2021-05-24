@@ -69,6 +69,7 @@ public class Levels {
 				int[] posFlipBrick = {315,85};
 				PowerUp flipUp = new SwitchPaddleDirection(objPaddle);
 				objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, flipUp));
+				break;
 									
 			}
 			case LEVEL2: {
@@ -77,6 +78,7 @@ public class Levels {
                     posInitBrick[0] = i * 165 + 50;  //nell'asse x
                     posInitBrick[1] = 92; //nell'asse y
                     objBricks.add(new Brick(brick, 65, 25, posInitBrick, 1));
+                    break;
                 }
             }
 		}

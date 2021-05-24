@@ -268,9 +268,7 @@ public class Screen extends Canvas implements Runnable{
 			
 			objPaddle.move();			
 			
-			if(gameWin) endGameWin();
-
-			
+			if(gameWin) endGameWin();			
 		}
 		
 		// inzializzazione partita
@@ -305,9 +303,6 @@ public class Screen extends Canvas implements Runnable{
 			//creazione e posizionamento dei Bricks
 			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddle);
 			this.lifePlayer = new LifeAdvisor(players.get(0), mainMusic, ball1, objBall);
-
-			
-			
 		}
 		
 		/*
