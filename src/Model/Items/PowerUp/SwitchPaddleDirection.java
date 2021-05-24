@@ -20,4 +20,8 @@ public class SwitchPaddleDirection extends PowerUp {
 			((Paddle)affectedScreenItem).switchDir();
 			this.setActive(false);
 	}
+	
+	public PowerUpTypes whichPower() {
+		return PowerUpTypes.FLIP;
+	}
 }

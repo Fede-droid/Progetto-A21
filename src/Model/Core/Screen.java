@@ -23,6 +23,7 @@ import Model.Items.ScreenItem;
 import Model.Items.Utilities;
 import Model.Items.PowerUp.BallSpeedUp;
 import Model.Items.PowerUp.PowerUp;
+import Model.Items.PowerUp.PowerUpTypes;
 import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
 import Model.Logic.Player;
@@ -37,10 +38,14 @@ public class Screen extends Canvas implements Runnable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, hitBox, flipBrick, sfondo, youWin, youLose;
+	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, hitBox, flipBrick, sfondo, youWin, youLose, on, off, fastLogo, flipLogo;
 	//SpecialBrick objFlip, objFast;
 	private boolean gameStatus = false;
 	private boolean gameOver = false;
+	private boolean isFastStarted = false;
+	private boolean isFlipStarted = false;
+	private boolean isFastActive = false;
+	private boolean isFlipActive = false;
 	private Ball objBall;
 	private List<Brick> objBricks;
 	private Box objBox;
@@ -57,7 +62,9 @@ public class Screen extends Canvas implements Runnable{
 	private ScoreAdvisor score;
 	private Levels levels;
 	private List<Player> players;
-	
+	double fastStartTime = 0;
+	double flipStartTime = 0;
+	double switchStart = 0;
 	int i = 0;
 	
 	public Screen(BreakoutGame game) {
@@ -113,10 +120,13 @@ public class Screen extends Canvas implements Runnable{
 			flipBrick = loader.uploadImage("/Images/flip.png");
 			youWin = loader.uploadImage("/Images/w3.png");
 			youLose = loader.uploadImage("/Images/lose.png");
-
+			on = loader.uploadImage("/Images/on.png");
+			off = loader.uploadImage("/Images/off.png");
+			fastLogo = loader.uploadImage("/Images/fastLogo.png");
+			flipLogo = loader.uploadImage("/Images/flipLogo.png");
 		}
 
-		// disegno di oggetti grafici a schermo oo
+		// disegno di oggetti grafici a schermo
 		synchronized public void render() {
 			
 			// creazione di 2 buffer cos� che l'immagine venga aggiornata su uno e mostrata sull'altro 
@@ -137,9 +147,14 @@ public class Screen extends Canvas implements Runnable{
 			objPaddle.render(g);
 			objBox.render(g);
             g.drawImage(hitBox, 508, 3, 30, 30, null);
-
+            
+            g.drawImage(fastLogo, 508, 90, 25, 25, null);
+            if(isFastActive) g.drawImage(on, 508, 123, 25, 15, null);
+            else g.drawImage(off, 508, 123, 25, 15, null);
+            g.drawImage(flipLogo, 508, 165, 25, 20, null);
+            if(isFlipActive) g.drawImage(on, 508, 190, 25, 15, null);
+            else g.drawImage(off, 508, 190, 25, 15, null);
 		
-			
 			g.setFont(new Font("Courier", Font.BOLD, 30)); 
 			g.setColor(Color.WHITE);
 			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 505, 58);
@@ -189,18 +204,35 @@ public class Screen extends Canvas implements Runnable{
 			ball1.checkCollisionLato(objPaddle);
 			ball1.checkCollisionLato(objBox);
 			ball1.checkCollision(objPaddle);
+			
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
-					if(ball1.checkCollisionLato(tempBrick) ||
-					ball1.checkCollision(tempBrick)){
-			
-						score.addPoint(players.get(0));
-							
+					if(ball1.checkCollisionLato(tempBrick) || ball1.checkCollision(tempBrick)) {
+						score.addPoint(players.get(0));		
 					}
-					if(tempBrick.isDestroyed()) tempBrick.activatePowerUP();
+					if(tempBrick.isDestroyed()) {
+						if (tempBrick.whichPower() == PowerUpTypes.FAST) isFastStarted = tempBrick.activatePowerUP();
+						if (tempBrick.whichPower() == PowerUpTypes.FLIP) isFlipStarted = tempBrick.activatePowerUP();
+					}
+					if(isFastStarted) {
+						fastStartTime = System.nanoTime();
+						isFastActive = true;
+						isFastStarted = false;
+					}
+					if(isFlipStarted) {
+						flipStartTime = System.nanoTime();
+						isFlipActive = true;
+						isFlipStarted = false;
+					}
 				}
-				
-				
+				if (System.nanoTime() >= fastStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FAST) {
+					isFastActive = false;
+					tempBrick.disactivatePowerUp();
+				}
+				if (System.nanoTime() >= flipStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FLIP) {
+					isFlipActive = false;
+					tempBrick.disactivatePowerUp();
+				}
 			}
 			
 			objPaddle.move();			

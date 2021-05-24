@@ -22,4 +22,8 @@ public class BallSpeedUp extends PowerUp {
 		this.setActive(false);
 	}
 
+	@Override
+	public PowerUpTypes whichPower() {
+		return PowerUpTypes.FAST;
+	}
 }

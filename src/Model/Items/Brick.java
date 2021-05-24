@@ -2,6 +2,7 @@ package Model.Items;
 
 import java.awt.image.BufferedImage;
 import Model.Items.PowerUp.PowerUp;
+import Model.Items.PowerUp.PowerUpTypes;
 
 public class Brick extends ScreenItem{
 	
@@ -58,16 +59,25 @@ public class Brick extends ScreenItem{
 		this.hitLevel = initialHitLevel ;
 	}
 	
-	public void activatePowerUP() {
-		if(powerUp != null) powerUp.activate();
+	public boolean activatePowerUP() {
+		if(powerUp != null && !powerUp.isActive()) {
+			powerUp.activate();
+			return true;
+		}
+		return false;
 	}
 	
 	public void disactivatePowerUp() {
-		if(powerUp.isActive())powerUp.disactivate();
+		if(powerUp != null && powerUp.isActive()) powerUp.disactivate();
 	}
 	
 	public boolean getHasPowerUp() {
 		return hasPowerUp;
+	}
+	
+	public PowerUpTypes whichPower() {
+		if(powerUp != null) return powerUp.whichPower();
+		else return PowerUpTypes.NULL;
 	}
 }
 	
