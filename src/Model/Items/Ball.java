@@ -11,7 +11,7 @@ public class Ball extends ScreenItem{
     public Ball(BufferedImage image, int width, int height, int[] position) {
         super(image, width, height, position);
         this.active = true;
-        xDirection = 1;
+        xDirection = -1;
         yDirection = -1;
         speed = (int) Utilities.DEFAULT_SPEED;    // costante di incremento velocit�
     }

@@ -145,6 +145,9 @@ public class Screen extends Canvas implements Runnable{
 			
 			this.g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si pu� disegnare
 			
+			g.setFont(new Font("Courier", Font.BOLD, 25)); 
+			g.setColor(Color.WHITE);
+			
 			objSfondo.render(g, this);
 			objBall.render(g);
 			//for(Player ps : players) {
@@ -153,14 +156,20 @@ public class Screen extends Canvas implements Runnable{
             g.drawImage(hitBox, 508, 3, 30, 30, null);
             
             g.drawImage(fastLogo, 508, 120, 25, 25, null);
-            if(isFastActive) g.drawImage(on, 508, 153, 25, 15, null);
-            else g.drawImage(off, 508, 153, 25, 15, null);
-            g.drawImage(flipLogo, 508, 195, 25, 20, null);
-            if(isFlipActive) g.drawImage(on, 508, 220, 25, 15, null);
-            else g.drawImage(off, 508, 220, 25, 15, null);
+            if(isFastActive) {
+            	if (System.nanoTime() >= fastStartTime+6e9) 
+            		g.drawString(""+(int)((fastStartTime+10e9-System.nanoTime())/1e9), 510, 170);
+            	else g.drawImage(on, 508, 153, 25, 25, null);
+            }
+            else g.drawImage(off, 508, 153, 25, 25, null);
+            g.drawImage(flipLogo, 508, 195, 25, 25, null);
+            if(isFlipActive) {
+            	if (System.nanoTime() >= flipStartTime+6e9) 
+            		g.drawString(""+(int)((flipStartTime+10e9-System.nanoTime())/1e9), 510, 235);
+            	else g.drawImage(on, 508, 153, 25, 25, null);g.drawImage(on, 508, 220, 25, 25, null);
+            }
+            else g.drawImage(off, 508, 220, 25, 25, null);
 		
-			g.setFont(new Font("Courier", Font.BOLD, 30)); 
-			g.setColor(Color.WHITE);
 			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 505, 58);
 			
 			
@@ -184,7 +193,6 @@ public class Screen extends Canvas implements Runnable{
 					}
 					tempBrick.render(g);
 				}
-				
 			}
 			
 			switch(players.get(0).getLife()) {
@@ -379,15 +387,4 @@ public class Screen extends Canvas implements Runnable{
 		public Graphics getG() {
 			return g;
 		}
-		
-		
-		/*
-		private void addBrickToList(BufferedImage image, int width, int height, int posX, int posY,int hitLevel, PowerUp powerUp) {
-			int[] posInitBrick = new int[2];
-			posInitBrick[0] = posX;
-		    posInitBrick[1] = posY;
-		    Brick tempBrick = new Brick(image, width, height, posInitBrick, hitLevel, powerUp);
-			objBricks.add(tempBrick);
-		}
-		*/
 	}
