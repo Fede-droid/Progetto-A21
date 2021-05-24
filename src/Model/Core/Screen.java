@@ -43,6 +43,7 @@ public class Screen extends Canvas implements Runnable{
 	//SpecialBrick objFlip, objFast;
 	private boolean gameStatus = false;
 	private boolean gameOver = false;
+	private boolean gameWin = false;
 	private boolean isFastStarted = false;
 	private boolean isFlipStarted = false;
 	private boolean isFastActive = false;
@@ -195,19 +196,38 @@ public class Screen extends Canvas implements Runnable{
 				}
 			}
 			
-			switch(players.get(0).getLife()) {
-			case 1:g.drawImage(life, 505, 78, 20, 20, null); break;
-			case 2:g.drawImage(life, 505, 78, 20, 20, null); g.drawImage(life, 505, 88, 20, 20, null); break;
-			case 3:g.drawImage(life, 505, 78, 20, 20, null); g.drawImage(life, 505, 88, 20, 20, null); g.drawImage(life, 505, 98, 20, 20, null);
+			switch (players.get(0).getLife()) {
+				case 1:
+					g.drawImage(life, 505, 78, 20, 20, null); 
+					break;
+				case 2:
+					g.drawImage(life, 505, 78, 20, 20, null); 
+					g.drawImage(life, 505, 88, 20, 20, null); 
+					break;
+				case 3:
+					g.drawImage(life, 505, 78, 20, 20, null); 
+					g.drawImage(life, 505, 88, 20, 20, null); 
+					g.drawImage(life, 505, 98, 20, 20, null);
 			}
+			
 			try {
-				endGame();
+				endGameOver();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);
+			
+			int n = 0;
+			for(Brick tempBrick : objBricks) {
+				if(!tempBrick.isDestroyed()) {
+					n++;
+				}
+			}
+			if(n==0) {
+				g.drawImage(youLose, 495/2-250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);
+				gameWin = true; 
+			}
 			
 			g.dispose();
 			
@@ -226,10 +246,11 @@ public class Screen extends Canvas implements Runnable{
 			ball1.checkCollisionLato(objBox);
 			ball1.checkCollision(objPaddle);
 			
+			int n = 0;
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
 					if(ball1.checkCollisionLato(tempBrick) || ball1.checkCollision(tempBrick)) {
-						score.addPoint(players.get(0));		
+						score.addPoint(players.get(0));	
 					}
 					if(tempBrick.isDestroyed()) {
 						if (tempBrick.whichPower() == PowerUpTypes.FAST) isFastStarted = tempBrick.activatePowerUP();
@@ -245,6 +266,7 @@ public class Screen extends Canvas implements Runnable{
 						isFlipActive = true;
 						isFlipStarted = false;
 					}
+					n++;
 				}
 				if (System.nanoTime() >= fastStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FAST) {
 					isFastActive = false;
@@ -263,8 +285,10 @@ public class Screen extends Canvas implements Runnable{
 			}
 			if(checkWin()) {
 				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.WIN);
-				
 			}
+			
+			if(gameWin) endGameWin();
+
 			
 		}
 		
@@ -299,8 +323,6 @@ public class Screen extends Canvas implements Runnable{
 			
 			//creazione e posizionamento dei Bricks
 			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddle);
-		//	levels.setLevel(TypeLevels.LEVEL1);
-		//	objBricks = levels.getBricksDesposition();
 			this.lifePlayer = new LifeAdvisor(players.get(0), mainMusic, ball1, objBall);
 
 			
@@ -328,7 +350,7 @@ public class Screen extends Canvas implements Runnable{
 		/*
 		 * metodo che viene chiamato alla fine del game
 		 */
-		synchronized private void endGame() throws InterruptedException {
+		private void endGameOver() throws InterruptedException {
 			if(!gameStatus) {
 				// ho perso
 				try {
@@ -340,24 +362,16 @@ public class Screen extends Canvas implements Runnable{
 				game.gameWin(false);
 			
 			}
-			/*if(checkWin()) {
-				// ho vinto
-				objYouWin = new ScreenItem(youWin, 500, 500, centralPosition);
-				g.drawImage(youWin, 100, 150, 300, 80, null);
-				g.dispose();
-				objYouWin.render(g);
+		}
+		
+		private void endGameWin() {
+			try {
+				TimeUnit.SECONDS.sleep(2);
+			} catch (InterruptedException e) {
 				
-				
-				try {
-					TimeUnit.SECONDS.sleep(2);
-				} catch (InterruptedException e) {
-					
-					e.printStackTrace();
-				}
-				game.gameWin(true);
-								
-				
-			}*/
+				e.printStackTrace();
+			}
+			game.gameWin(true);
 		}
 		
 
@@ -384,11 +398,10 @@ public class Screen extends Canvas implements Runnable{
 		}
 		
 		public void setLevel(TypeLevels lv) {
-			
+
 			levels.setLevel(lv);
 			objBricks = levels.getBricksDesposition();
 		}
-
 
 		public Graphics getG() {
 			return g;
