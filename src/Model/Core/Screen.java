@@ -52,7 +52,7 @@ public class Screen extends Canvas implements Runnable{
 	private List<Brick> objBricks;
 	private Box objBox;
 	//private List<SpecialBrick> objSpecialBricks;
-	private ScreenItem objSfondo, objYouWin, objYouLose;
+	private ScreenItem objSfondo;
 	private ImagesLoader loader;
 	private Paddle objPaddle;
 	Clip win,hit;
@@ -122,7 +122,7 @@ public class Screen extends Canvas implements Runnable{
 			brick3 = loader.uploadImage("/Images/brick3.png");
 			fastBrick = loader.uploadImage("/Images/fast.png");
 			flipBrick = loader.uploadImage("/Images/flip.png");
-			youWin = loader.uploadImage("/Images/w3.png");
+			youWin = loader.uploadImage("/Images/youWin.png");
 			youLose = loader.uploadImage("/Images/lose.png");
 			on = loader.uploadImage("/Images/on.png");
 			off = loader.uploadImage("/Images/off.png");
@@ -173,9 +173,10 @@ public class Screen extends Canvas implements Runnable{
 		
 			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 505, 58);
 			
-			
+			int n = 0;
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
+					n++;
 					if(!tempBrick.getHasPowerUp()) {
 						int hitLevel = tempBrick.getHitLevel();
 						switch (hitLevel) {
@@ -195,6 +196,10 @@ public class Screen extends Canvas implements Runnable{
 					tempBrick.render(g);
 				}
 			}
+			if(n==0) {
+				g.drawImage(youWin, 495/2-150, Utilities.SCREEN_HEIGHT/2 - 100, 300, 70, null);
+				gameWin = true; 
+			}
 			
 			switch (players.get(0).getLife()) {
 				case 1:
@@ -209,25 +214,10 @@ public class Screen extends Canvas implements Runnable{
 					g.drawImage(life, 505, 88, 20, 20, null); 
 					g.drawImage(life, 505, 98, 20, 20, null);
 			}
+
+		    endGameOver();
 			
-			try {
-				endGameOver();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);
-			
-			int n = 0;
-			for(Brick tempBrick : objBricks) {
-				if(!tempBrick.isDestroyed()) {
-					n++;
-				}
-			}
-			if(n==0) {
-				g.drawImage(youLose, 495/2-250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);
-				gameWin = true; 
-			}
 			
 			g.dispose();
 			
@@ -246,7 +236,6 @@ public class Screen extends Canvas implements Runnable{
 			ball1.checkCollisionLato(objBox);
 			ball1.checkCollision(objPaddle);
 			
-			int n = 0;
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
 					if(ball1.checkCollisionLato(tempBrick) || ball1.checkCollision(tempBrick)) {
@@ -266,7 +255,6 @@ public class Screen extends Canvas implements Runnable{
 						isFlipActive = true;
 						isFlipStarted = false;
 					}
-					n++;
 				}
 				if (System.nanoTime() >= fastStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FAST) {
 					isFastActive = false;
@@ -279,13 +267,6 @@ public class Screen extends Canvas implements Runnable{
 			}
 			
 			objPaddle.move();			
-			if(!gameStatus) {
-				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOSE);
-				
-			}
-			if(checkWin()) {
-				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.WIN);
-			}
 			
 			if(gameWin) endGameWin();
 
@@ -350,8 +331,9 @@ public class Screen extends Canvas implements Runnable{
 		/*
 		 * metodo che viene chiamato alla fine del game
 		 */
-		private void endGameOver() throws InterruptedException {
+		private void endGameOver() {
 			if(!gameStatus) {
+				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOSE);
 				// ho perso
 				try {
 					TimeUnit.SECONDS.sleep(2);
@@ -365,6 +347,7 @@ public class Screen extends Canvas implements Runnable{
 		}
 		
 		private void endGameWin() {
+			if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.WIN);
 			try {
 				TimeUnit.SECONDS.sleep(2);
 			} catch (InterruptedException e) {
