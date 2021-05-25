@@ -367,13 +367,32 @@ public class Screen extends Canvas implements Runnable{
 		}
 		
 		public void reset() {
+			
+			/*
 			for(Brick tempBrick : objBricks) {
 				tempBrick.refresh();
 				if(tempBrick.getHasPowerUp()) tempBrick.disactivatePowerUp();
 			}
+			*/
+			
+			objBricks = new ArrayList<Brick>();
+			//objSpecialBricks = new ArrayList<SpecialBrick>();
+			uploadImages();
+			this.mainMusic = new Music();
+			
 			objBall.refresh();
 			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
 			score.resetPoints(players.get(0));
+			
+			this.gameStatus = false;
+			this.gameOver = false;
+			this.gameWin = false;
+			this.isFastStarted = false;
+			this.isFlipStarted = false;
+			this.isFastActive = false;
+			this.isFlipActive = false;
+			
+			start();
 		}
 		
 		public void setLevel(TypeLevels lv) {

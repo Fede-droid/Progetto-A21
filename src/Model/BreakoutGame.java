@@ -63,15 +63,19 @@ public class BreakoutGame {
 	// inizializzazione gioco e giocatori a sceonda delle scelte dell'utente
 	public void gameSetup() {
 	
-		
 		// creo un giocatore
 		this.p = new Player();
 		players.add(p);
 		
 		screen.newPlayer(p);
 		
-		screen.start();
 		
+		
+	}
+	
+	public void playGame() {
+		
+		screen.start();
 		screen.setLevel(lv);
 		
 		gameFrame.add(screen);
@@ -136,6 +140,12 @@ public class BreakoutGame {
 		
 	}
 	
+	public void showMainFromWin() {
+		
+		
+		
+	}
+	
 	// non funziona
 	public void nextLevel() {
 
@@ -183,6 +193,18 @@ public class BreakoutGame {
 	public void setLevel(TypeLevels level) {
 		
 		this.lv = level;
+		
+	}
+	
+	public void reset() {
+		
+		gameFrame.invalidate();
+		gameFrame.validate();
+		gameFrame.repaint();
+		
+		showMain();
+		
+		
 		
 	}
 	

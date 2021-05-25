@@ -9,8 +9,11 @@ import Model.BreakoutGame;
 
 public class Return2Main extends Listener implements ActionListener{
 
-	public Return2Main(BreakoutGame game, JPanel m) {
+	private boolean win;
+	
+	public Return2Main(BreakoutGame game, JPanel m, boolean win) {
 		super(game, m);
+		this.win = win;
 		
 	}
 
@@ -19,8 +22,11 @@ public class Return2Main extends Listener implements ActionListener{
 		
 		m.removeAll();
 		m.setVisible(false);
+		m.invalidate();
 		
-		game.showMain();
+		if(!win) game.showMain();
+		else game.reset();
+		
 		
 		
 	}

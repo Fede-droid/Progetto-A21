@@ -84,7 +84,7 @@ public class PauseMenu extends JPanel {
 		button4.setBorderPainted(false);
 		button4.setIcon(button4Img);
 		backgroundlabel.add(button4);
-		Return2Main return2Main = new Return2Main(game, this);
+		Return2Main return2Main = new Return2Main(game, this, win);
 		button4.addActionListener(return2Main);
 		
 		
