@@ -25,7 +25,10 @@ public class Return2Main extends Listener implements ActionListener{
 		m.invalidate();
 		
 		if(!win) game.showMain();
-		else game.reset();
+		else {
+			game.reset(); 
+			new BreakoutGame();
+			}
 		
 		
 		

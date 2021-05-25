@@ -374,22 +374,12 @@ public class Screen extends Canvas implements Runnable{
 				if(tempBrick.getHasPowerUp()) tempBrick.disactivatePowerUp();
 			}
 			
-			
-			
 			objBall.refresh();
 			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
 			score.resetPoints(players.get(0));
+			lifePlayer.resetLife();
 			
-			this.gameStatus = false;
-			this.gameOver = false;
-			this.gameWin = false;
-			this.isFastStarted = false;
-			this.isFlipStarted = false;
-			this.isFastActive = false;
-			this.isFlipActive = false;
-			
-			
-			
+
 			
 		}
 		

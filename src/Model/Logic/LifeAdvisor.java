@@ -32,6 +32,11 @@ public class LifeAdvisor {
 		return false;
 		
 		}
+	
+	public void resetLife() {
+		
+		p.resetLife();
+	}
 		
 	}
 	

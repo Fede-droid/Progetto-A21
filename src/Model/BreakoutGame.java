@@ -111,6 +111,7 @@ public class BreakoutGame {
 	// menu vittoria/sconfitta
 	public void gameWin(boolean win) {
 		
+		screen.reset();
 		screen.setVisible(false);
 		
 		PauseMenu pause = new PauseMenu(this, win);
