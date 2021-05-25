@@ -170,7 +170,7 @@ public class Screen extends Canvas implements Runnable{
             		g.drawString(""+(int)((flipStartTime+10e9-System.nanoTime())/1e9), 510, 245);
             	else g.drawImage(on, 508, 228, 25, 25, null);
             }
-            else g.drawImage(off, 508, 220, 25, 25, null);
+            else g.drawImage(off, 508, 228, 25, 25, null);
 		
 			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 505, 58);
 			
