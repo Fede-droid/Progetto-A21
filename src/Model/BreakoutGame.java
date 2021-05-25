@@ -43,7 +43,10 @@ public class BreakoutGame {
 	// avvio menu principale e creazione gioco
 	public void start() {
 		
+		gameFrame.revalidate();
+		
 		// creazione gioco 
+		
 		this.screen = new Screen(this);
 		this.score = new ScoreAdvisor(screen); 
 		
@@ -80,8 +83,7 @@ public class BreakoutGame {
 		gameFrame.setVisible(true);
 				
 		// avvio ciclo di gioco
-		this.gameThread = new Thread(screen);
-		this.gameThread.start();
+		new Thread(screen).start();
 		screen.setVisible(true);
 	}
 	
@@ -132,10 +134,27 @@ public class BreakoutGame {
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
 		
-		
 	}
 	
-	
+	// non funziona
+	public void nextLevel() {
+
+		screen.reset();
+		screen.start();
+		
+		gameFrame.add(screen);
+		
+		gameFrame.requestFocusInWindow();
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+		gameFrame.repaint();
+		
+		
+		this.gameThread2 = new Thread(screen);
+		gameThread2.start();
+		screen.setVisible(true);
+		
+	}
 	public GameFrame getGameFrame() {
 		return gameFrame;
 	}

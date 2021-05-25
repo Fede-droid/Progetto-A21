@@ -17,8 +17,11 @@ public class Return2Main extends Listener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		removeOldPanel();
+		m.removeAll();
+		m.setVisible(false);
+		
 		game.showMain();
+		
 		
 	}
 

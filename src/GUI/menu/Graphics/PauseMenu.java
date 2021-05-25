@@ -10,10 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import GUI.ImagesLoader;
+import GUI.menu.listeners.NextLevelListener;
 import GUI.menu.listeners.RepeatListener;
 import GUI.menu.listeners.Return2Main;
+import GUI.menu.listeners.SetLevel;
 import GUI.menu.listeners.SinglePlayerListener;
 import Model.BreakoutGame;
+import Model.Core.TypeLevels;
 import Model.Items.Utilities;
 import java.awt.image.BufferedImage;
 
@@ -55,6 +58,7 @@ public class PauseMenu extends JPanel {
 		button.setVisible(!win);
 		
 		
+		// mega bug 
 		// bottone 3
 		this.button3 = loader.uploadImage("menu/menuImages/nextLV.png");
 		ImageIcon button3Img = new ImageIcon(button3);
@@ -65,9 +69,9 @@ public class PauseMenu extends JPanel {
 		button3.setBorderPainted(false);
 		button3.setIcon(button3Img);
 		backgroundlabel.add(button3);
-		//RepeatListener a2 = new RepeatListener(game, this);
-		button3.setVisible(win);
-		//button.addActionListener(a1);
+		button3.setVisible(false);
+		NextLevelListener a2 = new NextLevelListener(game, this);
+		button3.addActionListener(a2);
 		
 		//
 		// bottone 4
@@ -82,6 +86,7 @@ public class PauseMenu extends JPanel {
 		backgroundlabel.add(button4);
 		Return2Main return2Main = new Return2Main(game, this);
 		button4.addActionListener(return2Main);
+		
 		
 		JLabel label1 = new JLabel();
 		label1.setFont(new Font("Courier", Font.BOLD, 50)); 
