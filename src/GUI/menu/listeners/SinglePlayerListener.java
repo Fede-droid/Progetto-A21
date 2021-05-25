@@ -20,7 +20,7 @@ public class SinglePlayerListener extends Listener implements ActionListener{
 		
 		removeOldPanel();
 		game.gameSetup();
-		game.playGame();
+		
 	}
 
 
