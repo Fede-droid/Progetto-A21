@@ -34,7 +34,7 @@ public class Levels {
 	public ArrayList<Brick> getBricksDesposition() {
 		switch (level) {
 			case LEVEL1: {
-				for(int i = 0; i < 4; i++) {
+				/*for(int i = 0; i < 4; i++) {
 					for (int j = 0; j < 3; j++) { 
 						
 						int[] posInitBrick = new int[2];
@@ -46,7 +46,7 @@ public class Levels {
 						// creo i Bricks
 						objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
 					}
-				}
+				}*/
 				
 				for (int i = 0; i < 3; i++) {
 					int[] posInitBrick = new int[2];

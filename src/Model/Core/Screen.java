@@ -163,11 +163,12 @@ public class Screen extends Canvas implements Runnable{
             	else g.drawImage(on, 508, 153, 25, 25, null);
             }
             else g.drawImage(off, 508, 153, 25, 25, null);
+            
             g.drawImage(flipLogo, 508, 195, 25, 25, null);
             if(isFlipActive) {
             	if (System.nanoTime() >= flipStartTime+6e9) 
-            		g.drawString(""+(int)((flipStartTime+10e9-System.nanoTime())/1e9), 510, 235);
-            	else g.drawImage(on, 508, 153, 25, 25, null);g.drawImage(on, 508, 220, 25, 25, null);
+            		g.drawString(""+(int)((flipStartTime+10e9-System.nanoTime())/1e9), 510, 245);
+            	else g.drawImage(on, 508, 228, 25, 25, null);
             }
             else g.drawImage(off, 508, 220, 25, 25, null);
 		
