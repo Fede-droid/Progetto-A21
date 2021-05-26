@@ -31,8 +31,15 @@ public class ScreenItem {
     }
 
     public int[] getPosition() {
-
         return position;
+    }
+    
+    public int getXPosition() {
+        return position[0];
+    }
+    
+    public int getYPosition() {
+        return position[1];
     }
 
     public void hit() {

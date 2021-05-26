@@ -24,7 +24,7 @@ public class LifeAdvisor {
 	
 	public boolean checkLife() {
 		if(collision.checkGameOver()) {
-			if (loseLifeMusic.isMusicOn()) loseLifeMusic.playMusic(MusicTypes.LOSE_LIFE);
+			if (loseLifeMusic.isMusicOn() && p.getLife() > 1) loseLifeMusic.playMusic(MusicTypes.LOSE_LIFE);
 			p.loseLife();
 			if(p.getLife() < 1) return true;
 			ball.refresh();

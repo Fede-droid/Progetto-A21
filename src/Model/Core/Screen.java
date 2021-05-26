@@ -199,7 +199,10 @@ public class Screen extends Canvas implements Runnable{
 			}
 			if(n==0) {
 				g.drawImage(youWin, 495/2-150, Utilities.SCREEN_HEIGHT/2 - 100, 300, 70, null);
-				gameWin = true; 
+				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.WIN);
+				gameStatus = false;
+				gameWin = true;
+				endGameWin();
 			}
 			
 			switch (players.get(0).getLife()) {
@@ -216,7 +219,7 @@ public class Screen extends Canvas implements Runnable{
 					g.drawImage(life, 505, 98, 20, 20, null);
 			}
 
-		    endGameOver();
+		    if (!gameWin) endGameOver();
 			
 			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);
 			
@@ -269,7 +272,8 @@ public class Screen extends Canvas implements Runnable{
 			
 			objPaddle.move();			
 			
-			if(gameWin) endGameWin();			
+		
+		
 		}
 		
 		// inzializzazione partita
@@ -306,30 +310,11 @@ public class Screen extends Canvas implements Runnable{
 			this.lifePlayer = new LifeAdvisor(players.get(0), mainMusic, ball1, objBall);
 		}
 		
-		/*
-		 * controlla la winn condition
-		 * ritorna true se tutti i brick sono distrutti, quindi ho vinto
-		 * ritorna false se cisono ancora brick da distruggere
-		 */
-		private boolean checkWin() {
-			//return objSpecialBrick.isDestroyed();  // Vittoria per distruzione del SPECIAL brick
-			//Vittoria per Distruzione di tutti i Brick
-			int n = 0;
-			for(Brick tempBrick : objBricks) {
-				if(!tempBrick.isDestroyed()) {
-					n++;
-				}
-			}
-			if(n!=0) return false;
-			else return true;
-			
-		}
-		/*
-		 * metodo che viene chiamato alla fine del game
-		 */
+
 		private void endGameOver() {
 			if(!gameStatus) {
 				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOSE);
+
 				// ho perso
 				try {
 					TimeUnit.SECONDS.sleep(2);
@@ -337,28 +322,25 @@ public class Screen extends Canvas implements Runnable{
 
 					e.printStackTrace();
 				}	
-				game.gameWin(false);
-			
+				game.gameWin(false);	
 			}
 		}
 		
 		private void endGameWin() {
-			if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.WIN);
 			try {
-				TimeUnit.SECONDS.sleep(2);
+				TimeUnit.SECONDS.sleep(1);
 			} catch (InterruptedException e) {
 				
 				e.printStackTrace();
 			}
-			game.gameWin(true);
+			game.gameWin(false);
 		}
 		
 
 		//Aggiungo player alla partita
 		public void newPlayer(Player p) {
 			this.players = game.getPlayers();
-			this.objPaddle = players.get(0).getObjPaddle();
-			
+			this.objPaddle = players.get(0).getObjPaddle();	
 		}
 		
 		//modifico musica 
@@ -367,8 +349,6 @@ public class Screen extends Canvas implements Runnable{
 		}
 		
 		public void reset() {
-			
-			
 			for(Brick tempBrick : objBricks) {
 				tempBrick.refresh();
 				if(tempBrick.getHasPowerUp()) tempBrick.disactivatePowerUp();
@@ -378,9 +358,7 @@ public class Screen extends Canvas implements Runnable{
 			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
 			score.resetPoints(players.get(0));
 			lifePlayer.resetLife();
-			
-
-			
+	
 		}
 		
 		public void setLevel(TypeLevels lv) {
