@@ -9,6 +9,5 @@ public static void main(String[] args) {
 		BreakoutGame game = new BreakoutGame();
 		game.start();
 	
-
 	}
 }
