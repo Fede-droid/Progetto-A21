@@ -15,12 +15,10 @@ public class ClientThread extends Thread {
    //private Player player1;
     private int serverPort;
     private DatagramSocket datagramSocket;
-    private int xPaddlePosition, yPaddlePosition;
+    public static int xPaddlePosition, yPaddlePosition;
 
 
     public ClientThread(InetAddress address, int port,  DatagramSocket socket) {
-    	this.xPaddlePosition=0;
-    	this.yPaddlePosition=0;
         message = "";
         this.socket = socket;
         this.serverPort=port;
@@ -60,11 +58,6 @@ public class ClientThread extends Thread {
 
     public String getMessage() {
         return message;
-    }
-    
-    public void setPaddlePosition(int xPaddlePosition, int yPaddlePosition) {
-    	this.xPaddlePosition=xPaddlePosition;
-    	this.yPaddlePosition=yPaddlePosition;
     }
 
 
