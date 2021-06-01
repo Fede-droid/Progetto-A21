@@ -15,17 +15,12 @@ public class ClientThread extends Thread {
    //private Player player1;
     private int serverPort;
     private DatagramSocket datagramSocket;
+    private int xPaddlePosition, yPaddlePosition;
 
-    /**
-     * Definisce un nuovo oggetto clientThread.
-     *
-     * @param address indirizzo IP
-     * @param port porta per la connesione
-     * @param socket  La socket
-     *
-     */
 
     public ClientThread(InetAddress address, int port,  DatagramSocket socket) {
+    	this.xPaddlePosition=0;
+    	this.yPaddlePosition=0;
         message = "";
         this.socket = socket;
         this.serverPort=port;
@@ -65,6 +60,11 @@ public class ClientThread extends Thread {
 
     public String getMessage() {
         return message;
+    }
+    
+    public void setPaddlePosition(int xPaddlePosition, int yPaddlePosition) {
+    	this.xPaddlePosition=xPaddlePosition;
+    	this.yPaddlePosition=yPaddlePosition;
     }
 
 
