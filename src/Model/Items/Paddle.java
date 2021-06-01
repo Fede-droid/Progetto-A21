@@ -9,7 +9,7 @@ public class Paddle extends ScreenItem {
 	private static final int VELOCITA = 3;
 	
 	// direzione paddle
-    private int dr;
+    private int dr, leftLimit, rightLimit;
     private boolean isSwitched;
     private int switchConstant;
 
@@ -17,6 +17,13 @@ public class Paddle extends ScreenItem {
     	super(image, width, height, position);
     	isSwitched = false;
     	switchConstant = 1;
+    	leftLimit = 0;
+    	rightLimit = 495;
+    }
+    
+    public void setLimits(int leftLimit, int rightLimit) {
+    	this.leftLimit=leftLimit;
+    	this.rightLimit=rightLimit;
     }
     
     // richiamato da update, verifica che non si vada fuori dai bordi dx e sx
@@ -24,14 +31,12 @@ public class Paddle extends ScreenItem {
     	
         position[0] += dr * switchConstant;
         
-        if (position[0] <= 0) {
-
-        	position[0] = 0;
+        if (position[0] <= leftLimit) {
+        	position[0] = leftLimit;
         }
 
-        if (position[0] >= 495 - imageWidth) {
-
-        	position[0] = 495 - imageWidth;
+        if (position[0] + imageWidth >= rightLimit) {
+        	position[0] = rightLimit - imageWidth;
         }
     }
     
