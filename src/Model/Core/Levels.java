@@ -31,6 +31,52 @@ public class Levels {
 		this.level = level;
 	}
 	
+	public void setPlayersPosition(int numberOfPlayers, int playerIndex) {
+        switch (numberOfPlayers) {
+        case 2: {
+        	if (playerIndex==0) {
+        		objPaddle.setPosition(200, 580);
+        	}
+        	else objPaddle.setPosition(200, 20);
+            break;
+        }
+        case 3: {
+        	if (playerIndex==0) {
+        		objPaddle.setPosition(50, 580);
+        		objPaddle.setLimits(0, 240);
+        	}
+        	else if (playerIndex==1) {
+        		objPaddle.setPosition(280, 580);
+        		objPaddle.setLimits(240, 495);
+        	}
+        	else {
+        		objPaddle.setPosition(280, 20);
+        		objPaddle.setLimits(0, 495);
+        	}
+            break;
+        }
+        case 4: {
+        	if (playerIndex==0) {
+        		objPaddle.setPosition(50, 580);
+        		objPaddle.setLimits(0, 240);
+        	}
+        	else if (playerIndex==1) {
+        		objPaddle.setPosition(280, 580);
+        		objPaddle.setLimits(240, 495);
+        	}
+        	else if (playerIndex==2) {
+        		objPaddle.setPosition(50, 20);
+        		objPaddle.setLimits(0, 240);
+        	}
+        	else {
+        		objPaddle.setPosition(280, 20);
+        		objPaddle.setLimits(240, 495);
+        	}
+            break;
+        }
+        }
+    }
+	
 	public ArrayList<Brick> getBricksDesposition() {
 		switch (level) {
 			case LEVEL1: {
