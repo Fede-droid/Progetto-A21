@@ -15,6 +15,7 @@ import GUI.menu.Graphics.YouWin;
 import Model.Core.Levels;
 import Model.Core.Screen;
 import Model.Core.TypeLevels;
+import Model.Core.Multiplayer.MultiplayerAdvisor;
 import Model.Items.Utilities;
 import Model.Logic.Player;
 import Model.Logic.ScoreAdvisor;
@@ -38,15 +39,13 @@ public class BreakoutGame {
 		this.gameFrame = new GameFrame();
 		players = new ArrayList<Player>();
 		this.lv = TypeLevels.LEVEL1;
+		
 	}
 
 	// avvio menu principale e creazione gioco
 	public void start() {
 		
-		
-		// creazione gioco 
-		
-		this.screen = new Screen(this);
+		this.screen = new Screen(this); // creazione schermo di gioco
 		this.score = new ScoreAdvisor(screen); 
 		
 		this.m = new MainMenu(this);
@@ -62,7 +61,6 @@ public class BreakoutGame {
 	// inizializzazione gioco e giocatori a sceonda delle scelte dell'utente
 	public void gameSetup() {
 	
-		
 		// creo un giocatore
 		this.p = new Player();
 		players.add(p);
@@ -202,6 +200,12 @@ public class BreakoutGame {
 		
 	}
 	
+	
+	public void setMultiplayer() {
+		
+		new MultiplayerAdvisor(this);
+		
+	}
 	
 	
 	

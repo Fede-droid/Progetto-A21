@@ -6,12 +6,16 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.management.timer.Timer;
 import javax.sound.sampled.Clip;
+import javax.swing.JOptionPane;
 
 import GUI.ImagesLoader;
 import Model.BreakoutGame;
@@ -34,10 +38,7 @@ import Music.MusicTypes;
 
 public class Screen extends Canvas implements Runnable{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 	
 	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, hitBox, flipBrick, sfondo, youWin, youLose, on, off, fastLogo, flipLogo, life;
 	//SpecialBrick objFlip, objFast;
@@ -69,6 +70,8 @@ public class Screen extends Canvas implements Runnable{
 	double switchStart = 0;
 	int i = 0;
 	private LifeAdvisor lifePlayer;
+	private DatagramSocket datagramSocket;
+	private int serverPort;
 
 	
 	public Screen(BreakoutGame game) {
@@ -231,7 +234,9 @@ public class Screen extends Canvas implements Runnable{
 		// aggiornamento ciclo di gioco
 		synchronized public void update() {
 			
-		    objBall.move();
+		
+			
+		    //objBall.move();
 		    gameOver = lifePlayer.checkLife();
 		    gameStatus = ball1.checkBorderCollision();
 		    
@@ -271,14 +276,13 @@ public class Screen extends Canvas implements Runnable{
 			}
 			
 			objPaddle.move();			
-			
-		
+
 		
 		}
 		
 		// inzializzazione partita
 		public void start() {
-			
+		
 			this.score = game.getScoreAdvisor();
 			
 			// posizione di partenza dello sfondo
@@ -370,4 +374,4 @@ public class Screen extends Canvas implements Runnable{
 		public Graphics getG() {
 			return g;
 		}
-	}
+	}	

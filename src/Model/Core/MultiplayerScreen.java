@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
 
 import GUI.ImagesLoader;
 import Model.BreakoutGame;
-import Model.Client;
 import Model.Items.Ball;
 import Model.Items.Box;
 import Model.Items.Brick;

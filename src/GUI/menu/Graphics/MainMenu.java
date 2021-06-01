@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import GUI.ImagesLoader;
+import GUI.menu.listeners.MultiplayerListener;
 import GUI.menu.listeners.SetLevel;
 import GUI.menu.listeners.SinglePlayerListener;
 import GUI.menu.listeners.SoundListener;
@@ -38,8 +39,7 @@ public class MainMenu extends JPanel{
 		backgroundlabel = new JLabel("", image, JLabel.CENTER);
 		backgroundlabel.setBounds(0, 0, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT);
 		add(backgroundlabel);
-		
-		
+	
 		
 		// bottone 1 pplayer
 		this.button1 = loader.uploadImage("menu/menuImages/button1.png");
@@ -54,6 +54,7 @@ public class MainMenu extends JPanel{
 		SinglePlayerListener a1 = new SinglePlayerListener(c, this);
 		button.addActionListener(a1);
 		
+		
 		// bottone 2 multiplayer
 		this.button2 = loader.uploadImage("menu/menuImages/button2.png");
 		ImageIcon button2Img = new ImageIcon(button2);
@@ -64,6 +65,8 @@ public class MainMenu extends JPanel{
 		button2.setBorderPainted(false);
 		button2.setIcon(button2Img);
 		backgroundlabel.add(button2);
+		MultiplayerListener a2 = new MultiplayerListener(c, this);
+		button2.addActionListener(a2);
 		
 		
 		

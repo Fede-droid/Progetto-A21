@@ -1,4 +1,4 @@
-package Model;
+package Model.Core.Multiplayer;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -8,11 +8,11 @@ import java.net.UnknownHostException;
 
 import Model.Logic.Player;
 
-public class Client extends Thread {
+public class ClientThread extends Thread {
     private DatagramSocket socket;
     private byte[] buf=new byte[4096];
     private String message;
-    private Player player1;
+   //private Player player1;
     private int serverPort;
     private DatagramSocket datagramSocket;
 
@@ -25,12 +25,12 @@ public class Client extends Thread {
      *
      */
 
-    public Client(InetAddress address, int port,  DatagramSocket socket, Player player1) {
+    public ClientThread(InetAddress address, int port,  DatagramSocket socket) {
         message = "";
         this.socket = socket;
         this.serverPort=port;
         socket.connect(address, serverPort);
-        this.player1=player1;
+        //this.player1=player1;
         this.datagramSocket=socket;
 
         
@@ -43,7 +43,7 @@ public class Client extends Thread {
     	
         while (true) {
         	byte[] b = new byte[1024];
-        	b = ((Integer) player1.getObjPaddle().getXPosition()).toString().getBytes();
+        	//b = ((Integer) player1.getObjPaddle().getXPosition()).toString().getBytes();
         	
         	DatagramPacket packetBack;
 			try {
