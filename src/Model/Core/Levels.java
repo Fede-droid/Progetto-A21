@@ -80,39 +80,54 @@ public class Levels {
 	public ArrayList<Brick> getBricksDesposition() {
 		switch (level) {
 			case LEVEL1: {
-				for(int i = 0; i < 4; i++) {
-					for (int j = 0; j < 3; j++) { 
+				for(int i = 0; i < 6; i++) {//first 2 layers down
+					for (int j = 0; j < 2; j++) { 
 						
 						int[] posInitBrick = new int[2];
-
+						
 						// posizione di partenza dei Brick
-						posInitBrick[0] = i * 110 + 50;  //nell'asse x
-						posInitBrick[1] = j * 60 + 150; //nell'asse y
+						posInitBrick[0] = i * 80 + 15;  //nell'asse x
+						posInitBrick[1] = j * 47 + 129; //nell'asse y
 				
 						// creo i Bricks
 						objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
 					}
 				}
 				
-				for (int i = 0; i < 3; i++) {
+				for (int i = 0; i < 6; i++) {
 					int[] posInitBrick = new int[2];
-					posInitBrick[0] = i * 165 + 50;  //nell'asse x
-					posInitBrick[1] = 90; //nell'asse y
-					objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
-				}
-				
-				for (int i = 0; i < 4; i++) {
-					int[] posInitBrick = new int[2];
-					posInitBrick[0] = i * 110 + 50;  //nell'asse x
+					posInitBrick[0] = i * 80+ 15;  //nell'asse x
 					posInitBrick[1] = 30; //nell'asse y
 					objBricks.add(new Brick(brick, 65, 25, posInitBrick,4));
 				}
 				
-				int[] posFastBrick = {150,85};
+				for (int i = 0; i < 2; i++) { //2 left bricks in the middle
+					int[] posInitBrick = new int[2];
+					posInitBrick[0] = i * 80+ 15;  //nell'asse x
+					posInitBrick[1] = 80; //nell'asse y
+					objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
+				}
+				
+				
+				for (int i = 0; i < 2; i++) { //2 right bricks in the middle
+					int[] posInitBrick = new int[2];
+					posInitBrick[0] = i * 80+ 335;  //nell'asse x
+					posInitBrick[1] = 80; //nell'asse y
+					objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
+				}
+				
+				//1 central bricks in the middle
+				int[] posInitBrick = new int[2];
+				posInitBrick[0] = 207+ 10;  //nell'asse x
+				posInitBrick[1] = 80; //nell'asse y
+				objBricks.add(new Brick(brick, 60, 25, posInitBrick,4));
+				
+				
+				int[] posFastBrick = {171,75};
 				PowerUp speedUp = new BallSpeedUp(objBall);
 				objBricks.add(new Brick(fastBrick, 35, 35, posFastBrick,1, speedUp));
 				
-				int[] posFlipBrick = {315,85};
+				int[] posFlipBrick = {289,75};
 				PowerUp flipUp = new SwitchPaddleDirection(objPaddle);
 				objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, flipUp));
 				break;
