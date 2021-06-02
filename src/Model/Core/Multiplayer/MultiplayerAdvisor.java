@@ -57,7 +57,7 @@ public class MultiplayerAdvisor {
 		
 		mainGame.gameSetup();
 		mainGame.start();
-		client.startThread();
+		client.startThread(mainGame.getScreen());
 		
 	}
 

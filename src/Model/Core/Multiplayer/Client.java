@@ -6,6 +6,8 @@ import java.net.InetAddress;
 
 import javax.swing.JOptionPane;
 
+import Model.Core.Screen;
+
 
 public class Client {
 	
@@ -21,10 +23,11 @@ public class Client {
 		
 		try {
 			address = InetAddress.getByName("202.61.250.68");
-			String playerData = new String(!isHost + " " + playerName + " " + gameCode + " " + 2);
-            byte[] b = playerData.getBytes();
+			String playerData = new String(isHost + " " + playerName + " " + gameCode + " " + playerNumber);
+			
+			byte[] b = playerData.getBytes();
             datagramSocket = new DatagramSocket();
-            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4765);
+            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4785);
             datagramSocket.send(packet);
             boolean waitingForReply = true;
            
@@ -52,9 +55,9 @@ public class Client {
 		
 	}
 	
-	public void startThread() {
+	public void startThread(Screen screen) {
 		
-		thread = new ClientThread(address, Integer.parseInt(portNewPlayer), datagramSocket);
+		thread = new ClientThread(address, Integer.parseInt(portNewPlayer), datagramSocket, screen);
         thread.start();
 	}
 	

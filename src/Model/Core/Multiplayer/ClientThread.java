@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import Model.Core.Screen;
 import Model.Logic.Player;
 
 public class ClientThread extends Thread {
@@ -18,7 +19,7 @@ public class ClientThread extends Thread {
     public static int xPaddlePosition, yPaddlePosition;
 
 
-    public ClientThread(InetAddress address, int port,  DatagramSocket socket) {
+    public ClientThread(InetAddress address, int port,  DatagramSocket socket, Screen screen) {
         message = "";
         this.socket = socket;
         this.serverPort=port;

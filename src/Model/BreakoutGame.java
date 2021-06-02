@@ -207,6 +207,11 @@ public class BreakoutGame {
 		
 	}
 	
+	public Screen getScreen() {
+		
+		return this.screen;
+	}
+	
 	
 	
 	

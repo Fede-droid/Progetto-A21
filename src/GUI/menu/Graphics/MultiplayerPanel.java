@@ -74,9 +74,10 @@ public class MultiplayerPanel extends JPanel{
 			ActionListener setVisibile = new ActionListener() {
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
-			    	changeHostVisible(true);
-			    	button.setVisible(!buttonHostVisible);
-			    	button2.setVisible(buttonHostVisible);
+			    	changeHostVisible(false);
+			    	button.setVisible(buttonHostVisible);
+			    	button2.setVisible(!buttonHostVisible);
+			    	
 			    	repaint();
 			    }
 			};
@@ -86,9 +87,9 @@ public class MultiplayerPanel extends JPanel{
 			ActionListener setVisibile2 = new ActionListener() {
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
-			    	changeHostVisible(false);
-			    	button.setVisible(!buttonHostVisible);
-			    	button2.setVisible(buttonHostVisible);
+			    	changeHostVisible(true);
+			    	button.setVisible(buttonHostVisible);
+			    	button2.setVisible(!buttonHostVisible);
 			    	repaint();
 			    }
 			};
@@ -123,10 +124,7 @@ public class MultiplayerPanel extends JPanel{
 	        backgroundlabel.add(checkbox3);
 	        backgroundlabel.add(checkbox4);
 	        
-	        if(checkbox1.isSelected()) playerNumber = 1;
-	        if(checkbox2.isSelected()) playerNumber = 2;
-	        if(checkbox3.isSelected()) playerNumber = 3;
-	        if(checkbox4.isSelected()) playerNumber = 4;
+	      
 	        
 	        
 			this.submit = loader.uploadImage("menu/menuImages/submit.png");
@@ -144,13 +142,18 @@ public class MultiplayerPanel extends JPanel{
 			    public void actionPerformed(ActionEvent e) {
 			    	String playerName = playerNamel.getText();
 			    	String gameCode = gameCodel.getText();
-			    	c.setPlayerData(!buttonHostVisible, playerName, gameCode, playerNumber);
+			    	if(checkbox1.isSelected()) playerNumber = 1;
+				    if(checkbox2.isSelected()) playerNumber = 2;
+				    if(checkbox3.isSelected()) playerNumber = 3;
+				    if(checkbox4.isSelected()) playerNumber = 4;
+			    	System.out.println("is host? " +buttonHostVisible);
+			    	System.out.println(playerNumber);
+			    	c.setPlayerData(buttonHostVisible, playerName, gameCode, playerNumber);
 			    	
 			    }
 			};
 			
 			submit.addActionListener(submitAction);
-	 
 			
 	}
 	
