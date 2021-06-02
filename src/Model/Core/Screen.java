@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
 
 import GUI.ImagesLoader;
 import Model.BreakoutGame;
-import Model.Core.Multiplayer.ClientThread;
 import Model.Items.Ball;
 import Model.Items.Box;
 import Model.Items.Brick;
@@ -241,10 +240,6 @@ private static final long serialVersionUID = 1L;
 		    gameOver = lifePlayer.checkLife();
 		    gameStatus = ball1.checkBorderCollision();
 		    
-		    objPaddle.move();
-            ClientThread.xPaddlePosition=objPaddle.getXPosition();
-            ClientThread.yPaddlePosition=objPaddle.getYPosition();
-		    
 		    
 			ball1.checkCollisionLato(objPaddle);
 			ball1.checkCollisionLato(objBox);
@@ -279,6 +274,9 @@ private static final long serialVersionUID = 1L;
 					tempBrick.disactivatePowerUp();
 				}
 			}
+			
+			objPaddle.move();			
+
 		
 		}
 		

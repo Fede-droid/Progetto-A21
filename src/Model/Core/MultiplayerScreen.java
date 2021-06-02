@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -20,6 +19,7 @@ import javax.swing.JOptionPane;
 
 import GUI.ImagesLoader;
 import Model.BreakoutGame;
+import Model.Core.Multiplayer.ClientThread;
 import Model.Items.Ball;
 import Model.Items.Box;
 import Model.Items.Brick;
@@ -39,10 +39,7 @@ import Music.MusicTypes;
 
 public class MultiplayerScreen extends Canvas implements Runnable{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 	
 	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, hitBox, flipBrick, sfondo, youWin, youLose, on, off, fastLogo, flipLogo, life;
 	//SpecialBrick objFlip, objFast;
@@ -76,7 +73,6 @@ public class MultiplayerScreen extends Canvas implements Runnable{
 	private LifeAdvisor lifePlayer;
 	private DatagramSocket datagramSocket;
 	private int serverPort;
-	private Client thread;
 
 	
 	public MultiplayerScreen(BreakoutGame game) {
@@ -245,6 +241,10 @@ public class MultiplayerScreen extends Canvas implements Runnable{
 		    gameOver = lifePlayer.checkLife();
 		    gameStatus = ball1.checkBorderCollision();
 		    
+		    objPaddle.move();
+            ClientThread.xPaddlePosition=objPaddle.getXPosition();
+            ClientThread.yPaddlePosition=objPaddle.getYPosition();
+		    
 		    
 			ball1.checkCollisionLato(objPaddle);
 			ball1.checkCollisionLato(objBox);
@@ -279,50 +279,12 @@ public class MultiplayerScreen extends Canvas implements Runnable{
 					tempBrick.disactivatePowerUp();
 				}
 			}
-			
-			objPaddle.move();			
-			
-			
-		
 		
 		}
 		
 		// inzializzazione partita
 		public void start() {
-			String playerName = "player1";
-			InetAddress address;
-			try {
-				address = InetAddress.getByName("202.61.250.68");
-	            byte[] b = "true lucia CODE8 1".getBytes();
-	            datagramSocket = new DatagramSocket();
-	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4980);
-	            datagramSocket.send(packet);
-	            boolean waitingForReply = true;
-	            String portNewPlayer = null;
-	            while (waitingForReply) {
-	            	System.out.println("here");
-		            byte[] c = new byte[1024];
-	                DatagramPacket packet1 = new DatagramPacket(c, c.length);
-	                datagramSocket.receive(packet1);
-	                String AllInfo = new String(packet1.getData(), 0, packet1.getLength());
-	                String AllInfos[] = AllInfo.split(" ");
-	                String trueOrFalse = AllInfos[0];
-	                portNewPlayer = AllInfos[1];
-	                System.out.println(trueOrFalse);
-	                System.out.println(portNewPlayer);
-	                if (trueOrFalse!=null) waitingForReply=false;
-	            }
-
-	            
-	            
-	            thread = new Client(address, Integer.parseInt(portNewPlayer), datagramSocket, players.get(0));
-		        thread.start();
-		        
-	        } catch (Exception e) {
-	            JOptionPane.showMessageDialog(null, "Nerwork Error", "Network error", 1);
-	            //game.setScreen(new MainMenuScreen(game));
-	        }
-
+		
 			this.score = game.getScoreAdvisor();
 			
 			// posizione di partenza dello sfondo
@@ -414,4 +376,4 @@ public class MultiplayerScreen extends Canvas implements Runnable{
 		public Graphics getG() {
 			return g;
 		}
-	}
+	}	

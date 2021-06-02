@@ -21,7 +21,7 @@ public class Client {
 		
 		try {
 			address = InetAddress.getByName("202.61.250.68");
-			String playerData = new String(isHost + " " + playerName + " " + gameCode + " " + 2);
+			String playerData = new String(!isHost + " " + playerName + " " + gameCode + " " + 2);
             byte[] b = playerData.getBytes();
             datagramSocket = new DatagramSocket();
             DatagramPacket packet = new DatagramPacket(b, b.length, address, 4765);
