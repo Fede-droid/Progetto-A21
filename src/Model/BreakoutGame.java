@@ -45,7 +45,7 @@ public class BreakoutGame {
 	// avvio menu principale e creazione gioco
 	public void start() {
 		
-		this.screen = new Screen(this); // creazione schermo di gioco
+		this.screen = new Screen(this); //creazione schermo di gioco
 		this.score = new ScoreAdvisor(screen); 
 		
 		this.m = new MainMenu(this);
@@ -54,7 +54,6 @@ public class BreakoutGame {
 		gameFrame.pack();
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
-		
 	}
 
 	
@@ -189,15 +188,12 @@ public class BreakoutGame {
 		
 	}
 	
-	public void reset() {
-		
+	public void reset() {	
 		gameFrame.invalidate();
 		gameFrame.validate();
 		gameFrame.repaint();
 		
-		showMain();
-		
-		
+		showMain();	
 	}
 	
 	

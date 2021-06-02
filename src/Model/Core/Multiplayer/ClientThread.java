@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import Model.Core.MultiplayerScreen;
 import Model.Core.Screen;
 import Model.Logic.Player;
 
@@ -16,17 +17,16 @@ public class ClientThread extends Thread {
    //private Player player1;
     private int serverPort;
     private DatagramSocket datagramSocket;
-    public static int xPaddlePosition, yPaddlePosition;
+    private MultiplayerScreen screen;
 
-
-    public ClientThread(InetAddress address, int port,  DatagramSocket socket, Screen screen) {
+    public ClientThread(InetAddress address, int port,  DatagramSocket socket, MultiplayerScreen screen) {
         message = "";
         this.socket = socket;
         this.serverPort=port;
         socket.connect(address, serverPort);
         //this.player1=player1;
         this.datagramSocket=socket;
-
+        this.screen=screen;
         
     }
 
@@ -37,7 +37,7 @@ public class ClientThread extends Thread {
     	
         while (true) {
         	byte[] b = new byte[1024];
-        	b = (((Integer) xPaddlePosition).toString()+" "+((Integer) yPaddlePosition).toString()).getBytes();
+        	b = (((Integer) screen.getPaddleXPosition()).toString()+" "+((Integer) screen.getPaddleXPosition()).toString()).getBytes();
         	
         	DatagramPacket packetBack;
 			try {

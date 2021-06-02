@@ -241,10 +241,7 @@ private static final long serialVersionUID = 1L;
 		    gameOver = lifePlayer.checkLife();
 		    gameStatus = ball1.checkBorderCollision();
 		    
-		    objPaddle.move();
-            ClientThread.xPaddlePosition=objPaddle.getXPosition();
-            ClientThread.yPaddlePosition=objPaddle.getYPosition();
-		    
+		    objPaddle.move();		    
 		    
 			ball1.checkCollisionLato(objPaddle);
 			ball1.checkCollisionLato(objBox);
@@ -315,7 +312,6 @@ private static final long serialVersionUID = 1L;
 			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddle);
 			this.lifePlayer = new LifeAdvisor(players.get(0), mainMusic, ball1, objBall);
 		}
-		
 
 		private void endGameOver() {
 			if(!gameStatus) {
@@ -371,6 +367,14 @@ private static final long serialVersionUID = 1L;
 
 			levels.setLevel(lv);
 			objBricks = levels.getBricksDesposition();
+		}
+		
+		public int getPaddleXPosition() {
+			return objPaddle.getXPosition();
+		}
+		
+		public int getPaddleYPosition() {
+			return objPaddle.getYPosition();
 		}
 
 		public Graphics getG() {
