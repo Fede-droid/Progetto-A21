@@ -21,7 +21,6 @@ public class ClientThread extends Thread {
 
     public ClientThread(InetAddress address, int port,  DatagramSocket socket, MultiplayerScreen screen) {
         message = "";
-        this.socket = socket;
         this.serverPort=port;
         socket.connect(address, serverPort);
         //this.player1=player1;
@@ -36,13 +35,20 @@ public class ClientThread extends Thread {
     synchronized public void run() {
     	
         while (true) {
-        	byte[] b = new byte[1024];
-        	b = (((Integer) screen.getPaddleXPosition()).toString()+" "+((Integer) screen.getPaddleYPosition()).toString()).getBytes();
-        	
-        	DatagramPacket packetBack;
 			try {
+				byte[] b = new byte[1024];
+	        	b = (((Integer) screen.getPaddleXPosition()).toString()+" "+((Integer) screen.getPaddleYPosition()).toString()).getBytes();
+	        	DatagramPacket packetBack;
 				packetBack = new DatagramPacket(b, b.length, InetAddress.getByName("202.61.250.68"), serverPort);
 				datagramSocket.send(packetBack);
+				
+				byte[] bytes = new byte[1024];
+                DatagramPacket packet = new DatagramPacket(bytes, bytes.length);
+                datagramSocket.receive(packet);
+                String allGameInfos = new String(packet.getData(), 0, packet.getLength());
+                String allGameInfosSplitted[] = allGameInfos.split(" ");
+                System.out.println(allGameInfos);
+                
 				wait(10);
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
