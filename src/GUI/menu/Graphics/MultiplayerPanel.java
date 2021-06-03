@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -29,9 +30,12 @@ public class MultiplayerPanel extends JPanel{
 	ImagesLoader loader;
 	private Boolean buttonHostVisible = true;
 	private int playerNumber;
+	private BreakoutGame c;
+	private JButton submitButton;
 	
 	public MultiplayerPanel(BreakoutGame c) {
 		
+		this.c = c;
 		this.loader = new ImagesLoader();
 		
 			// caricamento sfondo
@@ -129,12 +133,12 @@ public class MultiplayerPanel extends JPanel{
 			this.submit = loader.uploadImage("menu/menuImages/submit.png");
 			ImageIcon submitImg = new ImageIcon(submit);
 			backgroundlabel.setLayout(new FlowLayout() );
-			JButton submit = new JButton();
-			submit.setOpaque(false);
-			submit.setContentAreaFilled(false);
-			submit.setBorderPainted(false);
-			submit.setIcon(submitImg);
-			backgroundlabel.add(submit);
+			submitButton = new JButton();
+			submitButton.setOpaque(false);
+			submitButton.setContentAreaFilled(false);
+			submitButton.setBorderPainted(false);
+			submitButton.setIcon(submitImg);
+			backgroundlabel.add(submitButton);
 			
 			ActionListener submitAction = new ActionListener() {
 			    @Override
@@ -145,14 +149,16 @@ public class MultiplayerPanel extends JPanel{
 				    if(checkbox2.isSelected()) playerNumber = 2;
 				    if(checkbox3.isSelected()) playerNumber = 3;
 				    if(checkbox4.isSelected()) playerNumber = 4;
-			    	System.out.println("is host? " +buttonHostVisible);
-			    	System.out.println(playerNumber);
-			    	c.setPlayerData(buttonHostVisible, playerName, gameCode, playerNumber);
+				    c.setPlayerData(buttonHostVisible, playerName, gameCode, playerNumber);
+				    
+			    
+			    	
+			    	
 			    	
 			    }
 			};
 			
-			submit.addActionListener(submitAction);
+			submitButton.addActionListener(submitAction);
 			
 	}
 	
@@ -163,5 +169,29 @@ public class MultiplayerPanel extends JPanel{
 		this.buttonHostVisible = visible;
 		
 	}
+	
+	public void showError() {
+		
+		JOptionPane.showMessageDialog(this,
+			    "Partita non trovata e/o codice non valido!",
+			    "ATTENZIONE",
+			    JOptionPane.ERROR_MESSAGE);
+		
+		submitButton.removeAll();
+		repaint();
+		
+	
+	}
+	
+
+
+
+
+	
+		
+	
+		
+		
+	
 
 }

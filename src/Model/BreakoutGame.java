@@ -95,7 +95,7 @@ public class BreakoutGame {
 		screen.setVisible(true);
 	}
 	
-	//***// GESTIONE MULTIPLAYER
+	//***************************** INZIO GESTIONE MULTIPLAYER ****************************//
 	
 	public void inizializeMultiplayer() {
 		
@@ -120,8 +120,8 @@ public class BreakoutGame {
 	// invio al server i dati del giocatore
 	public void sendRequest() {
 		
-		client.join(isHost, gameCode, playerName, playerNumber);
-		startGame();
+		client.join(this, isHost, gameCode, playerName, playerNumber);
+		
 	}
 	
 	
@@ -164,6 +164,15 @@ public class BreakoutGame {
 		multiplayerScreen.setVisible(true);
 	}
 	
+	public void multiplayerError() {
+		
+		multiplayerPanel.showError();
+	
+	}
+	
+	
+	
+	//***************************** FINE GESTIONE MULTIPLAYER ****************************//
 	
 	// ripetere il livello/partita
 	//@SuppressWarnings("deprecation")
