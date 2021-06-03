@@ -44,7 +44,7 @@ public class Client {
 	           //
 	            while (waitingForReply) {
 	           
-	            	
+	            	//
 		            byte[] c = new byte[1024];
 	                DatagramPacket packet1 = new DatagramPacket(c, c.length);
 	                datagramSocket.receive(packet1);
