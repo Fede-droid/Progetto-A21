@@ -20,7 +20,7 @@ public class MultiplayerListener extends Listener implements ActionListener {
 		m.setVisible(false);
 		m.setEnabled(false);
 		m.invalidate();
-		game.setMultiplayer();
+		game.inizializeMultiplayer();
 		
 		
 	}

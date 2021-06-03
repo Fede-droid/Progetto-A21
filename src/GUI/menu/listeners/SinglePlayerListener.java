@@ -19,7 +19,7 @@ public class SinglePlayerListener extends Listener implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		removeOldPanel();
-		game.gameSetup();
+		game.gameSetupSinglePlayer();
 		
 	}
 

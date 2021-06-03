@@ -20,7 +20,6 @@ import GUI.ImagesLoader;
 import GUI.menu.listeners.MultiplayerListener;
 import GUI.menu.listeners.SinglePlayerListener;
 import Model.BreakoutGame;
-import Model.Core.Multiplayer.MultiplayerAdvisor;
 import Model.Items.Utilities;
 
 public class MultiplayerPanel extends JPanel{ 
@@ -31,7 +30,7 @@ public class MultiplayerPanel extends JPanel{
 	private Boolean buttonHostVisible = true;
 	private int playerNumber;
 	
-	public MultiplayerPanel(MultiplayerAdvisor c) {
+	public MultiplayerPanel(BreakoutGame c) {
 		
 		this.loader = new ImagesLoader();
 		
@@ -157,6 +156,8 @@ public class MultiplayerPanel extends JPanel{
 			
 	}
 	
+	
+
 	public void changeHostVisible(boolean visible) {
 		
 		this.buttonHostVisible = visible;

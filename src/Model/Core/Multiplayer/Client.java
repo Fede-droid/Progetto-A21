@@ -6,6 +6,7 @@ import java.net.InetAddress;
 
 import javax.swing.JOptionPane;
 
+import Model.Core.MultiplayerScreen;
 import Model.Core.Screen;
 
 
@@ -27,7 +28,7 @@ public class Client {
 			
 			byte[] b = playerData.getBytes();
             datagramSocket = new DatagramSocket();
-            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4785);
+            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4860);
             datagramSocket.send(packet);
             boolean waitingForReply = true;
            
@@ -55,9 +56,9 @@ public class Client {
 		
 	}
 	
-	public void startThread(Screen screen) {
+	public void startThread(MultiplayerScreen multiplayerScreen) {
 		
-		thread = new ClientThread(address, Integer.parseInt(portNewPlayer), datagramSocket, screen);
+		thread = new ClientThread(address, Integer.parseInt(portNewPlayer), datagramSocket, multiplayerScreen);
         thread.start();
 	}
 	

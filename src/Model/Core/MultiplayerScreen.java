@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import GUI.ImagesLoader;
 import Model.BreakoutGame;
 import Model.Core.Multiplayer.ClientThread;
+
 import Model.Items.Ball;
 import Model.Items.Box;
 import Model.Items.Brick;
@@ -84,6 +85,8 @@ private static final long serialVersionUID = 1L;
 	}
 	
 	
+
+
 	// ciclo di gioco
 	@Override
 	public void run() {

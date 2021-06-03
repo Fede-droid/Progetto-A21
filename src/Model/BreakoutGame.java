@@ -10,12 +10,15 @@ import javax.swing.JFrame;
 
 import GUI.menu.Graphics.GameFrame;
 import GUI.menu.Graphics.MainMenu;
+import GUI.menu.Graphics.MultiplayerPanel;
 import GUI.menu.Graphics.PauseMenu;
 import GUI.menu.Graphics.YouWin;
 import Model.Core.Levels;
+import Model.Core.MultiplayerScreen;
 import Model.Core.Screen;
 import Model.Core.TypeLevels;
-import Model.Core.Multiplayer.MultiplayerAdvisor;
+import Model.Core.Multiplayer.Client;
+
 import Model.Items.Utilities;
 import Model.Logic.Player;
 import Model.Logic.ScoreAdvisor;
@@ -33,6 +36,15 @@ public class BreakoutGame {
 	private ScoreAdvisor score;
 	private MainMenu m;
 	private TypeLevels lv;
+	private MultiplayerScreen multiplayerScreen;
+	private MultiplayerPanel multiplayerPanel;
+	private boolean isHost;
+	private String gameCode;
+	private String playerName;
+	private int playerNumber;
+	private Client client;
+	
+	
 	// creazione del controller
 	public BreakoutGame() {
 		
@@ -57,11 +69,12 @@ public class BreakoutGame {
 	}
 
 	
-	// inizializzazione gioco e giocatori a sceonda delle scelte dell'utente
-	public void gameSetup() {
+	// inizializzazione gioco con un giocaore offline
+	public void gameSetupSinglePlayer() {
+	
 	
 		// creo un giocatore
-		this.p = new Player();
+		p = new Player();
 		players.add(p);
 		
 		screen.newPlayer(p);
@@ -81,6 +94,76 @@ public class BreakoutGame {
 		new Thread(screen).start();
 		screen.setVisible(true);
 	}
+	
+	//***// GESTIONE MULTIPLAYER
+	
+	public void inizializeMultiplayer() {
+		
+		this.client = new Client(); //inzializzo connessione con il server
+		multiplayerPanel =  new MultiplayerPanel(this);
+		gameFrame.add(multiplayerPanel);
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+		gameFrame.repaint();
+	}
+	
+	// dati giocatore 
+	public void setPlayerData(boolean isHost, String name, String code, int number) {
+		
+		this.isHost = isHost;
+		playerName = name;
+		gameCode = code;
+		playerNumber = number;
+		sendRequest();
+		
+	}
+	// invio al server i dati del giocatore
+	public void sendRequest() {
+		
+		client.join(isHost, gameCode, playerName, playerNumber);
+		startGame();
+	}
+	
+	
+	// inzio partita in multigiocatore
+	public void startGame() {
+		
+		multiplayerPanel.setVisible(false);
+		multiplayerPanel.removeAll();
+		
+		gameSetupMultiplayer();
+		client.startThread(multiplayerScreen);
+		
+	}
+
+	
+	// inzializzazione gioco multiplayer 
+	public void gameSetupMultiplayer() {
+		
+		multiplayerScreen = new MultiplayerScreen(this); 
+		
+		// creo un giocatore
+		p = new Player();
+		players.add(p); // aggiungo player alla partita
+		
+		multiplayerScreen.newPlayer(p); //creazione schermo di gioco multiplayer
+		
+		multiplayerScreen.start();
+		multiplayerScreen.setLevel(lv);
+		
+		gameFrame.add(multiplayerScreen);
+		gameFrame.requestFocusInWindow();
+
+		// aggiungo controllo da tastiera
+		gameFrame.addKeyListener(p.getInputHandler());
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+				
+		// avvio ciclo di gioco
+		new Thread(multiplayerScreen).start();
+		multiplayerScreen.setVisible(true);
+	}
+	
 	
 	// ripetere il livello/partita
 	//@SuppressWarnings("deprecation")
@@ -197,11 +280,7 @@ public class BreakoutGame {
 	}
 	
 	
-	public void setMultiplayer() {
-		
-		new MultiplayerAdvisor(this);
-		
-	}
+
 	
 	public Screen getScreen() {
 		
