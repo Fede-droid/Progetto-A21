@@ -37,7 +37,7 @@ public class ClientThread extends Thread {
     	
         while (true) {
         	byte[] b = new byte[1024];
-        	b = (((Integer) screen.getPaddleXPosition()).toString()+" "+((Integer) screen.getPaddleXPosition()).toString()).getBytes();
+        	b = (((Integer) screen.getPaddleXPosition()).toString()+" "+((Integer) screen.getPaddleYPosition()).toString()).getBytes();
         	
         	DatagramPacket packetBack;
 			try {
