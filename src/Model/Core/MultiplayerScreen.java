@@ -68,7 +68,7 @@ private static final long serialVersionUID = 1L;
 	CollisionAdvisor ball1;
 	private Music mainMusic;
 	private BreakoutGame game;
-	private ScoreAdvisor score;
+	private String score;
 	private Levels levels;
 	double fastStartTime = 0;
 	double flipStartTime = 0;
@@ -185,13 +185,12 @@ private static final long serialVersionUID = 1L;
             		g.drawString(""+(int)((flipStartTime+10e9-System.nanoTime())/1e9), 510, 245);
             	else g.drawImage(on, 508, 228, 25, 25, null);
             }
-            else g.drawImage(off, 508, 228, 25, 25, null);
+            else g.drawImage(off, 508, 228, 25, 25, null);*/
 		
-			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 505, 58);*/
+			g.drawString(score, 505, 58);
 			
 			for (Brick tempBrick : objBricks) {
-				if (!tempBrick.isDestroyed()) {
-					if(!tempBrick.getHasPowerUp()) {
+				if (tempBrick.getHitLevel()!=0) {
 						int hitLevel = tempBrick.getHitLevel();
 						switch (hitLevel) {
 							case 1:
@@ -206,9 +205,9 @@ private static final long serialVersionUID = 1L;
 						    default:
 						    	tempBrick.setImage(brick);
 					        }
-					}
-					tempBrick.render(g);
-				}
+						tempBrick.render(g);
+
+					}				
 			}
 			
 			
@@ -251,6 +250,8 @@ private static final long serialVersionUID = 1L;
 			
 			for (int i=0; i<objBricks.size(); i++) {
 				objBricks.get(i).setHitLevel(bricksHitLevel.get(i));
+				//System.out.println(objBricks.get(i).getHitLevel());
+				//System.out.println(bricksHitLevel.get(i));
 			}
 			
 			objBall.setPosition(ballPosition[0], ballPosition[1]);
@@ -293,17 +294,21 @@ private static final long serialVersionUID = 1L;
 			String gameStatusString= new String();
 			gameStatusString=gameStatus;
 			String gameStatusStringSplitted[] = gameStatusString.split(" ");
-			int i;
-			for (i=0; i<2*numberOfPlayer; i++) {
+			
+			paddlesPosition = new ArrayList<>();
+			bricksHitLevel = new ArrayList<>();
+			
+			for (int i=0; i<2*numberOfPlayer; i++) {
 				paddlesPosition.add(Integer.parseInt(gameStatusStringSplitted[i]));
 			}
-			int j;
-			for (j=i; j<objBricks.size(); j++) {
+			for (int j=2*numberOfPlayer; j<objBricks.size()+2*numberOfPlayer; j++) {
 				bricksHitLevel.add(Integer.parseInt(gameStatusStringSplitted[j]));
 			}
-			ballPosition[0] = Integer.parseInt(gameStatusStringSplitted[j++]);
-			ballPosition[1] = Integer.parseInt(gameStatusStringSplitted[j++]);
-
+			int k = objBricks.size()+2*numberOfPlayer;
+			ballPosition[0] = Integer.parseInt(gameStatusStringSplitted[k++]);
+			ballPosition[1] = Integer.parseInt(gameStatusStringSplitted[k++]);
+			score=gameStatusStringSplitted[k++];
+			
 		}
 
 		private void endGameOver() {
@@ -358,7 +363,6 @@ private static final long serialVersionUID = 1L;
 		}*/
 		
 		public void setLevel(TypeLevels lv) {
-
 			levels.setLevel(lv);
 			objBricks = levels.getBricksDesposition();
 		}
