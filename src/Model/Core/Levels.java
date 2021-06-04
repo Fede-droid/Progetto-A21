@@ -282,8 +282,8 @@ public class Levels {
 				
 				int[] posFlipBrick = {293,275};//change-direction special brick
 				PowerUp flipUp = new SwitchPaddleDirection(objPaddle);
-				objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, flipUp));
-				break;*/
+				objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, flipUp));*/
+				break;
 				
 			}
 		}

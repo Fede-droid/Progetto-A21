@@ -267,10 +267,7 @@ public class BreakoutGame {
 		
 	}
 	
-	public void showMainFromWin() {
-		
-		
-		
+	public void showMainFromWin() {	
 	}
 	
 	// non funziona

@@ -36,7 +36,7 @@ public class Client {
 				
 				byte[] b = playerData.getBytes();
 	            datagramSocket = new DatagramSocket();
-	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4861);
+	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4860);
 	            datagramSocket.send(packet);
 	            
 	            
@@ -62,7 +62,7 @@ public class Client {
 	                
 	                playerIndex = Integer.parseInt(AllInfos[4]);
 	                
-	                System.out.println(isJoined);
+	                System.out.println(AllInfo);
 	                
 
 	                if (isJoined.equals("false")) {
@@ -71,7 +71,7 @@ public class Client {
 	                	waitingForReply = false;
 	                	
 	                	game.multiplayerError(); 
-	                	}
+	                }
 	                
 	                
 	               if (isJoined.equals("true")) {
@@ -121,7 +121,6 @@ public class Client {
 	        
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Nerwork Error", "Network error", 1);
-            //game.setScreen(new MainMenuScreen(game));
         }
 		
 	}
