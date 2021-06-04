@@ -1,3 +1,4 @@
+
 package Model.Core;
 
 import java.awt.Canvas;
@@ -52,12 +53,15 @@ private static final long serialVersionUID = 1L;
 	private boolean isFastActive = false;
 	private boolean isFlipActive = false;
 	private Ball objBall;
+	private int[] ballPosition;
 	private List<Brick> objBricks;
 	private Box objBox;
+	private ArrayList<Integer> paddlesPosition;
+	private ArrayList<Integer> bricksHitLevel;
 	//private List<SpecialBrick> objSpecialBricks;
 	private ScreenItem objSfondo;
 	private ImagesLoader loader;
-	private Paddle objPaddle;
+	private ArrayList<Paddle> objPaddles;
 	Clip win,hit;
 	boolean isMusicOn;
 	private Graphics g;
@@ -66,22 +70,21 @@ private static final long serialVersionUID = 1L;
 	private BreakoutGame game;
 	private ScoreAdvisor score;
 	private Levels levels;
-	private List<Player> players;
 	double fastStartTime = 0;
 	double flipStartTime = 0;
 	double switchStart = 0;
 	int i = 0;
-	private LifeAdvisor lifePlayer;
-	private DatagramSocket datagramSocket;
-	private int serverPort;
+	private int numberOfPlayer, playerIndex;
 
 	
 	public MultiplayerScreen(BreakoutGame game) {
 		this.game = game;
-		objBricks = new ArrayList<Brick>();
+		objBricks = new ArrayList<>();
+		objPaddles = new ArrayList<>();
 		//objSpecialBricks = new ArrayList<SpecialBrick>();
 		uploadImages();
 		this.mainMusic = new Music();
+		ballPosition = new int[2];
 	}
 	
 	
@@ -158,13 +161,14 @@ private static final long serialVersionUID = 1L;
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
-			//for(Player ps : players) {
-			objPaddle.render(g);
+			for (Paddle tempPaddle : objPaddles) tempPaddle.render(g);
 			objBox.render(g);
-            g.drawImage(hitBox, 508, 3, 30, 30, null);
+            
+			g.drawImage(hitBox, 508, 3, 30, 30, null);
             
             g.drawImage(fastLogo, 508, 120, 25, 25, null);
-            if(isFastActive) {
+            
+            /*if(isFastActive) {
             	if (System.nanoTime() >= fastStartTime+6e9) 
             		g.drawString(""+(int)((fastStartTime+10e9-System.nanoTime())/1e9), 510, 170);
             	else g.drawImage(on, 508, 153, 25, 25, null);
@@ -179,12 +183,10 @@ private static final long serialVersionUID = 1L;
             }
             else g.drawImage(off, 508, 228, 25, 25, null);
 		
-			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 505, 58);
+			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 505, 58);*/
 			
-			int n = 0;
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
-					n++;
 					if(!tempBrick.getHasPowerUp()) {
 						int hitLevel = tempBrick.getHitLevel();
 						switch (hitLevel) {
@@ -204,15 +206,9 @@ private static final long serialVersionUID = 1L;
 					tempBrick.render(g);
 				}
 			}
-			if(n==0) {
-				g.drawImage(youWin, 495/2-150, Utilities.SCREEN_HEIGHT/2 - 100, 300, 70, null);
-				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.WIN);
-				gameStatus = false;
-				gameWin = true;
-				endGameWin();
-			}
 			
-			switch (players.get(0).getLife()) {
+			
+			/*switch (players.get(0).getLife()) {
 				case 1:
 					g.drawImage(life, 505, 78, 20, 20, null); 
 					break;
@@ -228,7 +224,7 @@ private static final long serialVersionUID = 1L;
 
 		    if (!gameWin) endGameOver();
 			
-			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);
+			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);*/
 			
 			g.dispose();
 			
@@ -237,55 +233,30 @@ private static final long serialVersionUID = 1L;
 		
 		// aggiornamento ciclo di gioco
 		synchronized public void update() {
-			
-		
-			
-		    //objBall.move();
-		    gameOver = lifePlayer.checkLife();
-		    gameStatus = ball1.checkBorderCollision();
 		    
-		    objPaddle.move();		    
-		    
-			ball1.checkCollisionLato(objPaddle);
-			ball1.checkCollisionLato(objBox);
-			ball1.checkCollision(objPaddle);
-			
-			for (Brick tempBrick : objBricks) {
-				if (!tempBrick.isDestroyed()) {
-					if(ball1.checkCollisionLato(tempBrick) || ball1.checkCollision(tempBrick)) {
-						score.addPoint(players.get(0));	
-					}
-					if(tempBrick.isDestroyed()) {
-						if (tempBrick.whichPower() == PowerUpTypes.FAST) isFastStarted = tempBrick.activatePowerUP();
-						if (tempBrick.whichPower() == PowerUpTypes.FLIP) isFlipStarted = tempBrick.activatePowerUP();
-					}
-					if(isFastStarted) {
-						fastStartTime = System.nanoTime();
-						isFastActive = true;
-						isFastStarted = false;
-					}
-					if(isFlipStarted) {
-						flipStartTime = System.nanoTime();
-						isFlipActive = true;
-						isFlipStarted = false;
-					}
-				}
-				if (System.nanoTime() >= fastStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FAST) {
-					isFastActive = false;
-					tempBrick.disactivatePowerUp();
-				}
-				if (System.nanoTime() >= flipStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FLIP) {
-					isFlipActive = false;
-					tempBrick.disactivatePowerUp();
+		    objPaddles.get(playerIndex).move();
+		    int posPaddleX;
+		    int posPaddleY;
+			for (int i=0; i<numberOfPlayer; i++) {
+				posPaddleX=2*i;
+				posPaddleY=posPaddleX+1;
+				if(i != playerIndex) {
+					objPaddles.get(i).setPosition(posPaddleX, posPaddleY);;
 				}
 			}
+			
+			for (int i=0; i<objBricks.size(); i++) {
+				objBricks.get(i).setHitLevel(bricksHitLevel.get(i));
+			}
+			
+			objBall.setPosition(ballPosition[0], ballPosition[1]);
 		
 		}
 		
 		// inzializzazione partita
 		public void start() {
-		
-			this.score = game.getScoreAdvisor();
+			numberOfPlayer = game.getNumberOfPlayer();
+			playerIndex = game.getPlayerIndex();
 			
 			// posizione di partenza dello sfondo
 			int[] posInitSfondo = new int[2];
@@ -299,7 +270,7 @@ private static final long serialVersionUID = 1L;
 			posBox[0] = 495;  //nell'asse x
 			posBox[1] = 0; //nell'asse y
 			objBox = new Box(box, 80, 700, posBox);
-			
+						
 			// posizione di partenza ball
 			int[] posInitBall = new int[2];
 
@@ -308,12 +279,28 @@ private static final long serialVersionUID = 1L;
 			
 			// faccio partire il thread corrispondente a ball
 			objBall = new Ball(ball, 20, 20, posInitBall);
-			
-			ball1 = new CollisionAdvisor(objBall, mainMusic);
-			
+						
 			//creazione e posizionamento dei Bricks
-			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddle);
-			this.lifePlayer = new LifeAdvisor(players.get(0), mainMusic, ball1, objBall);
+			levels = new Levels(brick, fastBrick, flipBrick, null, null);
+			levels.setPlayersPosition(numberOfPlayer, playerIndex);
+			setLevel(TypeLevels.MULTIPLAYER);
+		}
+		
+		public void setStringGameStatus(String gameStatus) {
+			String gameStatusString= new String();
+			gameStatusString=gameStatus;
+			String gameStatusStringSplitted[] = gameStatusString.split(" ");
+			int i;
+			for (i=0; i<2*numberOfPlayer; i++) {
+				paddlesPosition.add(Integer.parseInt(gameStatusStringSplitted[i]));
+			}
+			int j;
+			for (j=i; j<objBricks.size(); j++) {
+				bricksHitLevel.add(Integer.parseInt(gameStatusStringSplitted[j]));
+			}
+			ballPosition[0] = Integer.parseInt(gameStatusStringSplitted[j++]);
+			ballPosition[1] = Integer.parseInt(gameStatusStringSplitted[j++]);
+
 		}
 
 		private void endGameOver() {
@@ -343,9 +330,10 @@ private static final long serialVersionUID = 1L;
 		
 
 		//Aggiungo player alla partita
-		public void newPlayer(Player p) {
-			this.players = game.getPlayers();
-			this.objPaddle = players.get(0).getObjPaddle();	
+		public void addPlayers(ArrayList<Player> players) {
+			for (int i=0; i<numberOfPlayer; i++) {
+				this.objPaddles.add(players.get(i).getObjPaddle());
+			}
 		}
 		
 		//modifico musica 
@@ -353,7 +341,7 @@ private static final long serialVersionUID = 1L;
 			mainMusic.setMusic(b);
 		}
 		
-		public void reset() {
+		/*public void reset() {
 			for(Brick tempBrick : objBricks) {
 				tempBrick.refresh();
 				if(tempBrick.getHasPowerUp()) tempBrick.disactivatePowerUp();
@@ -364,7 +352,7 @@ private static final long serialVersionUID = 1L;
 			score.resetPoints(players.get(0));
 			lifePlayer.resetLife();
 	
-		}
+		}*/
 		
 		public void setLevel(TypeLevels lv) {
 
@@ -373,14 +361,14 @@ private static final long serialVersionUID = 1L;
 		}
 		
 		public int getPaddleXPosition() {
-			return objPaddle.getXPosition();
+			return objPaddles.get(playerIndex).getXPosition();
 		}
 		
 		public int getPaddleYPosition() {
-			return objPaddle.getYPosition();
+			return objPaddles.get(playerIndex).getYPosition();
 		}
 
 		public Graphics getG() {
 			return g;
 		}
-	}	
+	}

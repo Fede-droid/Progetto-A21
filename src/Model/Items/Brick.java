@@ -50,6 +50,11 @@ public class Brick extends ScreenItem{
 		return hitLevel;
 	}
 	
+	public void setHitLevel(int hitLevel) {
+		this.hitLevel = hitLevel;
+	}
+
+	
 	public void setImage(BufferedImage imageUpdated) {
 		this.image = imageUpdated;
 	}
@@ -80,4 +85,3 @@ public class Brick extends ScreenItem{
 		else return PowerUpTypes.NULL;
 	}
 }
-	

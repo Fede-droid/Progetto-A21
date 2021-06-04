@@ -30,7 +30,7 @@ public class BreakoutGame {
 	
 	private GameFrame gameFrame; //creazione nuova finestra
 	private Screen screen; 
-	private List<Player> players; // definizione dei giocatori
+	private ArrayList<Player> players; // definizione dei giocatori
 	private Thread gameThread, gameThread2; // thread di gioco
 	private Boolean music; // setup musica
 	private Player p; 
@@ -148,10 +148,11 @@ public class BreakoutGame {
 		multiplayerScreen = new MultiplayerScreen(this); 
 		
 		// creo un giocatore
-		p = new Player();
-		players.add(p); // aggiungo player alla partita
-		
-		multiplayerScreen.newPlayer(p); //creazione schermo di gioco multiplayer
+		for (int i=0; i<playerNumber; i++) {
+			players.add(new Player());
+
+		}		
+		multiplayerScreen.addPlayers(players); //creazione schermo di gioco multiplayer
 		
 		multiplayerScreen.start();
 		multiplayerScreen.setLevel(lv);
@@ -306,7 +307,7 @@ public class BreakoutGame {
 		return players;
 	}
 
-	public void addPlayers(List<Player> players) {
+	public void addPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
 	

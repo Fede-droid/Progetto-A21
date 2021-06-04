@@ -46,8 +46,9 @@ public class ClientThread extends Thread {
                 DatagramPacket packet = new DatagramPacket(bytes, bytes.length);
                 datagramSocket.receive(packet);
                 String allGameInfos = new String(packet.getData(), 0, packet.getLength());
-                String allGameInfosSplitted[] = allGameInfos.split(" ");
                 System.out.println(allGameInfos);
+                
+                screen.setStringGameStatus(allGameInfos);
                 
 				wait(10);
 			} catch (UnknownHostException e) {
@@ -66,6 +67,7 @@ public class ClientThread extends Thread {
     public String getMessage() {
         return message;
     }
+     
 
 
 }
