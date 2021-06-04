@@ -236,7 +236,7 @@ private static final long serialVersionUID = 1L;
 			
 		
 			
-		    //objBall.move();
+		    objBall.move();
 		    gameOver = lifePlayer.checkLife();
 		    gameStatus = ball1.checkBorderCollision();
 		    

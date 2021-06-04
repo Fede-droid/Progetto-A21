@@ -285,7 +285,7 @@ private static final long serialVersionUID = 1L;
 			objBall = new Ball(ball, 20, 20, posInitBall);
 						
 			//creazione e posizionamento dei Bricks
-			levels = new Levels(brick, fastBrick, flipBrick, null, null);
+			levels = new Levels(brick, fastBrick, flipBrick, null, objPaddles.get(playerIndex));
 			levels.setPlayersPosition(numberOfPlayer, playerIndex);
 			setLevel(TypeLevels.MULTIPLAYER);
 		}
