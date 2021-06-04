@@ -83,12 +83,7 @@ public class Client {
 	            	   waitingToSend = false;
 	            	   waitingForReply = false;
 	            	   
-	            	   game.setNumberOfPlayer(numberOfPlayer);
-            		   game.setPlayerIndex(playerIndex);
-            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);
-            		   game.startGame();
-	            	   
-	            	   /*if(numberOfMissingPlayer == 0) {
+	            	   if(numberOfMissingPlayer == 0) {
 	            		   game.setNumberOfPlayer(numberOfPlayer);
 	            		   game.setPlayerIndex(playerIndex);
 	            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);
@@ -118,7 +113,7 @@ public class Client {
 	            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);
 	            		   game.startGame();
 	           
-	            	   }*/
+	            	   }
 	                	
 	                }
 	                	

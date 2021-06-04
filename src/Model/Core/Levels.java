@@ -37,7 +37,7 @@ public class Levels {
         	if (playerIndex==0) {
         		objPaddle.setPosition(200, 580);
         	}
-        	else objPaddle.setPosition(200, 5);
+        	else objPaddle.setPosition(200, 3);
             break;
         }
         case 3: {
@@ -50,7 +50,7 @@ public class Levels {
         		objPaddle.setLimits(240, 495);
         	}
         	else {
-        		objPaddle.setPosition(280, 5);
+        		objPaddle.setPosition(280, 3);
         		objPaddle.setLimits(0, 495);
         	}
             break;
@@ -65,11 +65,11 @@ public class Levels {
         		objPaddle.setLimits(240, 495);
         	}
         	else if (playerIndex==2) {
-        		objPaddle.setPosition(50, 5);
+        		objPaddle.setPosition(50, 3);
         		objPaddle.setLimits(0, 240);
         	}
         	else {
-        		objPaddle.setPosition(280, 5);
+        		objPaddle.setPosition(280, 3);
         		objPaddle.setLimits(240, 495);
         	}
             break;

@@ -35,7 +35,6 @@ import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
 import Model.Logic.LifeAdvisor;
 import Model.Logic.Player;
-import Model.Logic.ScoreAdvisor;
 import Music.Music;
 import Music.MusicTypes;
 

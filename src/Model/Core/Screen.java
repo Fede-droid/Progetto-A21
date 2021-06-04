@@ -32,7 +32,6 @@ import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
 import Model.Logic.LifeAdvisor;
 import Model.Logic.Player;
-import Model.Logic.ScoreAdvisor;
 import Music.Music;
 import Music.MusicTypes;
 
@@ -62,7 +61,7 @@ private static final long serialVersionUID = 1L;
 	CollisionAdvisor ball1;
 	private Music mainMusic;
 	private BreakoutGame game;
-	private ScoreAdvisor score;
+	private int score;
 	private Levels levels;
 	private List<Player> players;
 	double fastStartTime = 0;
@@ -72,6 +71,7 @@ private static final long serialVersionUID = 1L;
 	private LifeAdvisor lifePlayer;
 	private DatagramSocket datagramSocket;
 	private int serverPort;
+	private int lastScore;
 
 	
 	public Screen(BreakoutGame game) {
@@ -80,6 +80,7 @@ private static final long serialVersionUID = 1L;
 		//objSpecialBricks = new ArrayList<SpecialBrick>();
 		uploadImages();
 		this.mainMusic = new Music();
+		score=0;
 	}
 	
 	
@@ -175,7 +176,7 @@ private static final long serialVersionUID = 1L;
             }
             else g.drawImage(off, 508, 228, 25, 25, null);
 		
-			g.drawString(String.valueOf(players.get(0).getPlayerScore()), 505, 58);
+			g.drawString(String.valueOf((Integer)score).toString(), 505, 58);
 			
 			int n = 0;
 			for (Brick tempBrick : objBricks) {
@@ -248,7 +249,7 @@ private static final long serialVersionUID = 1L;
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
 					if(ball1.checkCollisionLato(tempBrick) || ball1.checkCollision(tempBrick)) {
-						score.addPoint(players.get(0));	
+						score++;
 					}
 					if(tempBrick.isDestroyed()) {
 						if (tempBrick.whichPower() == PowerUpTypes.FAST) isFastStarted = tempBrick.activatePowerUP();
@@ -282,9 +283,7 @@ private static final long serialVersionUID = 1L;
 		
 		// inzializzazione partita
 		public void start() {
-		
-			this.score = game.getScoreAdvisor();
-			
+	
 			// posizione di partenza dello sfondo
 			int[] posInitSfondo = new int[2];
 			posInitSfondo[0] = 0;
@@ -325,7 +324,8 @@ private static final long serialVersionUID = 1L;
 				} catch (InterruptedException e) {
 
 					e.printStackTrace();
-				}	
+				}
+				lastScore=score;
 				game.gameWin(false);	
 			}
 		}
@@ -337,6 +337,7 @@ private static final long serialVersionUID = 1L;
 				
 				e.printStackTrace();
 			}
+			lastScore=score;
 			game.gameWin(false);
 		}
 		
@@ -360,7 +361,7 @@ private static final long serialVersionUID = 1L;
 			
 			objBall.refresh();
 			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
-			score.resetPoints(players.get(0));
+			score=0;
 			lifePlayer.resetLife();
 	
 		}
@@ -369,6 +370,10 @@ private static final long serialVersionUID = 1L;
 
 			levels.setLevel(lv);
 			objBricks = levels.getBricksDesposition();
+		}
+		
+		public int getLastScore() {
+			return lastScore;
 		}
 
 		public Graphics getG() {

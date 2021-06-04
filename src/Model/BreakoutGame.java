@@ -22,7 +22,6 @@ import Model.Core.Multiplayer.Client;
 
 import Model.Items.Utilities;
 import Model.Logic.Player;
-import Model.Logic.ScoreAdvisor;
 
 public class BreakoutGame {
 	
@@ -34,7 +33,6 @@ public class BreakoutGame {
 	private Thread gameThread, gameThread2; // thread di gioco
 	private Boolean music; // setup musica
 	private Player p; 
-	private ScoreAdvisor score;
 	private MainMenu m;
 	private TypeLevels lv;
 	private MultiplayerScreen multiplayerScreen;
@@ -59,9 +57,7 @@ public class BreakoutGame {
 		
 		
 		
-		this.screen = new Screen(this); //creazione schermo di gioco
-		this.score = new ScoreAdvisor(screen); 
-		
+		this.screen = new Screen(this); //creazione schermo di gioco		
 		
 		this.m = new MainMenu(this);
 		
@@ -313,11 +309,6 @@ public class BreakoutGame {
 		this.players = players;
 	}
 	
-	public ScoreAdvisor getScoreAdvisor() {
-		
-		return score;
-	}
-	
 	
 	public void setLevel(TypeLevels level) {
 		
@@ -339,6 +330,10 @@ public class BreakoutGame {
 	public Screen getScreen() {
 		
 		return this.screen;
+	}
+	
+	public int getLastScore() {
+		return screen.getLastScore();
 	}
 	
 	
