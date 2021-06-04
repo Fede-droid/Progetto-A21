@@ -33,7 +33,7 @@ public class Client {
 			while(waitingToSend) {
 				
 				String playerData = new String(isHost + " " + playerName + " " + gameCode + " " + playerNumber);
-				System.out.println(playerData);
+				
 				byte[] b = playerData.getBytes();
 	            datagramSocket = new DatagramSocket();
 	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4861);
@@ -78,9 +78,40 @@ public class Client {
 	                	
 	            	   waitingToSend = false;
 	            	   waitingForReply = false;
+	            	   
+	            	   if(numberOfMissingPlayer == 0) {
+	            		   game.setNumberOfPlayer(numberOfPlayer);
+	            		   game.setPlayerIndex(playerIndex);
+	            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);
+	            		   game.startGame();
+	            	   }
+	            	   
+	            	   else {
+	            		   
+	            		   game.waitingMissingPlayer(); //apre menu di attesa
+	            		   
+	            		   while(numberOfMissingPlayer != 0) {
+	            			   
+		            			byte[] d = new byte[1024];
+		       	                DatagramPacket packet2 = new DatagramPacket(d, d.length);
+		       	                datagramSocket.receive(packet1);
+		       	                String numberOfMissingPlayerString = new String(packet2.getData(), 0, packet2.getLength());
+		       	                
+		    	                numberOfMissingPlayer = Integer.parseInt(numberOfMissingPlayerString);
+
+		       	                game.setNumberOfMissingPlayer(numberOfMissingPlayer);
+		       	                game.updateMissingPlayer();
+	            			   
+	            		   }
+	            		   
+	            		   game.setNumberOfPlayer(numberOfPlayer);
+	            		   game.setPlayerIndex(playerIndex);
+	            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);
+	            		   game.startGame();
+	           
+	            	   }
 	                	
-	                	game.startGame();
-	                	}
+	                }
 	                	
 	            }
 			}

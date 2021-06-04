@@ -12,6 +12,7 @@ import GUI.menu.Graphics.GameFrame;
 import GUI.menu.Graphics.MainMenu;
 import GUI.menu.Graphics.MultiplayerPanel;
 import GUI.menu.Graphics.PauseMenu;
+import GUI.menu.Graphics.WaitingForPlayerPanel;
 import GUI.menu.Graphics.YouWin;
 import Model.Core.Levels;
 import Model.Core.MultiplayerScreen;
@@ -39,11 +40,10 @@ public class BreakoutGame {
 	private MultiplayerScreen multiplayerScreen;
 	private MultiplayerPanel multiplayerPanel;
 	private boolean isHost;
-	private String gameCode;
-	private String playerName;
-	private int playerNumber;
+	private String playerName, gameCode;
+	private int playerNumber, playerIndex, numberOfMissingPlayer;
 	private Client client;
-	
+	private WaitingForPlayerPanel waitingPanel;
 	
 	// creazione del controller
 	public BreakoutGame() {
@@ -57,8 +57,11 @@ public class BreakoutGame {
 	// avvio menu principale e creazione gioco
 	public void start() {
 		
+		
+		
 		this.screen = new Screen(this); //creazione schermo di gioco
 		this.score = new ScoreAdvisor(screen); 
+		
 		
 		this.m = new MainMenu(this);
 		
@@ -66,6 +69,8 @@ public class BreakoutGame {
 		gameFrame.pack();
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
+		
+		
 	}
 
 	
@@ -164,13 +169,50 @@ public class BreakoutGame {
 		multiplayerScreen.setVisible(true);
 	}
 	
-	public void multiplayerError() {
+	public void waitingMissingPlayer() {
 		
-		multiplayerPanel.showError();
-	
+		waitingPanel = new WaitingForPlayerPanel(this); 
+		gameFrame.add(waitingPanel);
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+		gameFrame.repaint();
+		
+		
 	}
 	
+	public void updateMissingPlayer() {
+		
+		waitingPanel.updateMissingPlayerText();
+		
+	}
 	
+	public void multiplayerError() {
+		multiplayerPanel.showError();
+	}
+	
+	public int getNumberOfPlayer() {
+		return playerNumber;
+	}
+	
+	public void setNumberOfPlayer(int n) {
+		playerNumber = n;
+	}
+	
+	public int getPlayerIndex() {
+		return playerIndex;
+	}
+	
+	public void setPlayerIndex(int pi) {
+		playerIndex = pi;
+	}
+	
+	public void setNumberOfMissingPlayer(int nof) {
+		numberOfMissingPlayer = nof;
+	}
+	
+	public int getNumberOfMissingPlayer() {
+		return numberOfMissingPlayer;
+	}
 	
 	//***************************** FINE GESTIONE MULTIPLAYER ****************************//
 	
