@@ -77,7 +77,7 @@ private static final long serialVersionUID = 1L;
 	private int numberOfPlayer, playerIndex;
 
 	
-	public MultiplayerScreen(BreakoutGame game) {
+	public MultiplayerScreen(BreakoutGame game, int numberOfPlayer, int playerIndex) {
 		this.game = game;
 		objBricks = new ArrayList<>();
 		objPaddles = new ArrayList<>();
@@ -85,6 +85,8 @@ private static final long serialVersionUID = 1L;
 		uploadImages();
 		this.mainMusic = new Music();
 		ballPosition = new int[2];
+		this.numberOfPlayer = numberOfPlayer;
+		this.playerIndex = playerIndex;
 	}
 	
 	
@@ -255,8 +257,7 @@ private static final long serialVersionUID = 1L;
 		
 		// inzializzazione partita
 		public void start() {
-			numberOfPlayer = game.getNumberOfPlayer();
-			playerIndex = game.getPlayerIndex();
+			
 			
 			// posizione di partenza dello sfondo
 			int[] posInitSfondo = new int[2];

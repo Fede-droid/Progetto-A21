@@ -137,7 +137,7 @@ public class BreakoutGame {
 		multiplayerPanel.removeAll();
 		
 		gameSetupMultiplayer();
-		client.startThread(multiplayerScreen);
+		
 		
 	}
 
@@ -145,23 +145,28 @@ public class BreakoutGame {
 	// inzializzazione gioco multiplayer 
 	public void gameSetupMultiplayer() {
 		
-		multiplayerScreen = new MultiplayerScreen(this); 
+		multiplayerScreen = new MultiplayerScreen(this, playerNumber, playerIndex ); 
 		
 		// creo un giocatore
 		for (int i=0; i<playerNumber; i++) {
 			players.add(new Player());
 
-		}		
+		}	
+		
 		multiplayerScreen.addPlayers(players); //creazione schermo di gioco multiplayer
 		
+		
+		
 		multiplayerScreen.start();
-		multiplayerScreen.setLevel(lv);
+		
+		
+		client.startThread(multiplayerScreen);
 		
 		gameFrame.add(multiplayerScreen);
 		gameFrame.requestFocusInWindow();
 
 		// aggiungo controllo da tastiera
-		gameFrame.addKeyListener(p.getInputHandler());
+		gameFrame.addKeyListener(players.get(playerIndex).getInputHandler());
 		gameFrame.pack();
 		gameFrame.setVisible(true);
 				

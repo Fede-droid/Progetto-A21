@@ -1,8 +1,11 @@
 package Model.Core.Multiplayer;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
@@ -23,10 +26,11 @@ public class Client {
 		
 		//String playerName = "player1";
 		
-		try {
-			
+		
 			// connessione con il server ed inzializzazione giocatore
-			address = InetAddress.getByName("202.61.250.68");
+			try {
+				address = InetAddress.getByName("202.61.250.68");
+			
 			
 			boolean waitingToSend = true;
 			
@@ -94,7 +98,7 @@ public class Client {
 	            			   
 		            			byte[] d = new byte[1024];
 		       	                DatagramPacket packet2 = new DatagramPacket(d, d.length);
-		       	                datagramSocket.receive(packet1);
+		       	                datagramSocket.receive(packet2);
 		       	                String numberOfMissingPlayerString = new String(packet2.getData(), 0, packet2.getLength());
 		       	                
 		    	                numberOfMissingPlayer = Integer.parseInt(numberOfMissingPlayerString);
@@ -116,13 +120,19 @@ public class Client {
 	            }
 			}
 
-           
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SocketException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             
 	        
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Nerwork Error", "Network error", 1);
-        }
-		
+       
 	}
 	
 	public void startThread(MultiplayerScreen multiplayerScreen) {
