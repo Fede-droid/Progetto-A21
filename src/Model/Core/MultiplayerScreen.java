@@ -87,6 +87,8 @@ private static final long serialVersionUID = 1L;
 		ballPosition = new int[2];
 		this.numberOfPlayer = numberOfPlayer;
 		this.playerIndex = playerIndex;
+		paddlesPosition = new ArrayList<>();
+		bricksHitLevel = new ArrayList<>();
 	}
 	
 	
