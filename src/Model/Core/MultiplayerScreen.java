@@ -190,6 +190,7 @@ private static final long serialVersionUID = 1L;
 			
 			for (Brick tempBrick : objBricks) {
 				if (tempBrick.getHitLevel()!=0) {
+					if (!tempBrick.getHasPowerUp()) {
 						int hitLevel = tempBrick.getHitLevel();
 						switch (hitLevel) {
 							case 1:
@@ -204,9 +205,9 @@ private static final long serialVersionUID = 1L;
 						    default:
 						    	tempBrick.setImage(brick);
 					        }
-						tempBrick.render(g);
-
-					}				
+					}
+					tempBrick.render(g);
+				}
 			}
 			
 			

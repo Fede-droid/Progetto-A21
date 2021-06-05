@@ -275,12 +275,11 @@ public class Levels {
 				posInitBrick[0] = 210+ 10;  //nell'asse x
 				posInitBrick[1] = 280; //nell'asse y
 				objBricks.add(new Brick(brick, 60, 25, posInitBrick,4));
+			
+				int[] posFastBrick = {175,275};//speed special brick
+				objBricks.add(new Brick(fastBrick, 35, 35, posFastBrick,1, null));
 				
-				/*int[] posFastBrick = {175,275};//speed special brick
-				PowerUp speedUp = new BallSpeedUp(objBall);
-				objBricks.add(new Brick(fastBrick, 35, 35, posFastBrick,1, speedUp));
-				
-				int[] posFlipBrick = {293,275};//change-direction special brick
+				/*int[] posFlipBrick = {293,275};//change-direction special brick
 				PowerUp flipUp = new SwitchPaddleDirection(objPaddle);
 				objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, flipUp));*/
 				break;

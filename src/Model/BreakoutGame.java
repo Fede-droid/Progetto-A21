@@ -183,9 +183,7 @@ public class BreakoutGame {
 	}
 	
 	public void updateMissingPlayer() {
-		
 		waitingPanel.updateMissingPlayerText();
-		
 	}
 	
 	public void multiplayerError() {

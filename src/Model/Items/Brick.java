@@ -9,7 +9,7 @@ public class Brick extends ScreenItem{
 	private int hitLevel;
 	private int initialHitLevel;
 	protected boolean destroyed;
-	private PowerUp powerUp; // null vuol dire che è un brick normale
+	private PowerUp powerUp; // null vuol dire che ï¿½ un brick normale
 	private boolean hasPowerUp; 
 	
 	/*
