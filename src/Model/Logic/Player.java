@@ -44,10 +44,6 @@ public class Player {
 		this.paddle = loader.uploadImage("/Images/paddle.png");
 
 	}
-	
-	public void move() {
-		objPaddle.moveLeft();
-	}
 
 	public InputAdapter getInputHandler() {
 		return inputHandler;

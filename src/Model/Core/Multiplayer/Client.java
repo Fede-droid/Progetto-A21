@@ -40,7 +40,7 @@ public class Client {
 				
 				byte[] b = playerData.getBytes();
 	            datagramSocket = new DatagramSocket();
-	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4864);
+	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4866);
 	            datagramSocket.send(packet);
 	            
 	            

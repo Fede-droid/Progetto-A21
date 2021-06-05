@@ -279,9 +279,8 @@ public class Levels {
 				int[] posFastBrick = {175,275};//speed special brick
 				objBricks.add(new Brick(fastBrick, 35, 35, posFastBrick,1, null));
 				
-				/*int[] posFlipBrick = {293,275};//change-direction special brick
-				PowerUp flipUp = new SwitchPaddleDirection(objPaddle);
-				objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, flipUp));*/
+				int[] posFlipBrick = {293,275};//change-direction special brick
+				objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, null));
 				break;
 				
 			}

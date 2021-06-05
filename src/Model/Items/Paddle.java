@@ -12,6 +12,7 @@ public class Paddle extends ScreenItem {
     private int dr, leftLimit, rightLimit;
     private boolean isSwitched;
     private int switchConstant;
+    private boolean oneTimeMulti;
 
     public Paddle(BufferedImage image, int width, int height, int[] position) {
     	super(image, width, height, position);
@@ -19,6 +20,7 @@ public class Paddle extends ScreenItem {
     	switchConstant = 1;
     	leftLimit = 0;
     	rightLimit = 495;
+    	oneTimeMulti = true;
     }
     
     public void setLimits(int leftLimit, int rightLimit) {
@@ -72,29 +74,21 @@ public class Paddle extends ScreenItem {
         }
     }
     
-    
-    /*
-     * METODI INUTILI DA RIMUOVERE IN FUTURO
-     */
-    // Metodi che muovono il paddle a destra o sinistra, per ora INUTILI
-    public void moveRight() {
-    	
-    	// prima del confronto sommo la larghezza dello schermo con la larghezza del paddle, altrimenti esce
-    	if((position[0] + imageWidth) < 495) position[0]+= VELOCITA;
-    	
-    }
-    
-    public void moveLeft() {
-    	
-    	if((position[0]) > 0) position[0]-= VELOCITA;
-    	
-    }
-    
     public void switchDir() {
     	isSwitched =!isSwitched;
     	switchConstant = -switchConstant;
     }
     
+    public void switchDirectionMultiplayer(boolean isSwitched) {
+    	if(!isSwitched&&!oneTimeMulti) switchDir();
+    	if (oneTimeMulti) {
+	    	if (isSwitched) {
+	    		switchDir();
+	    		oneTimeMulti = false;
+	    	}
+    	}
+    	if (!isSwitched) oneTimeMulti = true;
+    }
 	
 
 }

@@ -47,10 +47,6 @@ private static final long serialVersionUID = 1L;
 	private boolean gameStatus = false;
 	private boolean gameOver = false;
 	private boolean gameWin = false;
-	private boolean isFastStarted = false;
-	private boolean isFlipStarted = false;
-	private boolean isFastActive = false;
-	private boolean isFlipActive = false;
 	private Ball objBall;
 	private int[] ballPosition;
 	private List<Brick> objBricks;
@@ -75,6 +71,8 @@ private static final long serialVersionUID = 1L;
 	double switchStart = 0;
 	int i = 0;
 	private int numberOfPlayer, playerIndex;
+	private String isFastActiveString, isFlipActiveString;
+	private int fastRemainingTime, flipRemainingTime;
 
 	
 	public MultiplayerScreen(BreakoutGame game, int numberOfPlayer, int playerIndex) {
@@ -171,21 +169,20 @@ private static final long serialVersionUID = 1L;
 			g.drawImage(hitBox, 508, 3, 30, 30, null);
             
             g.drawImage(fastLogo, 508, 120, 25, 25, null);
-            
-            /*if(isFastActive) {
-            	if (System.nanoTime() >= fastStartTime+6e9) 
-            		g.drawString(""+(int)((fastStartTime+10e9-System.nanoTime())/1e9), 510, 170);
+            if(isFastActiveString.equals("true")) {
+            	if (fastRemainingTime<4) 
+            		g.drawString(""+fastRemainingTime, 510, 170);
             	else g.drawImage(on, 508, 153, 25, 25, null);
             }
             else g.drawImage(off, 508, 153, 25, 25, null);
             
             g.drawImage(flipLogo, 508, 195, 25, 25, null);
-            if(isFlipActive) {
-            	if (System.nanoTime() >= flipStartTime+6e9) 
-            		g.drawString(""+(int)((flipStartTime+10e9-System.nanoTime())/1e9), 510, 245);
+            if(isFlipActiveString.equals("true")) {
+            	if (flipRemainingTime<4) 
+            		g.drawString(""+flipRemainingTime, 510, 245);
             	else g.drawImage(on, 508, 228, 25, 25, null);
             }
-            else g.drawImage(off, 508, 228, 25, 25, null);*/
+            else g.drawImage(off, 508, 228, 25, 25, null);
 		
 			g.drawString(scoreString, 505, 58);
 			
@@ -239,6 +236,7 @@ private static final long serialVersionUID = 1L;
 		synchronized public void update() {
 		    
 		    objPaddles.get(playerIndex).move();
+		    objPaddles.get(playerIndex).switchDirectionMultiplayer(isFlipActiveString.equals("true"));
 		    int posPaddleX;
 		    int posPaddleY;
 			for (int i=0; i<numberOfPlayer; i++) {
@@ -248,11 +246,12 @@ private static final long serialVersionUID = 1L;
 					objPaddles.get(i).setPosition(posPaddleX, posPaddleY);;
 				}
 			}
+			if (isFlipActiveString.equals("true")) {
+				
+			}
 			
 			for (int i=0; i<objBricks.size(); i++) {
 				objBricks.get(i).setHitLevel(bricksHitLevel.get(i));
-				//System.out.println(objBricks.get(i).getHitLevel());
-				//System.out.println(bricksHitLevel.get(i));
 			}
 			
 			objBall.setPosition(ballPosition[0], ballPosition[1]);
@@ -310,7 +309,10 @@ private static final long serialVersionUID = 1L;
 			ballPosition[1] = Integer.parseInt(gameStatusStringSplitted[k++]);
 			scoreString=gameStatusStringSplitted[k++];
 			lifesLeft=Integer.parseInt(gameStatusStringSplitted[k++]);
-			
+			isFastActiveString=gameStatusStringSplitted[k++];
+			fastRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
+			isFlipActiveString=gameStatusStringSplitted[k++];
+			flipRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
 		}
 
 		private void endGameOver() {
