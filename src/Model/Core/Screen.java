@@ -68,7 +68,7 @@ private static final long serialVersionUID = 1L;
 	double flipStartTime = 0;
 	double switchStart = 0;
 	int i = 0;
-	private LifeAdvisor lifePlayer;
+	private LifeAdvisor lifeAdvisor;
 	private DatagramSocket datagramSocket;
 	private int serverPort;
 	private int lastScore;
@@ -209,7 +209,7 @@ private static final long serialVersionUID = 1L;
 				endGameWin();
 			}
 			
-			switch (players.get(0).getLife()) {
+			switch (lifeAdvisor.getLife()) {
 				case 1:
 					g.drawImage(life, 505, 78, 20, 20, null); 
 					break;
@@ -238,7 +238,7 @@ private static final long serialVersionUID = 1L;
 		
 			
 		    objBall.move();
-		    gameOver = lifePlayer.checkLife();
+		    gameOver = lifeAdvisor.checkLife();
 		    gameStatus = ball1.checkBorderCollision();
 		    
 		    
@@ -310,7 +310,7 @@ private static final long serialVersionUID = 1L;
 			
 			//creazione e posizionamento dei Bricks
 			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddle);
-			this.lifePlayer = new LifeAdvisor(players.get(0), mainMusic, ball1, objBall);
+			this.lifeAdvisor = new LifeAdvisor(this, mainMusic, ball1, objBall);
 		}
 		
 
@@ -362,7 +362,7 @@ private static final long serialVersionUID = 1L;
 			objBall.refresh();
 			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
 			score=0;
-			lifePlayer.resetLife();
+			lifeAdvisor.resetLife();
 	
 		}
 		

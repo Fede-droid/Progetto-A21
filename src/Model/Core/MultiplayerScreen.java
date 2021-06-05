@@ -67,7 +67,8 @@ private static final long serialVersionUID = 1L;
 	CollisionAdvisor ball1;
 	private Music mainMusic;
 	private BreakoutGame game;
-	private String score;
+	private String scoreString;
+	private int lifesLeft;
 	private Levels levels;
 	double fastStartTime = 0;
 	double flipStartTime = 0;
@@ -186,7 +187,7 @@ private static final long serialVersionUID = 1L;
             }
             else g.drawImage(off, 508, 228, 25, 25, null);*/
 		
-			g.drawString(score, 505, 58);
+			g.drawString(scoreString, 505, 58);
 			
 			for (Brick tempBrick : objBricks) {
 				if (tempBrick.getHitLevel()!=0) {
@@ -211,7 +212,7 @@ private static final long serialVersionUID = 1L;
 			}
 			
 			
-			/*switch (players.get(0).getLife()) {
+			switch (lifesLeft) {
 				case 1:
 					g.drawImage(life, 505, 78, 20, 20, null); 
 					break;
@@ -225,7 +226,7 @@ private static final long serialVersionUID = 1L;
 					g.drawImage(life, 505, 98, 20, 20, null);
 			}
 
-		    if (!gameWin) endGameOver();
+		    /*if (!gameWin) endGameOver();
 			
 			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);*/
 			
@@ -307,7 +308,8 @@ private static final long serialVersionUID = 1L;
 			int k = objBricks.size()+2*numberOfPlayer;
 			ballPosition[0] = Integer.parseInt(gameStatusStringSplitted[k++]);
 			ballPosition[1] = Integer.parseInt(gameStatusStringSplitted[k++]);
-			score=gameStatusStringSplitted[k++];
+			scoreString=gameStatusStringSplitted[k++];
+			lifesLeft=Integer.parseInt(gameStatusStringSplitted[k++]);
 			
 		}
 
@@ -349,18 +351,6 @@ private static final long serialVersionUID = 1L;
 			mainMusic.setMusic(b);
 		}
 		
-		/*public void reset() {
-			for(Brick tempBrick : objBricks) {
-				tempBrick.refresh();
-				if(tempBrick.getHasPowerUp()) tempBrick.disactivatePowerUp();
-			}
-			
-			objBall.refresh();
-			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
-			score.resetPoints(players.get(0));
-			lifePlayer.resetLife();
-	
-		}*/
 		
 		public void setLevel(TypeLevels lv) {
 			levels.setLevel(lv);

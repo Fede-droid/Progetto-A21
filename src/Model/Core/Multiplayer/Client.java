@@ -40,7 +40,7 @@ public class Client {
 				
 				byte[] b = playerData.getBytes();
 	            datagramSocket = new DatagramSocket();
-	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4863);
+	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4864);
 	            datagramSocket.send(packet);
 	            
 	            
@@ -94,7 +94,7 @@ public class Client {
 	            		   
 	            		   game.waitingMissingPlayer(); //apre menu di attesa
 	            		   
-	            		   /*while(numberOfMissingPlayer != 0) {
+	            		   while(numberOfMissingPlayer != 0) {
 	            			   
 		            			byte[] d = new byte[1024];
 		       	                DatagramPacket packet2 = new DatagramPacket(d, d.length);
@@ -111,7 +111,7 @@ public class Client {
 	            		   game.setNumberOfPlayer(numberOfPlayer);
 	            		   game.setPlayerIndex(playerIndex);
 	            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);
-	            		   game.startGame();*/
+	            		   game.startGame();
 	           
 	            	   }
 	                	
