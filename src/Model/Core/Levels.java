@@ -6,6 +6,8 @@ import java.util.List;
 import Model.Items.Ball;
 import Model.Items.Brick;
 import Model.Items.Paddle;
+import Model.Items.Utilities;
+import Model.Items.Wall;
 import Model.Items.PowerUp.BallSpeedUp;
 import Model.Items.PowerUp.PowerUp;
 import Model.Items.PowerUp.SwitchPaddleDirection;
@@ -15,15 +17,15 @@ public class Levels {
 	private List<Brick> objBricks;
 	BufferedImage brick, fastBrick, flipBrick;
 	private Ball objBall;
-	private Paddle objPaddle;
+	private ArrayList<Paddle> objPaddles;
 	
-	public Levels(BufferedImage brick, BufferedImage fastBrick,BufferedImage flipBrick, Ball objBall, Paddle objPaddle) {
+	public Levels(BufferedImage brick, BufferedImage fastBrick,BufferedImage flipBrick, Ball objBall, ArrayList<Paddle> objPaddles) {
 		this.level = TypeLevels.LEVEL1;
 		this.brick = brick;
 		this.fastBrick = fastBrick;
 		this.flipBrick = flipBrick;	
 		this.objBall = objBall;
-		this.objPaddle = objPaddle;
+		this.objPaddles = objPaddles;
 		objBricks = new ArrayList<Brick>();
 		}
 	
@@ -35,47 +37,61 @@ public class Levels {
         switch (numberOfPlayers) {
         case 2: {
         	if (playerIndex==0) {
-        		objPaddle.setPosition(200, 580);
+        		objPaddles.get(playerIndex).setPosition(200, 580);
         	}
-        	else objPaddle.setPosition(200, 3);
+        	else objPaddles.get(playerIndex).setPosition(200, 3);
             break;
         }
         case 3: {
         	if (playerIndex==0) {
-        		objPaddle.setPosition(50, 580);
-        		objPaddle.setLimits(0, 240);
+        		objPaddles.get(playerIndex).setPosition(50, 580);
+        		objPaddles.get(playerIndex).setLimits(0, 240);
         	}
         	else if (playerIndex==1) {
-        		objPaddle.setPosition(280, 580);
-        		objPaddle.setLimits(240, 495);
+        		objPaddles.get(playerIndex).setPosition(280, 580);
+        		objPaddles.get(playerIndex).setLimits(240, 495);
         	}
         	else {
-        		objPaddle.setPosition(280, 3);
-        		objPaddle.setLimits(0, 495);
+        		objPaddles.get(playerIndex).setPosition(280, 3);
+        		objPaddles.get(playerIndex).setLimits(0, 495);
         	}
             break;
         }
         case 4: {
         	if (playerIndex==0) {
-        		objPaddle.setPosition(50, 580);
-        		objPaddle.setLimits(0, 240);
+        		objPaddles.get(playerIndex).setPosition(50, 580);
+        		objPaddles.get(playerIndex).setLimits(0, 240);
         	}
         	else if (playerIndex==1) {
-        		objPaddle.setPosition(280, 580);
-        		objPaddle.setLimits(240, 495);
+        		objPaddles.get(playerIndex).setPosition(280, 580);
+        		objPaddles.get(playerIndex).setLimits(240, 495);
         	}
         	else if (playerIndex==2) {
-        		objPaddle.setPosition(50, 3);
-        		objPaddle.setLimits(0, 240);
+        		objPaddles.get(playerIndex).setPosition(50, 3);
+        		objPaddles.get(playerIndex).setLimits(0, 240);
         	}
         	else {
-        		objPaddle.setPosition(280, 3);
-        		objPaddle.setLimits(240, 495);
+        		objPaddles.get(playerIndex).setPosition(280, 3);
+        		objPaddles.get(playerIndex).setLimits(240, 495);
         	}
             break;
         }
         }
     }
+	
+	public void setPlayersPosition(int numberOfPlayers) {
+		switch (numberOfPlayers) {
+		case 1: {
+			objPaddles.get(0).setPosition(200, 580);
+        	break;
+		}
+        case 2: {
+        	objPaddles.get(0).setPosition(200, 580);
+        	objPaddles.get(1).setPosition(200, 5);
+        	break;
+        }
+		}
+	}
 	
 	public ArrayList<Brick> getBricksDesposition() {
 		switch (level) {
@@ -128,7 +144,7 @@ public class Levels {
 				objBricks.add(new Brick(fastBrick, 35, 35, posFastBrick,1, speedUp));
 				
 				int[] posFlipBrick = {289,75};
-				PowerUp flipUp = new SwitchPaddleDirection(objPaddle);
+				PowerUp flipUp = new SwitchPaddleDirection(objPaddles.get(0));
 				objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, flipUp));
 				break;
 									
@@ -223,7 +239,7 @@ public class Levels {
 				objBricks.add(new Brick(fastBrick, 35, 35, posFastBrick,1, speedUp));
 				
 				int[] posFlipBrick = {289,75};
-				PowerUp flipUp = new SwitchPaddleDirection(objPaddle);
+				PowerUp flipUp = new SwitchPaddleDirection(objPaddles.get(0));
 				objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, flipUp));
 				break;
 						

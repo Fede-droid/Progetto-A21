@@ -19,6 +19,12 @@ public class ScreenItem {
         this.position = position;
     }
     
+    public ScreenItem(int width, int height, int[] position) {
+        this.imageWidth = width;
+        this.imageHeight = height;
+        this.position = position;
+    }
+    
     public void render(Graphics g, Canvas c) {
         // si disegna
         g.drawImage(image, position[0], position[1], imageWidth, imageHeight, c);

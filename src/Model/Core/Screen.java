@@ -25,6 +25,7 @@ import Model.Items.Brick;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 import Model.Items.Utilities;
+import Model.Items.Wall;
 import Model.Items.PowerUp.BallSpeedUp;
 import Model.Items.PowerUp.PowerUp;
 import Model.Items.PowerUp.PowerUpTypes;
@@ -49,12 +50,12 @@ private static final long serialVersionUID = 1L;
 	private boolean isFastActive = false;
 	private boolean isFlipActive = false;
 	private Ball objBall;
-	private List<Brick> objBricks;
+	private ArrayList<Brick> objBricks;
+	private ArrayList<Wall> objWalls;
 	private Box objBox;
-	//private List<SpecialBrick> objSpecialBricks;
 	private ScreenItem objSfondo;
 	private ImagesLoader loader;
-	private Paddle objPaddle;
+	private ArrayList<Paddle> objPaddles;
 	Clip win,hit;
 	boolean isMusicOn;
 	private Graphics g;
@@ -63,21 +64,22 @@ private static final long serialVersionUID = 1L;
 	private BreakoutGame game;
 	private int score;
 	private Levels levels;
-	private List<Player> players;
+	private ArrayList<Player> players;
 	double fastStartTime = 0;
 	double flipStartTime = 0;
 	double switchStart = 0;
-	int i = 0;
 	private LifeAdvisor lifeAdvisor;
 	private DatagramSocket datagramSocket;
-	private int serverPort;
-	private int lastScore;
+	private int lastScore, numberOfPlayers;
 
 	
-	public Screen(BreakoutGame game) {
+	public Screen(BreakoutGame game,int numberOfPlayers) {
 		this.game = game;
+		this.numberOfPlayers=numberOfPlayers;
 		objBricks = new ArrayList<Brick>();
-		//objSpecialBricks = new ArrayList<SpecialBrick>();
+		objPaddles = new ArrayList<Paddle>();
+		players = new ArrayList<Player>();
+		objWalls = new ArrayList<Wall>();
 		uploadImages();
 		this.mainMusic = new Music();
 		score=0;
@@ -135,6 +137,91 @@ private static final long serialVersionUID = 1L;
 			life = loader.uploadImage("/Images/life.png");
 		}
 
+		// inzializzazione partita
+		public void start() {
+	
+			// posizione di partenza dello sfondo
+			int[] posInitSfondo = new int[2];
+			posInitSfondo[0] = 0;
+			posInitSfondo[1] = 0;
+			
+			// creo lo sfondo
+			objSfondo = new ScreenItem(sfondo, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT, posInitSfondo);
+			
+			int[] posBox = new int[2];
+			posBox[0] = 495;  //nell'asse x
+			posBox[1] = 0; //nell'asse y
+			objBox = new Box(box, 80, 700, posBox);
+			
+			// posizione di partenza ball
+			int[] posInitBall = new int[2];
+
+			posInitBall[0] = Utilities.INTIAL_POSITION_BALL_X;  // x
+			posInitBall[1] = Utilities.INITIAL_POSITION_BALL_Y;  // y
+			
+			// faccio partire il thread corrispondente a ball
+			objBall = new Ball(ball, 20, 20, posInitBall);
+			
+			ball1 = new CollisionAdvisor(objBall, mainMusic);
+			
+			//creazione e posizionamento dei Bricks
+			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddles);
+			this.lifeAdvisor = new LifeAdvisor(this, mainMusic, ball1, objBall);
+		}
+		
+		// aggiornamento ciclo di gioco
+		synchronized public void update() {
+			
+		    objBall.move();
+		    gameOver = lifeAdvisor.checkLife(numberOfPlayers);
+		    gameStatus = ball1.checkBorderCollision(numberOfPlayers);
+		    
+		    for (Paddle tempPaddle: objPaddles) {
+		    	ball1.checkCollisionLato(tempPaddle);
+				ball1.checkCollision(tempPaddle);
+		    }
+		    
+		    for (Wall tempWall: objWalls) {
+		    	ball1.checkCollisionLato(tempWall);
+				ball1.checkCollision(tempWall);
+		    }
+
+			ball1.checkCollisionLato(objBox);
+			
+			for (Brick tempBrick : objBricks) {
+				if (!tempBrick.isDestroyed()) {
+					if(ball1.checkCollisionLato(tempBrick) || ball1.checkCollision(tempBrick)) {
+						score++;
+					}
+					if(tempBrick.isDestroyed()) {
+						if (tempBrick.whichPower() == PowerUpTypes.FAST) isFastStarted = tempBrick.activatePowerUP();
+						if (tempBrick.whichPower() == PowerUpTypes.FLIP) isFlipStarted = tempBrick.activatePowerUP();
+					}
+					if(isFastStarted) {
+						fastStartTime = System.nanoTime();
+						isFastActive = true;
+						isFastStarted = false;
+					}
+					if(isFlipStarted) {
+						flipStartTime = System.nanoTime();
+						isFlipActive = true;
+						isFlipStarted = false;
+					}
+				}
+				if (System.nanoTime() >= fastStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FAST) {
+					isFastActive = false;
+					tempBrick.disactivatePowerUp();
+				}
+				if (System.nanoTime() >= flipStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FLIP) {
+					isFlipActive = false;
+					tempBrick.disactivatePowerUp();
+				}
+			}
+			
+			objPaddles.get(0).move();
+			if (objPaddles.size()>1) objPaddles.get(1).move(objBall.getXPosition(), objBall.getYPosition(),objBall.getImageWidth());
+		}		
+		
 		// disegno di oggetti grafici a schermo
 		synchronized public void render() {
 			
@@ -155,8 +242,7 @@ private static final long serialVersionUID = 1L;
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
-			//for(Player ps : players) {
-			objPaddle.render(g);
+			for(Paddle tempPaddle: objPaddles) tempPaddle.render(g);
 			objBox.render(g);
             g.drawImage(hitBox, 508, 3, 30, 30, null);
             
@@ -231,88 +317,6 @@ private static final long serialVersionUID = 1L;
 			
 			buffer.show();
 		}
-		
-		// aggiornamento ciclo di gioco
-		synchronized public void update() {
-			
-		
-			
-		    objBall.move();
-		    gameOver = lifeAdvisor.checkLife();
-		    gameStatus = ball1.checkBorderCollision();
-		    
-		    
-			ball1.checkCollisionLato(objPaddle);
-			ball1.checkCollisionLato(objBox);
-			ball1.checkCollision(objPaddle);
-			
-			for (Brick tempBrick : objBricks) {
-				if (!tempBrick.isDestroyed()) {
-					if(ball1.checkCollisionLato(tempBrick) || ball1.checkCollision(tempBrick)) {
-						score++;
-					}
-					if(tempBrick.isDestroyed()) {
-						if (tempBrick.whichPower() == PowerUpTypes.FAST) isFastStarted = tempBrick.activatePowerUP();
-						if (tempBrick.whichPower() == PowerUpTypes.FLIP) isFlipStarted = tempBrick.activatePowerUP();
-					}
-					if(isFastStarted) {
-						fastStartTime = System.nanoTime();
-						isFastActive = true;
-						isFastStarted = false;
-					}
-					if(isFlipStarted) {
-						flipStartTime = System.nanoTime();
-						isFlipActive = true;
-						isFlipStarted = false;
-					}
-				}
-				if (System.nanoTime() >= fastStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FAST) {
-					isFastActive = false;
-					tempBrick.disactivatePowerUp();
-				}
-				if (System.nanoTime() >= flipStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FLIP) {
-					isFlipActive = false;
-					tempBrick.disactivatePowerUp();
-				}
-			}
-			
-			objPaddle.move();			
-
-		
-		}
-		
-		// inzializzazione partita
-		public void start() {
-	
-			// posizione di partenza dello sfondo
-			int[] posInitSfondo = new int[2];
-			posInitSfondo[0] = 0;
-			posInitSfondo[1] = 0;
-			
-			// creo lo sfondo
-			objSfondo = new ScreenItem(sfondo, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT, posInitSfondo);
-			
-			int[] posBox = new int[2];
-			posBox[0] = 495;  //nell'asse x
-			posBox[1] = 0; //nell'asse y
-			objBox = new Box(box, 80, 700, posBox);
-			
-			// posizione di partenza ball
-			int[] posInitBall = new int[2];
-
-			posInitBall[0] = Utilities.INTIAL_POSITION_BALL_X;  // x
-			posInitBall[1] = Utilities.INITIAL_POSITION_BALL_Y;  // y
-			
-			// faccio partire il thread corrispondente a ball
-			objBall = new Ball(ball, 20, 20, posInitBall);
-			
-			ball1 = new CollisionAdvisor(objBall, mainMusic);
-			
-			//creazione e posizionamento dei Bricks
-			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddle);
-			this.lifeAdvisor = new LifeAdvisor(this, mainMusic, ball1, objBall);
-		}
-		
 
 		private void endGameOver() {
 			if(!gameStatus) {
@@ -343,9 +347,11 @@ private static final long serialVersionUID = 1L;
 		
 
 		//Aggiungo player alla partita
-		public void newPlayer(Player p) {
-			this.players = game.getPlayers();
-			this.objPaddle = players.get(0).getObjPaddle();	
+		public void addPlayers(ArrayList<Player> players) {
+			this.players = players;
+			for(Player tempPlayer : players) {
+				objPaddles.add(tempPlayer.getObjPaddle());	
+			}
 		}
 		
 		//modifico musica 
@@ -360,16 +366,16 @@ private static final long serialVersionUID = 1L;
 			}
 			
 			objBall.refresh();
-			objPaddle.setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
+			objPaddles.get(0).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
 			score=0;
 			lifeAdvisor.resetLife();
 	
 		}
 		
 		public void setLevel(TypeLevels lv) {
-
 			levels.setLevel(lv);
 			objBricks = levels.getBricksDesposition();
+			levels.setPlayersPosition(numberOfPlayers);
 		}
 		
 		public int getLastScore() {

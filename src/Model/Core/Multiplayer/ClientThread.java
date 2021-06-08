@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import Model.Core.MultiplayerScreen;
@@ -34,6 +36,13 @@ public class ClientThread extends Thread {
      */
     synchronized public void run() {
     	
+    	try {
+			datagramSocket.setSoTimeout(30);
+		} catch (SocketException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
         while (true) {
 			try {
 				byte[] b = new byte[1024];
@@ -46,18 +55,22 @@ public class ClientThread extends Thread {
                 DatagramPacket packet = new DatagramPacket(bytes, bytes.length);
                 datagramSocket.receive(packet);
                 String allGameInfos = new String(packet.getData(), 0, packet.getLength());
-                System.out.println(allGameInfos);
+                //ystem.out.println(allGameInfos);
                 
                 screen.setStringGameStatus(allGameInfos);
                 
-				wait(10);
+				wait(25);
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (IOException e) {
+			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (InterruptedException e) {
+			}
+			  catch (SocketTimeoutException e) {
+	            // incoming package timeout exception.
+	            System.out.println("Incoming package lost!");
+	        } catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

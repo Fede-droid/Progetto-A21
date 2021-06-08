@@ -53,12 +53,8 @@ public class BreakoutGame {
 	}
 
 	// avvio menu principale e creazione gioco
-	public void start() {
-		
-		
-		
-		this.screen = new Screen(this); //creazione schermo di gioco		
-		
+	public void start() {		
+				
 		this.m = new MainMenu(this);
 		
 		gameFrame.add(m);
@@ -66,28 +62,27 @@ public class BreakoutGame {
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
 		
-		
 	}
 
 	
 	// inizializzazione gioco con un giocaore offline
 	public void gameSetupSinglePlayer() {
-	
-	
-		// creo un giocatore
-		p = new Player();
-		players.add(p);
 		
-		screen.newPlayer(p);
+		this.screen = new Screen(this,2); //creazione schermo di gioco		
 		
+		for (int i=0; i<2; i++) {
+			players.add(new Player());
+		}
+		
+		screen.addPlayers(players);
 		screen.start();
-		screen.setLevel(lv);
+		screen.setLevel(TypeLevels.MULTIPLAYER);
 		
 		gameFrame.add(screen);
 		gameFrame.requestFocusInWindow();
 
 		// aggiungo controllo da tastiera
-		gameFrame.addKeyListener(p.getInputHandler());
+		gameFrame.addKeyListener(players.get(0).getInputHandler());
 		gameFrame.pack();
 		gameFrame.setVisible(true);
 				

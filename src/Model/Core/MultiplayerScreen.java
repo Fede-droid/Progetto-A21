@@ -246,9 +246,6 @@ private static final long serialVersionUID = 1L;
 					objPaddles.get(i).setPosition(posPaddleX, posPaddleY);;
 				}
 			}
-			if (isFlipActiveString.equals("true")) {
-				
-			}
 			
 			for (int i=0; i<objBricks.size(); i++) {
 				objBricks.get(i).setHitLevel(bricksHitLevel.get(i));
@@ -285,7 +282,7 @@ private static final long serialVersionUID = 1L;
 			objBall = new Ball(ball, 20, 20, posInitBall);
 						
 			//creazione e posizionamento dei Bricks
-			levels = new Levels(brick, fastBrick, flipBrick, null, objPaddles.get(playerIndex));
+			levels = new Levels(brick, fastBrick, flipBrick, null, objPaddles);
 			levels.setPlayersPosition(numberOfPlayer, playerIndex);
 			setLevel(TypeLevels.MULTIPLAYER);
 		}

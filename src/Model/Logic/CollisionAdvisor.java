@@ -4,6 +4,7 @@ import Model.Items.Ball;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 import Model.Items.Utilities;
+import Model.Items.Wall;
 import Music.Music;
 import Music.MusicTypes;
 
@@ -20,31 +21,32 @@ public class CollisionAdvisor {
 		
 	}
 	
-	public boolean checkGameOver() {
-		if((ball.getPosition()[1] + ball.getImageHeight()) >= Utilities.SCREEN_HEIGHT-4) {
+	public boolean checkGameOver(int numberOfPlayers) {
+		if((ball.getPosition()[1] + ball.getImageHeight()) >= Utilities.SCREEN_HEIGHT-3) {
             return true;
         }
+		if(numberOfPlayers > 1) {
+			if (ball.getPosition()[1] <= 3) return true;
+		}
 		return false;
-		
 	}
 	
-	public boolean checkBorderCollision() {
-		this.ballSpeed = ball.getSpeed();
-        if ((ball.getPosition()[0] + ball.getImageHeight()) >= Utilities.SCREEN_WIDTH) {
-            ball.setXdir(-1);
-			if (collisionMusic.isMusicOn()) collisionMusic.playMusic(MusicTypes.HIT);
-        }
-
+	public boolean checkBorderCollision(int numberOfPlayers) {
         if (ball.getPosition()[0] <= 0) {
             ball.setXdir(1);
 			if (collisionMusic.isMusicOn()) collisionMusic.playMusic(MusicTypes.HIT);
         }
-
-        if (ball.getPosition()[1] <= 0) {
-            ball.setYdir(1);
-			if (collisionMusic.isMusicOn()) collisionMusic.playMusic(MusicTypes.HIT);
-        }
         
+        if(numberOfPlayers > 1) {
+        	if (ball.getPosition()[1] <= 0) return false;
+        }
+        else {
+        	if (ball.getPosition()[1] <= 0) {
+                ball.setYdir(1);
+        		if (collisionMusic.isMusicOn()) collisionMusic.playMusic(MusicTypes.HIT);
+            }
+        }
+    
         if((ball.getPosition()[1] + ball.getImageHeight()) >= Utilities.SCREEN_HEIGHT) {
                return false;
         }
@@ -92,7 +94,7 @@ public class CollisionAdvisor {
 			if (ball.getPosition()[1] <= (item.getPosition()[1]+item.getImageHeight()+ballSpeed) && (ball.getPosition()[1]+ball.getImageHeight()) >= item.getPosition()[1]-ballSpeed) {
 				if (isBallBelow) ball.setYdir(1);
 				else ball.setYdir(-1);
-				if (ball.getPosition()[0] >= (item.getPosition()[0]+item.getImageWidth()/2)) ball.setXdir(1);
+				if (ball.getPosition()[0]+ball.getImageWidth()/2 >= (item.getPosition()[0]+item.getImageWidth()/2)) ball.setXdir(1);
 				else ball.setXdir(-1);
 				if (collisionMusic.isMusicOn()) collisionMusic.playMusic(MusicTypes.HIT);
 				return true;

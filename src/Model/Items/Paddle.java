@@ -42,6 +42,23 @@ public class Paddle extends ScreenItem {
         }
     }
     
+    public void move(int positionXBall, int positionYBall, int ballImageWidth) {
+    	if (positionYBall >= 81+Math.random()*10) {
+    		if (positionXBall+ballImageWidth/2 >= position[0]+getImageWidth()/2) {
+        		position[0] += VELOCITA;
+        	}
+        	else position[0] += -VELOCITA;
+    	}
+    	
+    	if (position[0] <= leftLimit) {
+        	position[0] = leftLimit;
+        }
+
+        if (position[0] + imageWidth >= rightLimit) {
+        	position[0] = rightLimit - imageWidth;
+        }
+    }
+    
     // appena si preme il paddle si aggiorna ad ogni frame in base alla velocità impostata
     public void keyPressed(KeyEvent e) {
 
