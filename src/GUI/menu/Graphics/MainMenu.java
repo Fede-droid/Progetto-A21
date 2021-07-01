@@ -1,6 +1,8 @@
 package GUI.menu.Graphics;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.TimeUnit;
 
@@ -24,9 +26,12 @@ public class MainMenu extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	BufferedImage background, button1, button2, button3, button4, button5, button6, button7;
+	BufferedImage background, button1, button2, button3, button4, button5, button6, button7, switch1, switch2, bot;
+	
 	ImagesLoader loader;
 	private JButton musicButtonON, musicButtonOFF, level1Button, level2Button;
+	private boolean singleSwitch;
+	
 	
 	public MainMenu(BreakoutGame c) {
 		
@@ -53,6 +58,47 @@ public class MainMenu extends JPanel{
 		backgroundlabel.add(button);
 		SinglePlayerListener a1 = new SinglePlayerListener(c, this);
 		button.addActionListener(a1);
+		
+		// bottone switch1
+		this.switch1 = loader.uploadImage("menu/menuImages/switch1.png");
+		ImageIcon switch1Img = new ImageIcon(switch1);
+		backgroundlabel.setLayout(new FlowLayout() );
+		JButton switch1 = new JButton();
+		switch1.setOpaque(false);
+		switch1.setContentAreaFilled(false);
+		switch1.setBorderPainted(false);
+		switch1.setIcon(switch1Img);
+		backgroundlabel.add(switch1);
+		switch1.setVisible(!singleSwitch);
+
+		
+		// bottone switch2
+		this.switch2 = loader.uploadImage("menu/menuImages/switch2.png");
+		ImageIcon switch2Img = new ImageIcon(switch2);
+		backgroundlabel.setLayout(new FlowLayout() );
+		JButton switch2 = new JButton();
+		switch2.setOpaque(false);
+		switch2.setContentAreaFilled(false);
+		switch2.setBorderPainted(false);
+		switch2.setIcon(switch2Img);
+		backgroundlabel.add(switch2);
+		switch2.setVisible(singleSwitch);
+		
+
+	
+		ActionListener setVisibileSwitch1 = new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	singleSwitch = !singleSwitch;
+		    	switch1.setVisible(singleSwitch);
+		    	switch2.setVisible(!singleSwitch);
+		    	repaint();
+		    }
+		};
+		
+		switch1.addActionListener(setVisibileSwitch1);
+		switch2.addActionListener(setVisibileSwitch1);
+		
 		
 		
 		// bottone 2 multiplayer

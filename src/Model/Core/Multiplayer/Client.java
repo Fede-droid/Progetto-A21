@@ -29,8 +29,9 @@ public class Client {
 		
 			// connessione con il server ed inzializzazione giocatore
 			try {
-				address = InetAddress.getByName("202.61.250.68");
-			
+				address = InetAddress.getByName("52.233.198.36");
+				
+			//202.61.250.68
 			
 			boolean waitingToSend = true;
 			
@@ -40,7 +41,7 @@ public class Client {
 				
 				byte[] b = playerData.getBytes();
 	            datagramSocket = new DatagramSocket();
-	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4866);
+	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 8888);
 	            datagramSocket.send(packet);
 	            
 	            
