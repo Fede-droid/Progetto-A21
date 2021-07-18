@@ -348,6 +348,7 @@ private static final long serialVersionUID = 1L;
 
 		//Aggiungo player alla partita
 		public void addPlayers(ArrayList<Player> players) {
+		
 			this.players = players;
 			for(Player tempPlayer : players) {
 				objPaddles.add(tempPlayer.getObjPaddle());	
@@ -360,6 +361,8 @@ private static final long serialVersionUID = 1L;
 		}
 		
 		public void reset() {
+			players.removeAll(players);
+			/*
 			for(Brick tempBrick : objBricks) {
 				tempBrick.refresh();
 				if(tempBrick.getHasPowerUp()) tempBrick.disactivatePowerUp();
@@ -369,7 +372,7 @@ private static final long serialVersionUID = 1L;
 			objPaddles.get(0).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
 			score=0;
 			lifeAdvisor.resetLife();
-	
+	*/
 		}
 		
 		public void setLevel(TypeLevels lv) {

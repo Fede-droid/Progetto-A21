@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import GUI.ImagesLoader;
 import GUI.menu.listeners.MultiplayerListener;
 import GUI.menu.listeners.SetLevel;
-import GUI.menu.listeners.SinglePlayerListener;
 import GUI.menu.listeners.SoundListener;
 import Model.BreakoutGame;
 import Model.Core.TypeLevels;
@@ -45,20 +44,7 @@ public class MainMenu extends JPanel{
 		backgroundlabel.setBounds(0, 0, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT);
 		add(backgroundlabel);
 	
-		
-		// bottone 1 pplayer
-		this.button1 = loader.uploadImage("menu/menuImages/button1.png");
-		ImageIcon button1Img = new ImageIcon(button1);
-		backgroundlabel.setLayout(new FlowLayout() );
-		JButton button = new JButton();
-		button.setOpaque(false);
-		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
-		button.setIcon(button1Img);
-		backgroundlabel.add(button);
-		SinglePlayerListener a1 = new SinglePlayerListener(c, this);
-		button.addActionListener(a1);
-		
+	
 		// bottone switch1
 		this.switch1 = loader.uploadImage("menu/menuImages/switch1.png");
 		ImageIcon switch1Img = new ImageIcon(switch1);
@@ -89,15 +75,44 @@ public class MainMenu extends JPanel{
 		ActionListener setVisibileSwitch1 = new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		    	singleSwitch = !singleSwitch;
 		    	switch1.setVisible(singleSwitch);
 		    	switch2.setVisible(!singleSwitch);
+		    	singleSwitch = !singleSwitch;
 		    	repaint();
 		    }
 		};
 		
 		switch1.addActionListener(setVisibileSwitch1);
 		switch2.addActionListener(setVisibileSwitch1);
+		
+		
+		
+		// bottone 1 pplayer
+		this.button1 = loader.uploadImage("menu/menuImages/button1.png");
+		ImageIcon button1Img = new ImageIcon(button1);
+		backgroundlabel.setLayout(new FlowLayout() );
+		JButton button = new JButton();
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
+		button.setIcon(button1Img);
+		backgroundlabel.add(button);
+		//SinglePlayerListener a1 = new SinglePlayerListener(c, this);
+		//button.addActionListener(a1);
+		
+		ActionListener singlePlayerListener = new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	
+		    	removeAll();
+		    	setVisible(false);
+				c.gameSetupSinglePlayer(singleSwitch);
+				
+		    }
+		};
+		
+		button.addActionListener(singlePlayerListener);
+		
 		
 		
 		

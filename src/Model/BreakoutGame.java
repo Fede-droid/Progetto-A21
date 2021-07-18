@@ -42,6 +42,7 @@ public class BreakoutGame {
 	private int playerNumber, playerIndex, numberOfMissingPlayer;
 	private Client client;
 	private WaitingForPlayerPanel waitingPanel;
+	private boolean botMode;
 	
 	// creazione del controller
 	public BreakoutGame() {
@@ -66,11 +67,18 @@ public class BreakoutGame {
 
 	
 	// inizializzazione gioco con un giocaore offline
-	public void gameSetupSinglePlayer() {
+	public void gameSetupSinglePlayer(boolean botMode) {
 		
-		this.screen = new Screen(this,2); //creazione schermo di gioco		
+		this.botMode = botMode;
 		
-		for (int i=0; i<2; i++) {
+		int n;
+		
+		if(botMode) n = 2; 
+		else n = 1;
+		
+		this.screen = new Screen(this,n); //creazione schermo di gioco		
+		
+		for (int i=0; i<n; i++) {
 			players.add(new Player());
 		}
 		
@@ -218,7 +226,7 @@ public class BreakoutGame {
 		//gameThread.stop();
 		
 		screen.reset();
-		
+		/*
 		gameFrame.add(screen);
 		
 		gameFrame.requestFocusInWindow();
@@ -230,7 +238,7 @@ public class BreakoutGame {
 		this.gameThread2 = new Thread(screen);
 		gameThread2.start();
 		screen.setVisible(true);
-	
+	*/
 		
 	}
 	
@@ -253,6 +261,7 @@ public class BreakoutGame {
 	public void showMain() {
 		
 		screen.reset();
+		
 		
 		gameFrame.add(new MainMenu(this));
 		gameFrame.pack();
@@ -329,6 +338,9 @@ public class BreakoutGame {
 		return screen.getLastScore();
 	}
 	
+	public boolean getBotMode() {
+		return botMode;
+	}
 	
 	
 	

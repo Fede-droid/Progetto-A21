@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 
 import GUI.ImagesLoader;
 import GUI.menu.listeners.MultiplayerListener;
-import GUI.menu.listeners.SinglePlayerListener;
 import Model.BreakoutGame;
 import Model.Items.Utilities;
 

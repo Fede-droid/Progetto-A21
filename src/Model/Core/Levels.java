@@ -96,7 +96,7 @@ public class Levels {
 	public ArrayList<Brick> getBricksDesposition() {
 		switch (level) {
 			case LEVEL1: {
-				for(int i = 0; i < 6; i++) {//first 2 layers down
+				for(int i = 0; i < 1; i++) {//first 2 layers down
 					for (int j = 0; j < 1; j++) { 
 						
 						int[] posInitBrick = new int[2];

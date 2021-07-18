@@ -2,6 +2,8 @@ package GUI.menu.Graphics;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -12,9 +14,7 @@ import javax.swing.JPanel;
 import GUI.ImagesLoader;
 import GUI.menu.listeners.NextLevelListener;
 import GUI.menu.listeners.RepeatListener;
-import GUI.menu.listeners.Return2Main;
 import GUI.menu.listeners.SetLevel;
-import GUI.menu.listeners.SinglePlayerListener;
 import Model.BreakoutGame;
 import Model.Core.TypeLevels;
 import Model.Items.Utilities;
@@ -53,9 +53,22 @@ public class PauseMenu extends JPanel {
 		button.setBorderPainted(false);
 		button.setIcon(button1Img);
 		backgroundlabel.add(button);
-		RepeatListener a1 = new RepeatListener(game, this);
-		button.addActionListener(a1);
+		//RepeatListener a1 = new RepeatListener(game, this);
+		//button.addActionListener(a1);
 		button.setVisible(!win);
+		
+		ActionListener playAgainListener = new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	removeAll();
+		    	setVisible(false);
+		    	
+		    	game.gameSetupSinglePlayer(game.getBotMode());
+		    	repaint();
+		    }
+		};
+		
+		button.addActionListener(playAgainListener);
 		
 		
 		// mega bug 
@@ -84,8 +97,21 @@ public class PauseMenu extends JPanel {
 		button4.setBorderPainted(false);
 		button4.setIcon(button4Img);
 		backgroundlabel.add(button4);
-		Return2Main return2Main = new Return2Main(game, this, win);
-		button4.addActionListener(return2Main);
+		
+
+		ActionListener return2main = new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	removeAll();
+		    	setVisible(false);
+		    	game.reset();
+		    	
+		    	repaint();
+		    }
+		};
+		button4.addActionListener(return2main);
+	
+	
 		
 		
 		JLabel label1 = new JLabel();
