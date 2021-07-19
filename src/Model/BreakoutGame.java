@@ -50,7 +50,7 @@ public class BreakoutGame {
 		this.gameFrame = new GameFrame();
 		players = new ArrayList<Player>();
 		this.lv = TypeLevels.LEVEL1;
-		
+		this.music = true;
 	}
 
 	// avvio menu principale e creazione gioco
@@ -85,6 +85,7 @@ public class BreakoutGame {
 		screen.addPlayers(players);
 		screen.start();
 		screen.setLevel(TypeLevels.MULTIPLAYER);
+		screen.setMusic(music);
 		
 		gameFrame.add(screen);
 		gameFrame.requestFocusInWindow();
@@ -154,7 +155,7 @@ public class BreakoutGame {
 		
 		multiplayerScreen.addPlayers(players); //creazione schermo di gioco multiplayer
 		
-		
+		multiplayerScreen.setMusic(music);
 		
 		multiplayerScreen.start();
 		
@@ -299,7 +300,7 @@ public class BreakoutGame {
 	public void setSound(boolean bool) {
 		
 		this.music = bool;
-		screen.setMusic(bool);
+		
 	}
 
 	public List<Player> getPlayers() {

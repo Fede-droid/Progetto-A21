@@ -22,7 +22,7 @@ public class GameFrame extends JFrame{
 		setTitle("Breakout");
 		Dimension dimension_screen = new Dimension(Utilities.SCREEN_WIDTH,Utilities.SCREEN_HEIGHT);
 		setPreferredSize(dimension_screen);
-		setResizable(true);
+		setResizable(false);
 		inzialize();
 		
 	}
