@@ -1,6 +1,8 @@
 package GUI.menu.Graphics;
 
+import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -9,13 +11,17 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 
 import GUI.ImagesLoader;
 import GUI.menu.listeners.MultiplayerListener;
@@ -59,7 +65,6 @@ public class MultiplayerPanel extends JPanel{
 			button.setVisible(buttonHostVisible);
 			
 			
-			
 			// bottone 2 JOINER
 			this.button2 = loader.uploadImage("menu/menuImages/buttonJOINER.png");
 			ImageIcon button2Img = new ImageIcon(button2);
@@ -71,6 +76,7 @@ public class MultiplayerPanel extends JPanel{
 			button2.setIcon(button2Img);
 			backgroundlabel.add(button2);
 			button2.setVisible(!buttonHostVisible);
+			
 			
 			
 			ActionListener setVisibile = new ActionListener() {
@@ -96,62 +102,44 @@ public class MultiplayerPanel extends JPanel{
 			    }
 			};
 			
-		
 			button2.addActionListener(setVisibile2);
-			
-			
+		
 			
 	        // label nome giocatore
-			backgroundlabel.setLayout(new FlowLayout() );
+			//backgroundlabel.setLayout(new FlowLayout() );
 	        JTextField playerNamel = new JTextField("nome player");
-	        backgroundlabel.add(playerNamel);
 	       
 	       
 	        // label gameCode
-	        backgroundlabel.setLayout(new FlowLayout());
 	        JTextField gameCodel = new JTextField("game code");
-	        backgroundlabel.add(gameCodel);
 	     
 	        
+	      String[] nPlayers = { "1", "2", "3", "4"};
+
+	      //Create the combo box, select item at index 4.
+	      JComboBox<Object> nPl = new JComboBox<Object>(nPlayers);
+	      nPl.setSelectedIndex(3);
+	     
 	        
-	        // numero di giocatori
-	        JCheckBox checkbox1 = new JCheckBox("1");
-	        JCheckBox checkbox2 = new JCheckBox("2");
-	        JCheckBox checkbox3 = new JCheckBox("3");
-	        JCheckBox checkbox4 = new JCheckBox("4");
-	        
-	       
-	        backgroundlabel.add(checkbox1);
-	        backgroundlabel.add(checkbox2);
-	        backgroundlabel.add(checkbox3);
-	        backgroundlabel.add(checkbox4);
-	        
-	      
-	        
-	        
+	    
 			this.submit = loader.uploadImage("menu/menuImages/submit.png");
 			ImageIcon submitImg = new ImageIcon(submit);
-			backgroundlabel.setLayout(new FlowLayout() );
 			submitButton = new JButton();
 			submitButton.setOpaque(false);
 			submitButton.setContentAreaFilled(false);
 			submitButton.setBorderPainted(false);
 			submitButton.setIcon(submitImg);
-			backgroundlabel.add(submitButton);
 			
 			ActionListener submitAction = new ActionListener() {
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
 			    	String playerName = playerNamel.getText();
 			    	String gameCode = gameCodel.getText();
-			    	if(checkbox1.isSelected()) playerNumber = 1;
-				    if(checkbox2.isSelected()) playerNumber = 2;
-				    if(checkbox3.isSelected()) playerNumber = 3;
-				    if(checkbox4.isSelected()) playerNumber = 4;
+			    
 				    c.setPlayerData(buttonHostVisible, playerName, gameCode, playerNumber);
 				    
 			    
-			    	
+				    playerNumber = Integer. parseInt(nPl.getSelectedItem().toString());
 			    	
 			    	
 			    }
@@ -159,6 +147,58 @@ public class MultiplayerPanel extends JPanel{
 			
 			submitButton.addActionListener(submitAction);
 			
+			
+			
+			// posizione bottoni 
+			backgroundlabel.setLayout(null);
+
+			// posizione bottone Host/Joiner
+			button.setSize(400, 100);
+			button2.setSize(400, 100);
+			button.setLocation(Utilities.SCREEN_WIDTH/2 - 200, 30);
+			button2.setLocation(Utilities.SCREEN_WIDTH/2 - 200, 30);
+
+			
+			// posizione "numero giocatori"
+			JLabel numP = new JLabel("Seleziona il numero di giocatori");
+			numP.setSize(500, 100);
+			Font f = new Font("Helvetica", Font.BOLD, 25);
+			numP.setFont(f);
+			numP.setLocation(SwingConstants.CENTER + 100, 130);
+			
+			// numero giocatori
+			nPl.setSize(200, 60);
+			nPl.setLocation(Utilities.SCREEN_WIDTH/2 - 100, 200);
+			Font f1 = new Font("Helvetica", Font.BOLD, 18);
+			nPl.setFont(f1);
+			
+			// nome player
+			playerNamel.setSize(160,30);
+			playerNamel.setLocation(Utilities.SCREEN_WIDTH/2 - 80, 270);
+			playerNamel.setFont(f);
+			
+			// game code
+			gameCodel.setSize(160,30);
+			gameCodel.setLocation(Utilities.SCREEN_WIDTH/2 - 80, 330);
+			gameCodel.setFont(f);
+			
+			// submit
+			submitButton.setSize(400, 200);
+			submitButton.setLocation(Utilities.SCREEN_WIDTH/2 - 200, 360);
+			
+			
+			
+			backgroundlabel.add(button);
+			backgroundlabel.add(button2);
+			backgroundlabel.add(nPl);
+			backgroundlabel.add(numP);
+			backgroundlabel.add(playerNamel);
+			backgroundlabel.add(gameCodel);
+			backgroundlabel.add(submitButton);
+			
+	    
+			
+							
 	}
 	
 	
