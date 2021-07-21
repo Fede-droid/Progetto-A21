@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 
 import GUI.menu.Graphics.GameFrame;
+import GUI.menu.Graphics.IntroPanel;
 import GUI.menu.Graphics.MainMenu;
 import GUI.menu.Graphics.MultiplayerPanel;
 import GUI.menu.Graphics.PauseMenu;
@@ -54,10 +55,21 @@ public class BreakoutGame {
 	}
 
 	// avvio menu principale e creazione gioco
-	public void start() {		
-				
-		this.m = new MainMenu(this);
+	public void start() throws InterruptedException {		
 		
+		IntroPanel intro = new IntroPanel();
+		gameFrame.add(intro);
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+		gameFrame.repaint();
+		
+		TimeUnit.SECONDS.sleep(9);
+		
+		intro.setVisible(false);
+		gameFrame.repaint();
+
+		
+		this.m = new MainMenu(this);
 		gameFrame.add(m);
 		gameFrame.pack();
 		gameFrame.setVisible(true);

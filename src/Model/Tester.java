@@ -7,7 +7,11 @@ public class Tester {
 public static void main(String[] args) {
 	
 		BreakoutGame game = new BreakoutGame();
-		game.start();
+		try {
+			game.start();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	
 	}
 }
