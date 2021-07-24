@@ -16,7 +16,6 @@ import GUI.menu.listeners.MultiplayerListener;
 import GUI.menu.listeners.SetLevel;
 import GUI.menu.listeners.SoundListener;
 import Model.BreakoutGame;
-import Model.Core.Levels.TypeLevels;
 import Model.Items.Utilities;
 
 public class MainMenu extends JPanel{
@@ -169,8 +168,8 @@ public class MainMenu extends JPanel{
 		level1Button.setBorderPainted(false);
 		level1Button.setIcon(button6Img);
 		backgroundlabel.add(level1Button);
-		SetLevel l1 = new SetLevel(c, this, TypeLevels.LEVEL1);
-		level1Button.addActionListener(l1);
+		//SetLevel l1 = new SetLevel(c, this, 1);
+		//level1Button.addActionListener(l1);
 		
 		// bottone  5 level 2
 		this.button7 = loader.uploadImage("menu/menuImages/level1.png");
@@ -182,11 +181,11 @@ public class MainMenu extends JPanel{
 		level2Button.setBorderPainted(false);
 		level2Button.setIcon(button7Img);
 		backgroundlabel.add(level2Button);
-		SetLevel l2 = new SetLevel(c, this, TypeLevels.LEVEL2);
-		level2Button.addActionListener(l2);
+		//SetLevel l2 = new SetLevel(c, this);
+		//level2Button.addActionListener(l2);
 		//level2Button.setVisible(false);
 		
-		setLevelButton(TypeLevels.LEVEL1);
+		//setLevelButton(TypeLevels.LEVEL1);
 	}
 	
 	public void setMusicButton(boolean bool) {
@@ -196,6 +195,7 @@ public class MainMenu extends JPanel{
 		
 	}
 	
+	/*
 	public void setLevelButton(TypeLevels lv) {
 		
 		switch(lv){
@@ -211,7 +211,7 @@ public class MainMenu extends JPanel{
 		
 	}
 	
-	
+	*/
 	
 	
 	

@@ -3,9 +3,7 @@ package GUI.menu.listeners;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JPanel;
-
 import Model.BreakoutGame;
-import Model.Core.Levels.TypeLevels;
 
 public class NextLevelListener extends Listener {
 
@@ -18,7 +16,7 @@ public class NextLevelListener extends Listener {
 	public void actionPerformed(ActionEvent e) {
 		
 		removeOldPanel();
-		game.setLevel(TypeLevels.LEVEL2);
+		game.setLevel(2);
 		game.nextLevel();
 		
 	}

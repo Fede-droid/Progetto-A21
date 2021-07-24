@@ -18,7 +18,6 @@ import Model.Items.PowerUp.PowerUp;
 import Model.Items.PowerUp.SwitchPaddleDirection;
 
 public class Levels {
-	private TypeLevels level;
 	private List<Brick> objBricks;
 	BufferedImage brick, fastBrick, flipBrick;
 	private Ball objBall;
