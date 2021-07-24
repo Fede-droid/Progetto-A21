@@ -15,10 +15,10 @@ import GUI.menu.Graphics.MultiplayerPanel;
 import GUI.menu.Graphics.PauseMenu;
 import GUI.menu.Graphics.WaitingForPlayerPanel;
 import GUI.menu.Graphics.YouWin;
-import Model.Core.Levels;
 import Model.Core.MultiplayerScreen;
 import Model.Core.Screen;
-import Model.Core.TypeLevels;
+import Model.Core.Levels.Levels;
+import Model.Core.Levels.TypeLevels;
 import Model.Core.Multiplayer.Client;
 
 import Model.Items.Utilities;
@@ -96,7 +96,7 @@ public class BreakoutGame {
 		
 		screen.addPlayers(players);
 		screen.start();
-		screen.setLevel(TypeLevels.MULTIPLAYER);
+		screen.setLevel(1);
 		screen.setMusic(music);
 		
 		gameFrame.add(screen);
@@ -290,6 +290,7 @@ public class BreakoutGame {
 	public void nextLevel() {
 
 		screen.reset();
+		screen.setLevel(2);
 		screen.start();
 		
 		gameFrame.add(screen);

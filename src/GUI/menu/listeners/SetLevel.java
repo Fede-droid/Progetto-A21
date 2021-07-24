@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 import GUI.menu.Graphics.MainMenu;
 import Model.BreakoutGame;
-import Model.Core.TypeLevels;
+import Model.Core.Levels.TypeLevels;
 
 public class SetLevel extends Listener {
 

@@ -11,7 +11,7 @@ public class ScreenItem {
     protected int imageWidth;
     protected int imageHeight;
     protected int position[]; // position[0] = x, position[1] = y;
-
+    
     public ScreenItem(BufferedImage image, int width, int height, int[] position) {
         this.image = image;
         this.imageWidth = width;

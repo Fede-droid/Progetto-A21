@@ -1,0 +1,7 @@
+# max colonne = 6
+# max righe = 10
+# brick = "b"
+# powerUp = 1,2, ...
+$ 1
+b
+end

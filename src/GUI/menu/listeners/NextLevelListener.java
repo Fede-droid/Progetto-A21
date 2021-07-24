@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 import Model.BreakoutGame;
-import Model.Core.TypeLevels;
+import Model.Core.Levels.TypeLevels;
 
 public class NextLevelListener extends Listener {
 

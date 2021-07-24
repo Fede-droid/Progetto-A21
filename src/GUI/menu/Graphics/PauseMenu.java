@@ -16,7 +16,7 @@ import GUI.menu.listeners.NextLevelListener;
 import GUI.menu.listeners.RepeatListener;
 import GUI.menu.listeners.SetLevel;
 import Model.BreakoutGame;
-import Model.Core.TypeLevels;
+import Model.Core.Levels.TypeLevels;
 import Model.Items.Utilities;
 import java.awt.image.BufferedImage;
 

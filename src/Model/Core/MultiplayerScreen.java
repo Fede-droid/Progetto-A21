@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
 
 import GUI.ImagesLoader;
 import Model.BreakoutGame;
+import Model.Core.Levels.Levels;
+import Model.Core.Levels.TypeLevels;
 import Model.Core.Multiplayer.ClientThread;
 
 import Model.Items.Ball;
@@ -352,7 +354,7 @@ private static final long serialVersionUID = 1L;
 		
 		
 		public void setLevel(TypeLevels lv) {
-			levels.setLevel(lv);
+			levels.setLevel(1);
 			objBricks = levels.getBricksDesposition();
 		}
 		

@@ -16,7 +16,7 @@ import GUI.menu.listeners.MultiplayerListener;
 import GUI.menu.listeners.SetLevel;
 import GUI.menu.listeners.SoundListener;
 import Model.BreakoutGame;
-import Model.Core.TypeLevels;
+import Model.Core.Levels.TypeLevels;
 import Model.Items.Utilities;
 
 public class MainMenu extends JPanel{
