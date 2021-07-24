@@ -21,7 +21,6 @@ import javax.swing.JOptionPane;
 import GUI.ImagesLoader;
 import Model.BreakoutGame;
 import Model.Core.Levels.Levels;
-import Model.Core.Levels.TypeLevels;
 import Model.Core.Multiplayer.ClientThread;
 
 import Model.Items.Ball;
@@ -89,6 +88,7 @@ private static final long serialVersionUID = 1L;
 		this.playerIndex = playerIndex;
 		paddlesPosition = new ArrayList<>();
 		bricksHitLevel = new ArrayList<>();
+		setLevel(1);
 	}
 	
 	
@@ -286,7 +286,7 @@ private static final long serialVersionUID = 1L;
 			//creazione e posizionamento dei Bricks
 			levels = new Levels(brick, fastBrick, flipBrick, null, objPaddles);
 			levels.setPlayersPosition(numberOfPlayer, playerIndex);
-			setLevel(TypeLevels.MULTIPLAYER);
+			objBricks = levels.getBricksDesposition();
 		}
 		
 		public void setStringGameStatus(String gameStatus) {
@@ -353,9 +353,9 @@ private static final long serialVersionUID = 1L;
 		}
 		
 		
-		public void setLevel(TypeLevels lv) {
-			levels.setLevel(1);
-			objBricks = levels.getBricksDesposition();
+		public void setLevel(int lv) {
+			levels.setLevel(lv);
+			
 		}
 		
 		public int getPaddleXPosition() {

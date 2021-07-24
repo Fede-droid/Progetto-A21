@@ -18,7 +18,6 @@ import GUI.menu.Graphics.YouWin;
 import Model.Core.MultiplayerScreen;
 import Model.Core.Screen;
 import Model.Core.Levels.Levels;
-import Model.Core.Levels.TypeLevels;
 import Model.Core.Multiplayer.Client;
 
 import Model.Items.Utilities;
@@ -35,7 +34,6 @@ public class BreakoutGame {
 	private Boolean music; // setup musica
 	private Player p; 
 	private MainMenu m;
-	private TypeLevels lv;
 	private MultiplayerScreen multiplayerScreen;
 	private MultiplayerPanel multiplayerPanel;
 	private boolean isHost;
@@ -44,13 +42,14 @@ public class BreakoutGame {
 	private Client client;
 	private WaitingForPlayerPanel waitingPanel;
 	private boolean botMode;
+	private int lv;
 	
 	// creazione del controller
 	public BreakoutGame() {
 		
 		this.gameFrame = new GameFrame();
 		players = new ArrayList<Player>();
-		this.lv = TypeLevels.LEVEL1;
+		this.lv = 1;
 		this.music = true;
 	}
 
@@ -326,7 +325,7 @@ public class BreakoutGame {
 	}
 	
 	
-	public void setLevel(TypeLevels level) {
+	public void setLevel(int level) {
 		
 		this.lv = level;
 		
