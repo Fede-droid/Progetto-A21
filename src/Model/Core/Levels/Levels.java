@@ -399,7 +399,15 @@ public class Levels {
 				posInitBrick[0] = j * 80 + 15;  //nell'asse x
 				posInitBrick[1] = nLine * 47 + 129; //nell'asse y
 				if(li[j].equals("b")) objBricks.add(new Brick(brick, 65, 25, posInitBrick,4));
-				
+				if(li[j].equals("1")) {
+					PowerUp speedUp = new BallSpeedUp(objBall);
+					objBricks.add(new Brick(fastBrick, 35, 35, posInitBrick,1, speedUp));
+				}
+				if(li[j].equals("2")) {
+					PowerUp flipUp = new SwitchPaddleDirection(objPaddles.get(0));
+					objBricks.add(new Brick(flipBrick, 35, 35, posInitBrick,1, flipUp));
+				}
+
 				}
 				
 			}

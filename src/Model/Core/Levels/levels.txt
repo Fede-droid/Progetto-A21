@@ -3,5 +3,5 @@
 # brick = "b"
 # powerUp = 1,2, ...
 $ 1
-b
+b 1 2
 end
