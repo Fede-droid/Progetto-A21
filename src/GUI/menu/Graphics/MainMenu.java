@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -164,6 +165,26 @@ public class MainMenu extends JPanel{
 		allLevels.setBorderPainted(false);
 		allLevels.setIcon(button6Img);
 		backgroundlabel.add(allLevels);
+		
+		ActionListener allLevelsList = new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	
+		    	removeAll();
+		    	setVisible(false);
+				
+				
+				removeAll();
+				setVisible(false);
+				setEnabled(false);
+				invalidate();
+				AllLevelsPanel p = new AllLevelsPanel(c);
+				p.setVisible(true);
+				
+		    }
+		};
+		
+		//allLevels.addActionListener(allLevelsList);
 		
 		
 	}
