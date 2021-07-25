@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 
 import GUI.ImagesLoader;
 import GUI.menu.listeners.MultiplayerListener;
-import GUI.menu.listeners.SetLevel;
 import GUI.menu.listeners.SoundListener;
 import Model.BreakoutGame;
 import Model.Items.Utilities;
@@ -27,7 +26,7 @@ public class MainMenu extends JPanel{
 	BufferedImage background, button1, button2, button3, button4, button5, button6, button7, switch1, switch2, bot;
 	
 	ImagesLoader loader;
-	private JButton musicButtonON, musicButtonOFF, level1Button, level2Button;
+	private JButton musicButtonON, musicButtonOFF, allLevels;
 	private boolean singleSwitch;
 	
 	
@@ -113,8 +112,6 @@ public class MainMenu extends JPanel{
 		button.addActionListener(singlePlayerListener);
 		
 		
-		
-		
 		// bottone 2 multiplayer
 		this.button2 = loader.uploadImage("menu/menuImages/button2.png");
 		ImageIcon button2Img = new ImageIcon(button2);
@@ -127,7 +124,6 @@ public class MainMenu extends JPanel{
 		backgroundlabel.add(button2);
 		MultiplayerListener a2 = new MultiplayerListener(c, this);
 		button2.addActionListener(a2);
-		
 		
 		
 		// bottone 4 ON
@@ -159,33 +155,17 @@ public class MainMenu extends JPanel{
 		
 		
 		// bottone 4 level 1
-		this.button6 = loader.uploadImage("menu/menuImages/level2.png");
+		this.button6 = loader.uploadImage("menu/menuImages/allLevels.png");
 		ImageIcon button6Img = new ImageIcon(button6);
 		backgroundlabel.setLayout(new FlowLayout() );
-		this.level1Button = new JButton();
-		level1Button.setOpaque(false);
-		level1Button.setContentAreaFilled(false);
-		level1Button.setBorderPainted(false);
-		level1Button.setIcon(button6Img);
-		backgroundlabel.add(level1Button);
-		//SetLevel l1 = new SetLevel(c, this, 1);
-		//level1Button.addActionListener(l1);
+		this.allLevels = new JButton();
+		allLevels.setOpaque(false);
+		allLevels.setContentAreaFilled(false);
+		allLevels.setBorderPainted(false);
+		allLevels.setIcon(button6Img);
+		backgroundlabel.add(allLevels);
 		
-		// bottone  5 level 2
-		this.button7 = loader.uploadImage("menu/menuImages/level1.png");
-		ImageIcon button7Img = new ImageIcon(button7);
-		backgroundlabel.setLayout(new FlowLayout() );
-		this.level2Button = new JButton();
-		level2Button.setOpaque(false);
-		level2Button.setContentAreaFilled(false);
-		level2Button.setBorderPainted(false);
-		level2Button.setIcon(button7Img);
-		backgroundlabel.add(level2Button);
-		//SetLevel l2 = new SetLevel(c, this);
-		//level2Button.addActionListener(l2);
-		//level2Button.setVisible(false);
 		
-		//setLevelButton(TypeLevels.LEVEL1);
 	}
 	
 	public void setMusicButton(boolean bool) {

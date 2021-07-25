@@ -42,15 +42,16 @@ public class BreakoutGame {
 	private Client client;
 	private WaitingForPlayerPanel waitingPanel;
 	private boolean botMode;
-	private int lv;
+	private int level, totLevels;
 	
 	// creazione del controller
 	public BreakoutGame() {
 		
 		this.gameFrame = new GameFrame();
 		players = new ArrayList<Player>();
-		this.lv = 1;
 		this.music = true;
+		
+		this.level = 1;
 	}
 
 	// avvio menu principale e creazione gioco
@@ -74,6 +75,8 @@ public class BreakoutGame {
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
 		
+		this.screen = new Screen(this); //creazione schermo di gioco
+		
 	}
 
 	
@@ -86,16 +89,15 @@ public class BreakoutGame {
 		
 		if(botMode) n = 2; 
 		else n = 1;
-		
-		this.screen = new Screen(this,n); //creazione schermo di gioco		
-		
+				
+		screen.setNumberOfPlayers(n);
 		for (int i=0; i<n; i++) {
 			players.add(new Player());
 		}
 		
 		screen.addPlayers(players);
 		screen.start();
-		screen.setLevel(1);
+		screen.setLevel(level);
 		screen.setMusic(music);
 		
 		gameFrame.add(screen);
@@ -111,6 +113,12 @@ public class BreakoutGame {
 		screen.setVisible(true);
 	}
 	
+	public int getNumberOfLevels() {
+		
+		screen.start();
+		return screen.getNumberOfLevels();
+		
+	}
 	//***************************** INZIO GESTIONE MULTIPLAYER ****************************//
 	
 	public void inizializeMultiplayer() {
@@ -327,7 +335,7 @@ public class BreakoutGame {
 	
 	public void setLevel(int level) {
 		
-		this.lv = level;
+		this.level = level;
 		
 	}
 	

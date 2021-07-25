@@ -422,6 +422,11 @@ public class Levels {
 		
 	}
 	
+	public int getNumberOfLevels() {
+		
+		return nLevel;
+	}
+	
 	public ArrayList<Brick> getBricksDesposition() {
 		
 	

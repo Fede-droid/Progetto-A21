@@ -74,9 +74,8 @@ private static final long serialVersionUID = 1L;
 	private int lastScore, numberOfPlayers;
 
 	
-	public Screen(BreakoutGame game,int numberOfPlayers) {
+	public Screen(BreakoutGame game) {
 		this.game = game;
-		this.numberOfPlayers=numberOfPlayers;
 		objBricks = new ArrayList<Brick>();
 		objPaddles = new ArrayList<Paddle>();
 		players = new ArrayList<Player>();
@@ -86,6 +85,10 @@ private static final long serialVersionUID = 1L;
 		score=0;
 	}
 	
+	public void setNumberOfPlayers(int n) {
+		
+		this.numberOfPlayers = n;
+	}
 	
 	// ciclo di gioco
 	@Override
@@ -380,6 +383,11 @@ private static final long serialVersionUID = 1L;
 			levels.setLevel(lv);
 			objBricks = levels.getBricksDesposition();
 			levels.setPlayersPosition(numberOfPlayers);
+		}
+		
+		public int getNumberOfLevels() {
+			
+			return levels.getNumberOfLevels();
 		}
 		
 		public int getLastScore() {
