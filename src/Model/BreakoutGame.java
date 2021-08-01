@@ -243,22 +243,7 @@ public class BreakoutGame {
 	//@SuppressWarnings("deprecation")
 	public void playAgain() {
 		
-		//gameThread.stop();
-		
 		screen.reset();
-		/*
-		gameFrame.add(screen);
-		
-		gameFrame.requestFocusInWindow();
-		gameFrame.pack();
-		gameFrame.setVisible(true);
-		gameFrame.repaint();
-		
-		
-		this.gameThread2 = new Thread(screen);
-		gameThread2.start();
-		screen.setVisible(true);
-	*/
 		
 	}
 	
@@ -293,24 +278,11 @@ public class BreakoutGame {
 	public void showMainFromWin() {	
 	}
 	
-	// non funziona
+	// incremento livello
 	public void nextLevel() {
 
+		this.level++;
 		screen.reset();
-		screen.setLevel(2);
-		screen.start();
-		
-		gameFrame.add(screen);
-		
-		gameFrame.requestFocusInWindow();
-		gameFrame.pack();
-		gameFrame.setVisible(true);
-		gameFrame.repaint();
-		
-		
-		this.gameThread2 = new Thread(screen);
-		gameThread2.start();
-		screen.setVisible(true);
 		
 	}
 	public GameFrame getGameFrame() {
@@ -360,7 +332,7 @@ public class BreakoutGame {
 	}
 	
 	public boolean getBotMode() {
-		return botMode;
+		return this.botMode;
 	}
 	
 	

@@ -69,7 +69,6 @@ public class PauseMenu extends JPanel {
 		button.addActionListener(playAgainListener);
 		
 		
-		// mega bug 
 		// bottone 3
 		this.button3 = loader.uploadImage("menu/menuImages/nextLV.png");
 		ImageIcon button3Img = new ImageIcon(button3);
@@ -80,11 +79,25 @@ public class PauseMenu extends JPanel {
 		button3.setBorderPainted(false);
 		button3.setIcon(button3Img);
 		backgroundlabel.add(button3);
-		button3.setVisible(false);
-		NextLevelListener a2 = new NextLevelListener(game, this);
-		button3.addActionListener(a2);
+		button3.setVisible(!win);
+	
 		
-		//
+		ActionListener nextLevelListener = new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	removeAll();
+		    	setVisible(false);
+		    	
+		    	game.nextLevel();
+		    	game.gameSetupSinglePlayer(game.getBotMode());
+		    	repaint();
+		    }
+		};
+		
+		button3.addActionListener(nextLevelListener);
+		
+		
+		
 		// bottone 4
 		this.button4 = loader.uploadImage("menu/menuImages/mainMenupng.png");
 		ImageIcon button4Img = new ImageIcon(button4);

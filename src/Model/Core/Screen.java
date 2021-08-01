@@ -267,7 +267,10 @@ private static final long serialVersionUID = 1L;
             else g.drawImage(off, 508, 228, 25, 25, null);
 		
 			g.drawString(String.valueOf((Integer)score).toString(), 505, 58);
-			
+			g.drawString("LV", 505, 280);
+			g.drawString(""+levels.getActualLevel(), 505, 305);
+
+
 			int n = 0;
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
@@ -366,22 +369,13 @@ private static final long serialVersionUID = 1L;
 		
 		public void reset() {
 			players.removeAll(players);
-			/*
-			for(Brick tempBrick : objBricks) {
-				tempBrick.refresh();
-				if(tempBrick.getHasPowerUp()) tempBrick.disactivatePowerUp();
-			}
+			objPaddles.removeAll(objPaddles);
 			
-			objBall.refresh();
-			objPaddles.get(0).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
-			score=0;
-			lifeAdvisor.resetLife();
-	*/
 		}
 		
 		public void setLevel(int lv) {
 			levels.setLevel(lv);
-			objBricks = levels.getBricksDesposition();
+			objBricks = levels.getBricksDesposition(lv);
 			levels.setPlayersPosition(numberOfPlayers);
 		}
 		

@@ -10,9 +10,7 @@ import java.util.Scanner;
 import Model.Items.Ball;
 import Model.Items.Brick;
 import Model.Items.Paddle;
-import Model.Items.ScreenItem;
-import Model.Items.Utilities;
-import Model.Items.Wall;
+
 import Model.Items.PowerUp.BallSpeedUp;
 import Model.Items.PowerUp.PowerUp;
 import Model.Items.PowerUp.SwitchPaddleDirection;
@@ -22,8 +20,8 @@ public class Levels {
 	BufferedImage brick, fastBrick, flipBrick;
 	private Ball objBall;
 	private ArrayList<Paddle> objPaddles;
-	private HashMap<Integer, List<Brick>> levels;
-	private int nLevel;
+	private HashMap<Integer, List<Brick>> levels;	
+	private int nLevel, nLine;
 	
 	public Levels(BufferedImage brick, BufferedImage fastBrick,BufferedImage flipBrick, Ball objBall, ArrayList<Paddle> objPaddles) {
 		//this.level = TypeLevels.LEVEL2;
@@ -113,7 +111,7 @@ public class Levels {
 		 File levelsFile = new File("./src/Model/Core/Levels/levels.txt");
 	     try {
 			this.myReader = new Scanner(levelsFile);
-			System.out.println("LEVELS CARICATI CORRETTAMENTE!");
+			System.out.println("LIVELLO CARICATO CORRETTAMENTE!");
 		} catch (FileNotFoundException e) {
 			System.err.println("LATTURA FILE LEVELS FALLITA!");
 			e.printStackTrace();
@@ -122,19 +120,14 @@ public class Levels {
 	}
 	
 	public void getLevels() {
-		 int nLine = 0;
+		
 		 while (myReader.hasNextLine()) {
 			 	String line = myReader.nextLine();
 			 	
-			    //System.out.println(line);
 			    
 			    String[] El = line.split(" ");
 			    if(El[0].equals("#")) continue;
-			    if(El[0].equals("end")) {
-			    	nLine  = 0;
-			    	continue;
-			    }
-			    
+
 			    levelCreator(line, nLine++);
 			    
 			 
@@ -150,7 +143,13 @@ public class Levels {
 		if(l[0].equals("$")) {
 			
 			nLevel = Integer.parseInt(l[1]);
+			this.nLine = 0;
+			return;
+		}
 		
+		if(l[0].equals("x")) {
+			addLevel(nLevel, new ArrayList<Brick>(objBricks));
+			objBricks.clear();
 		}
 		
 		else {
@@ -177,7 +176,7 @@ public class Levels {
 				
 			}
 		
-			addLevel(nLevel, objBricks);
+			
 		}
 		
 	
@@ -193,11 +192,16 @@ public class Levels {
 		return nLevel;
 	}
 	
-	public ArrayList<Brick> getBricksDesposition() {
+	public ArrayList<Brick> getBricksDesposition(int lv) {
 		
 	
-		return (ArrayList<Brick>) levels.get(1);
+		return (ArrayList<Brick>) levels.get(lv);
 		
+	}
+	
+	public int getActualLevel() {
+		
+		return this.nLevel;
 	}
 }
 

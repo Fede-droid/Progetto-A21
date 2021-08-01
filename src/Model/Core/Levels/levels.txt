@@ -1,7 +1,19 @@
-# max colonne = 6
+# max colonne = 3
 # max righe = 10
 # brick = "b"
 # powerUp = 1,2, ...
 $ 1
-b 1 2
-end
+b b b
+b b
+b
+b
+x
+$ 2
+b   b
+b 1 b
+b   b
+b   b
+x
+$ 3
+1 2 b 
+x

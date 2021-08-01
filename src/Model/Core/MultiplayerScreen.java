@@ -286,7 +286,7 @@ private static final long serialVersionUID = 1L;
 			//creazione e posizionamento dei Bricks
 			levels = new Levels(brick, fastBrick, flipBrick, null, objPaddles);
 			levels.setPlayersPosition(numberOfPlayer, playerIndex);
-			objBricks = levels.getBricksDesposition();
+			objBricks = levels.getBricksDesposition(1);
 		}
 		
 		public void setStringGameStatus(String gameStatus) {
