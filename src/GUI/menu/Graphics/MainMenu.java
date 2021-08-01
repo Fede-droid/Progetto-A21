@@ -165,7 +165,7 @@ public class MainMenu extends JPanel{
 		allLevels.setBorderPainted(false);
 		allLevels.setIcon(button6Img);
 		backgroundlabel.add(allLevels);
-		
+		allLevels.setVisible(false);
 		ActionListener allLevelsList = new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
