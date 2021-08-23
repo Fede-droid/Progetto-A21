@@ -24,7 +24,7 @@ public class IntroPanel extends JPanel {
 	
 	public IntroPanel() throws InterruptedException {
 		
-		ImagesLoader loader = new ImagesLoader();
+		ImagesLoader loader = ImagesLoader.getInstace();
  
 		Dimension dimension_screen = new Dimension(Utilities.SCREEN_WIDTH,Utilities.SCREEN_HEIGHT);
 		setPreferredSize(dimension_screen);

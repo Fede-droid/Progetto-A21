@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 
+import GUI.ImagesLoader;
+
 // classe astratta per metodi e varibili comuni fra gli oggetti
 public class ScreenItem {
 
@@ -11,6 +13,7 @@ public class ScreenItem {
     protected int imageWidth;
     protected int imageHeight;
     protected int position[]; // position[0] = x, position[1] = y;
+    private String path;
     
     public ScreenItem(BufferedImage image, int width, int height, int[] position) {
         this.image = image;
@@ -35,7 +38,7 @@ public class ScreenItem {
         // si disegna
         g.drawImage(image, position[0], position[1], imageWidth, imageHeight, null);
     }
-
+    
     public int[] getPosition() {
         return position;
     }

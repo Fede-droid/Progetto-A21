@@ -40,7 +40,7 @@ public class Player {
 	
 	public void createImage() {
 		
-		this.loader = new ImagesLoader();
+		this.loader = ImagesLoader.getInstace();
 		this.paddle = loader.uploadImage("/Images/paddle.png");
 
 	}

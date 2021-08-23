@@ -125,7 +125,7 @@ private static final long serialVersionUID = 1L;
 		// caricamento immagini 
 		private void uploadImages() {
 			
-			loader = new ImagesLoader();
+			loader = ImagesLoader.getInstace();
 			box = loader.uploadImage("../Images/box.png");
 			hitBox = loader.uploadImage("../Images/hit.png");
 			ball = loader.uploadImage("../Images/ball.png");

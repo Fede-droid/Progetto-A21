@@ -42,14 +42,9 @@ public class Screen extends Canvas implements Runnable{
 private static final long serialVersionUID = 1L;
 	
 	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, hitBox, flipBrick, sfondo, youWin, youLose, on, off, fastLogo, flipLogo, life;
-	//SpecialBrick objFlip, objFast;
 	private boolean gameStatus = false;
 	private boolean gameOver = false;
 	private boolean gameWin = false;
-	private boolean isFastStarted = false;
-	private boolean isFlipStarted = false;
-	private boolean isFastActive = false;
-	private boolean isFlipActive = false;
 	private Ball objBall;
 	private ArrayList<Brick> objBricks;
 	private ArrayList<Wall> objWalls;
@@ -121,7 +116,7 @@ private static final long serialVersionUID = 1L;
 		// caricamento immagini 
 		private void uploadImages() {
 			
-			loader = new ImagesLoader();
+			loader = ImagesLoader.getInstace();
 			box = loader.uploadImage("../Images/box.png");
 			hitBox = loader.uploadImage("../Images/hit.png");
 			ball = loader.uploadImage("../Images/ball.png");
@@ -139,6 +134,8 @@ private static final long serialVersionUID = 1L;
 			fastLogo = loader.uploadImage("/Images/fastLogo.png");
 			flipLogo = loader.uploadImage("/Images/flipLogo.png");
 			life = loader.uploadImage("/Images/life.png");
+			
+
 		}
 
 		// inzializzazione partita
@@ -170,7 +167,7 @@ private static final long serialVersionUID = 1L;
 			
 			//creazione e posizionamento dei Bricks
 			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddles);
-			this.lifeAdvisor = new LifeAdvisor(this, mainMusic, ball1, objBall);
+			this.lifeAdvisor = new LifeAdvisor(mainMusic, ball1, objBall);
 		}
 		
 		// aggiornamento ciclo di gioco
@@ -198,32 +195,13 @@ private static final long serialVersionUID = 1L;
 						score++;
 					}
 					if(tempBrick.isDestroyed()) {
-						if (tempBrick.whichPower() == PowerUpTypes.FAST) isFastStarted = tempBrick.activatePowerUP();
-						if (tempBrick.whichPower() == PowerUpTypes.FLIP) isFlipStarted = tempBrick.activatePowerUP();
+						tempBrick.activatePowerUP();
 					}
-					if(isFastStarted) {
-						fastStartTime = System.nanoTime();
-						isFastActive = true;
-						isFastStarted = false;
-					}
-					if(isFlipStarted) {
-						flipStartTime = System.nanoTime();
-						isFlipActive = true;
-						isFlipStarted = false;
-					}
-				}
-				if (System.nanoTime() >= fastStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FAST) {
-					isFastActive = false;
-					tempBrick.disactivatePowerUp();
-				}
-				if (System.nanoTime() >= flipStartTime+10e9 && tempBrick.whichPower() == PowerUpTypes.FLIP) {
-					isFlipActive = false;
-					tempBrick.disactivatePowerUp();
 				}
 			}
 			
 			objPaddles.get(0).move();
-			if (objPaddles.size()>1) objPaddles.get(1).move(objBall.getXPosition(), objBall.getYPosition(),objBall.getImageWidth());
+			if (objPaddles.size()>1) objPaddles.get(1).move(objBall.getXPosition(), objBall.getYPosition(),objBall.getImageWidth());// bot
 		}		
 		
 		// disegno di oggetti grafici a schermo
@@ -251,6 +229,7 @@ private static final long serialVersionUID = 1L;
             g.drawImage(hitBox, 508, 3, 30, 30, null);
             
             g.drawImage(fastLogo, 508, 120, 25, 25, null);
+            /* ricordarsi di non cancellare bisogna implementare la grafica dei power up
             if(isFastActive) {
             	if (System.nanoTime() >= fastStartTime+6e9) 
             		g.drawString(""+(int)((fastStartTime+10e9-System.nanoTime())/1e9), 510, 170);
@@ -265,6 +244,7 @@ private static final long serialVersionUID = 1L;
             	else g.drawImage(on, 508, 228, 25, 25, null);
             }
             else g.drawImage(off, 508, 228, 25, 25, null);
+            */
 		
 			g.drawString(String.valueOf((Integer)score).toString(), 505, 58);
 			g.drawString("LV", 505, 280);

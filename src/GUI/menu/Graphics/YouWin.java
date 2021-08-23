@@ -21,7 +21,7 @@ public class YouWin extends JPanel{
 	
 	public YouWin() {
 		
-		this.loader = new ImagesLoader();
+		this.loader = ImagesLoader.getInstace();
 		
 		// caricamento sfondo
 		this.background = loader.uploadImage("menu/menuImages/background.jpg");

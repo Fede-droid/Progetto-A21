@@ -29,7 +29,7 @@ public class WaitingForPlayerPanel extends JPanel{
 		this.game = game;
 		
 		// inizializzaizone caricatore di immagini
-		this.loader = new ImagesLoader();
+		this.loader = ImagesLoader.getInstace();
 		
 	
 		

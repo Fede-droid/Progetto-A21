@@ -87,19 +87,19 @@ public class CollisionAdvisor {
 	}
 	
 	public boolean checkCollision(Paddle item) {
-		this.ballSpeed = ball.getSpeed();
-		if ((ball.getPosition()[0]+ball.getImageWidth()) > item.getPosition()[0] && ball.getPosition()[0] < (item.getPosition()[0] + item.getImageWidth())) {
-			boolean isBallBelow = false;
-			if (ball.getPosition()[1] >= (item.getPosition()[1]+item.getImageHeight()/2)) isBallBelow = true;
-			if (ball.getPosition()[1] <= (item.getPosition()[1]+item.getImageHeight()+ballSpeed) && (ball.getPosition()[1]+ball.getImageHeight()) >= item.getPosition()[1]-ballSpeed) {
-				if (isBallBelow) ball.setYdir(1);
-				else ball.setYdir(-1);
-				if (ball.getPosition()[0]+ball.getImageWidth()/2 >= (item.getPosition()[0]+item.getImageWidth()/2)) ball.setXdir(1);
-				else ball.setXdir(-1);
-				if (collisionMusic.isMusicOn()) collisionMusic.playMusic(MusicTypes.HIT);
-				return true;
-			}
-		}
-		return false;
-	}
+        this.ballSpeed = ball.getSpeed();
+        if ((ball.getPosition()[0]+ball.getImageWidth()) > item.getPosition()[0] && ball.getPosition()[0] < (item.getPosition()[0] + item.getImageWidth())) {
+            boolean isBallBelow = false;
+            if (ball.getPosition()[1] >= (item.getPosition()[1]+item.getImageHeight()/2)) isBallBelow = true;
+            if (ball.getPosition()[1] <= (item.getPosition()[1]+item.getImageHeight()+ballSpeed) && (ball.getPosition()[1]+ball.getImageHeight()) >= item.getPosition()[1]-ballSpeed) {
+                if (isBallBelow) ball.setYdir(1);
+                else ball.setYdir(-1);
+                if (ball.getPosition()[0]+ball.getImageWidth()/2 >= (item.getPosition()[0]+item.getImageWidth()/2)) ball.setXdir(1);
+                else ball.setXdir(-1);
+                if (collisionMusic.isMusicOn()) collisionMusic.playMusic(MusicTypes.HIT);
+                return true;
+            }
+        }
+        return false;
+    }
 }

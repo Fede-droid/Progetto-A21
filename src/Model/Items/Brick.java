@@ -10,7 +10,7 @@ public class Brick extends ScreenItem{
 	private int initialHitLevel;
 	protected boolean destroyed;
 	private PowerUp powerUp; // null vuol dire che � un brick normale
-	private boolean hasPowerUp; 
+	private boolean hasPowerUp;
 	
 	/*
 	 * Costruttore 1: Brick normale
@@ -66,7 +66,7 @@ public class Brick extends ScreenItem{
 	
 	public boolean activatePowerUP() {
 		if(powerUp != null && !powerUp.isActive()) {
-			powerUp.activate();
+			powerUp.startPowerUp();
 			return true;
 		}
 		return false;

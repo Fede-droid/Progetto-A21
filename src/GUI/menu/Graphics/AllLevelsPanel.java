@@ -21,7 +21,7 @@ public class AllLevelsPanel extends JPanel{
 	
 	public AllLevelsPanel(BreakoutGame game) {
 		
-		this.loader = new ImagesLoader();
+		this.loader = ImagesLoader.getInstace();
 		
 		// caricamento sfondo
 		this.background = loader.uploadImage("menu/menuImages/background.jpg");

@@ -7,15 +7,13 @@ import Music.MusicTypes;
 
 public class LifeAdvisor {
 	
-    private Screen screen;
 	private Music loseLifeMusic;
 	private CollisionAdvisor collision;
 	private Ball ball;
     private int life;
 	
-	public LifeAdvisor(Screen screen, Music loseLife, CollisionAdvisor collision, Ball ball) {
+	public LifeAdvisor(Music loseLife, CollisionAdvisor collision, Ball ball) {
 		
-        this.screen = screen;
 		this.loseLifeMusic = loseLife;
 		this.collision = collision;
 		this.ball = ball;

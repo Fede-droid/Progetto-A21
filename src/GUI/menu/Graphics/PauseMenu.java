@@ -31,7 +31,7 @@ public class PauseMenu extends JPanel {
 	
 	public PauseMenu(BreakoutGame game, boolean win) {
 		
-		this.loader = new ImagesLoader();
+		this.loader = ImagesLoader.getInstace();
 		
 		// caricamento sfondo
 		this.background = loader.uploadImage("menu/menuImages/background.jpg");
