@@ -177,7 +177,7 @@ public class BreakoutGame {
 		multiplayerScreen.setMusic(music);
 		
 		multiplayerScreen.start();
-		
+		//multiplayerScreen.setLevel(1);
 		
 		client.startThread(multiplayerScreen);
 		
@@ -195,20 +195,16 @@ public class BreakoutGame {
 	}
 	
 	public void waitingMissingPlayer() {
-		
-		waitingPanel = new WaitingForPlayerPanel(this); 
+
+		this.waitingPanel = new WaitingForPlayerPanel(this);
 		gameFrame.add(waitingPanel);
+		multiplayerPanel.setVisible(false);
 		gameFrame.pack();
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
-		
-		
 	}
 	
-	public void updateMissingPlayer() {
-		waitingPanel.updateMissingPlayerText();
-	}
-	
+
 	public void multiplayerError() {
 		multiplayerPanel.showError();
 	}
@@ -236,6 +232,17 @@ public class BreakoutGame {
 	public int getNumberOfMissingPlayer() {
 		return numberOfMissingPlayer;
 	}
+	
+	public void updateMissing() {
+		
+		System.out.println("sono qui");
+		System.out.println(""+getNumberOfMissingPlayer());
+		
+		waitingPanel.updateMissingPlayerText();
+		waitingPanel.repaint();
+	}
+	
+	
 	
 	//***************************** FINE GESTIONE MULTIPLAYER ****************************//
 	

@@ -37,8 +37,20 @@ public class Levels {
 		getLevels();
 		}
 	
+	public Levels(BufferedImage brick, BufferedImage fastBrick,BufferedImage flipBrick, ArrayList<Paddle> objPaddles) {
+		//this.level = TypeLevels.LEVEL2;
+		this.brick = brick;
+		this.fastBrick = fastBrick;
+		this.flipBrick = flipBrick;	
+		this.objPaddles = objPaddles;
+		objBricks = new ArrayList<Brick>();
+		}
+	
 	public void setLevel(int level) {
+		
 		this.nLevel = level;
+		
+		
 	
 	}
 	
@@ -178,6 +190,7 @@ public class Levels {
 		
 			
 		}
+	
 		
 	
 	

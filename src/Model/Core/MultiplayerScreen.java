@@ -88,12 +88,11 @@ private static final long serialVersionUID = 1L;
 		this.playerIndex = playerIndex;
 		paddlesPosition = new ArrayList<>();
 		bricksHitLevel = new ArrayList<>();
-		setLevel(1);
+		//setLevel(1);
+		
 	}
 	
 	
-
-
 	// ciclo di gioco
 	@Override
 	public void run() {
@@ -245,11 +244,14 @@ private static final long serialVersionUID = 1L;
 				posPaddleX=2*i;
 				posPaddleY=posPaddleX+1;
 				if(i != playerIndex) {
-					objPaddles.get(i).setPosition(posPaddleX, posPaddleY);;
+					objPaddles.get(i).setPosition(paddlesPosition.get(posPaddleX), paddlesPosition.get(posPaddleY));;
 				}
 			}
 			
-			for (int i=0; i<objBricks.size(); i++) {
+			
+			
+			
+			for (int i=0; i<objBricks.size()-1; i++) {
 				objBricks.get(i).setHitLevel(bricksHitLevel.get(i));
 			}
 			
@@ -284,10 +286,72 @@ private static final long serialVersionUID = 1L;
 			objBall = new Ball(ball, 20, 20, posInitBall);
 						
 			//creazione e posizionamento dei Bricks
-			levels = new Levels(brick, fastBrick, flipBrick, null, objPaddles);
+			levels = new Levels(brick, fastBrick, flipBrick, objPaddles);
 			levels.setPlayersPosition(numberOfPlayer, playerIndex);
-			objBricks = levels.getBricksDesposition(1);
-		}
+
+			for(int i = 0; i < 4; i++) {//first 2 layers up
+				for (int j = 0; j < 2; j++) { 
+					
+					int[] posInitBrick = new int[2];
+					
+					// posizione di partenza dei Brick
+					posInitBrick[0] = i * 80 + 100;  //nell'asse x
+					posInitBrick[1] = j * 43 + 193; //nell'asse y
+			
+					// creo i Bricks
+					objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
+				}
+			}
+			for(int i = 0; i < 4; i++) {//first 2 layers down
+				for (int j = 0; j < 2; j++) { 
+					
+					int[] posInitBrick = new int[2];
+					
+					// posizione di partenza dei Brick
+					posInitBrick[0] = i * 80 + 100;  //nell'asse x
+					posInitBrick[1] = j * 45 + 325; //nell'asse y
+			
+					// creo i Bricks
+					objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
+				}
+			}
+			for (int i = 0; i < 1; i++) { //1 left bricks in the middle
+				int[] posInitBrick = new int[2];
+				posInitBrick[0] = i * 80+ 100;  //nell'asse x
+				posInitBrick[1] = 280; //nell'asse y
+				objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
+			}
+			
+			for (int i = 0; i < 1; i++) { //1 right bricks in the middle
+				int[] posInitBrick = new int[2];
+				posInitBrick[0] = i * 80+ 340;  //nell'asse x
+				posInitBrick[1] = 280; //nell'asse y
+				objBricks.add(new Brick(brick, 65, 25, posInitBrick, 4));
+			}
+			
+			//1 central bricks in the middle
+			int[] posInitBrick = new int[2];
+			posInitBrick[0] = 210+ 10;  //nell'asse x
+			posInitBrick[1] = 280; //nell'asse y
+			objBricks.add(new Brick(brick, 60, 25, posInitBrick,4));
+		
+			int[] posFastBrick = {175,275};//speed special brick
+			objBricks.add(new Brick(fastBrick, 35, 35, posFastBrick,1, null));
+			
+			int[] posFlipBrick = {293,275};//change-direction special brick
+			objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, null));
+			
+			
+			isFastActiveString = "false";
+			isFlipActiveString = "false";
+			scoreString = "0";
+			lifesLeft = 3;
+			
+			
+	}
+			
+		
+		
 		
 		public void setStringGameStatus(String gameStatus) {
 			String gameStatusString= new String();
@@ -312,6 +376,9 @@ private static final long serialVersionUID = 1L;
 			fastRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
 			isFlipActiveString=gameStatusStringSplitted[k++];
 			flipRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
+			
+			
+			
 		}
 
 		private void endGameOver() {
@@ -352,12 +419,13 @@ private static final long serialVersionUID = 1L;
 			mainMusic.setMusic(b);
 		}
 		
-		
+		/*
 		public void setLevel(int lv) {
 			levels.setLevel(lv);
-			
+			objBricks = levels.getBricksDesposition(lv);
+			//levels.setPlayersPosition(numberOfPlayers);
 		}
-		
+		*/
 		public int getPaddleXPosition() {
 			return objPaddles.get(playerIndex).getXPosition();
 		}

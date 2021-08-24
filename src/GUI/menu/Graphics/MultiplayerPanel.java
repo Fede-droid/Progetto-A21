@@ -8,6 +8,8 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
@@ -37,6 +39,8 @@ public class MultiplayerPanel extends JPanel{
 	private int playerNumber;
 	private BreakoutGame c;
 	private JButton submitButton;
+	private int missing;
+	private JLabel numR;
 	
 	public MultiplayerPanel(BreakoutGame c) {
 		
@@ -114,13 +118,11 @@ public class MultiplayerPanel extends JPanel{
 	        JTextField gameCodel = new JTextField("game code");
 	     
 	        
-	      String[] nPlayers = { "1", "2", "3", "4"};
+	      String[] nPlayers = {"2", "3", "4"};
 
 	      //Create the combo box, select item at index 4.
 	      JComboBox<Object> nPl = new JComboBox<Object>(nPlayers);
-	      nPl.setSelectedIndex(3);
 	     
-	        
 	    
 			this.submit = loader.uploadImage("menu/menuImages/submit.png");
 			ImageIcon submitImg = new ImageIcon(submit);
@@ -133,14 +135,17 @@ public class MultiplayerPanel extends JPanel{
 			ActionListener submitAction = new ActionListener() {
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
+			    	//c.waitingMissingPlayer(); 
+			    	
 			    	String playerName = playerNamel.getText();
 			    	String gameCode = gameCodel.getText();
-			    
-				    c.setPlayerData(buttonHostVisible, playerName, gameCode, playerNumber);
+			    	int nPlay = nPl.getSelectedIndex() + 2;
+			    	
+				    c.setPlayerData(buttonHostVisible, playerName, gameCode, nPlay);
 				    
 			    
-				    playerNumber = Integer. parseInt(nPl.getSelectedItem().toString());
 			    	
+				    
 			    	
 			    }
 			};
@@ -187,6 +192,15 @@ public class MultiplayerPanel extends JPanel{
 			submitButton.setLocation(Utilities.SCREEN_WIDTH/2 - 200, 360);
 			
 			
+			/*
+			// posizione "numero giocatori rimanenti"
+			this.numR = new JLabel("Numero giocatori rimanenti: ");
+			numR.setSize(500, 100);
+			Font g1 = new Font("Helvetica", Font.BOLD, 25);
+			numR.setFont(g1);
+			numR.setLocation(SwingConstants.CENTER + 100, 500);
+			
+			*/
 			
 			backgroundlabel.add(button);
 			backgroundlabel.add(button2);
@@ -195,13 +209,19 @@ public class MultiplayerPanel extends JPanel{
 			backgroundlabel.add(playerNamel);
 			backgroundlabel.add(gameCodel);
 			backgroundlabel.add(submitButton);
+			//backgroundlabel.add(numR);
+
 			
-	    
-			
-							
+	    			
 	}
 	
-	
+	/*
+	public void changeLabel() {
+		
+		numR.setText("Numero giocatori rimanenti: " + c.getNumberOfMissingPlayer());
+		repaint();
+	}
+	*/
 
 	public void changeHostVisible(boolean visible) {
 		
@@ -222,14 +242,36 @@ public class MultiplayerPanel extends JPanel{
 	
 	}
 	
-
-
-
+	
+	
+	public void showNumberOfMissingPlayer() {
+		
+		/*
+		new Thread(new Runnable(){
+			@Override
+			public synchronized void run(){
+				double timeStart = System.nanoTime();
+				while(System.nanoTime() <= timeStart + 10e9);
+				c.getNumberOfMissingPlayer();
+				repaint();
+			}
+		}).start();
+		
+		JOptionPane.showMessageDialog(this,
+			    ""+missing,
+			    "!!!!!",
+			    JOptionPane.ERROR_MESSAGE);
+		
+		submitButton.removeAll();
+		
+		*/
+		
+	}
 
 	
-		
 	
-		
+	
+	
 		
 	
 
