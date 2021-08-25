@@ -136,6 +136,7 @@ public class Client {
 	            						
 	            					}
 	            					
+	            					
 	            				   game.setNumberOfPlayer(numberOfPlayer);
 	      	            		   game.setPlayerIndex(playerIndex);
 	      	            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);

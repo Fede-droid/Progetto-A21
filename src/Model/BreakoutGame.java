@@ -150,7 +150,7 @@ public class BreakoutGame {
 	public void startGame() {
 		
 		multiplayerPanel.setVisible(false);
-		waitingPanel.setVisible(false);
+		if(waitingPanel != null) waitingPanel.setVisible(false);
 		multiplayerPanel.removeAll();
 		
 		gameSetupMultiplayer();

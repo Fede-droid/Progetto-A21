@@ -244,7 +244,7 @@ private static final long serialVersionUID = 1L;
 				posPaddleX=2*i;
 				posPaddleY=posPaddleX+1;
 				if(i != playerIndex) {
-					objPaddles.get(i).setPosition(paddlesPosition.get(posPaddleX), paddlesPosition.get(posPaddleY));;
+					objPaddles.get(i).setPosition(paddlesPosition.get(posPaddleX), paddlesPosition.get(posPaddleY));
 				}
 			}
 			
