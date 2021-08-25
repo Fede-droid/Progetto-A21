@@ -48,12 +48,14 @@ private static final long serialVersionUID = 1L;
 	private boolean gameStatus = false;
 	private boolean gameOver = false;
 	private boolean gameWin = false;
+	boolean victory, loss;
 	private Ball objBall;
 	private int[] ballPosition;
 	private List<Brick> objBricks;
 	private Box objBox;
 	private ArrayList<Integer> paddlesPosition;
 	private ArrayList<Integer> bricksHitLevel;
+	private ArrayList<String> playersName;
 	//private List<SpecialBrick> objSpecialBricks;
 	private ScreenItem objSfondo;
 	private ImagesLoader loader;
@@ -80,7 +82,6 @@ private static final long serialVersionUID = 1L;
 		this.game = game;
 		objBricks = new ArrayList<>();
 		objPaddles = new ArrayList<>();
-		//objSpecialBricks = new ArrayList<SpecialBrick>();
 		uploadImages();
 		this.mainMusic = new Music();
 		ballPosition = new int[2];
@@ -88,6 +89,7 @@ private static final long serialVersionUID = 1L;
 		this.playerIndex = playerIndex;
 		paddlesPosition = new ArrayList<>();
 		bricksHitLevel = new ArrayList<>();
+		playersName = new ArrayList<>();
 	}
 	
 	
@@ -158,11 +160,14 @@ private static final long serialVersionUID = 1L;
 			this.g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si pu� disegnare
 			
 			g.setFont(new Font("Courier", Font.BOLD, 25)); 
-			g.setColor(Color.WHITE);
+			g.setColor(Color.BLACK);
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
-			for (Paddle tempPaddle : objPaddles) tempPaddle.render(g);
+			for (int i=0; i<numberOfPlayer; i++) {
+				objPaddles.get(i).render(g);
+				g.drawString(playersName.get(i), objPaddles.get(i).getXPosition()+7, objPaddles.get(i).getYPosition()+21);
+			}
 			objBox.render(g);
             
 			g.drawImage(hitBox, 508, 3, 30, 30, null);
@@ -225,7 +230,6 @@ private static final long serialVersionUID = 1L;
 		    /*if (!gameWin) endGameOver();
 			
 			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);*/
-			
 			g.dispose();
 			
 			buffer.show();
@@ -344,9 +348,9 @@ private static final long serialVersionUID = 1L;
 			isFastActiveString = "false";
 			isFlipActiveString = "false";
 			scoreString = "0";
-			lifesLeft = 3;		
+			lifesLeft = 3;	
 			
-			
+			for (int i=0; i<numberOfPlayer; i++) playersName.add("Name");
 	}
 				
 		public void setStringGameStatus(String gameStatus) {
@@ -369,6 +373,11 @@ private static final long serialVersionUID = 1L;
 			fastRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
 			isFlipActiveString=gameStatusStringSplitted[k++];
 			flipRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
+			victory = Boolean. parseBoolean(gameStatusStringSplitted[k++]);
+			loss = Boolean. parseBoolean(gameStatusStringSplitted[k++]);
+			for (int i=0; i<numberOfPlayer; i++) {
+				playersName.set(i, gameStatusStringSplitted[k++]);
+			}
 			
 			
 			
