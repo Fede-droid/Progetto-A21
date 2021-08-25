@@ -19,6 +19,7 @@ import Model.Core.Screen;
 public class Client {
 	
 	private DatagramSocket datagramSocket;
+    static String serverIP = "79.21.81.36";
 	private int serverPort;
 	private ClientThread thread;
 	private InetAddress address;
@@ -31,7 +32,7 @@ public class Client {
 		
 			// connessione con il server ed inzializzazione giocatore
 			try {
-				address = InetAddress.getByName("79.21.81.36");
+				address = InetAddress.getByName(serverIP);
 				
 			//202.61.250.68
 			

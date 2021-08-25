@@ -345,14 +345,10 @@ private static final long serialVersionUID = 1L;
 			isFastActiveString = "false";
 			isFlipActiveString = "false";
 			scoreString = "0";
-			lifesLeft = 3;
-			
+			lifesLeft = 3;			
 			
 	}
-			
-		
-		
-		
+				
 		public void setStringGameStatus(String gameStatus) {
 			String gameStatusString= new String();
 			gameStatusString=gameStatus;

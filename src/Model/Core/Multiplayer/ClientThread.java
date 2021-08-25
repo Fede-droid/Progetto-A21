@@ -48,7 +48,7 @@ public class ClientThread extends Thread {
 				byte[] b = new byte[1024];
 	        	b = (((Integer) screen.getPaddleXPosition()).toString()+" "+((Integer) screen.getPaddleYPosition()).toString()).getBytes();
 	        	DatagramPacket packetBack;
-				packetBack = new DatagramPacket(b, b.length, InetAddress.getByName("202.61.250.68"), serverPort);
+				packetBack = new DatagramPacket(b, b.length, InetAddress.getByName(Client.serverIP), serverPort);
 				datagramSocket.send(packetBack);
 				
 				byte[] bytes = new byte[1024];

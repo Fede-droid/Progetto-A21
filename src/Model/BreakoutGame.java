@@ -168,7 +168,6 @@ public class BreakoutGame {
 			players.add(new Player());
 
 		}	
-		
 		multiplayerScreen.addPlayers(players); //creazione schermo di gioco multiplayer
 		
 		multiplayerScreen.setMusic(music);
