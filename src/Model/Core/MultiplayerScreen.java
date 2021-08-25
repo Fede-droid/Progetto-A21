@@ -88,8 +88,6 @@ private static final long serialVersionUID = 1L;
 		this.playerIndex = playerIndex;
 		paddlesPosition = new ArrayList<>();
 		bricksHitLevel = new ArrayList<>();
-		//setLevel(1);
-		
 	}
 	
 	
@@ -343,6 +341,7 @@ private static final long serialVersionUID = 1L;
 			
 			int[] posFlipBrick = {293,275};//change-direction special brick
 			objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, null));
+			for(int i=0; i<objBricks.size();i++) bricksHitLevel.add(0);
 			
 			
 			isFastActiveString = "false";
