@@ -60,6 +60,7 @@ public class WaitingForPlayerPanel extends JPanel{
 		ImageIcon image2 = new ImageIcon(new ImageIcon(wait).getImage());
 		JLabel waitLabel = new JLabel(image2);
 		
+		
 		backgroundlabel.add(waitLabel);
 		backgroundlabel.setLayout(new FlowLayout());
 
