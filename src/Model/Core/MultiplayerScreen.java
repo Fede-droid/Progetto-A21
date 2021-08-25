@@ -287,6 +287,9 @@ private static final long serialVersionUID = 1L;
 						
 			//creazione e posizionamento dei Bricks
 			levels = new Levels(brick, fastBrick, flipBrick, objPaddles);
+			for (int i=0; i<2*numberOfPlayer; i++) {
+				paddlesPosition.add(0);
+			}
 			levels.setPlayersPosition(numberOfPlayer, playerIndex);
 
 			for(int i = 0; i < 4; i++) {//first 2 layers up
@@ -345,7 +348,8 @@ private static final long serialVersionUID = 1L;
 			isFastActiveString = "false";
 			isFlipActiveString = "false";
 			scoreString = "0";
-			lifesLeft = 3;			
+			lifesLeft = 3;		
+			
 			
 	}
 				
