@@ -246,9 +246,6 @@ private static final long serialVersionUID = 1L;
 				}
 			}
 			
-			
-			
-			
 			for (int i=0; i<objBricks.size()-1; i++) {
 				objBricks.get(i).setHitLevel(bricksHitLevel.get(i));
 			}
@@ -341,8 +338,8 @@ private static final long serialVersionUID = 1L;
 			
 			int[] posFlipBrick = {293,275};//change-direction special brick
 			objBricks.add(new Brick(flipBrick, 35, 35, posFlipBrick,1, null));
-			for(int i=0; i<objBricks.size();i++) bricksHitLevel.add(0);
 			
+			for(int i=0; i<objBricks.size();i++) bricksHitLevel.add(0);
 			
 			isFastActiveString = "false";
 			isFlipActiveString = "false";
@@ -357,14 +354,11 @@ private static final long serialVersionUID = 1L;
 			gameStatusString=gameStatus;
 			String gameStatusStringSplitted[] = gameStatusString.split(" ");
 			
-			paddlesPosition = new ArrayList<>();
-			bricksHitLevel = new ArrayList<>();
-			
 			for (int i=0; i<2*numberOfPlayer; i++) {
-				paddlesPosition.add(Integer.parseInt(gameStatusStringSplitted[i]));
+				paddlesPosition.set(i, Integer.parseInt(gameStatusStringSplitted[i]));
 			}
 			for (int j=2*numberOfPlayer; j<objBricks.size()+2*numberOfPlayer; j++) {
-				bricksHitLevel.add(Integer.parseInt(gameStatusStringSplitted[j]));
+				bricksHitLevel.set(j, Integer.parseInt(gameStatusStringSplitted[j]));
 			}
 			int k = objBricks.size()+2*numberOfPlayer;
 			ballPosition[0] = Integer.parseInt(gameStatusStringSplitted[k++]);
