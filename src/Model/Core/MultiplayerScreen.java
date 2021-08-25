@@ -357,7 +357,7 @@ private static final long serialVersionUID = 1L;
 			for (int i=0; i<2*numberOfPlayer; i++) {
 				paddlesPosition.set(i, Integer.parseInt(gameStatusStringSplitted[i]));
 			}
-			for (int j=2*numberOfPlayer; j<objBricks.size()+2*numberOfPlayer; j++) {
+			for (int j=(2*numberOfPlayer+1); j<objBricks.size()+2*numberOfPlayer; j++) {
 				bricksHitLevel.set(j, Integer.parseInt(gameStatusStringSplitted[j]));
 			}
 			int k = objBricks.size()+2*numberOfPlayer;
