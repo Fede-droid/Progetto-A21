@@ -62,6 +62,7 @@ public class WaitingForPlayerPanel extends JPanel{
 		
 		
 		backgroundlabel.add(waitLabel);
+		
 		backgroundlabel.setLayout(new FlowLayout());
 
 
