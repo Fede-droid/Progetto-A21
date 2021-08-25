@@ -1,9 +1,11 @@
 package GUI.menu.Graphics;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,7 +21,7 @@ public class WaitingForPlayerPanel extends JPanel{
 	
 	 
 		private static final long serialVersionUID = 1L;
-		BufferedImage background, button1, button2, button3, button4;
+		BufferedImage background, button1, button2, button3, button4, wait;
 		ImagesLoader loader;
 		private BreakoutGame game;
 		private JLabel missingPlayer;
@@ -40,6 +42,8 @@ public class WaitingForPlayerPanel extends JPanel{
 		backgroundlabel.setBounds(0, 0, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT);
 		add(backgroundlabel);
 
+		
+
 		//label1.setBounds(0, 0, 200, 50);
 		
 		//creazione label per testo
@@ -48,8 +52,17 @@ public class WaitingForPlayerPanel extends JPanel{
 		missingPlayer.setLocation(100, 1000);
 		missingPlayer.setOpaque(false);
 		backgroundlabel.setLayout(new FlowLayout());
+	
 		
 		backgroundlabel.add(missingPlayer);
+		
+		this.wait = loader.uploadImage("menu/menuImages/waiting.gif");
+		ImageIcon image2 = new ImageIcon(new ImageIcon(wait).getImage());
+		JLabel waitLabel = new JLabel(image2);
+		
+		backgroundlabel.add(waitLabel);
+		backgroundlabel.setLayout(new FlowLayout());
+
 
 		
 	}

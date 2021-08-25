@@ -35,7 +35,6 @@ public class IntroPanel extends JPanel {
 	// Pannello di intro al gioco
 	public IntroPanel(BreakoutGame c) throws InterruptedException {
 		
-		ImagesLoader loader = ImagesLoader.getInstace();
  
 		Dimension dimension_screen = new Dimension(Utilities.SCREEN_WIDTH,Utilities.SCREEN_HEIGHT);
 		setPreferredSize(dimension_screen);

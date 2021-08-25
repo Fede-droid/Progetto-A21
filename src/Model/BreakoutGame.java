@@ -31,7 +31,7 @@ public class BreakoutGame {
 	private int playerNumber, playerIndex, numberOfMissingPlayer;
 	private Client client;
 	private WaitingForPlayerPanel waitingPanel;
-	private boolean botMode;
+	private boolean botMode, entered;
 	private int level;
 	
 	// creazione del controller
@@ -63,16 +63,19 @@ public class BreakoutGame {
 	// salta l'introduzione
 	public void skipIntro(){
 		
-		gameFrame.repaint();
-
-		
-		this.m = new MainMenu(this);
-		gameFrame.add(m);
-		gameFrame.pack();
-		gameFrame.setVisible(true);
-		gameFrame.repaint();
-		
-		this.screen = new Screen(this); //creazione schermo di gioco
+		if(!entered) {
+			entered = true;
+			gameFrame.repaint();
+	
+			
+			this.m = new MainMenu(this);
+			gameFrame.add(m);
+			gameFrame.pack();
+			gameFrame.setVisible(true);
+			gameFrame.repaint();
+			
+			this.screen = new Screen(this); //creazione schermo di gioco
+	}
 	}
 
 	
