@@ -125,6 +125,7 @@ public class PauseMenu extends JPanel {
 	
 		
 		
+		
 		JLabel label1 = new JLabel();
 		label1.setFont(new Font("Courier", Font.BOLD, 50)); 
 		label1.setText("LAST SCORE: " + game.getLastScore());
