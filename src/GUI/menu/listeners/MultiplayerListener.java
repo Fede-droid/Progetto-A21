@@ -16,10 +16,7 @@ public class MultiplayerListener extends Listener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		m.removeAll();
 		m.setVisible(false);
-		m.setEnabled(false);
-		m.invalidate();
 		game.inizializeMultiplayer();
 		
 		

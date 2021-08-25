@@ -2,6 +2,9 @@ package GUI.menu.Graphics;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
@@ -12,17 +15,25 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import GUI.ImagesLoader;
+import Model.BreakoutGame;
 import Model.Items.Utilities;
 
 public class IntroPanel extends JPanel {
 
+	/**
+	 * 	INTRO AL GIOCO
+	 */
+	private static final long serialVersionUID = 1L;
+	private Clip hit;
 	
-	public IntroPanel() throws InterruptedException {
+	// Pannello di intro al gioco
+	public IntroPanel(BreakoutGame c) throws InterruptedException {
 		
 		ImagesLoader loader = ImagesLoader.getInstace();
  
@@ -40,7 +51,7 @@ public class IntroPanel extends JPanel {
 		String musicString = "./src/GUI/menu/menuImages/intro.wav";
 		try {
 		    AudioInputStream audio = AudioSystem.getAudioInputStream(new File(musicString).getAbsoluteFile());
-	        Clip hit = AudioSystem.getClip();
+	        this.hit = AudioSystem.getClip();
 	        hit.open(audio);
 	        hit.start();
 	        } catch(Exception ex) {
@@ -49,6 +60,27 @@ public class IntroPanel extends JPanel {
 	    }
 	
         setVisible(true);
+        
+  
+        // bottone "skip" per saltare la intro ed accedere direttamente al menu iniziale
+     		label.setLayout(new FlowLayout() );
+     		JButton skip = new JButton("SKIP");     
+     		skip.setLocation(Utilities.SCREEN_WIDTH - skip.getWidth(), 100);
+     		label.add(skip);
+
+     		ActionListener setVisibileSwitch1 = new ActionListener() {
+     		    @Override
+     		    public void actionPerformed(ActionEvent e) {
+     		    
+     		    	c.skipIntro();
+     		    	hit.stop();
+     		    	setVisible(false);
+     		    	repaint();
+     		    }
+     		};
+     		
+     		skip.addActionListener(setVisibileSwitch1);
+        
 		
 	}
 	

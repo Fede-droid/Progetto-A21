@@ -1,32 +1,19 @@
 package GUI.menu.Graphics;
 
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.AbstractButton;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
-
 import GUI.ImagesLoader;
-import GUI.menu.listeners.MultiplayerListener;
 import Model.BreakoutGame;
 import Model.Items.Utilities;
 
@@ -36,11 +23,8 @@ public class MultiplayerPanel extends JPanel{
 	BufferedImage background, button1, button2, submit;
 	ImagesLoader loader;
 	private Boolean buttonHostVisible = true;
-	private int playerNumber;
 	private BreakoutGame c;
 	private JButton submitButton;
-	private int missing;
-	private JLabel numR;
 	
 	public MultiplayerPanel(BreakoutGame c) {
 		
@@ -61,10 +45,7 @@ public class MultiplayerPanel extends JPanel{
 			ImageIcon button1Img = new ImageIcon(button1);
 			backgroundlabel.setLayout(new FlowLayout() );
 			JButton button = new JButton();
-			button.setOpaque(false);
-			button.setContentAreaFilled(false);
-			button.setBorderPainted(false);
-			button.setIcon(button1Img);
+			inizializeButton(button,button1Img);
 			backgroundlabel.add(button);
 			button.setVisible(buttonHostVisible);
 			
@@ -74,15 +55,12 @@ public class MultiplayerPanel extends JPanel{
 			ImageIcon button2Img = new ImageIcon(button2);
 			backgroundlabel.setLayout(new FlowLayout() );
 			JButton button2 = new JButton();
-			button2.setOpaque(false);
-			button2.setContentAreaFilled(false);
-			button2.setBorderPainted(false);
-			button2.setIcon(button2Img);
+			inizializeButton(button2,button2Img);
 			backgroundlabel.add(button2);
 			button2.setVisible(!buttonHostVisible);
 			
 			
-			
+			// scelta fra host e joiner
 			ActionListener setVisibile = new ActionListener() {
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
@@ -110,43 +88,40 @@ public class MultiplayerPanel extends JPanel{
 		
 			
 	        // label nome giocatore
-			//backgroundlabel.setLayout(new FlowLayout() );
-	        JTextField playerNamel = new JTextField("nome player");
-	       
-	       
+
+			JTextField playerNamel = new JTextField("NomePlayer");
 	        // label gameCode
-	        JTextField gameCodel = new JTextField("game code");
+	        JTextField gameCodel = new JTextField("GameCode");
 	     
 	        
 	      String[] nPlayers = {"2", "3", "4"};
 
-	      //Create the combo box, select item at index 4.
+	      //ComboBox per scelta numero player
+	      
 	      JComboBox<Object> nPl = new JComboBox<Object>(nPlayers);
 	     
 	    
 			this.submit = loader.uploadImage("menu/menuImages/submit.png");
 			ImageIcon submitImg = new ImageIcon(submit);
 			submitButton = new JButton();
-			submitButton.setOpaque(false);
-			submitButton.setContentAreaFilled(false);
-			submitButton.setBorderPainted(false);
+			inizializeButton(submitButton, submitImg);
 			submitButton.setIcon(submitImg);
 			
 			ActionListener submitAction = new ActionListener() {
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
-			    	//c.waitingMissingPlayer(); 
 			    	
 			    	String playerName = playerNamel.getText();
 			    	String gameCode = gameCodel.getText();
-			    	int nPlay = nPl.getSelectedIndex() + 2;
 			    	
-				    c.setPlayerData(buttonHostVisible, playerName, gameCode, nPlay);
+			    	if(controlText(playerName) && controlText(gameCode)) {
+			    	
+			    		int nPlay = nPl.getSelectedIndex() + 2;
+			    	
+			    		c.setPlayerData(buttonHostVisible, playerName, gameCode, nPlay);
 				    
-			    
-			    	
-				    
-			    	
+			    	}
+
 			    }
 			};
 			
@@ -154,7 +129,8 @@ public class MultiplayerPanel extends JPanel{
 			
 			
 			
-			// posizione bottoni 
+			// posizione elementi su schermo
+			
 			backgroundlabel.setLayout(null);
 
 			// posizione bottone Host/Joiner
@@ -192,16 +168,6 @@ public class MultiplayerPanel extends JPanel{
 			submitButton.setLocation(Utilities.SCREEN_WIDTH/2 - 200, 360);
 			
 			
-			/*
-			// posizione "numero giocatori rimanenti"
-			this.numR = new JLabel("Numero giocatori rimanenti: ");
-			numR.setSize(500, 100);
-			Font g1 = new Font("Helvetica", Font.BOLD, 25);
-			numR.setFont(g1);
-			numR.setLocation(SwingConstants.CENTER + 100, 500);
-			
-			*/
-			
 			backgroundlabel.add(button);
 			backgroundlabel.add(button2);
 			backgroundlabel.add(nPl);
@@ -209,20 +175,12 @@ public class MultiplayerPanel extends JPanel{
 			backgroundlabel.add(playerNamel);
 			backgroundlabel.add(gameCodel);
 			backgroundlabel.add(submitButton);
-			//backgroundlabel.add(numR);
 
 			
 	    			
 	}
 	
-	/*
-	public void changeLabel() {
-		
-		numR.setText("Numero giocatori rimanenti: " + c.getNumberOfMissingPlayer());
-		repaint();
-	}
-	*/
-
+	
 	public void changeHostVisible(boolean visible) {
 		
 		this.buttonHostVisible = visible;
@@ -242,35 +200,39 @@ public class MultiplayerPanel extends JPanel{
 	
 	}
 	
-	
-	
-	public void showNumberOfMissingPlayer() {
-		
-		/*
-		new Thread(new Runnable(){
-			@Override
-			public synchronized void run(){
-				double timeStart = System.nanoTime();
-				while(System.nanoTime() <= timeStart + 10e9);
-				c.getNumberOfMissingPlayer();
-				repaint();
-			}
-		}).start();
+	public void showErrorSpace() {
 		
 		JOptionPane.showMessageDialog(this,
-			    ""+missing,
-			    "!!!!!",
+			    "Nome utente e/o game code non devono contenere spazi!",
+			    "ATTENZIONE",
 			    JOptionPane.ERROR_MESSAGE);
-		
-		submitButton.removeAll();
-		
-		*/
-		
+	
 	}
+	
+	
+	
+	// setta caratteristiche bottone 
+	
+		public void inizializeButton(JButton butt, ImageIcon imag) {
+			
+			butt.setOpaque(false);
+			butt.setContentAreaFilled(false);
+			butt.setBorderPainted(false);
+			butt.setIcon(imag);
+		}
 
 	
 	
-	
+	public boolean controlText(String text) {
+		
+		if(text.contains(" ") ) {
+			showErrorSpace();
+			return false;
+		}
+		
+		return true;
+		
+	}
 	
 		
 	
