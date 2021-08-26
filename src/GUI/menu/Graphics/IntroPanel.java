@@ -60,7 +60,7 @@ public class IntroPanel extends JPanel {
 	        hit.open(audio);
 	        hit.start();
 	        } catch(Exception ex) {
-	        System.out.println("Windows not supportet yet");
+	        
 	       
 	    }
 	
