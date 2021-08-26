@@ -155,6 +155,7 @@ public class MultiplayerPanel extends JPanel{
 			Font f1 = new Font("Helvetica", Font.BOLD, 18);
 			nPl.setFont(f1);
 			
+			
 			// nome player
 			playerNamel.setSize(160,30);
 			playerNamel.setLocation(Utilities.SCREEN_WIDTH/2 - 80, 270);
