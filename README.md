@@ -11,7 +11,7 @@ Software/programmi utiizzati:
 - GitHub
 - Lucidchart
 - Discord
-- Programmi di Video-editor
+- Photoshop
 
 ## CONFIGURAZIONE DEL GIOCO
 
