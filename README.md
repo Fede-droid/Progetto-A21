@@ -4,7 +4,12 @@
 ### INFO
 Gioco free-to-play. 
 Progetto realizzato da:
-- Alessandro Cremonesi, Davide Toscanini, Fabio Tagliani, Federico Cignoli, Nicola Ibba.
+- Cremonesi Alessandro 
+- Cignoli Federico
+- Diegoli Tommaso
+- Ibba Nicola
+- Tagliani Fabio
+- Toscanini Davide
 
 Software/programmi utiizzati:
 - Eclipse
