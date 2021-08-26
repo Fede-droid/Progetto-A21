@@ -16,7 +16,6 @@ public class NextLevelListener extends Listener {
 	public void actionPerformed(ActionEvent e) {
 		
 		removeOldPanel();
-		game.setLevel(2);
 		game.nextLevel();
 		
 	}

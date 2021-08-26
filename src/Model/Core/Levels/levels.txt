@@ -3,10 +3,12 @@
 # brick = "b"
 # powerUp = 1,2, ...
 $ 1
+b b b
 1 2 b
-b b
-b
-b
+b 1 b
+b b b
+b b b
+b 1 b
 x
 $ 2
 b   b

@@ -27,6 +27,7 @@ public class WaitingForPlayerPanel extends JPanel{
 		ImagesLoader loader;
 		private BreakoutGame game;
 		private JLabel missingPlayer;
+		private int nMissingPlayer;
 	
 	public WaitingForPlayerPanel(BreakoutGame game) {
 		
@@ -72,12 +73,17 @@ public class WaitingForPlayerPanel extends JPanel{
 	}
 	
 	public void updateMissingPlayerText() {
-		
-		missingPlayer.setText("Giocatori rimanenti: " + game.getNumberOfMissingPlayer());
+		this.nMissingPlayer = game.getNumberOfMissingPlayer();
+		missingPlayer.setText("Giocatori rimanenti: " + nMissingPlayer);
 		
 		repaint();
 	}
 	
+	// solo per il test
+	public int getnMissingPlayer() {
+		
+		return nMissingPlayer;
+	}
 	
 
 }

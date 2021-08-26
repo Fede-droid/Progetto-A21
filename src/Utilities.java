@@ -1,11 +1,11 @@
-package Model.Items;
+
 
 public interface Utilities {
 	
 	// Dimensioni dello screen
 	
 	static final int SCREEN_WIDTH = 560; 
-	static final int SCREEN_HEIGHT = 650;
+	static final int SCREEN_HEIGHT = 700;
 	
 	// Posizione iniziale della Ball
     static final int INTIAL_POSITION_BALL_X = 250;

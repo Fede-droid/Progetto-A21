@@ -234,8 +234,6 @@ public class BreakoutGame {
 	// aggiornemento giocatori mancanti
 	public void updateMissing() {
 		
-		System.out.println(""+getNumberOfMissingPlayer());
-		
 		waitingPanel.updateMissingPlayerText();
 		waitingPanel.repaint();
 	}
