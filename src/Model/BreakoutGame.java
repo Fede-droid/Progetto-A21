@@ -35,6 +35,7 @@ public class BreakoutGame {
 	private int level;
 	
 	// creazione del controller
+	
 	public BreakoutGame() {
 		
 		this.gameFrame = new GameFrame();
