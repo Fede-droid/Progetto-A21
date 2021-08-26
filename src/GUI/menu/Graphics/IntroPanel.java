@@ -41,7 +41,7 @@ public class IntroPanel extends JPanel {
 
 		Icon imgIcon = new ImageIcon(this.getClass().getResource("intro-2.gif"));
 		JLabel label = new JLabel(imgIcon);
-		label.setSize(Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT);
+		label.setSize(Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT-30);
 		
 		label.setBounds(0, 0, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT);
 		add(label);

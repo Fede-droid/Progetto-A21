@@ -114,7 +114,7 @@ public class MultiplayerPanel extends JPanel{
 			    	String playerName = playerNamel.getText();
 			    	String gameCode = gameCodel.getText();
 			    	
-			    	if(controlText(playerName) && controlText(gameCode)) {
+			    	if(controlText(playerName) && controlText(gameCode) && controlChar(playerName)) {
 			    	
 			    		int nPlay = nPl.getSelectedIndex() + 2;
 			    	
@@ -209,6 +209,15 @@ public class MultiplayerPanel extends JPanel{
 	
 	}
 	
+	public void showErrorCaracter() {
+		
+		JOptionPane.showMessageDialog(this,
+			    "Numero massimo di caratteri per il nome è 5",
+			    "ATTENZIONE",
+			    JOptionPane.ERROR_MESSAGE);
+	
+	}
+	
 	
 	
 	// setta caratteristiche bottone 
@@ -234,6 +243,17 @@ public class MultiplayerPanel extends JPanel{
 		
 	}
 	
+	
+	public boolean controlChar(String text) {
+		
+		if(text.length() > 5 ) {
+			showErrorCaracter();
+			return false;
+		}
+		
+		return true;
+		
+	}
 		
 	
 
