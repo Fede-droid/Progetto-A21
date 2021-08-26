@@ -99,7 +99,8 @@ public class MultiplayerPanel extends JPanel{
 	      //ComboBox per scelta numero player
 	      
 	      JComboBox<Object> nPl = new JComboBox<Object>(nPlayers);
-	     
+
+	      
 	    
 			this.submit = loader.uploadImage("menu/menuImages/submit.png");
 			ImageIcon submitImg = new ImageIcon(submit);
@@ -149,6 +150,7 @@ public class MultiplayerPanel extends JPanel{
 			
 			// numero giocatori
 			nPl.setSize(200, 60);
+			
 			nPl.setLocation(Utilities.SCREEN_WIDTH/2 - 100, 200);
 			Font f1 = new Font("Helvetica", Font.BOLD, 18);
 			nPl.setFont(f1);
