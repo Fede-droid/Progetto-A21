@@ -163,7 +163,7 @@ private static final long serialVersionUID = 1L;
 			this.g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si pu� disegnare
 			
 			g.setFont(new Font("Courier", Font.BOLD, 25)); 
-			g.setColor(Color.BLACK);
+			g.setColor(Color.WHITE);
 			
 			objSfondo.render(g, this);
 			objBall.render(g);
