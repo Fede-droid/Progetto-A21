@@ -35,15 +35,20 @@ public class IntroPanel extends JPanel {
 	// Pannello di intro al gioco
 	public IntroPanel(BreakoutGame c) throws InterruptedException {
 		
- 
+		setLayout(null);
+
 		Dimension dimension_screen = new Dimension(Utilities.SCREEN_WIDTH,Utilities.SCREEN_HEIGHT);
 		setPreferredSize(dimension_screen);
 
 		Icon imgIcon = new ImageIcon(this.getClass().getResource("intro-2.gif"));
 		JLabel label = new JLabel(imgIcon);
-		label.setSize(Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT-30);
 		
-		label.setBounds(0, 0, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT);
+		label.setLocation(0, -30);
+		
+		label.setSize(Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT);
+		
+		//label.setBounds(0, 0, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT);
+		
 		add(label);
 		setBackground(Color.BLACK);
 
