@@ -68,9 +68,11 @@ public class IntroPanel extends JPanel {
         
   
         // bottone "skip" per saltare la intro ed accedere direttamente al menu iniziale
-     		label.setLayout(new FlowLayout() );
+     	//	label.setLayout(new FlowLayout() );
      		JButton skip = new JButton("SKIP");     
-     		skip.setLocation(Utilities.SCREEN_WIDTH - skip.getWidth(), 100);
+     		skip.setLocation(Utilities.SCREEN_WIDTH - 70 - skip.getWidth(), 50);
+     		skip.setSize(50, 40);
+     		
      		label.add(skip);
 
      		ActionListener setVisibileSwitch1 = new ActionListener() {
