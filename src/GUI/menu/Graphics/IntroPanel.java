@@ -53,14 +53,15 @@ public class IntroPanel extends JPanel {
 		setBackground(Color.BLACK);
 
 		String musicString = "./src/GUI/menu/menuImages/intro.wav";
+		
 		try {
 		    AudioInputStream audio = AudioSystem.getAudioInputStream(new File(musicString).getAbsoluteFile());
 	        this.hit = AudioSystem.getClip();
 	        hit.open(audio);
 	        hit.start();
 	        } catch(Exception ex) {
-	        System.out.println("Error with playing sound.");
-	        ex.printStackTrace();
+	        System.out.println("Windows not supportet yet");
+	       
 	    }
 	
         setVisible(true);
