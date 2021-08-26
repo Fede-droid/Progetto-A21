@@ -3,7 +3,9 @@ package GUI.menu.Graphics;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -48,7 +50,7 @@ public class WaitingForPlayerPanel extends JPanel{
 		
 		//creazione label per testo
 		this.missingPlayer = new JLabel("Giocatori rimanenti: " + game.getNumberOfMissingPlayer());
-		missingPlayer.setFont(new Font("Courier", Font.BOLD, 30)); 
+		missingPlayer.setFont(new Font("Courier", Font.BOLD, 35)); 
 		missingPlayer.setLocation(100, 1000);
 		missingPlayer.setOpaque(false);
 		backgroundlabel.setLayout(new FlowLayout());
@@ -56,9 +58,9 @@ public class WaitingForPlayerPanel extends JPanel{
 		
 		backgroundlabel.add(missingPlayer);
 		
-		this.wait = loader.uploadImage("menu/menuImages/waiting.gif");
-		ImageIcon image2 = new ImageIcon(new ImageIcon(wait).getImage());
-		JLabel waitLabel = new JLabel(image2);
+		Image image2 = new ImageIcon(this.getClass().getResource("waiting3.gif")).getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT);
+		ImageIcon imageI2 = new ImageIcon(image2);
+		JLabel waitLabel = new JLabel(imageI2);
 		
 		
 		backgroundlabel.add(waitLabel);
