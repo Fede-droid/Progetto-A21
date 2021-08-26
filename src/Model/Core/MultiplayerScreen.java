@@ -48,6 +48,8 @@ private static final long serialVersionUID = 1L;
 	private boolean gameStatus = false;
 	private boolean gameOver = false;
 	private boolean gameWin = false;
+	private boolean isXdirectionPositive = true;
+	private boolean isYdirectionPositive = false;
 	boolean victory, loss;
 	private Ball objBall;
 	private int[] ballPosition;
@@ -76,6 +78,7 @@ private static final long serialVersionUID = 1L;
 	private int numberOfPlayer, playerIndex;
 	private String isFastActiveString, isFlipActiveString;
 	private int fastRemainingTime, flipRemainingTime;
+	private int[] tempBallPosition = {0,0};
 
 	
 	public MultiplayerScreen(BreakoutGame game, int numberOfPlayer, int playerIndex) {
@@ -364,23 +367,29 @@ private static final long serialVersionUID = 1L;
 			for (int j=2*numberOfPlayer; j<objBricks.size()+2*numberOfPlayer; j++) {
 				bricksHitLevel.set(j-2*numberOfPlayer, Integer.parseInt(gameStatusStringSplitted[j]));
 			}
+			
 			int k = objBricks.size()+2*numberOfPlayer;
+			tempBallPosition[0]=ballPosition[0];
+			tempBallPosition[1]=ballPosition[1];
 			ballPosition[0] = Integer.parseInt(gameStatusStringSplitted[k++]);
 			ballPosition[1] = Integer.parseInt(gameStatusStringSplitted[k++]);
+			if (isXdirectionPositive && (tempBallPosition[0]-ballPosition[0])>0 || !isXdirectionPositive && (tempBallPosition[0]-ballPosition[0])<0
+				|| isYdirectionPositive && (tempBallPosition[1]-ballPosition[1])>0 || !isYdirectionPositive && (tempBallPosition[1]-ballPosition[1])<0)
+				mainMusic.playMusic(MusicTypes.HIT);
+			isXdirectionPositive = (tempBallPosition[0]-ballPosition[0]<0) ? true : false;
+			isYdirectionPositive = (tempBallPosition[1]-ballPosition[1]<0) ? true : false;
 			scoreString=gameStatusStringSplitted[k++];
 			lifesLeft=Integer.parseInt(gameStatusStringSplitted[k++]);
 			isFastActiveString=gameStatusStringSplitted[k++];
 			fastRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
 			isFlipActiveString=gameStatusStringSplitted[k++];
 			flipRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
-			victory = Boolean. parseBoolean(gameStatusStringSplitted[k++]);
-			loss = Boolean. parseBoolean(gameStatusStringSplitted[k++]);
+			victory = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
+			loss = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
 			for (int i=0; i<numberOfPlayer; i++) {
 				playersName.set(i, gameStatusStringSplitted[k++]);
 			}
-			
-			
-			
+		
 		}
 
 		private void endGameOver() {
