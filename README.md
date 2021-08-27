@@ -50,9 +50,7 @@ Per poter verificare il corretto funzionamento del programma bisogna seguire i s
 > discreta connessione ad internet.
 
 ### ALCUNI SCREENSHOT DEL GIOCO
-![nb](https://cdn.discordapp.com/attachments/880214894337720341/880223054620422154/main.png)
-![nb](https://cdn.discordapp.com/attachments/880214894337720341/880223057040535613/level1.png)
-![nb](https://cdn.discordapp.com/attachments/880214894337720341/880552761551364147/unknown.png)
+
 
 
 **Free Game, Hell Yeah!**
