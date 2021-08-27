@@ -4,12 +4,14 @@
 ### INFO
 Gioco free-to-play. 
 Progetto realizzato da:
-- Cremonesi Alessandro 
-- Cignoli Federico
-- Diegoli Tommaso
-- Ibba Nicola
-- Tagliani Fabio
-- Toscanini Davide
+- Cremonesi Alessandro    (responsabile qualità del codice)
+- Cignoli Federico        (responsabile documentazione dei requisiti)
+- Diegoli Tommaso         (responsabile progettazione dell’interfaccia)
+- Ibba Nicola             (responsabile documentazione del codice)
+- Tagliani Fabio          (responsabile verifica e convalida)
+- Toscanini Davide        (responsabile documentazione del progetto)
+
+Le varie responsabilià non sono state svolte dalla singola persona, ma in modo collettivo.
 
 Software/programmi utiizzati:
 - Eclipse
@@ -50,9 +52,8 @@ Per poter verificare il corretto funzionamento del programma bisogna seguire i s
 ### ALCUNI SCREENSHOT DEL GIOCO
 ![nb](https://cdn.discordapp.com/attachments/880214894337720341/880223054620422154/main.png)
 ![nb](https://cdn.discordapp.com/attachments/880214894337720341/880223057040535613/level1.png)
-![nb]()
+![nb](https://cdn.discordapp.com/attachments/880214894337720341/880552761551364147/unknown.png)
 
 
-## ✨✨✨✨✨VERY IMPORTANT✨✨✨✨✨
 **Free Game, Hell Yeah!**
 
