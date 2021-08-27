@@ -230,9 +230,10 @@ private static final long serialVersionUID = 1L;
 					g.drawImage(life, 505, 98, 20, 20, null);
 			}
 
-		    /*if (!gameWin) endGameOver();
+		    if (!gameWin) endGameOver();
 			
-			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);*/
+			/*if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);*/
+			
 			g.dispose();
 			
 			buffer.show();

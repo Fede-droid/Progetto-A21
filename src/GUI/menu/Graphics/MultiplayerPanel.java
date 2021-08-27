@@ -20,7 +20,7 @@ import Model.Items.Utilities;
 public class MultiplayerPanel extends JPanel{ 
 	
 	private static final long serialVersionUID = 1L;
-	BufferedImage background, button1, button2, submit;
+	BufferedImage background, button1, button2, submit, random;
 	ImagesLoader loader;
 	private Boolean buttonHostVisible = true;
 	private BreakoutGame c;
@@ -85,7 +85,9 @@ public class MultiplayerPanel extends JPanel{
 			};
 			
 			button2.addActionListener(setVisibile2);
-		
+			
+			
+			
 			
 	        // label nome giocatore
 
@@ -101,7 +103,6 @@ public class MultiplayerPanel extends JPanel{
 	      JComboBox<Object> nPl = new JComboBox<Object>(nPlayers);
 
 	      
-	    
 			this.submit = loader.uploadImage("menu/menuImages/submit.png");
 			ImageIcon submitImg = new ImageIcon(submit);
 			submitButton = new JButton();
@@ -128,7 +129,23 @@ public class MultiplayerPanel extends JPanel{
 			
 			submitButton.addActionListener(submitAction);
 			
+			// bottone PARTITA RANDOM
+			this.random = loader.uploadImage("menu/menuImages/random.png");
+			ImageIcon buttonRImg = new ImageIcon(random);
+			backgroundlabel.setLayout(new FlowLayout() );
+			JButton random = new JButton();
+			inizializeButton(random,buttonRImg);
+			backgroundlabel.add(random);
+
+			ActionListener randomClick = new ActionListener() {
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			    	gameCodel.setText("RANDOM");
+			    	repaint();
+			    }
+			};
 			
+			random.addActionListener(randomClick);
 			
 			// posizione elementi su schermo
 			
@@ -155,7 +172,6 @@ public class MultiplayerPanel extends JPanel{
 			Font f1 = new Font("Helvetica", Font.BOLD, 18);
 			nPl.setFont(f1);
 			
-			
 			// nome player
 			playerNamel.setSize(160,30);
 			playerNamel.setLocation(Utilities.SCREEN_WIDTH/2 - 80, 270);
@@ -166,9 +182,16 @@ public class MultiplayerPanel extends JPanel{
 			gameCodel.setLocation(Utilities.SCREEN_WIDTH/2 - 80, 330);
 			gameCodel.setFont(f);
 			
-			// submit
-			submitButton.setSize(400, 200);
-			submitButton.setLocation(Utilities.SCREEN_WIDTH/2 - 200, 360);
+		
+			// submit button
+			submitButton.setSize(250, 75);
+			submitButton.setLocation(Utilities.SCREEN_WIDTH/2 - 125, 400);
+			
+			// random button
+			random.setSize(200, 50);
+			random.setLocation(Utilities.SCREEN_WIDTH/2 - 100, 500);
+			
+		
 			
 			
 			backgroundlabel.add(button);
@@ -179,8 +202,6 @@ public class MultiplayerPanel extends JPanel{
 			backgroundlabel.add(gameCodel);
 			backgroundlabel.add(submitButton);
 
-			
-	    			
 	}
 	
 	
