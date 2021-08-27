@@ -1,13 +1,15 @@
 package Model.Items.PowerUp;
 
-import java.util.Timer;
-
+import Model.Core.Screen;
 import Model.Items.ScreenItem;
+import Model.Items.Utilities;
 
 public abstract class PowerUp {
 	
 	protected boolean active;
 	protected ScreenItem affectedScreenItem;
+	protected double duringTime;
+	private double timeStart;
 	
 	public PowerUp() {
 		active = false;
@@ -26,8 +28,8 @@ public abstract class PowerUp {
 		new Thread(new Runnable(){
 			@Override
 			public synchronized void run(){
-				double timeStart = System.nanoTime();
-				while(System.nanoTime() <= timeStart + 10e9);
+				timeStart = System.nanoTime();
+				while(System.nanoTime() <= timeStart + duringTime);
 				disactivate();
 			}
 		}).start();
@@ -39,4 +41,6 @@ public abstract class PowerUp {
 	public abstract void disactivate();
 	
 	public abstract PowerUpTypes whichPower();
+	
+	public abstract String getPath();
 }

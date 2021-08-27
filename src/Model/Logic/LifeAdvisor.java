@@ -2,6 +2,7 @@ package Model.Logic;
 
 import Model.Core.Screen;
 import Model.Items.Ball;
+import Model.Items.Utilities;
 import Music.Music;
 import Music.MusicTypes;
 
@@ -17,7 +18,7 @@ public class LifeAdvisor {
 		this.loseLifeMusic = loseLife;
 		this.collision = collision;
 		this.ball = ball;
-        life = 3;
+        life = Utilities.NUMBER_LIFE;
 	}
 	
 	// false se è ancora in vita, true se ha perso
@@ -31,15 +32,14 @@ public class LifeAdvisor {
 		}
 		return false;	
 	}
-	
+	/*
 	public void resetLife() {
         life=3;
     }
-
+*/
     public int getLife() {
         return life;
     }
-	
 }
 	
 	

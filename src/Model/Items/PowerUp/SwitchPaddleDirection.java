@@ -1,12 +1,18 @@
 package Model.Items.PowerUp;
 
+import Model.Items.Item;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
+import Model.Items.Utilities;
+import Model.Logic.ScreenItemFactory;
 
 public class SwitchPaddleDirection extends PowerUp {
 	
+	private String path = "/Images/flip.png";
+	
 	public SwitchPaddleDirection(ScreenItem screenItem) {
 		super.affectedScreenItem = screenItem;
+		duringTime = 10e9;
 	}
 
 	@Override
@@ -23,5 +29,9 @@ public class SwitchPaddleDirection extends PowerUp {
 	
 	public PowerUpTypes whichPower() {
 		return PowerUpTypes.FLIP;
+	}
+
+	public String getPath() {
+		return path;
 	}
 }

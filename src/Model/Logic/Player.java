@@ -10,19 +10,20 @@ import Model.Items.Utilities;
 
 public class Player {
 
+	private int numberPlayer;
 	private Paddle objPaddle;
-	private BufferedImage paddle;
-	private ImagesLoader loader;
+	//private BufferedImage paddle;
+	//private ImagesLoader loader;
 	private InputAdapter inputHandler;
-	private int playerScore;
-	private int life;
+	//private int playerScore;
+	//private int life;
 
-	public Player() {
+	public Player(/*int numberPlayer*/) {
 		
-		createImage();
+		this.numberPlayer = numberPlayer;
 		inizialize();
 		this.inputHandler = new InputAdapter(objPaddle);
-		this.life = 3;
+		//this.life = 3;
 	}
 	
 	public void inizialize() {
@@ -33,16 +34,9 @@ public class Player {
 		posInitPaddle[1] = Utilities.INITIAL_POSITION_PADDLE_Y;  // y
 					
 		// creo un paddle 
-		objPaddle = new Paddle(paddle, 100, 30, posInitPaddle);
+		objPaddle = new Paddle(100, 30, posInitPaddle);
 
-		this.playerScore = 0;
-	}
-	
-	public void createImage() {
-		
-		this.loader = ImagesLoader.getInstace();
-		this.paddle = loader.uploadImage("/Images/paddle.png");
-
+		//this.playerScore = 0;
 	}
 
 	public InputAdapter getInputHandler() {
@@ -53,8 +47,11 @@ public class Player {
 		this.inputHandler = inputHandler;
 	}
 	
-
 	public Paddle getObjPaddle() {	
 		return objPaddle;
+	}
+	
+	public void setLimit() {
+		
 	}
 }

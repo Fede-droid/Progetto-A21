@@ -10,6 +10,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -21,19 +22,22 @@ import GUI.ImagesLoader;
 import Model.BreakoutGame;
 import Model.Core.Levels.Levels;
 import Model.Items.Ball;
-import Model.Items.Box;
 import Model.Items.Brick;
+import Model.Items.BrickPowerUp;
+import Model.Items.Item;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 import Model.Items.Utilities;
-import Model.Items.Wall;
 import Model.Items.PowerUp.BallSpeedUp;
 import Model.Items.PowerUp.PowerUp;
 import Model.Items.PowerUp.PowerUpTypes;
 import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
+import Model.Logic.Drawer;
 import Model.Logic.LifeAdvisor;
 import Model.Logic.Player;
+import Model.Logic.PowerUpListComparator;
+import Model.Logic.ScreenItemFactory;
 import Music.Music;
 import Music.MusicTypes;
 
@@ -41,58 +45,66 @@ public class Screen extends Canvas implements Runnable{
 	
 private static final long serialVersionUID = 1L;
 	
-	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, hitBox, flipBrick, sfondo, youWin, youLose, on, off, fastLogo, flipLogo, life;
 	private boolean gameStatus = false;
 	private boolean gameOver = false;
 	private boolean gameWin = false;
 	private Ball objBall;
 	private ArrayList<Brick> objBricks;
-	private ArrayList<Wall> objWalls;
-	private Box objBox;
-	private ScreenItem objSfondo;
-	private ImagesLoader loader;
+	private HashMap<PowerUp, ScreenItem> objPowerUp;
 	private ArrayList<Paddle> objPaddles;
+	private ScreenItem objSfondo, objHit, objBox, objSpeedUpLogo, objSwitchLogo, objLongerLogo, objShorterLogo, objWin, objLose;
+	private ScreenItem[] objLife;
+	private ScreenItem[] objOn;
+	//private ScreenItem[] objOff;
 	Clip win,hit;
 	boolean isMusicOn;
 	private Graphics g;
-	CollisionAdvisor ball1;
+	CollisionAdvisor advisor;
 	private Music mainMusic;
 	private BreakoutGame game;
 	private int score;
 	private Levels levels;
 	private ArrayList<Player> players;
-	double fastStartTime = 0;
-	double flipStartTime = 0;
 	double switchStart = 0;
 	private LifeAdvisor lifeAdvisor;
-	private DatagramSocket datagramSocket;
 	private int lastScore, numberOfPlayers;
+	private Drawer drawer;
 
-	
+	/*
+	 * Costruttore della classe screen, istanzia gli oggetti dello screen e il drawer per disegnare
+	 */
 	public Screen(BreakoutGame game) {
 		this.game = game;
 		objBricks = new ArrayList<Brick>();
+		objPowerUp = new HashMap<PowerUp, ScreenItem>();
 		objPaddles = new ArrayList<Paddle>();
+		ScreenItem[] objLife = new ScreenItem[Utilities.NUMBER_LIFE];
 		players = new ArrayList<Player>();
-		objWalls = new ArrayList<Wall>();
-		uploadImages();
+		drawer = new Drawer();
 		this.mainMusic = new Music();
 		score=0;
 	}
 	
+	/*
+	 * Setta il numero di giocatori
+	 */
 	public void setNumberOfPlayers(int n) {
 		
 		this.numberOfPlayers = n;
 	}
 	
-	// ciclo di gioco
+	/*
+	 * Metodo run che definisce il thread screen, qui viene gestito il ciclo di gioco: attraverso il pattern game cycle
+	 * vengono chiamati update() e render(), per rispettivamente, aggiornare il model con le nuove posizioni e disegnare gli oggetti.
+	 * La variabile fps Stabilisce i frame per secondo.
+	 */
 	@Override
 	public void run() {
 		
 		double previous = System.nanoTime(); 
 		double delta = 0.0;
 		double fps = 100.0;
-		double ns = 1e9/fps; // numero di nano sec per fps
+		double ns = 1e9/fps; // numero di nano secondi per fps
 		gameStatus = true;
 		
 		//switchare off/on
@@ -113,85 +125,70 @@ private static final long serialVersionUID = 1L;
 		}
 	}
 	
-		// caricamento immagini 
-		private void uploadImages() {
-			
-			loader = ImagesLoader.getInstace();
-			box = loader.uploadImage("../Images/box.png");
-			hitBox = loader.uploadImage("../Images/hit.png");
-			ball = loader.uploadImage("../Images/ball.png");
-			sfondo = loader.uploadImage("/Images/sfondo.jpeg");
-			brick = loader.uploadImage("/Images/brick.png");
-			brick1 = loader.uploadImage("/Images/brick1.png");
-			brick2 = loader.uploadImage("/Images/brick2.png");
-			brick3 = loader.uploadImage("/Images/brick3.png");
-			fastBrick = loader.uploadImage("/Images/fast.png");
-			flipBrick = loader.uploadImage("/Images/flip.png");
-			youWin = loader.uploadImage("/Images/youWin.png");
-			youLose = loader.uploadImage("/Images/lose.png");
-			on = loader.uploadImage("/Images/on.png");
-			off = loader.uploadImage("/Images/off.png");
-			fastLogo = loader.uploadImage("/Images/fastLogo.png");
-			flipLogo = loader.uploadImage("/Images/flipLogo.png");
-			life = loader.uploadImage("/Images/life.png");
-			
-
-		}
-
-		// inzializzazione partita
-		public void start() {
-	
-			// posizione di partenza dello sfondo
-			int[] posInitSfondo = new int[2];
-			posInitSfondo[0] = 0;
-			posInitSfondo[1] = 0;
-			
-			// creo lo sfondo
-			objSfondo = new ScreenItem(sfondo, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT, posInitSfondo);
-			
-			int[] posBox = new int[2];
-			posBox[0] = 495;  //nell'asse x
-			posBox[1] = 0; //nell'asse y
-			objBox = new Box(box, 80, 700, posBox);
-			
-			// posizione di partenza ball
-			int[] posInitBall = new int[2];
-
-			posInitBall[0] = Utilities.INTIAL_POSITION_BALL_X;  // x
-			posInitBall[1] = Utilities.INITIAL_POSITION_BALL_Y;  // y
-			
-			// faccio partire il thread corrispondente a ball
-			objBall = new Ball(ball, 20, 20, posInitBall);
-			
-			ball1 = new CollisionAdvisor(objBall, mainMusic);
-			
-			//creazione e posizionamento dei Bricks
-			levels = new Levels(brick, fastBrick, flipBrick, objBall, objPaddles);
-			this.lifeAdvisor = new LifeAdvisor(mainMusic, ball1, objBall);
+	/*
+	 *  inzializzazione della partita: creo gli oggetti ScreenItem che poi verranno aggiornati e disegnati.
+	 */
+	public void setLevel(int lv) {
+		
+		objBall = (Ball)ScreenItemFactory.getInstance().getScreenItem(Item.BALL);
+		
+		levels = new Levels(objBall, objPaddles);
+		levels.setLevel(lv);
+		objBricks = levels.getBricksDesposition(lv);
+		//levels.setPlayersPosition(numberOfPlayers);
+		
+		ArrayList<PowerUp> tempList = new ArrayList<PowerUp>();
+		for(Brick tempBrick : objBricks) {
+			try {
+				if(!((BrickPowerUp) tempBrick == null)) {
+					tempList.add(((BrickPowerUp)tempBrick).getPowerUp());
+				}
+			} catch(ClassCastException e) {	}
 		}
 		
-		// aggiornamento ciclo di gioco
+		advisor = new CollisionAdvisor(objBall, mainMusic);
+		
+		lifeAdvisor = new LifeAdvisor(mainMusic, advisor, objBall);
+		objLife = ScreenItemFactory.getInstance().getScreenItem(Item.LIFE, Utilities.NUMBER_LIFE);
+		
+		objSpeedUpLogo = ScreenItemFactory.getInstance().getScreenItem(Item.SPEED_UP);
+		objSwitchLogo = ScreenItemFactory.getInstance().getScreenItem(Item.SWITCH);
+		objSfondo = ScreenItemFactory.getInstance().getScreenItem(Item.SFONDO);
+		objBox = ScreenItemFactory.getInstance().getScreenItem(Item.BOX);
+		objHit = ScreenItemFactory.getInstance().getScreenItem(Item.HIT);
+		objWin = ScreenItemFactory.getInstance().getScreenItem(Item.WIN);
+		objLose = ScreenItemFactory.getInstance().getScreenItem(Item.LOSE);
+		objLongerLogo = ScreenItemFactory.getInstance().getScreenItem(Item.LONG_UP);
+		objShorterLogo = ScreenItemFactory.getInstance().getScreenItem(Item.SHORT_UP);
+		
+		objOn = ScreenItemFactory.getInstance().getScreenItem(Item.ON, tempList.size());
+		PowerUpListComparator c = new PowerUpListComparator();
+		tempList.sort(c);
+		for(int i=0; i < tempList.size(); i++) {
+			if(!objPowerUp.containsKey(tempList.get(i))) objPowerUp.put(tempList.get(i), objOn[i]);
+		}
+	}
+	
+		/*
+		 *  Game cycle: update(), aggiorno il ciclo di gioco.
+		 *  Controllo le collisioni e gestisco cambiamenti nel model dovuto ad esse
+		 */
 		synchronized public void update() {
 			
 		    objBall.move();
 		    gameOver = lifeAdvisor.checkLife(numberOfPlayers);
-		    gameStatus = ball1.checkBorderCollision(numberOfPlayers);
+		    gameStatus = advisor.checkBorderCollision(numberOfPlayers);
 		    
 		    for (Paddle tempPaddle: objPaddles) {
-		    	ball1.checkCollisionLato(tempPaddle);
-				ball1.checkCollision(tempPaddle);
-		    }
-		    
-		    for (Wall tempWall: objWalls) {
-		    	ball1.checkCollisionLato(tempWall);
-				ball1.checkCollision(tempWall);
+		    	advisor.checkCollisionLato(tempPaddle);
+		    	advisor.checkCollision(tempPaddle);
 		    }
 
-			ball1.checkCollisionLato(objBox);
+		    advisor.checkCollisionLato(objBox);
 			
 			for (Brick tempBrick : objBricks) {
 				if (!tempBrick.isDestroyed()) {
-					if(ball1.checkCollisionLato(tempBrick) || ball1.checkCollision(tempBrick)) {
+					if(advisor.checkCollisionLato(tempBrick) || advisor.checkCollision(tempBrick)) {
 						score++;
 					}
 					if(tempBrick.isDestroyed()) {
@@ -204,105 +201,77 @@ private static final long serialVersionUID = 1L;
 			if (objPaddles.size()>1) objPaddles.get(1).move(objBall.getXPosition(), objBall.getYPosition(),objBall.getImageWidth());// bot
 		}		
 		
-		// disegno di oggetti grafici a schermo
+		/*
+		 * Game cycle: render(), renderizzo gli screenItem.
+		 * Ogni screen item è definito drawable e, attraverso la classe drawer, viene disegnato su un oggetto Canvas.
+		 * Ogni oggetto per essere disegnato effettivamente utilizza la classe graphics con il quale bufferizzo tutte le coponenti di
+		 * un frame. Solo una volta composto il frame disegno. 
+		 */
 		synchronized public void render() {
 			
-			// creazione di 2 buffer cosï¿½ che l'immagine venga aggiornata su uno e mostrata sull'altro 
-			// modo ciclico, evita gli scatti.
-			
 			BufferStrategy buffer = this.getBufferStrategy();
-			
 			if(buffer == null) {
-				createBufferStrategy(2);
+				this.createBufferStrategy(2);
 				return;	
 			}
+			g = buffer.getDrawGraphics();
 			
-			this.g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si puï¿½ disegnare
+			drawer.loadGraphics(g);
 			
-			g.setFont(new Font("Courier", Font.BOLD, 25)); 
-			g.setColor(Color.WHITE);
+			drawer.draw(objSfondo);
+			drawer.draw(objBall);
+			drawer.draw(objBox);
+			drawer.draw(objHit);
+			drawer.draw(objSpeedUpLogo);
+			drawer.draw(objSwitchLogo);
+			drawer.draw(objLongerLogo);
+			drawer.draw(objShorterLogo);
 			
-			objSfondo.render(g, this);
-			objBall.render(g);
-			for(Paddle tempPaddle: objPaddles) tempPaddle.render(g);
-			objBox.render(g);
-            g.drawImage(hitBox, 508, 3, 30, 30, null);
-            
-            g.drawImage(fastLogo, 508, 120, 25, 25, null);
-            /* ricordarsi di non cancellare bisogna implementare la grafica dei power up
-            if(isFastActive) {
-            	if (System.nanoTime() >= fastStartTime+6e9) 
-            		g.drawString(""+(int)((fastStartTime+10e9-System.nanoTime())/1e9), 510, 170);
-            	else g.drawImage(on, 508, 153, 25, 25, null);
-            }
-            else g.drawImage(off, 508, 153, 25, 25, null);
-            
-            g.drawImage(flipLogo, 508, 195, 25, 25, null);
-            if(isFlipActive) {
-            	if (System.nanoTime() >= flipStartTime+6e9) 
-            		g.drawString(""+(int)((flipStartTime+10e9-System.nanoTime())/1e9), 510, 245);
-            	else g.drawImage(on, 508, 228, 25, 25, null);
-            }
-            else g.drawImage(off, 508, 228, 25, 25, null);
-            */
-		
-			g.drawString(String.valueOf((Integer)score).toString(), 505, 58);
-			g.drawString("LV", 505, 280);
-			g.drawString(""+levels.getActualLevel(), 505, 305);
-
-
-			int n = 0;
-			for (Brick tempBrick : objBricks) {
-				if (!tempBrick.isDestroyed()) {
-					n++;
-					if(!tempBrick.getHasPowerUp()) {
-						int hitLevel = tempBrick.getHitLevel();
-						switch (hitLevel) {
-							case 1:
-								tempBrick.setImage(brick3); 
-								break;
-							case 2:
-								tempBrick.setImage(brick2); 
-								break;
-							case 3:
-								tempBrick.setImage(brick1); 
-								break;
-						    default:
-						    	tempBrick.setImage(brick);
-					        }
-					}
-					tempBrick.render(g);
+			for(int i=0; i < lifeAdvisor.getLife(); i++) drawer.draw(objLife[i]);
+			
+			for(Paddle tempPaddle: objPaddles) drawer.draw(tempPaddle);
+			
+			for(Brick tempBrick: objBricks) {
+				if(!tempBrick.isDestroyed()) drawer.draw(tempBrick);	
+			}
+			
+			for(PowerUp powerUp: objPowerUp.keySet()) {
+				if(powerUp.isActive()) {
+					drawer.draw(objPowerUp.get(powerUp));
 				}
 			}
-			if(n==0) {
-				g.drawImage(youWin, 495/2-150, Utilities.SCREEN_HEIGHT/2 - 100, 300, 70, null);
+			
+			drawer.draw(String.valueOf((Integer)score).toString(), 517, 60);
+			drawer.draw("LV", 505, 15);
+			drawer.draw(""+levels.getActualLevel(), 530, 15);
+			
+			
+			
+			if(endGame()) {
+				drawer.draw(objWin);
 				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.WIN);
 				gameStatus = false;
 				gameWin = true;
 				endGameWin();
 			}
+			if(!gameWin) endGameOver();
+			if(gameOver) drawer.draw(objLose);
 			
-			switch (lifeAdvisor.getLife()) {
-				case 1:
-					g.drawImage(life, 505, 78, 20, 20, null); 
-					break;
-				case 2:
-					g.drawImage(life, 505, 78, 20, 20, null); 
-					g.drawImage(life, 505, 88, 20, 20, null); 
-					break;
-				case 3:
-					g.drawImage(life, 505, 78, 20, 20, null); 
-					g.drawImage(life, 505, 88, 20, 20, null); 
-					g.drawImage(life, 505, 98, 20, 20, null);
-			}
-
-		    if (!gameWin) endGameOver();
-			
-			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);
 			
 			g.dispose();
-			
 			buffer.show();
+		}
+		
+		private boolean endGame() {
+			int win = 0;
+			for(Brick tempBrick : objBricks) {
+				if(tempBrick.isDestroyed()) {
+					win++;
+				}
+			}
+			if(win == objBricks.size()) {
+				return true;
+			} else return false;
 		}
 
 		private void endGameOver() {
@@ -350,13 +319,6 @@ private static final long serialVersionUID = 1L;
 		public void reset() {
 			players.removeAll(players);
 			objPaddles.removeAll(objPaddles);
-			
-		}
-		
-		public void setLevel(int lv) {
-			levels.setLevel(lv);
-			objBricks = levels.getBricksDesposition(lv);
-			levels.setPlayersPosition(numberOfPlayers);
 		}
 		
 		public int getNumberOfLevels() {

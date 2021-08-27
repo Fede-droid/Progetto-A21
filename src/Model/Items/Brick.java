@@ -1,38 +1,37 @@
 package Model.Items;
 
 import java.awt.image.BufferedImage;
+
+import GUI.ImagesLoader;
 import Model.Items.PowerUp.PowerUp;
 import Model.Items.PowerUp.PowerUpTypes;
 
 public class Brick extends ScreenItem{
 	
-	private int hitLevel;
+	private BufferedImage[] images;
+	protected int hitLevel = 4;
 	private int initialHitLevel;
 	protected boolean destroyed;
-	private PowerUp powerUp; // null vuol dire che � un brick normale
-	private boolean hasPowerUp;
 	
 	/*
 	 * Costruttore 1: Brick normale
 	 */
-	public Brick(BufferedImage image, int width, int height, int[] position, int hitLevel) {
-		super(image, width, height, position);
+	public Brick(int width, int height, int[] position) { 
+		super(width, height, position);
+		images = new BufferedImage[hitLevel];
+		if(hitLevel == 4) initialize();
 		this.destroyed = false;
-		this.hitLevel = hitLevel;
 		initialHitLevel = hitLevel;
-		hasPowerUp = false;
 	}
 	
-	/*
-	 * Costruttore 2: Special Brick - PowerUP
-	 */
-	public Brick(BufferedImage image, int width, int height, int[] position, int hitLevel, PowerUp powerUp) {
-		super(image, width, height, position);
-		this.destroyed = false;
-		this.hitLevel = hitLevel;
-		initialHitLevel = hitLevel;
-		this.powerUp = powerUp;
-		hasPowerUp = true;
+	private void initialize() {
+		
+		images[0] = ImagesLoader.getInstace().uploadImage("/Images/brick.png");
+		images[1] = ImagesLoader.getInstace().uploadImage("/Images/brick1.png");
+		images[2] = ImagesLoader.getInstace().uploadImage("/Images/brick2.png");
+		images[3] = ImagesLoader.getInstace().uploadImage("/Images/brick3.png");
+		
+		this.image = images[0];
 	}
 
 	public boolean isDestroyed() {
@@ -43,7 +42,7 @@ public class Brick extends ScreenItem{
 		hitLevel -= 1;
 		if (hitLevel == 0) {
 			destroyed = true;
-		}
+		} else image = images[4-hitLevel];
 	}
 	
 	public int getHitLevel() {
@@ -65,23 +64,6 @@ public class Brick extends ScreenItem{
 	}
 	
 	public boolean activatePowerUP() {
-		if(powerUp != null && !powerUp.isActive()) {
-			powerUp.startPowerUp();
-			return true;
-		}
 		return false;
-	}
-	
-	public void disactivatePowerUp() {
-		if(powerUp != null && powerUp.isActive()) powerUp.disactivate();
-	}
-	
-	public boolean getHasPowerUp() {
-		return hasPowerUp;
-	}
-	
-	public PowerUpTypes whichPower() {
-		if(powerUp != null) return powerUp.whichPower();
-		else return PowerUpTypes.NULL;
 	}
 }

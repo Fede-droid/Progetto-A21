@@ -1,5 +1,5 @@
 package Model.Items.PowerUp;
 
 public enum PowerUpTypes {
-	FAST, FLIP, NULL;
+	FLIP, FAST, LONG, SHORT;
 }

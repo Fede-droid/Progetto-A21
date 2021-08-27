@@ -1,5 +1,4 @@
 package Model.Core.Levels;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -9,25 +8,23 @@ import java.util.Scanner;
 
 import Model.Items.Ball;
 import Model.Items.Brick;
+import Model.Items.BrickPowerUp;
 import Model.Items.Paddle;
-
+import Model.Items.Utilities;
 import Model.Items.PowerUp.BallSpeedUp;
+import Model.Items.PowerUp.LongerPaddle;
 import Model.Items.PowerUp.PowerUp;
+import Model.Items.PowerUp.ShorterPaddle;
 import Model.Items.PowerUp.SwitchPaddleDirection;
 
 public class Levels {
 	private List<Brick> objBricks;
-	BufferedImage brick, fastBrick, flipBrick;
 	private Ball objBall;
 	private ArrayList<Paddle> objPaddles;
-	private HashMap<Integer, List<Brick>> levels;	
+	private HashMap<Integer, List<Brick>> levels;
 	private int nLevel, nLine;
 	
-	public Levels(BufferedImage brick, BufferedImage fastBrick,BufferedImage flipBrick, Ball objBall, ArrayList<Paddle> objPaddles) {
-		//this.level = TypeLevels.LEVEL2;
-		this.brick = brick;
-		this.fastBrick = fastBrick;
-		this.flipBrick = flipBrick;	
+	public Levels(Ball objBall, ArrayList<Paddle> objPaddles) {
 		this.objBall = objBall;
 		this.objPaddles = objPaddles;
 		objBricks = new ArrayList<Brick>();
@@ -42,13 +39,14 @@ public class Levels {
 	
 	}
 	
+	/*
 	public void setPlayersPosition(int numberOfPlayers, int playerIndex) {
         switch (numberOfPlayers) {
         case 2: {
         	if (playerIndex==0) {
-        		objPaddles.get(playerIndex).setPosition(200, 580);
+        		objPaddles.get(playerIndex).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
         	}
-        	else objPaddles.get(playerIndex).setPosition(200, 3);
+        	else objPaddles.get(playerIndex).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, 3);
             break;
         }
         case 3: {
@@ -87,20 +85,24 @@ public class Levels {
         }
         }
     }
+    */
 	
+	/*
 	public void setPlayersPosition(int numberOfPlayers) {
 		switch (numberOfPlayers) {
 		case 1: {
-			objPaddles.get(0).setPosition(200, 580);
+			objPaddles.get(0).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
         	break;
 		}
         case 2: {
-        	objPaddles.get(0).setPosition(200, 580);
-        	objPaddles.get(1).setPosition(200, 5);
+        	objPaddles.get(0).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
+        	objPaddles.get(1).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, 5);
         	break;
         }
 		}
 	}
+	
+	*/
 
 	
 	private Scanner myReader;
@@ -148,8 +150,9 @@ public class Levels {
 		}
 		
 		if(l[0].equals("x")) {
-			addLevel(nLevel, new ArrayList<Brick>(objBricks));
+			addLevel(nLevel, new ArrayList<Brick>(objBricks)/*, new ArrayList<PowerUp>(objPowerUps)*/);
 			objBricks.clear();
+			//objPowerUps.clear();
 		}
 		
 		else {
@@ -162,28 +165,33 @@ public class Levels {
 				// posizione di partenza dei Brick
 				posInitBrick[0] = j * 80 + 15;  //nell'asse x
 				posInitBrick[1] = nLine * 47 + 129; //nell'asse y
-				if(li[j].equals("b")) objBricks.add(new Brick(brick, 65, 25, posInitBrick,4));
+				if(li[j].equals("b")) objBricks.add(new Brick(Utilities.BRICK_WIDTH, Utilities.BRICK_HEIGHT, posInitBrick));
 				if(li[j].equals("1")) {
 					PowerUp speedUp = new BallSpeedUp(objBall);
-					objBricks.add(new Brick(fastBrick, 35, 35, posInitBrick,1, speedUp));
+					objBricks.add(new BrickPowerUp(Utilities.P_UP_BRICK_WIDTH, Utilities.P_UP_BRICK_HEIGHT, posInitBrick, speedUp));
 				}
 				if(li[j].equals("2")) {
 					PowerUp flipUp = new SwitchPaddleDirection(objPaddles.get(0));
-					objBricks.add(new Brick(flipBrick, 35, 35, posInitBrick,1, flipUp));
+					objBricks.add(new BrickPowerUp(Utilities.P_UP_BRICK_WIDTH, Utilities.P_UP_BRICK_HEIGHT, posInitBrick, flipUp));
 				}
-
+				if(li[j].equals("3")) {
+					PowerUp longUp = new LongerPaddle(objPaddles.get(0));
+					objBricks.add(new BrickPowerUp(Utilities.P_UP_BRICK_WIDTH, Utilities.P_UP_BRICK_HEIGHT, posInitBrick, longUp));
+					}
+				if(li[j].equals("4")) {
+					PowerUp shortUp = new ShorterPaddle(objPaddles.get(0));
+					objBricks.add(new BrickPowerUp(Utilities.P_UP_BRICK_WIDTH, Utilities.P_UP_BRICK_HEIGHT, posInitBrick, shortUp));
+					}
 				}
-				
-			}
-		
-			
+			}	
 		}
 		
 	
 	
-	public void addLevel(int nLevel, List<Brick> items) {
+	public void addLevel(int nLevel, List<Brick> items/*, List<PowerUp> pUps*/) {
 		
 		levels.put(nLevel, items);
+		//levelUp.put(nLevel, pUps);
 		
 	}
 	
@@ -193,12 +201,13 @@ public class Levels {
 	}
 	
 	public ArrayList<Brick> getBricksDesposition(int lv) {
-		
-	
 		return (ArrayList<Brick>) levels.get(lv);
-		
 	}
-	
+	/*
+	public ArrayList<PowerUp> getPowerUp(int lv){
+		return (ArrayList<PowerUp>) levelUp.get(lv);
+	}
+	*/
 	public int getActualLevel() {
 		
 		return this.nLevel;

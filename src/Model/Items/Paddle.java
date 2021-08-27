@@ -3,6 +3,8 @@ package Model.Items;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
+import GUI.ImagesLoader;
+
 public class Paddle extends ScreenItem {
 	
 	// velocità paddle 
@@ -14,8 +16,9 @@ public class Paddle extends ScreenItem {
     private int switchConstant;
     private boolean oneTimeMulti;
 
-    public Paddle(BufferedImage image, int width, int height, int[] position) {
-    	super(image, width, height, position);
+    public Paddle(int width, int height, int[] position) {
+    	super(width, height, position);
+    	this.image = ImagesLoader.getInstace().uploadImage("/Images/paddle.png");
     	isSwitched = false;
     	switchConstant = 1;
     	leftLimit = 0;
@@ -106,6 +109,4 @@ public class Paddle extends ScreenItem {
     	}
     	if (!isSwitched) oneTimeMulti = true;
     }
-	
-
 }

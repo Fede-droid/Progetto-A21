@@ -1,13 +1,19 @@
 package Model.Items.PowerUp;
 
+import Model.Core.Screen;
 import Model.Items.Ball;
+import Model.Items.Item;
 import Model.Items.ScreenItem;
 import Model.Items.Utilities;
+import Model.Logic.ScreenItemFactory;
 
 public class BallSpeedUp extends PowerUp {
 	
+	private String path = "/Images/fast.png";
+	
 	public BallSpeedUp(ScreenItem screenItem) {
-		super.affectedScreenItem = screenItem;
+		affectedScreenItem = screenItem;
+		duringTime = 10e9;
 	}
 
 	@Override
@@ -25,5 +31,9 @@ public class BallSpeedUp extends PowerUp {
 	@Override
 	public PowerUpTypes whichPower() {
 		return PowerUpTypes.FAST;
+	}
+	
+	public String getPath() {
+		return path;
 	}
 }

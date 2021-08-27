@@ -1,25 +1,24 @@
 package Model.Items;
 
-import java.awt.Graphics;
-import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 
 import GUI.ImagesLoader;
 
 // classe astratta per metodi e varibili comuni fra gli oggetti
-public class ScreenItem {
+public class ScreenItem implements Drawable {
 
     protected BufferedImage image;
     protected int imageWidth;
     protected int imageHeight;
     protected int position[]; // position[0] = x, position[1] = y;
-    private String path;
+    protected String path;
     
-    public ScreenItem(BufferedImage image, int width, int height, int[] position) {
-        this.image = image;
+    public ScreenItem(String path, int width, int height, int[] position) {
+        this.image = ImagesLoader.getInstace().uploadImage(path);
         this.imageWidth = width;
         this.imageHeight = height;
         this.position = position;
+        this.path = path;
     }
     
     public ScreenItem(int width, int height, int[] position) {
@@ -27,16 +26,9 @@ public class ScreenItem {
         this.imageHeight = height;
         this.position = position;
     }
-    
-    public void render(Graphics g, Canvas c) {
-        // si disegna
-        g.drawImage(image, position[0], position[1], imageWidth, imageHeight, c);
-    }
 
-
-    public void render(Graphics g) {
-        // si disegna
-        g.drawImage(image, position[0], position[1], imageWidth, imageHeight, null);
+    public BufferedImage getImage() {
+    	return image;
     }
     
     public int[] getPosition() {

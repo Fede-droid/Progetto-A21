@@ -96,7 +96,7 @@ public class BreakoutGame {
 		}
 		
 		screen.addPlayers(players);
-		screen.start();
+		//screen.start();
 		screen.setLevel(level);
 		screen.setMusic(music);
 		
@@ -115,7 +115,7 @@ public class BreakoutGame {
 	
 	public int getNumberOfLevels() {
 		
-		screen.start();
+		//screen.start();
 		return screen.getNumberOfLevels();
 		
 	}

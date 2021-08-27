@@ -4,7 +4,6 @@ import Model.Items.Ball;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 import Model.Items.Utilities;
-import Model.Items.Wall;
 import Music.Music;
 import Music.MusicTypes;
 

@@ -2,14 +2,17 @@ package Model.Items;
 
 import java.awt.image.BufferedImage;
 
+import GUI.ImagesLoader;
+
 public class Ball extends ScreenItem{
 
     private boolean active;
     private int xDirection;
     private int yDirection;
     private int speed;
-    public Ball(BufferedImage image, int width, int height, int[] position) {
-        super(image, width, height, position);
+    public Ball(int width, int height, int[] position) {
+        super(width, height, position);
+        this.image = ImagesLoader.getInstace().uploadImage("../Images/ball.png");
         this.active = true;
         xDirection = 1;
         yDirection = -1;
