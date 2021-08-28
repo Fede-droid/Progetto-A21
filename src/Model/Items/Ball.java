@@ -18,6 +18,7 @@ public class Ball extends ScreenItem{
         xDirection = 1;
         yDirection = -1;
         speed = (int) Utilities.DEFAULT_SPEED;    // costante di incremento velocit�
+        
     }
 
     public void move() {
