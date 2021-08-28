@@ -1,4 +1,5 @@
 package Model.Core.Levels;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -10,12 +11,12 @@ import Model.Items.Ball;
 import Model.Items.Brick;
 import Model.Items.BrickPowerUp;
 import Model.Items.Paddle;
-import Model.Items.Utilities;
 import Model.Items.PowerUp.BallSpeedUp;
 import Model.Items.PowerUp.LongerPaddle;
 import Model.Items.PowerUp.PowerUp;
 import Model.Items.PowerUp.ShorterPaddle;
 import Model.Items.PowerUp.SwitchPaddleDirection;
+import Utility.Utilities;
 
 public class Levels {
 	private List<Brick> objBricks;
@@ -33,10 +34,18 @@ public class Levels {
 		readFile();
 		getLevels();
 		}
-	
+	/*
+	public Levels(BufferedImage brick, BufferedImage fastBrick,BufferedImage flipBrick, ArrayList<Paddle> objPaddles) {
+		//this.level = TypeLevels.LEVEL2;
+		this.brick = brick;
+		this.fastBrick = fastBrick;
+		this.flipBrick = flipBrick;	
+		this.objPaddles = objPaddles;
+		objBricks = new ArrayList<Brick>();
+		}
+	*/
 	public void setLevel(int level) {
 		this.nLevel = level;
-	
 	}
 	
 	/*
@@ -185,6 +194,7 @@ public class Levels {
 				}
 			}	
 		}
+	
 		
 	
 	

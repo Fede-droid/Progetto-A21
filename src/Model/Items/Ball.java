@@ -3,6 +3,7 @@ package Model.Items;
 import java.awt.image.BufferedImage;
 
 import GUI.ImagesLoader;
+import Utility.Utilities;
 
 public class Ball extends ScreenItem{
 

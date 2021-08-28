@@ -12,11 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import GUI.ImagesLoader;
-import GUI.menu.listeners.NextLevelListener;
-import GUI.menu.listeners.RepeatListener;
 import Model.BreakoutGame;
-import Model.Items.Utilities;
-import java.awt.image.BufferedImage;
+import Utility.Utilities;
 
 public class PauseMenu extends JPanel {
 	
@@ -123,6 +120,7 @@ public class PauseMenu extends JPanel {
 		button4.addActionListener(return2main);
 	
 	
+		
 		
 		
 		JLabel label1 = new JLabel();

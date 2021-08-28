@@ -3,9 +3,9 @@ package Model.Logic;
 import Model.Items.Ball;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
-import Model.Items.Utilities;
 import Music.Music;
 import Music.MusicTypes;
+import Utility.Utilities;
 
 public class CollisionAdvisor {
 	Ball ball;

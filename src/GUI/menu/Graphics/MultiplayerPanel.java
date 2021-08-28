@@ -1,40 +1,28 @@
 package GUI.menu.Graphics;
 
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-
-import javax.swing.AbstractButton;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
-
 import GUI.ImagesLoader;
-import GUI.menu.listeners.MultiplayerListener;
 import Model.BreakoutGame;
-import Model.Items.Utilities;
+import Utility.Utilities;
 
 public class MultiplayerPanel extends JPanel{ 
 	
 	private static final long serialVersionUID = 1L;
-	BufferedImage background, button1, button2, submit;
+	BufferedImage background, button1, button2, submit, random;
 	ImagesLoader loader;
 	private Boolean buttonHostVisible = true;
-	private int playerNumber;
 	private BreakoutGame c;
 	private JButton submitButton;
 	
@@ -57,10 +45,7 @@ public class MultiplayerPanel extends JPanel{
 			ImageIcon button1Img = new ImageIcon(button1);
 			backgroundlabel.setLayout(new FlowLayout() );
 			JButton button = new JButton();
-			button.setOpaque(false);
-			button.setContentAreaFilled(false);
-			button.setBorderPainted(false);
-			button.setIcon(button1Img);
+			inizializeButton(button,button1Img);
 			backgroundlabel.add(button);
 			button.setVisible(buttonHostVisible);
 			
@@ -70,15 +55,12 @@ public class MultiplayerPanel extends JPanel{
 			ImageIcon button2Img = new ImageIcon(button2);
 			backgroundlabel.setLayout(new FlowLayout() );
 			JButton button2 = new JButton();
-			button2.setOpaque(false);
-			button2.setContentAreaFilled(false);
-			button2.setBorderPainted(false);
-			button2.setIcon(button2Img);
+			inizializeButton(button2,button2Img);
 			backgroundlabel.add(button2);
 			button2.setVisible(!buttonHostVisible);
 			
 			
-			
+			// scelta fra host e joiner
 			ActionListener setVisibile = new ActionListener() {
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
@@ -103,53 +85,70 @@ public class MultiplayerPanel extends JPanel{
 			};
 			
 			button2.addActionListener(setVisibile2);
-		
+			
+			
+			
 			
 	        // label nome giocatore
-			//backgroundlabel.setLayout(new FlowLayout() );
-	        JTextField playerNamel = new JTextField("nome player");
-	       
-	       
-	        // label gameCode
-	        JTextField gameCodel = new JTextField("game code");
-	     
-	        
-	      String[] nPlayers = { "1", "2", "3", "4"};
 
-	      //Create the combo box, select item at index 4.
-	      JComboBox<Object> nPl = new JComboBox<Object>(nPlayers);
-	      nPl.setSelectedIndex(3);
+			JTextField playerNamel = new JTextField("NomePlayer");
+	        // label gameCode
+	        JTextField gameCodel = new JTextField("GameCode");
 	     
 	        
-	    
+	      String[] nPlayers = {"2", "3", "4"};
+
+	      //ComboBox per scelta numero player
+	      
+	      JComboBox<Object> nPl = new JComboBox<Object>(nPlayers);
+
+	      
 			this.submit = loader.uploadImage("menu/menuImages/submit.png");
 			ImageIcon submitImg = new ImageIcon(submit);
 			submitButton = new JButton();
-			submitButton.setOpaque(false);
-			submitButton.setContentAreaFilled(false);
-			submitButton.setBorderPainted(false);
+			inizializeButton(submitButton, submitImg);
 			submitButton.setIcon(submitImg);
 			
 			ActionListener submitAction = new ActionListener() {
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
+			    	
 			    	String playerName = playerNamel.getText();
 			    	String gameCode = gameCodel.getText();
-			    
-				    c.setPlayerData(buttonHostVisible, playerName, gameCode, playerNumber);
+			    	
+			    	if(controlText(playerName) && controlText(gameCode) && controlChar(playerName)) {
+			    	
+			    		int nPlay = nPl.getSelectedIndex() + 2;
+			    	
+			    		c.setPlayerData(buttonHostVisible, playerName, gameCode, nPlay);
 				    
-			    
-				    playerNumber = Integer. parseInt(nPl.getSelectedItem().toString());
-			    	
-			    	
+			    	}
+
 			    }
 			};
 			
 			submitButton.addActionListener(submitAction);
 			
+			// bottone PARTITA RANDOM
+			this.random = loader.uploadImage("menu/menuImages/random.png");
+			ImageIcon buttonRImg = new ImageIcon(random);
+			backgroundlabel.setLayout(new FlowLayout() );
+			JButton random = new JButton();
+			inizializeButton(random,buttonRImg);
+			backgroundlabel.add(random);
+
+			ActionListener randomClick = new ActionListener() {
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			    	gameCodel.setText("RANDOM");
+			    	repaint();
+			    }
+			};
 			
+			random.addActionListener(randomClick);
 			
-			// posizione bottoni 
+			// posizione elementi su schermo
+			
 			backgroundlabel.setLayout(null);
 
 			// posizione bottone Host/Joiner
@@ -168,6 +167,7 @@ public class MultiplayerPanel extends JPanel{
 			
 			// numero giocatori
 			nPl.setSize(200, 60);
+			
 			nPl.setLocation(Utilities.SCREEN_WIDTH/2 - 100, 200);
 			Font f1 = new Font("Helvetica", Font.BOLD, 18);
 			nPl.setFont(f1);
@@ -182,10 +182,16 @@ public class MultiplayerPanel extends JPanel{
 			gameCodel.setLocation(Utilities.SCREEN_WIDTH/2 - 80, 330);
 			gameCodel.setFont(f);
 			
-			// submit
-			submitButton.setSize(400, 200);
-			submitButton.setLocation(Utilities.SCREEN_WIDTH/2 - 200, 360);
+		
+			// submit button
+			submitButton.setSize(250, 75);
+			submitButton.setLocation(Utilities.SCREEN_WIDTH/2 - 125, 400);
 			
+			// random button
+			random.setSize(200, 50);
+			random.setLocation(Utilities.SCREEN_WIDTH/2 - 100, 500);
+			
+		
 			
 			
 			backgroundlabel.add(button);
@@ -195,14 +201,10 @@ public class MultiplayerPanel extends JPanel{
 			backgroundlabel.add(playerNamel);
 			backgroundlabel.add(gameCodel);
 			backgroundlabel.add(submitButton);
-			
-	    
-			
-							
+
 	}
 	
 	
-
 	public void changeHostVisible(boolean visible) {
 		
 		this.buttonHostVisible = visible;
@@ -222,14 +224,60 @@ public class MultiplayerPanel extends JPanel{
 	
 	}
 	
-
-
-
+	public void showErrorSpace() {
+		
+		JOptionPane.showMessageDialog(this,
+			    "Nome utente e/o game code non devono contenere spazi!",
+			    "ATTENZIONE",
+			    JOptionPane.ERROR_MESSAGE);
+	
+	}
+	
+	public void showErrorCaracter() {
+		
+		JOptionPane.showMessageDialog(this,
+			    "Numero massimo di caratteri per il nome è 5",
+			    "ATTENZIONE",
+			    JOptionPane.ERROR_MESSAGE);
+	
+	}
+	
+	
+	
+	// setta caratteristiche bottone 
+	
+		public void inizializeButton(JButton butt, ImageIcon imag) {
+			
+			butt.setOpaque(false);
+			butt.setContentAreaFilled(false);
+			butt.setBorderPainted(false);
+			butt.setIcon(imag);
+		}
 
 	
-		
 	
+	public boolean controlText(String text) {
 		
+		if(text.contains(" ") ) {
+			showErrorSpace();
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	
+	public boolean controlChar(String text) {
+		
+		if(text.length() > 5 ) {
+			showErrorCaracter();
+			return false;
+		}
+		
+		return true;
+		
+	}
 		
 	
 

@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import GUI.ImagesLoader;
-import Model.Items.Utilities;
+import Utility.Utilities;
 
 	
 public class YouWin extends JPanel{

@@ -4,7 +4,7 @@ import Model.Core.Screen;
 import Model.Items.Ball;
 import Model.Items.Item;
 import Model.Items.ScreenItem;
-import Model.Items.Utilities;
+import Utility.Utilities;
 
 public class ScreenItemFactory {
 	
@@ -141,6 +141,9 @@ public class ScreenItemFactory {
 				path = "/Images/life.png";
 				obj[numberItem - n] = new ScreenItem(path, 20, 20, position);
 				break;
+			case PADDLE:
+				//position[0] = 200
+				//position[1] = 
 			default:
 				obj[numberItem - n] = null;
 			}

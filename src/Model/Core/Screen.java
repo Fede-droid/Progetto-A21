@@ -27,7 +27,6 @@ import Model.Items.BrickPowerUp;
 import Model.Items.Item;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
-import Model.Items.Utilities;
 import Model.Items.PowerUp.BallSpeedUp;
 import Model.Items.PowerUp.PowerUp;
 import Model.Items.PowerUp.PowerUpTypes;
@@ -40,6 +39,7 @@ import Model.Logic.PowerUpListComparator;
 import Model.Logic.ScreenItemFactory;
 import Music.Music;
 import Music.MusicTypes;
+import Utility.Utilities;
 
 public class Screen extends Canvas implements Runnable{
 	

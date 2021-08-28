@@ -1,38 +1,28 @@
 package Model;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import javax.swing.JFrame;
-
 import GUI.menu.Graphics.GameFrame;
 import GUI.menu.Graphics.IntroPanel;
 import GUI.menu.Graphics.MainMenu;
 import GUI.menu.Graphics.MultiplayerPanel;
 import GUI.menu.Graphics.PauseMenu;
 import GUI.menu.Graphics.WaitingForPlayerPanel;
-import GUI.menu.Graphics.YouWin;
 import Model.Core.MultiplayerScreen;
 import Model.Core.Screen;
-import Model.Core.Levels.Levels;
 import Model.Core.Multiplayer.Client;
-
-import Model.Items.Utilities;
 import Model.Logic.Player;
 
 public class BreakoutGame {
 	
-	// controller tra la logica e la gui
+	// PATTERN CONTROLLER
 	
 	private GameFrame gameFrame; //creazione nuova finestra
 	private Screen screen; 
 	private ArrayList<Player> players; // definizione dei giocatori
-	private Thread gameThread, gameThread2; // thread di gioco
 	private Boolean music; // setup musica
-	private Player p; 
 	private MainMenu m;
 	private MultiplayerScreen multiplayerScreen;
 	private MultiplayerPanel multiplayerPanel;
@@ -41,10 +31,11 @@ public class BreakoutGame {
 	private int playerNumber, playerIndex, numberOfMissingPlayer;
 	private Client client;
 	private WaitingForPlayerPanel waitingPanel;
-	private boolean botMode;
-	private int level, totLevels;
+	private boolean botMode, entered;
+	private int level;
 	
 	// creazione del controller
+	
 	public BreakoutGame() {
 		
 		this.gameFrame = new GameFrame();
@@ -54,10 +45,10 @@ public class BreakoutGame {
 		this.level = 1;
 	}
 
-	// avvio menu principale e creazione gioco
+	// avvio del gioco a partire dalla intro
 	public void start() throws InterruptedException {		
 		
-		IntroPanel intro = new IntroPanel();
+		IntroPanel intro = new IntroPanel(this);
 		gameFrame.add(intro);
 		gameFrame.pack();
 		gameFrame.setVisible(true);
@@ -66,17 +57,26 @@ public class BreakoutGame {
 		TimeUnit.SECONDS.sleep(9);
 		
 		intro.setVisible(false);
-		gameFrame.repaint();
-
+		skipIntro();
 		
-		this.m = new MainMenu(this);
-		gameFrame.add(m);
-		gameFrame.pack();
-		gameFrame.setVisible(true);
-		gameFrame.repaint();
+	}
+	
+	// salta l'introduzione
+	public void skipIntro(){
 		
-		this.screen = new Screen(this); //creazione schermo di gioco
-		
+		if(!entered) {
+			entered = true;
+			gameFrame.repaint();
+	
+			
+			this.m = new MainMenu(this);
+			gameFrame.add(m);
+			gameFrame.pack();
+			gameFrame.setVisible(true);
+			gameFrame.repaint();
+			
+			this.screen = new Screen(this); //creazione schermo di gioco
+	}
 	}
 
 	
@@ -112,19 +112,27 @@ public class BreakoutGame {
 		new Thread(screen).start();
 		screen.setVisible(true);
 	}
-	
+	/*
+<<<<<<< HEAD
 	public int getNumberOfLevels() {
 		
 		//screen.start();
 		return screen.getNumberOfLevels();
 		
 	}
+=======
+	
+>>>>>>> branch 'main' of https://github.com/IngSW-unipv/Progetto-A21.git
+*/
 	//***************************** INZIO GESTIONE MULTIPLAYER ****************************//
+	
+	// menu multiplayer 
 	
 	public void inizializeMultiplayer() {
 		
 		this.client = new Client(); //inzializzo connessione con il server
 		multiplayerPanel =  new MultiplayerPanel(this);
+		m.setVisible(false);
 		gameFrame.add(multiplayerPanel);
 		gameFrame.pack();
 		gameFrame.setVisible(true);
@@ -153,6 +161,7 @@ public class BreakoutGame {
 	public void startGame() {
 		
 		multiplayerPanel.setVisible(false);
+		if(waitingPanel != null) waitingPanel.setVisible(false);
 		multiplayerPanel.removeAll();
 		
 		gameSetupMultiplayer();
@@ -171,13 +180,11 @@ public class BreakoutGame {
 			players.add(new Player());
 
 		}	
-		
 		multiplayerScreen.addPlayers(players); //creazione schermo di gioco multiplayer
 		
 		multiplayerScreen.setMusic(music);
 		
 		multiplayerScreen.start();
-		
 		
 		client.startThread(multiplayerScreen);
 		
@@ -194,21 +201,19 @@ public class BreakoutGame {
 		multiplayerScreen.setVisible(true);
 	}
 	
+	// finestra di attesa giocatori
 	public void waitingMissingPlayer() {
-		
-		waitingPanel = new WaitingForPlayerPanel(this); 
+
+		this.waitingPanel = new WaitingForPlayerPanel(this);
 		gameFrame.add(waitingPanel);
+		multiplayerPanel.setVisible(false);
 		gameFrame.pack();
 		gameFrame.setVisible(true);
 		gameFrame.repaint();
-		
-		
 	}
 	
-	public void updateMissingPlayer() {
-		waitingPanel.updateMissingPlayerText();
-	}
-	
+	// getters e setters
+
 	public void multiplayerError() {
 		multiplayerPanel.showError();
 	}
@@ -237,17 +242,25 @@ public class BreakoutGame {
 		return numberOfMissingPlayer;
 	}
 	
+	// aggiornemento giocatori mancanti
+	public void updateMissing() {
+		
+		waitingPanel.updateMissingPlayerText();
+		waitingPanel.repaint();
+	}
+	
+	
 	//***************************** FINE GESTIONE MULTIPLAYER ****************************//
 	
-	// ripetere il livello/partita
-	//@SuppressWarnings("deprecation")
+	
+	// gioca allo stesso livello 
 	public void playAgain() {
 		
 		screen.reset();
 		
 	}
 	
-	// menu vittoria/sconfitta
+	// menu intermedio tra i livelli
 	public void gameWin(boolean win) {
 		
 		screen.reset();
@@ -275,8 +288,6 @@ public class BreakoutGame {
 		
 	}
 	
-	public void showMainFromWin() {	
-	}
 	
 	// incremento livello
 	public void nextLevel() {
@@ -299,18 +310,20 @@ public class BreakoutGame {
 		
 		return players;
 	}
-
+	
+	// aggiunta giocatori alla partita
 	public void addPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
 	
-	
+	// settaggio livello di gioco
 	public void setLevel(int level) {
 		
 		this.level = level;
 		
 	}
 	
+	// reset del gioco
 	public void reset() {	
 		gameFrame.invalidate();
 		gameFrame.validate();
@@ -320,7 +333,6 @@ public class BreakoutGame {
 	}
 	
 	
-
 	
 	public Screen getScreen() {
 		

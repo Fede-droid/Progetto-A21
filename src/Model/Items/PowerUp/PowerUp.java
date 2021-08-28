@@ -1,8 +1,6 @@
 package Model.Items.PowerUp;
 
-import Model.Core.Screen;
 import Model.Items.ScreenItem;
-import Model.Items.Utilities;
 
 public abstract class PowerUp {
 	

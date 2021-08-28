@@ -1,11 +1,11 @@
-package Model.Items;
+package Utility;
+
 
 public interface Utilities {
 	
-	// Dimensioni dello screen
-	
+	// Dimensione dello Screen
 	static final int SCREEN_WIDTH = 560; 
-	static final int SCREEN_HEIGHT = 700;
+	static final int SCREEN_HEIGHT = 650;
 	
 	// Dimensioni della Ball
 	static final int BALL_WIDTH = 20;
@@ -51,4 +51,5 @@ public interface Utilities {
     
     // Numero di vite
     static final int NUMBER_LIFE = 10;
+
 }

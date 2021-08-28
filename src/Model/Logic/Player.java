@@ -6,11 +6,12 @@ import java.awt.image.BufferedImage;
 
 import GUI.ImagesLoader;
 import Model.Items.Paddle;
-import Model.Items.Utilities;
+import Utility.Utilities;
 
 public class Player {
 
 	private int numberPlayer;
+	private int idPlayer;
 	private Paddle objPaddle;
 	//private BufferedImage paddle;
 	//private ImagesLoader loader;
@@ -18,9 +19,10 @@ public class Player {
 	//private int playerScore;
 	//private int life;
 
-	public Player(/*int numberPlayer*/) {
+	public Player() {
 		
 		this.numberPlayer = numberPlayer;
+		this.idPlayer = idPlayer;
 		inizialize();
 		this.inputHandler = new InputAdapter(objPaddle);
 		//this.life = 3;
@@ -51,7 +53,9 @@ public class Player {
 		return objPaddle;
 	}
 	
+	/*
 	public void setLimit() {
-		
+		if(idPlayer)
 	}
+	*/
 }

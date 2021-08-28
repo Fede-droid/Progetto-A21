@@ -1,14 +1,8 @@
 package GUI.menu.Graphics;
 
 import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import javax.swing.JFrame;
-
-import Model.BreakoutGame;
-import Model.Items.Utilities;
+import Utility.Utilities;
 
 public class GameFrame extends JFrame{
 
@@ -23,7 +17,7 @@ public class GameFrame extends JFrame{
 		Dimension dimension_screen = new Dimension(Utilities.SCREEN_WIDTH,Utilities.SCREEN_HEIGHT);
 		setPreferredSize(dimension_screen);
         setLocationRelativeTo(null);
-		setResizable(false);
+		setResizable(true);
 		inzialize();
 		
 	}

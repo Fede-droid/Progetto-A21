@@ -1,10 +1,7 @@
 package Model.Items.PowerUp;
 
-import Model.Items.Item;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
-import Model.Items.Utilities;
-import Model.Logic.ScreenItemFactory;
 
 public class SwitchPaddleDirection extends PowerUp {
 	

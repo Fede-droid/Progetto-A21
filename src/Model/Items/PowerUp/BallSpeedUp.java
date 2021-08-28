@@ -1,11 +1,8 @@
 package Model.Items.PowerUp;
 
-import Model.Core.Screen;
 import Model.Items.Ball;
-import Model.Items.Item;
 import Model.Items.ScreenItem;
-import Model.Items.Utilities;
-import Model.Logic.ScreenItemFactory;
+import Utility.Utilities;
 
 public class BallSpeedUp extends PowerUp {
 	

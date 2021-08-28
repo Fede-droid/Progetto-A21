@@ -6,6 +6,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Observable;
 
 import javax.swing.JOptionPane;
 
@@ -17,11 +19,12 @@ import Model.Core.Screen;
 public class Client {
 	
 	private DatagramSocket datagramSocket;
+    static String serverIP = "79.21.81.36";
 	private int serverPort;
 	private ClientThread thread;
 	private InetAddress address;
 	private int portNewPlayer, numberOfMissingPlayer, numberOfPlayer, playerIndex;
-
+		
 	public void join(BreakoutGame game, Boolean isHost, String gameCode, String playerName, int playerNumber) {
 		
 		//String playerName = "player1";
@@ -29,7 +32,7 @@ public class Client {
 		
 			// connessione con il server ed inzializzazione giocatore
 			try {
-				address = InetAddress.getByName("52.233.198.36");
+				address = InetAddress.getByName(serverIP);
 				
 			//202.61.250.68
 			
@@ -41,7 +44,7 @@ public class Client {
 				
 				byte[] b = playerData.getBytes();
 	            datagramSocket = new DatagramSocket();
-	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 8888);
+	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 2001);
 	            datagramSocket.send(packet);
 	            
 	            
@@ -55,6 +58,7 @@ public class Client {
 	                datagramSocket.receive(packet1);
 	                String AllInfo = new String(packet1.getData(), 0, packet1.getLength());
 	                
+	                System.out.println(AllInfo);
 	                String AllInfos[] = AllInfo.split(" ");
 	                
 	                String isJoined = AllInfos[0];
@@ -93,28 +97,63 @@ public class Client {
 	            	   
 	            	   else {
 	            		   
-	            		   game.waitingMissingPlayer(); //apre menu di attesa
-	            		   
-	            		   while(numberOfMissingPlayer != 0) {
-	            			   
-		            			byte[] d = new byte[1024];
-		       	                DatagramPacket packet2 = new DatagramPacket(d, d.length);
-		       	                datagramSocket.receive(packet2);
-		       	                String numberOfMissingPlayerString = new String(packet2.getData(), 0, packet2.getLength());
-		       	                
-		    	                numberOfMissingPlayer = Integer.parseInt(numberOfMissingPlayerString);
-
-		       	                game.setNumberOfMissingPlayer(numberOfMissingPlayer);
-		       	                game.updateMissingPlayer();
-	            			   
-	            		   }
-	            		   
-	            		   game.setNumberOfPlayer(numberOfPlayer);
-	            		   game.setPlayerIndex(playerIndex);
+	            		  
 	            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);
-	            		   game.startGame();
+    		       	      
+    		       	       game.waitingMissingPlayer(); //apre menu di attesa
+    		       	       
+    		       	       game.updateMissing();
+    		       	       
+	            		   new Thread(new Runnable(){
+	            				@Override
+	            				public synchronized void run(){
+	            					
+	            					while(numberOfMissingPlayer != 0) {
+	            						System.out.println("MANCANO: " + numberOfMissingPlayer);
+	    		    	                
+	    		       	                game.setNumberOfMissingPlayer(numberOfMissingPlayer);
+	    		       	       
+	    		       	                game.updateMissing();
+	    		       	             
+	            						byte[] d = new byte[1024];
+	    		       	                DatagramPacket packet2 = new DatagramPacket(d, d.length);
+	    		       	                try {
+											datagramSocket.receive(packet2);
+										} catch (IOException e) {
+											e.printStackTrace();
+										}
+	    		       	                String numberOfMissingPlayerString = new String(packet2.getData(), 0, packet2.getLength());
+	    		       	                
+	    		    	                numberOfMissingPlayer = Integer.parseInt(numberOfMissingPlayerString);
+
+	    		    	                
+	    		       	                
+	    		       	                try {
+											thread.sleep(300);
+										} catch (InterruptedException e) {
+											e.printStackTrace();
+										}
+	            						
+	            					}
+	            					
+	            					
+	            				   game.setNumberOfPlayer(numberOfPlayer);
+	      	            		   game.setPlayerIndex(playerIndex);
+	      	            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);
+	      	            		   game.startGame();
+	      	            		   
+	            					
+	      	            		   
+	            				}
+	            			}).start();
+	            		   
+	            		   
+	            		   
+	            		  
+	            		  
 	           
 	            	   }
+	            	 
 	                	
 	                }
 	                	

@@ -21,8 +21,8 @@ public class Paddle extends ScreenItem {
     	this.image = ImagesLoader.getInstace().uploadImage("/Images/paddle.png");
     	isSwitched = false;
     	switchConstant = 1;
-    	leftLimit = 0;
-    	rightLimit = 495;
+    	//leftLimit = 0;
+    	//rightLimit = 495;
     	oneTimeMulti = true;
     }
     
