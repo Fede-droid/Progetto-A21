@@ -73,7 +73,7 @@ public class MultiplayerScreen extends Screen{
 		}
 	    
 	    
-		for (int i=0; i<objBricks.size()-1; i++) {
+		for (int i=0; i<objBricks.size(); i++) {
 			objBricks.get(i).setHitLevel(bricksHitLevel.get(i));
 		}
 		
@@ -132,7 +132,7 @@ public class MultiplayerScreen extends Screen{
 			if(!objPowerUp.containsKey(tempList.get(i))) objPowerUp.put(tempList.get(i), objOn[i]);
 		}
 		for (int i=0; i<numberOfPlayer; i++) playersName.add("Name");
-		for(int i=0; i<objBricks.size();i++) bricksHitLevel.add(0);
+		for(int i=0; i<objBricks.size();i++) bricksHitLevel.add(4);
 		
 		this.scoreString = "0";
 		
@@ -220,7 +220,6 @@ public class MultiplayerScreen extends Screen{
 		for(int i=0; i < lifesLeft; i++) drawer.draw(objLife[i]);
 		
 		
-		
 		for(int i=0; i<numberOfPlayer; i++) { 
 			drawer.draw(objPaddles.get(i));
 			drawer.draw(playersName.get(i), objPaddles.get(i).getXPosition()+7, objPaddles.get(i).getYPosition()+21);
@@ -248,10 +247,7 @@ public class MultiplayerScreen extends Screen{
 		g.dispose();
 		buffer.show();
 		
-		
 	}
-	
-
 	
 	public void setPlayersPosition(int numberOfPlayers, int playerIndex) {
         switch (numberOfPlayers) {

@@ -49,7 +49,10 @@ public class Brick extends ScreenItem{
 	
 	public void setHitLevel(int hitLevel) {
 		this.hitLevel = hitLevel;
-		image = images[4-hitLevel];
+		if (hitLevel != 0) {
+			image = images[4-hitLevel];
+		} else destroyed = true;
+		
 	}
 
 	
