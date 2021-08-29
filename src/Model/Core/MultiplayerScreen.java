@@ -89,7 +89,7 @@ public class MultiplayerScreen extends Screen{
 	}
 	
 	
-	public void setLevel(int lv) {
+	synchronized public void setLevel(int lv) {
 		
 		objBall = (Ball)ScreenItemFactory.getInstance().getScreenItem(Item.BALL);
 		
@@ -150,7 +150,7 @@ public class MultiplayerScreen extends Screen{
 		
 	}
 	
-	public void setStringGameStatus(String gameStatus) {
+	synchronized public void setStringGameStatus(String gameStatus) {
 		String gameStatusString= new String();
 		gameStatusString=gameStatus;
 		String gameStatusStringSplitted[] = gameStatusString.split(" ");
@@ -197,7 +197,7 @@ public class MultiplayerScreen extends Screen{
 	
 	
 	@Override 
-	public void render() {
+	synchronized public void render() {
 		
 		BufferStrategy buffer = this.getBufferStrategy();
 		if(buffer == null) {
@@ -251,7 +251,7 @@ public class MultiplayerScreen extends Screen{
 		
 	}
 	
-	public void setPlayersPosition(int numberOfPlayers, int playerIndex) {
+	synchronized public void setPlayersPosition(int numberOfPlayers, int playerIndex) {
         switch (numberOfPlayers) {
         case 2: {
         	if (playerIndex==0) {
@@ -297,7 +297,7 @@ public class MultiplayerScreen extends Screen{
         }
     }
 	
-	public void setLevel() {
+	synchronized public void setLevel() {
 		
 		for(int i = 0; i < 4; i++) {//first 2 layers up
 			for (int j = 0; j < 2; j++) { 
@@ -355,11 +355,11 @@ public class MultiplayerScreen extends Screen{
 		
 	}
 	
-	public int getPaddleXPosition() {
+	synchronized public int getPaddleXPosition() {
 		return objPaddles.get(playerIndex).getXPosition();
 	}
 	
-	public int getPaddleYPosition() {
+	synchronized public int getPaddleYPosition() {
 		return objPaddles.get(playerIndex).getYPosition();
 	}
 	
