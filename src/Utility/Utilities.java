@@ -50,6 +50,6 @@ public interface Utilities {
     static final int POSITION_Y_POWER_UP = 350;
     
     // Numero di vite
-    static final int NUMBER_LIFE = 2;
+    static final int NUMBER_LIFE = 5;
 
 }
