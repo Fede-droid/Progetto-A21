@@ -51,6 +51,7 @@ public class ScoreListPanel extends JFrame {
 		model.addColumn("SCORE");
 		table.setRowHeight(35);
 		table.setBackground(Color.LIGHT_GRAY);
+		table.setEnabled(false);
 		updateData();
 		
 

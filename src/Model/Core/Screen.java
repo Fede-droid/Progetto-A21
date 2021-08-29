@@ -290,7 +290,9 @@ private static final long serialVersionUID = 1L;
 			}
 			
 			lastScore = scoreAdvisor.getScoreEnd(score);
-			db.updateScore();
+			if(db.getScoreByLVandUser() < score) {
+				db.updateScore();
+			}
 			game.gameWin(true);
 		}
 		

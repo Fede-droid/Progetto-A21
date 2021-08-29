@@ -12,12 +12,7 @@ public class SqlDAO implements DataBaseDAO{
 	private ArrayList<Integer> allScore;
 	private ArrayList<String> allPlayer;
 
-	@Override
-	public int getScoreByLV(int lv) {
-		  
-	       return 0; 
-	}
-
+	
 	@Override
 	public void allScore() {
 		allScore = new ArrayList<Integer>();
@@ -72,6 +67,27 @@ public class SqlDAO implements DataBaseDAO{
 	
 	public ArrayList<Integer> getAllScores() {
 		return allScore;
+	}
+
+
+	@Override
+	public int getScoreByUserAndLV(String user, int lv) {
+		Connection connection = ConnectionFactory.getConnection();
+		
+		try {
+            Statement stmt = connection.createStatement();
+            String update = "SELECT SCORE "+
+            		"FROM SINGLEPLAYERDB "+
+            		"WHERE NAME_PLAYER = '" + user + "' AND LV = '" + lv + "'";
+            
+            stmt.executeQuery(update);
+            
+            
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+		
+		return 0;
 	}
 	
 	

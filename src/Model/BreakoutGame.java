@@ -314,9 +314,6 @@ public class BreakoutGame {
 		this.level++;
 		screen.reset();
 		
-		ScoreListPanel ll = new ScoreListPanel();
-		ll.updateData();
-		
 	}
 	public GameFrame getGameFrame() {
 		return gameFrame;

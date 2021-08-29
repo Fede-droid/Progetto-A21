@@ -37,15 +37,13 @@ public class PersistenceFacade {
 	}
 
 	
-	public int getScoreByLV() {
+	public int getScoreByLVandUser() {
 		  
 	   
-		return  db.getScoreByLV(screen.getCurrentLevel());
+		return  db.getScoreByUserAndLV(screen.getName(), screen.getCurrentLevel());
 	       
 	}
 
-
-	
 	
 	public void updateScore() {
 		
