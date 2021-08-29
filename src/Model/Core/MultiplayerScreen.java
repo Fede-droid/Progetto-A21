@@ -28,6 +28,7 @@ public class MultiplayerScreen extends Screen{
 	private int[] ballPosition;
 	private ArrayList<Integer> paddlesPosition;
 	private ArrayList<String> playersName;
+	private ArrayList<String> powerUpActivation;
 	private int[] tempBallPosition = {0,0};
 	private boolean isXdirectionPositive = true;
 	private boolean isYdirectionPositive = false;
@@ -47,6 +48,7 @@ public class MultiplayerScreen extends Screen{
 		this.numberOfPlayer = numberOfPlayer;
 		this.playerIndex = playerIndex;
 		paddlesPosition = new ArrayList<>();
+		powerUpActivation = new ArrayList<>();
 		playersName = new ArrayList<>();
 		ballPosition = new int[2];
 		this.mainMusic = new Music();
@@ -76,6 +78,11 @@ public class MultiplayerScreen extends Screen{
 			objBricks.get(i).setHitLevel(bricksHitLevel.get(i));
 		}
 		
+		int i = 0;
+		for (PowerUp tempPowerUp : objPowerUp.keySet()) {
+			tempPowerUp.setActive(powerUpActivation.get(i).equals("true"));
+			i++;
+		}
 
 	    objBall.setPosition(ballPosition[0], ballPosition[1]);
 	    
@@ -130,8 +137,11 @@ public class MultiplayerScreen extends Screen{
 		
 		this.scoreString = "0";
 		lifesLeft = 3;
-		this.isFastActiveString = "false";
-		this.isFlipActiveString = "false";
+		
+		for (PowerUp tempPowerUp : objPowerUp.keySet()) {
+			tempPowerUp.setActive(false);
+		}
+
 		
 		
 	}
@@ -160,12 +170,18 @@ public class MultiplayerScreen extends Screen{
 		isYdirectionPositive = (tempBallPosition[1]-ballPosition[1]<0) ? true : false;
 		scoreString=gameStatusStringSplitted[k++];
 		lifesLeft=Integer.parseInt(gameStatusStringSplitted[k++]);
-		isFastActiveString=gameStatusStringSplitted[k++];
+		
+		for (PowerUp powerUp : objPowerUp.keySet()) {
+			powerUpActivation.add(gameStatusStringSplitted[k++]);
+		}
+			
+		/*isFastActiveString=gameStatusStringSplitted[k++];
 		//this.fastRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
 		k++;
 		isFlipActiveString=gameStatusStringSplitted[k++];
 		//this.flipRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
-		k++;
+		k++;*/
+		
 		victory = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
 		loss = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
 		for (int i=0; i<numberOfPlayer; i++) {
