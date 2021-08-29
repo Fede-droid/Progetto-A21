@@ -5,6 +5,11 @@ import Model.Items.ScreenItem;
 
 public class ShorterPaddle extends PowerUp {
 	
+	/*
+	 * Power Up che permette di diminuire le dimensioni di un paddle
+	 * una volta che viene distrutto 
+	 * 
+	 */
     private String path = "/Images/paddle.png";
 	
 	public ShorterPaddle(ScreenItem screenItem) {

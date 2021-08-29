@@ -6,6 +6,9 @@ import Utility.Utilities;
 
 public class BallSpeedUp extends PowerUp {
 	
+	// power up che permette di aumetare la velocità della ball 
+	// una volta che viene distrutto 
+	
 	private String path = "/Images/fast.png";
 	
 	public BallSpeedUp(ScreenItem screenItem) {

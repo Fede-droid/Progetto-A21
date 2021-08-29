@@ -40,6 +40,7 @@ public class Client {
 			boolean waitingToSend = true;
 			
 			while(waitingToSend) {
+				// attesa per l'invioo di tutte le info per inzializzare una partita
 				
 				String playerData = new String(isHost + " " + playerName + " " + gameCode + " " + playerNumber);
 				
@@ -50,7 +51,7 @@ public class Client {
 	            
 	            
 	            boolean waitingForReply = true;
-	           //
+	           // ciclo di attesa di riposta dal server
 	            while (waitingForReply) {
 	           
 	            	//
@@ -104,9 +105,11 @@ public class Client {
 	            		  
 	            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);
     		       	      
-    		       	       game.waitingMissingPlayer(); //apre menu di attesa
+    		       	       game.waitingMissingPlayer(); //apre menu di attesa attraverso il controller
     		       	       
     		       	       game.updateMissing();
+    		       	       
+    		       	       // thread che permette di attendere che tutti i giocatori siano entrati nella lobby per poi poter avviare la partita 
     		       	       
 	            		   new Thread(new Runnable(){
 	            				@Override
@@ -173,6 +176,7 @@ public class Client {
        
 	}
 	
+	// creazione client thread per la ricezione e aggiornamento dei dati durante la partita
 	public void startThread(MultiplayerScreen multiplayerScreen) {
 		
 		thread = new ClientThread(address, portNewPlayer, datagramSocket, multiplayerScreen);

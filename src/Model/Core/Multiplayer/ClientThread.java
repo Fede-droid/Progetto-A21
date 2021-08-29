@@ -33,13 +33,13 @@ public class ClientThread extends Thread {
 
     /**
      * Metodo che viene chiamato ogni volta che parte il Thread
+     * serve per aggiornare tutte le informazioni sulla partita in gestione al server
      */
     synchronized public void run() {
     	
     	try {
 			datagramSocket.setSoTimeout(30);
 		} catch (SocketException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
     	
@@ -55,23 +55,19 @@ public class ClientThread extends Thread {
                 DatagramPacket packet = new DatagramPacket(bytes, bytes.length);
                 datagramSocket.receive(packet);
                 String allGameInfos = new String(packet.getData(), 0, packet.getLength());
-                //ystem.out.println(allGameInfos);
                 
                 screen.setStringGameStatus(allGameInfos);
                 
 				wait(25);
 			} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  catch (SocketTimeoutException e) {
 	            // incoming package timeout exception.
 	            System.out.println("Incoming package lost!");
 	        } catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }

@@ -15,12 +15,15 @@ import Model.Items.ScreenItem;
 
 public class Drawer {
 	
+	// Classe che gestisce il render effettivo degli oggetti sullo schermo di gioco 
+	
 	Graphics graphics;
 	BufferStrategy buffer;
 	
 	public Drawer() {
 	}
 	
+	// l'oggetto passato verrà disegnato
 	public void draw(ScreenItem item) {
 		
 		int[] position = item.getPosition();
@@ -36,7 +39,7 @@ public class Drawer {
 	}
 	
 	
-	
+	// inzializzazione drawer 
 	public void loadGraphics(Graphics graphics) {
 		
 		graphics.setFont(new Font("Courier", Font.BOLD, 20)); 

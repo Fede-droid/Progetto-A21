@@ -5,6 +5,11 @@ import Model.Items.ScreenItem;
 
 public class SwitchPaddleDirection extends PowerUp {
 	
+	/*
+	 * Power up che permette di cambiare direzione delle frecce
+	 * per il movimento del paddle una volta colpito
+	 *  
+	 */
 	private String path = "/Images/flip.png";
 	private boolean oneTimeMulti;
 	

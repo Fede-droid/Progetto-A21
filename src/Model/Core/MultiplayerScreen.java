@@ -24,6 +24,8 @@ import Utility.Utilities;
 
 public class MultiplayerScreen extends Screen{
 	
+	// classe principale per la gestione di una partita in modalità multiplayer
+	
 	private int numberOfPlayer, playerIndex;
 	private int[] ballPosition;
 	private ArrayList<Integer> paddlesPosition;
@@ -42,7 +44,6 @@ public class MultiplayerScreen extends Screen{
 
 
 
-
 	public MultiplayerScreen(BreakoutGame game, int numberOfPlayer, int playerIndex) {
 		super(game);
 		this.numberOfPlayer = numberOfPlayer;
@@ -56,6 +57,9 @@ public class MultiplayerScreen extends Screen{
 	}
 	
 	
+	// PATTERN GAME LOOP -> UPDATE, RENDER 
+	// tutte le informazioni rivebute dal server saranno utilizzate per aggiornare 
+	// le varie componenti (Update) che saranno successivamente disegnate (Render)
 	@Override
 	synchronized public void update() {
 		
@@ -92,6 +96,9 @@ public class MultiplayerScreen extends Screen{
 		
 	}
 	
+	// inzializzazione livello per il multiplayer
+	// inzializzazione componenti
+	// costruzione degli oggetti utilizzati
 	
 	synchronized public void setLevel(int lv) {
 		
@@ -116,6 +123,8 @@ public class MultiplayerScreen extends Screen{
 		advisor = new CollisionAdvisor(objBall, mainMusic);
 		objLife = ScreenItemFactory.getInstance().getScreenItem(Item.LIFE, Utilities.NUMBER_LIFE);
 		
+		// carimento oggetti e inizializzazione con la factory 
+		
 		objSpeedUpLogo = ScreenItemFactory.getInstance().getScreenItem(Item.SPEED_UP);
 		objSwitchLogo = ScreenItemFactory.getInstance().getScreenItem(Item.SWITCH);
 		objSfondo = ScreenItemFactory.getInstance().getScreenItem(Item.SFONDO);
@@ -129,7 +138,8 @@ public class MultiplayerScreen extends Screen{
 		objOn = ScreenItemFactory.getInstance().getScreenItem(Item.ON, tempList.size());
 		
 		setPlayersPosition(numberOfPlayer, playerIndex);
-		// setLevel();
+		
+		
 		PowerUpListComparator c = new PowerUpListComparator();
 		tempList.sort(c);
 		for(int i=0; i < tempList.size(); i++) {
@@ -150,10 +160,10 @@ public class MultiplayerScreen extends Screen{
 			powerUpActivation.add("false");
 		}
 
-		
-		
+	
 	}
 	
+	// Lettura informazioni rivevute dal server
 	synchronized public void setStringGameStatus(String gameStatus) {
 		String gameStatusString= new String();
 		gameStatusString=gameStatus;
@@ -179,7 +189,7 @@ public class MultiplayerScreen extends Screen{
 		scoreString=gameStatusStringSplitted[k++];
 		lifesLeft = Integer.parseInt(gameStatusStringSplitted[k++]);
 		
-		System.out.println(lifesLeft);
+	
 		int j = 0;
         for (PowerUp powerUp : objPowerUp.keySet()) {
             powerUpActivation.set(j, gameStatusStringSplitted[k++]);
@@ -188,12 +198,15 @@ public class MultiplayerScreen extends Screen{
 			
 		victory = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
 		loss = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
+		
+		System.out.println(victory + " " + loss);
 		for (int i=0; i<numberOfPlayer; i++) {
 			playersName.set(i, gameStatusStringSplitted[k++]);
 		}
 	}
 	
 	
+	// disegno oggetti dopo aggiornamento
 	@Override 
 	synchronized public void render() {
 		
@@ -295,6 +308,9 @@ public class MultiplayerScreen extends Screen{
 		
 		
 	}
+	
+	// set posizione paddle dei vari giocatori nelle varie parti dello screen 
+	// 2 sotto e 2 sopra (se 4 player), ognuno ha metà schermo per muoversi 
 	
 	synchronized public void setPlayersPosition(int numberOfPlayers, int playerIndex) {
         switch (numberOfPlayers) {

@@ -5,6 +5,8 @@ import Model.Items.PowerUp.PowerUp;
 
 public class BrickPowerUp extends Brick {
 	
+	// Brick speciale che implementa le funzioni di un powerUP
+	
 	private PowerUp powerUp;
 
 	public BrickPowerUp(int width, int height, int[] position, PowerUp powerUp) {

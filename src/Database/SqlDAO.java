@@ -8,11 +8,15 @@ import java.util.ArrayList;
 
 public class SqlDAO implements DataBaseDAO{
 
+	// classe per la gestione delle modifiche e accessi alle informazioni del db 
 	
 	private ArrayList<Integer> allScore;
 	private ArrayList<String> allPlayer;
 
 	
+	/**
+	 * memorizza nelle liste i punteggi e i player nel db
+	 */
 	@Override
 	public void allScore() {
 		allScore = new ArrayList<Integer>();
@@ -38,7 +42,11 @@ public class SqlDAO implements DataBaseDAO{
         }
 	}
 
-	
+	/**
+	 * Memorizza le info passate come parametro nel db
+	 * @param nome, livello, punteggio
+	 * 
+	 */
 	@Override
 	public void updateScore(String name, int lv, int score) {
 		
@@ -70,6 +78,10 @@ public class SqlDAO implements DataBaseDAO{
 	}
 
 
+	/**
+	 * @param nome player e livello 
+	 * @return ottiene il punteggio specifico
+	 */
 	@Override
 	public int getScoreByUserAndLV(String user, int lv) {
 		Connection connection = ConnectionFactory.getConnection();

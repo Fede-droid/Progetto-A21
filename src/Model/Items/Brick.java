@@ -12,7 +12,7 @@ public class Brick extends ScreenItem{
 	protected boolean destroyed;
 	
 	/*
-	 * Costruttore 1: Brick normale
+	 * Classe che definisce le funzionalità di un brick base
 	 */
 	public Brick(int width, int height, int[] position) { 
 		super(width, height, position);
@@ -47,6 +47,7 @@ public class Brick extends ScreenItem{
 		return hitLevel;
 	}
 	
+	// livello distruzione del brick, un brick non viene distrutto subito ma dopo qualche colpo
 	public void setHitLevel(int hitLevel) {
 		this.hitLevel = hitLevel;
 		if (hitLevel != 0) {

@@ -7,6 +7,8 @@ import GUI.ImagesLoader;
 
 public class Paddle extends ScreenItem {
 	
+	// classe che definisce un paddle e le sue funzioni 
+	
 	// velocità paddle 
 	private static final int VELOCITA = 3;
 	

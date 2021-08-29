@@ -8,6 +8,9 @@ import Utility.Utilities;
 
 public class ScreenItemFactory {
 	
+	/*
+	 * classe factory che permette la crezione di oggetti ScreenItem
+	 */
 	private static ScreenItemFactory instance;
 	
 	private ScreenItemFactory() {}

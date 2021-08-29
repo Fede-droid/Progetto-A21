@@ -4,6 +4,12 @@ import Model.Items.ScreenItem;
 
 public abstract class PowerUp {
 	
+	/*
+	 * classe astratta che permette di avere le funzionalità base 
+	 * per un power up. Ogni tipo di power up estende questa classe
+	 * ed implementa la sua funzione.
+	 */
+	
 	protected boolean active;
 	protected ScreenItem affectedScreenItem;
 	protected double duringTime;

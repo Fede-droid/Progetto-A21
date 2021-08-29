@@ -26,6 +26,13 @@ public class Levels {
 	private int nLevel, nLine;
 	
 	public Levels(Ball objBall, ArrayList<Paddle> objPaddles) {
+		/*
+		 * 
+		 * classe che permette di gestire i vari livelli. 
+		 * permette di leggere un file e creare un livello in base
+		 * ai caratteri contenuti nel file. 
+		 */
+		
 		this.objBall = objBall;
 		this.objPaddles = objPaddles;
 		objBricks = new ArrayList<Brick>();
@@ -34,86 +41,14 @@ public class Levels {
 		readFile();
 		getLevels();
 		}
-	/*
-	public Levels(BufferedImage brick, BufferedImage fastBrick,BufferedImage flipBrick, ArrayList<Paddle> objPaddles) {
-		//this.level = TypeLevels.LEVEL2;
-		this.brick = brick;
-		this.fastBrick = fastBrick;
-		this.flipBrick = flipBrick;	
-		this.objPaddles = objPaddles;
-		objBricks = new ArrayList<Brick>();
-		}
-	*/
+	
 	public void setLevel(int level) {
 		this.nLevel = level;
 	}
 	
-	/*
-	public void setPlayersPosition(int numberOfPlayers, int playerIndex) {
-        switch (numberOfPlayers) {
-        case 2: {
-        	if (playerIndex==0) {
-        		objPaddles.get(playerIndex).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
-        	}
-        	else objPaddles.get(playerIndex).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, 3);
-            break;
-        }
-        case 3: {
-        	if (playerIndex==0) {
-        		objPaddles.get(playerIndex).setPosition(50, 580);
-        		objPaddles.get(playerIndex).setLimits(0, 240);
-        	}
-        	else if (playerIndex==1) {
-        		objPaddles.get(playerIndex).setPosition(280, 580);
-        		objPaddles.get(playerIndex).setLimits(240, 495);
-        	}
-        	else {
-        		objPaddles.get(playerIndex).setPosition(280, 3);
-        		objPaddles.get(playerIndex).setLimits(0, 495);
-        	}
-            break;
-        }
-        case 4: {
-        	if (playerIndex==0) {
-        		objPaddles.get(playerIndex).setPosition(50, 580);
-        		objPaddles.get(playerIndex).setLimits(0, 240);
-        	}
-        	else if (playerIndex==1) {
-        		objPaddles.get(playerIndex).setPosition(280, 580);
-        		objPaddles.get(playerIndex).setLimits(240, 495);
-        	}
-        	else if (playerIndex==2) {
-        		objPaddles.get(playerIndex).setPosition(50, 3);
-        		objPaddles.get(playerIndex).setLimits(0, 240);
-        	}
-        	else {
-        		objPaddles.get(playerIndex).setPosition(280, 3);
-        		objPaddles.get(playerIndex).setLimits(240, 495);
-        	}
-            break;
-        }
-        }
-    }
-    */
 	
-	/*
-	public void setPlayersPosition(int numberOfPlayers) {
-		switch (numberOfPlayers) {
-		case 1: {
-			objPaddles.get(0).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
-        	break;
-		}
-        case 2: {
-        	objPaddles.get(0).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
-        	objPaddles.get(1).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, 5);
-        	break;
-        }
-		}
-	}
-	
-	*/
 
-	
+	// lettura file di testo levels.txt
 	private Scanner myReader;
 	private int i;
 
@@ -145,7 +80,7 @@ public class Levels {
 			   }
 	}
 	
-	
+	// creazione livello 
 	public void levelCreator(String line, int nLine) {
 		
 		
@@ -197,11 +132,11 @@ public class Levels {
 	
 		
 	
-	
-	public void addLevel(int nLevel, List<Brick> items/*, List<PowerUp> pUps*/) {
+	// aggiunta livello alla lista dei livelli
+	public void addLevel(int nLevel, List<Brick> items) {
 		
 		levels.put(nLevel, items);
-		//levelUp.put(nLevel, pUps);
+		
 		
 	}
 	
@@ -210,14 +145,11 @@ public class Levels {
 		return nLevel;
 	}
 	
+	// ritorna la disposizione dei brick in un livello specifico
 	public ArrayList<Brick> getBricksDesposition(int lv) {
 		return (ArrayList<Brick>) levels.get(lv);
 	}
-	/*
-	public ArrayList<PowerUp> getPowerUp(int lv){
-		return (ArrayList<PowerUp>) levelUp.get(lv);
-	}
-	*/
+
 	public int getActualLevel() {
 		
 		return this.nLevel;

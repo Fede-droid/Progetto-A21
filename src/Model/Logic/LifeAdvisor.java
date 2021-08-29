@@ -8,6 +8,9 @@ import Utility.Utilities;
 
 public class LifeAdvisor {
 	
+	// classe per la gestione delle vite 
+	// le vite si possono settare in utilities
+
 	private Music loseLifeMusic;
 	private CollisionAdvisor collision;
 	private Ball ball;
@@ -38,11 +41,7 @@ public class LifeAdvisor {
 		}
 		return false;	
 	}
-	/*
-	public void resetLife() {
-        life=3;
-    }
-*/
+	
     public int getLife() {
         return life;
     }

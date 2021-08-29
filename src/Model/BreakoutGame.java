@@ -128,19 +128,7 @@ public class BreakoutGame {
 		new Thread(screen).start();
 		screen.setVisible(true);
 	}
-	/*
-<<<<<<< HEAD
-	public int getNumberOfLevels() {
-		
-		//screen.start();
-		return screen.getNumberOfLevels();
-		
-	}
-=======
 	
->>>>>>> branch 'main' of https://github.com/IngSW-unipv/Progetto-A21.git
-*/
-	//***************************** INZIO GESTIONE MULTIPLAYER ****************************//
 	
 	// menu multiplayer 
 	

@@ -5,6 +5,11 @@ import Model.Items.ScreenItem;
 
 public class LongerPaddle extends PowerUp {
 	
+	
+	/*
+	 * Power up che permette di aumentare la lunghezza del paddle 
+	 * una volta che viene distrutto
+	 */
 	private String path = "/Images/paddle.png";
 	
 	public LongerPaddle(ScreenItem screenItem) {

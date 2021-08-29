@@ -32,8 +32,8 @@ import Utility.Utilities;
 
 public class Screen extends Canvas implements Runnable{
 	
-private static final long serialVersionUID = 1L;
-
+	// Classe pirncipale per la gestione di una partita in single player
+	
     protected BreakoutGame game;
     protected boolean gameStatus = false;
 	protected boolean gameOver = false;

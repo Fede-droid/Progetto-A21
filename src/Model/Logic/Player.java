@@ -1,7 +1,6 @@
 package Model.Logic;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 import java.awt.image.BufferedImage;
 
 import GUI.ImagesLoader;
@@ -9,24 +8,22 @@ import Model.Items.Paddle;
 import Utility.Utilities;
 
 public class Player {
-
-	private int numberPlayer;
-	private int idPlayer;
+	/*
+	 * 
+	 * classe che gestisce le funzionalità di un player, 
+	 * ogni player possiede il suo paddle e lo mantiene 
+	 * per tutta la durata del gioco
+	 */
 	private Paddle objPaddle;
 	private BufferedImage paddle;
-	//private ImagesLoader loader;
 	private InputAdapter inputHandler;
-	//private int playerScore;
-	//private int life;
+
 
 	public Player() {
-		
-		//this.numberPlayer = numberPlayer;
-		//this.idPlayer = idPlayer;
+	
 		inizialize();
 		paddle = ImagesLoader.getInstace().uploadImage("/Images/paddle.png");
 		this.inputHandler = new InputAdapter(objPaddle);
-		//this.life = 3;
 	}
 	
 	public void inizialize() {
@@ -39,7 +36,7 @@ public class Player {
 		// creo un paddle 
 		objPaddle = new Paddle(100, 30, posInitPaddle);
 
-		//this.playerScore = 0;
+		
 	}
 
 	public InputAdapter getInputHandler() {
@@ -54,9 +51,5 @@ public class Player {
 		return objPaddle;
 	}
 	
-	/*
-	public void setLimit() {
-		if(idPlayer)
-	}
-	*/
+
 }

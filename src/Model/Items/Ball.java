@@ -7,6 +7,10 @@ import Utility.Utilities;
 
 public class Ball extends ScreenItem{
 
+	
+	/*
+	 * classe che definisce le funzionbalità della Ball
+	 */
     private boolean active;
     private int xDirection;
     private int yDirection;

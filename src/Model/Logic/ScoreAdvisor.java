@@ -2,14 +2,19 @@ package Model.Logic;
 
 public class ScoreAdvisor {
 	
+	/*
+	 * 
+	 * classe che permette il calcolo del punteggio a fine partita
+	 * ovvero che il punteggio è inversamente proporzionale alla durata della partita. 
+	 * se un giocatore impiega troppo tempo per perdere/vincere avrò un punteggio più
+	 * basso
+	 */
 	
 	private long time;
-	private int score;
 	
 	public void start() {
 		
 		time = System.currentTimeMillis();
-		this.score = 0;
 	}
 	
 

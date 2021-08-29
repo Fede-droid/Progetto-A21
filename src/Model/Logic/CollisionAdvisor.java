@@ -8,11 +8,17 @@ import Music.MusicTypes;
 import Utility.Utilities;
 
 public class CollisionAdvisor {
+	
+	/*
+	 * 
+	 * classe che gestisce le collisioni tra la pallina e i brick 
+	 * e tra la pallina e il/i paddle presenti nel gioco
+	 */
 	Ball ball;
 	Music collisionMusic;
 	int ballSpeed;
 	
-
+	
 	public CollisionAdvisor(Ball ball, Music collisionMusic) {
 		this.ball = ball;
 		this.collisionMusic = collisionMusic;
@@ -20,6 +26,7 @@ public class CollisionAdvisor {
 		
 	}
 	
+	// se la pallina esce dai bordi, a seconda della modalità i bordi possono cambiare
 	public boolean checkGameOver(int numberOfPlayers) {
 		if((ball.getPosition()[1] + ball.getImageHeight()) >= Utilities.SCREEN_HEIGHT-3) {
             return true;

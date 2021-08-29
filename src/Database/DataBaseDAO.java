@@ -1,6 +1,8 @@
 package Database;
 
+
 public interface DataBaseDAO {
+	// interfaccia per i DAO 
 	
 	void allScore();
 	

@@ -7,6 +7,8 @@ import GUI.ImagesLoader;
 // classe astratta per metodi e varibili comuni fra gli oggetti
 public class ScreenItem implements Drawable {
 
+	
+	// classe che descrive un generico oggetto disegnabile e le sue funzioni base
     protected BufferedImage image;
     protected int imageWidth;
     protected int imageHeight;
