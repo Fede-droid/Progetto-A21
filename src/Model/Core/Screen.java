@@ -1,25 +1,15 @@
 package Model.Core;
 
 import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.management.timer.Timer;
 import javax.sound.sampled.Clip;
-import javax.swing.JOptionPane;
 
 import Database.PersistenceFacade;
-import GUI.ImagesLoader;
 import Model.BreakoutGame;
 import Model.Core.Levels.Levels;
 import Model.Items.Ball;
@@ -28,10 +18,7 @@ import Model.Items.BrickPowerUp;
 import Model.Items.Item;
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
-import Model.Items.PowerUp.BallSpeedUp;
 import Model.Items.PowerUp.PowerUp;
-import Model.Items.PowerUp.PowerUpTypes;
-import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
 import Model.Logic.Drawer;
 import Model.Logic.LifeAdvisor;
