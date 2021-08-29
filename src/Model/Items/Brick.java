@@ -3,8 +3,6 @@ package Model.Items;
 import java.awt.image.BufferedImage;
 
 import GUI.ImagesLoader;
-import Model.Items.PowerUp.PowerUp;
-import Model.Items.PowerUp.PowerUpTypes;
 
 public class Brick extends ScreenItem{
 	
