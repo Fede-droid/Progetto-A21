@@ -143,6 +143,16 @@ public class BreakoutGame {
 		gameFrame.repaint();
 	}
 	
+	public void inizializeMultiplayerAP() {
+		client.stopConnection();
+		multiplayerPanel =  new MultiplayerPanel(this);
+		multiplayerScreen.setVisible(false);
+		gameFrame.add(multiplayerPanel);
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+		gameFrame.repaint();
+	}
+	
 	// dati giocatore 
 	public void setPlayerData(boolean isHost, String name, String code, int number) {
 		

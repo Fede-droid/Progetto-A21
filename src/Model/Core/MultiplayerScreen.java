@@ -255,11 +255,11 @@ public class MultiplayerScreen extends Screen{
 			buffer.show();
 			try {
 				Thread.sleep(3000);
+				gameWin();
 			} catch (InterruptedException e) {
-				
 				e.printStackTrace();
 			}
-			gameWin();
+			
 		}
 		if(gameOver) {
 			drawer.draw(objLose);
@@ -267,11 +267,12 @@ public class MultiplayerScreen extends Screen{
 			buffer.show();
 			try {
 				Thread.sleep(3000);
+				gameLose();
 			} catch (InterruptedException e) {
 				
 				e.printStackTrace();
 			}
-			gameLose();
+			
 		}
 		
 		g.dispose();
@@ -283,28 +284,15 @@ public class MultiplayerScreen extends Screen{
 	public void gameWin(){
 		
 		gameStatus = false;
-		game.inizializeMultiplayer();
+		game.inizializeMultiplayerAP();
 		
-		/*
-		
-		new Thread(new Runnable(){
-			@Override
-			public synchronized void run(){
-				
-				drawer.draw(objWin);
-				
-				
-			}
-		}).start();
-		
-		*/
 		
 	}
 	
 	public void gameLose() {
 		
 		gameStatus = false;
-		game.inizializeMultiplayer();
+		game.inizializeMultiplayerAP();
 		
 		
 	}
