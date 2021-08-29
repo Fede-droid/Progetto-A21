@@ -200,7 +200,7 @@ public class BreakoutGame {
 		
 		multiplayerScreen.setMusic(music);
 		
-		multiplayerScreen.start();
+		multiplayerScreen.setLevel(level);
 		
 		client.startThread(multiplayerScreen);
 		

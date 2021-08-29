@@ -17,6 +17,7 @@ import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
 import Model.Logic.PowerUpListComparator;
 import Model.Logic.ScreenItemFactory;
+import Model.Logic.Levels.Levels;
 import Music.Music;
 import Music.MusicTypes;
 import Utility.Utilities;
@@ -50,9 +51,6 @@ public class MultiplayerScreen extends Screen{
 		ballPosition = new int[2];
 		this.mainMusic = new Music();
 		bricksHitLevel = new ArrayList<>();
-
-		
-
 	}
 	
 	
@@ -85,9 +83,13 @@ public class MultiplayerScreen extends Screen{
 	}
 	
 	
-	public void start() {
+	public void setLevel(int lv) {
 		
 		objBall = (Ball)ScreenItemFactory.getInstance().getScreenItem(Item.BALL);
+		
+		levels = new Levels(objBall, objPaddles);
+		levels.setLevel(lv);
+		objBricks = levels.getBricksDesposition(lv);
 		
 		for (int i=0; i<2*numberOfPlayer; i++) {
 			paddlesPosition.add(0);
