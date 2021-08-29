@@ -175,9 +175,11 @@ public class MultiplayerScreen extends Screen{
 		scoreString=gameStatusStringSplitted[k++];
 		lifesLeft = Integer.parseInt(gameStatusStringSplitted[k++]);
 		
-		for (PowerUp powerUp : objPowerUp.keySet()) {
-			powerUpActivation.add(gameStatusStringSplitted[k++]);
-		}
+		int j = 0;
+        for (PowerUp powerUp : objPowerUp.keySet()) {
+            powerUpActivation.set(j, gameStatusStringSplitted[k++]);
+            j++;
+        }
 			
 		/*isFastActiveString=gameStatusStringSplitted[k++];
 		//this.fastRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
