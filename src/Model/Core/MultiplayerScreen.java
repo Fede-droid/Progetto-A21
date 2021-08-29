@@ -1,372 +1,347 @@
-
 package Model.Core;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import javax.management.timer.Timer;
-import javax.sound.sampled.Clip;
-import javax.swing.JOptionPane;
-
-import GUI.ImagesLoader;
 import Model.BreakoutGame;
-import Model.Core.Levels.Levels;
-import Model.Core.Multiplayer.ClientThread;
-
 import Model.Items.Ball;
-import Model.Items.Box;
 import Model.Items.Brick;
+import Model.Items.BrickPowerUp;
+import Model.Items.Item;
 import Model.Items.Paddle;
-import Model.Items.ScreenItem;
-import Model.Items.Utilities;
 import Model.Items.PowerUp.BallSpeedUp;
 import Model.Items.PowerUp.PowerUp;
-import Model.Items.PowerUp.PowerUpTypes;
 import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
-import Model.Logic.LifeAdvisor;
-import Model.Logic.Player;
+import Model.Logic.PowerUpListComparator;
+import Model.Logic.ScreenItemFactory;
 import Music.Music;
 import Music.MusicTypes;
+import Utility.Utilities;
 
-public class MultiplayerScreen extends Canvas implements Runnable{
+public class MultiplayerScreen extends Screen{
 	
-private static final long serialVersionUID = 1L;
-	
-	BufferedImage box, ball, brick, brick1, brick2, brick3, fastBrick, hitBox, flipBrick, sfondo, youWin, youLose, on, off, fastLogo, flipLogo, life;
-	//SpecialBrick objFlip, objFast;
-	private boolean gameStatus = false;
-	private boolean gameOver = false;
-	private boolean gameWin = false;
-	private Ball objBall;
+	private int numberOfPlayer, playerIndex;
 	private int[] ballPosition;
-	private List<Brick> objBricks;
-	private Box objBox;
 	private ArrayList<Integer> paddlesPosition;
-	private ArrayList<Integer> bricksHitLevel;
-	//private List<SpecialBrick> objSpecialBricks;
-	private ScreenItem objSfondo;
-	private ImagesLoader loader;
-	private ArrayList<Paddle> objPaddles;
-	Clip win,hit;
-	boolean isMusicOn;
-	private Graphics g;
-	CollisionAdvisor ball1;
+	private ArrayList<String> playersName;
+	private int[] tempBallPosition = {0,0};
+	private boolean isXdirectionPositive = true;
+	private boolean isYdirectionPositive = false;
 	private Music mainMusic;
-	private BreakoutGame game;
 	private String scoreString;
 	private int lifesLeft;
-	private Levels levels;
-	double fastStartTime = 0;
-	double flipStartTime = 0;
-	double switchStart = 0;
-	int i = 0;
-	private int numberOfPlayer, playerIndex;
 	private String isFastActiveString, isFlipActiveString;
 	private int fastRemainingTime, flipRemainingTime;
+	boolean victory, loss;
+	private ArrayList<Integer> bricksHitLevel;
 
-	
+
+
+
 	public MultiplayerScreen(BreakoutGame game, int numberOfPlayer, int playerIndex) {
-		this.game = game;
-		objBricks = new ArrayList<>();
-		objPaddles = new ArrayList<>();
-		//objSpecialBricks = new ArrayList<SpecialBrick>();
-		uploadImages();
-		this.mainMusic = new Music();
-		ballPosition = new int[2];
+		super(game);
 		this.numberOfPlayer = numberOfPlayer;
 		this.playerIndex = playerIndex;
 		paddlesPosition = new ArrayList<>();
+		playersName = new ArrayList<>();
+		ballPosition = new int[2];
+		this.mainMusic = new Music();
 		bricksHitLevel = new ArrayList<>();
-		setLevel(1);
+
+		
+
 	}
 	
 	
-
-
-	// ciclo di gioco
 	@Override
-	public void run() {
+	synchronized public void update() {
 		
-		double previous = System.nanoTime(); 
-		double delta = 0.0;
-		double fps = 100.0;
-		double ns = 1e9/fps; // numero di nano sec per fps
-		gameStatus = true;
+	    objPaddles.get(playerIndex).move();
+	    
+	    objPaddles.get(playerIndex).switchDirectionMultiplayer(isFlipActiveString.equals("true"));
+	    int posPaddleX;
+	    int posPaddleY;
+	    
+	    for (int i=0; i<numberOfPlayer; i++) {
+			posPaddleX=2*i;
+			posPaddleY=posPaddleX+1;
+			if(i != playerIndex) {
+				objPaddles.get(i).setPosition(paddlesPosition.get(posPaddleX), paddlesPosition.get(posPaddleY));
+			}
+		}
+	    
+	    
+		for (int i=0; i<objBricks.size()-1; i++) {
+			objBricks.get(i).setHitLevel(bricksHitLevel.get(i));
+		}
 		
-		//switchare off/on
-		//if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
-		
-		while (gameStatus) {
-			double current = System.nanoTime();
-			
-			double elapsed = current - previous;
-			previous = current;
-			delta += elapsed;
 
-				while (delta >= ns) {
-				   update();	
-				   delta -= ns;
+	    objBall.setPosition(ballPosition[0], ballPosition[1]);
+	    
+		
+	}
+	
+	
+	public void start() {
+		
+		objBall = (Ball)ScreenItemFactory.getInstance().getScreenItem(Item.BALL);
+		
+		for (int i=0; i<2*numberOfPlayer; i++) {
+			paddlesPosition.add(0);
+		}
+		
+		ArrayList<PowerUp> tempList = new ArrayList<PowerUp>();
+		for(Brick tempBrick : objBricks) {
+			try {
+				if(!((BrickPowerUp) tempBrick == null)) {
+					tempList.add(((BrickPowerUp)tempBrick).getPowerUp());
 				}
-			render();
+			} catch(ClassCastException e) {	}
+		}
+		advisor = new CollisionAdvisor(objBall, mainMusic);
+		objLife = ScreenItemFactory.getInstance().getScreenItem(Item.LIFE, Utilities.NUMBER_LIFE);
+		
+		objSpeedUpLogo = ScreenItemFactory.getInstance().getScreenItem(Item.SPEED_UP);
+		objSwitchLogo = ScreenItemFactory.getInstance().getScreenItem(Item.SWITCH);
+		objSfondo = ScreenItemFactory.getInstance().getScreenItem(Item.SFONDO);
+		objBox = ScreenItemFactory.getInstance().getScreenItem(Item.BOX);
+		objHit = ScreenItemFactory.getInstance().getScreenItem(Item.HIT);
+		objWin = ScreenItemFactory.getInstance().getScreenItem(Item.WIN);
+		objLose = ScreenItemFactory.getInstance().getScreenItem(Item.LOSE);
+		objLongerLogo = ScreenItemFactory.getInstance().getScreenItem(Item.LONG_UP);
+		objShorterLogo = ScreenItemFactory.getInstance().getScreenItem(Item.SHORT_UP);
+		
+		objOn = ScreenItemFactory.getInstance().getScreenItem(Item.ON, tempList.size());
+		
+		setPlayersPosition(numberOfPlayer, playerIndex);
+		setLevel();
+		PowerUpListComparator c = new PowerUpListComparator();
+		tempList.sort(c);
+		for(int i=0; i < tempList.size(); i++) {
+			if(!objPowerUp.containsKey(tempList.get(i))) objPowerUp.put(tempList.get(i), objOn[i]);
+		}
+		for (int i=0; i<numberOfPlayer; i++) playersName.add("Name");
+		for(int i=0; i<objBricks.size();i++) bricksHitLevel.add(0);
+		
+		this.scoreString = "0";
+		lifesLeft = 3;
+		this.isFastActiveString = "false";
+		this.isFlipActiveString = "false";
+		
+		
+	}
+	
+	public void setStringGameStatus(String gameStatus) {
+		String gameStatusString= new String();
+		gameStatusString=gameStatus;
+		String gameStatusStringSplitted[] = gameStatusString.split(" ");
+		
+		for (int i=0; i<2*numberOfPlayer; i++) {
+			paddlesPosition.set(i, Integer.parseInt(gameStatusStringSplitted[i]));
+		}
+		for (int j=2*numberOfPlayer; j<objBricks.size()+2*numberOfPlayer; j++) {
+			bricksHitLevel.set(j-2*numberOfPlayer, Integer.parseInt(gameStatusStringSplitted[j]));
+		}
+		
+		int k = objBricks.size()+2*numberOfPlayer;
+		tempBallPosition[0]=ballPosition[0];
+		tempBallPosition[1]=ballPosition[1];
+		ballPosition[0] = Integer.parseInt(gameStatusStringSplitted[k++]);
+		ballPosition[1] = Integer.parseInt(gameStatusStringSplitted[k++]);
+		if (isXdirectionPositive && (tempBallPosition[0]-ballPosition[0])>0 || !isXdirectionPositive && (tempBallPosition[0]-ballPosition[0])<0
+			|| isYdirectionPositive && (tempBallPosition[1]-ballPosition[1])>0 || !isYdirectionPositive && (tempBallPosition[1]-ballPosition[1])<0)
+			mainMusic.playMusic(MusicTypes.HIT);
+		isXdirectionPositive = (tempBallPosition[0]-ballPosition[0]<0) ? true : false;
+		isYdirectionPositive = (tempBallPosition[1]-ballPosition[1]<0) ? true : false;
+		scoreString=gameStatusStringSplitted[k++];
+		lifesLeft=Integer.parseInt(gameStatusStringSplitted[k++]);
+		isFastActiveString=gameStatusStringSplitted[k++];
+		//this.fastRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
+		k++;
+		isFlipActiveString=gameStatusStringSplitted[k++];
+		//this.flipRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
+		k++;
+		victory = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
+		loss = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
+		for (int i=0; i<numberOfPlayer; i++) {
+			playersName.set(i, gameStatusStringSplitted[k++]);
 		}
 	}
 	
-		// caricamento immagini 
-		private void uploadImages() {
-			
-			loader = ImagesLoader.getInstace();
-			box = loader.uploadImage("../Images/box.png");
-			hitBox = loader.uploadImage("../Images/hit.png");
-			ball = loader.uploadImage("../Images/ball.png");
-			sfondo = loader.uploadImage("/Images/sfondo.jpeg");
-			brick = loader.uploadImage("/Images/brick.png");
-			brick1 = loader.uploadImage("/Images/brick1.png");
-			brick2 = loader.uploadImage("/Images/brick2.png");
-			brick3 = loader.uploadImage("/Images/brick3.png");
-			fastBrick = loader.uploadImage("/Images/fast.png");
-			flipBrick = loader.uploadImage("/Images/flip.png");
-			youWin = loader.uploadImage("/Images/youWin.png");
-			youLose = loader.uploadImage("/Images/lose.png");
-			on = loader.uploadImage("/Images/on.png");
-			off = loader.uploadImage("/Images/off.png");
-			fastLogo = loader.uploadImage("/Images/fastLogo.png");
-			flipLogo = loader.uploadImage("/Images/flipLogo.png");
-			life = loader.uploadImage("/Images/life.png");
-		}
-
-		// disegno di oggetti grafici a schermo
-		synchronized public void render() {
-			
-			// creazione di 2 buffer cos� che l'immagine venga aggiornata su uno e mostrata sull'altro 
-			// modo ciclico, evita gli scatti.
-			
-			BufferStrategy buffer = this.getBufferStrategy();
-			
-			if(buffer == null) {
-				createBufferStrategy(2);
-				return;	
-			}
-			
-			this.g = buffer.getDrawGraphics();// oggetto di tipo Canvas su cui si pu� disegnare
-			
-			g.setFont(new Font("Courier", Font.BOLD, 25)); 
-			g.setColor(Color.WHITE);
-			
-			objSfondo.render(g, this);
-			objBall.render(g);
-			for (Paddle tempPaddle : objPaddles) tempPaddle.render(g);
-			objBox.render(g);
-            
-			g.drawImage(hitBox, 508, 3, 30, 30, null);
-            
-            g.drawImage(fastLogo, 508, 120, 25, 25, null);
-            if(isFastActiveString.equals("true")) {
-            	if (fastRemainingTime<4) 
-            		g.drawString(""+fastRemainingTime, 510, 170);
-            	else g.drawImage(on, 508, 153, 25, 25, null);
-            }
-            else g.drawImage(off, 508, 153, 25, 25, null);
-            
-            g.drawImage(flipLogo, 508, 195, 25, 25, null);
-            if(isFlipActiveString.equals("true")) {
-            	if (flipRemainingTime<4) 
-            		g.drawString(""+flipRemainingTime, 510, 245);
-            	else g.drawImage(on, 508, 228, 25, 25, null);
-            }
-            else g.drawImage(off, 508, 228, 25, 25, null);
+	
+	@Override 
+	public void render() {
 		
-			g.drawString(scoreString, 505, 58);
-			
-			for (Brick tempBrick : objBricks) {
-				if (tempBrick.getHitLevel()!=0) {
-					if (!tempBrick.getHasPowerUp()) {
-						int hitLevel = tempBrick.getHitLevel();
-						switch (hitLevel) {
-							case 1:
-								tempBrick.setImage(brick3); 
-								break;
-							case 2:
-								tempBrick.setImage(brick2); 
-								break;
-							case 3:
-								tempBrick.setImage(brick1); 
-								break;
-						    default:
-						    	tempBrick.setImage(brick);
-					        }
-					}
-					tempBrick.render(g);
-				}
-			}
-			
-			
-			switch (lifesLeft) {
-				case 1:
-					g.drawImage(life, 505, 78, 20, 20, null); 
-					break;
-				case 2:
-					g.drawImage(life, 505, 78, 20, 20, null); 
-					g.drawImage(life, 505, 88, 20, 20, null); 
-					break;
-				case 3:
-					g.drawImage(life, 505, 78, 20, 20, null); 
-					g.drawImage(life, 505, 88, 20, 20, null); 
-					g.drawImage(life, 505, 98, 20, 20, null);
-			}
-
-		    /*if (!gameWin) endGameOver();
-			
-			if (gameOver) g.drawImage(youLose, 495/2 - 250, Utilities.SCREEN_HEIGHT/2 - 250, 500, 500, null);*/
-			
-			g.dispose();
-			
-			buffer.show();
+		BufferStrategy buffer = this.getBufferStrategy();
+		if(buffer == null) {
+			this.createBufferStrategy(2);
+			return;	
 		}
+		g = buffer.getDrawGraphics();
+		g.setFont(new Font("Courier", Font.BOLD, 25)); 
+		g.setColor(Color.WHITE);
 		
-		// aggiornamento ciclo di gioco
-		synchronized public void update() {
-		    
-		    objPaddles.get(playerIndex).move();
-		    objPaddles.get(playerIndex).switchDirectionMultiplayer(isFlipActiveString.equals("true"));
-		    int posPaddleX;
-		    int posPaddleY;
-			for (int i=0; i<numberOfPlayer; i++) {
-				posPaddleX=2*i;
-				posPaddleY=posPaddleX+1;
-				if(i != playerIndex) {
-					objPaddles.get(i).setPosition(posPaddleX, posPaddleY);;
-				}
-			}
-			
-			for (int i=0; i<objBricks.size(); i++) {
-				objBricks.get(i).setHitLevel(bricksHitLevel.get(i));
-			}
-			
-			objBall.setPosition(ballPosition[0], ballPosition[1]);
+		drawer.loadGraphics(g);
 		
-		}
+		drawer.draw(objSfondo);
+		drawer.draw(objBall);
+		drawer.draw(objBox);
+		drawer.draw(objHit);
+		drawer.draw(objSpeedUpLogo);
+		drawer.draw(objSwitchLogo);
+		drawer.draw(objLongerLogo);
+		drawer.draw(objShorterLogo);
 		
-		// inzializzazione partita
-		public void start() {
-			
-			
-			// posizione di partenza dello sfondo
-			int[] posInitSfondo = new int[2];
-			posInitSfondo[0] = 0;
-			posInitSfondo[1] = 0;
-			
-			// creo lo sfondo
-			objSfondo = new ScreenItem(sfondo, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT, posInitSfondo);
-			
-			int[] posBox = new int[2];
-			posBox[0] = 495;  //nell'asse x
-			posBox[1] = 0; //nell'asse y
-			objBox = new Box(box, 80, 700, posBox);
-						
-			// posizione di partenza ball
-			int[] posInitBall = new int[2];
-
-			posInitBall[0] = Utilities.INTIAL_POSITION_BALL_X;  // x
-			posInitBall[1] = Utilities.INITIAL_POSITION_BALL_Y;  // y
-			
-			// faccio partire il thread corrispondente a ball
-			objBall = new Ball(ball, 20, 20, posInitBall);
-						
-			//creazione e posizionamento dei Bricks
-			levels = new Levels(brick, fastBrick, flipBrick, null, objPaddles);
-			levels.setPlayersPosition(numberOfPlayer, playerIndex);
-			objBricks = levels.getBricksDesposition(1);
-		}
+		for(int i=0; i < lifesLeft; i++) drawer.draw(objLife[i]);
 		
-		public void setStringGameStatus(String gameStatus) {
-			String gameStatusString= new String();
-			gameStatusString=gameStatus;
-			String gameStatusStringSplitted[] = gameStatusString.split(" ");
-			
-			paddlesPosition = new ArrayList<>();
-			bricksHitLevel = new ArrayList<>();
-			
-			for (int i=0; i<2*numberOfPlayer; i++) {
-				paddlesPosition.add(Integer.parseInt(gameStatusStringSplitted[i]));
-			}
-			for (int j=2*numberOfPlayer; j<objBricks.size()+2*numberOfPlayer; j++) {
-				bricksHitLevel.add(Integer.parseInt(gameStatusStringSplitted[j]));
-			}
-			int k = objBricks.size()+2*numberOfPlayer;
-			ballPosition[0] = Integer.parseInt(gameStatusStringSplitted[k++]);
-			ballPosition[1] = Integer.parseInt(gameStatusStringSplitted[k++]);
-			scoreString=gameStatusStringSplitted[k++];
-			lifesLeft=Integer.parseInt(gameStatusStringSplitted[k++]);
-			isFastActiveString=gameStatusStringSplitted[k++];
-			fastRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
-			isFlipActiveString=gameStatusStringSplitted[k++];
-			flipRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
-		}
-
-		private void endGameOver() {
-			if(!gameStatus) {
-				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOSE);
-
-				// ho perso
-				try {
-					TimeUnit.SECONDS.sleep(2);
-				} catch (InterruptedException e) {
-
-					e.printStackTrace();
-				}	
-				game.gameWin(false);	
-			}
-		}
 		
-		private void endGameWin() {
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				
-				e.printStackTrace();
+		
+		for(int i=0; i<numberOfPlayer; i++) { 
+			drawer.draw(objPaddles.get(i));
+			drawer.draw(playersName.get(i), objPaddles.get(i).getXPosition()+7, objPaddles.get(i).getYPosition()+21);
 			}
-			game.gameWin(false);
-		}
 		
 
-		//Aggiungo player alla partita
-		public void addPlayers(ArrayList<Player> players) {
-			for (int i=0; i<numberOfPlayer; i++) {
-				this.objPaddles.add(players.get(i).getObjPaddle());
+		for(Brick tempBrick: objBricks) {
+			if(!tempBrick.isDestroyed()) drawer.draw(tempBrick);	
+		}
+		
+		for(PowerUp powerUp: objPowerUp.keySet()) {
+			if(powerUp.isActive()) {
+				drawer.draw(objPowerUp.get(powerUp));
 			}
 		}
 		
-		//modifico musica 
-		public void setMusic(Boolean b) {
-			mainMusic.setMusic(b);
-		}
+		if(isFastActiveString.equals("true")) {
+        	if (fastRemainingTime<4) 
+        		drawer.draw(""+fastRemainingTime, 510, 170);
+        	// else drawer.draw(on, 508, 153, 25, 25, null);  CREMO CREMO CREMO
+        }
+		
+		// da mettere win e lose
+		
+		g.dispose();
+		buffer.show();
 		
 		
-		public void setLevel(int lv) {
-			levels.setLevel(lv);
-			
-		}
-		
-		public int getPaddleXPosition() {
-			return objPaddles.get(playerIndex).getXPosition();
-		}
-		
-		public int getPaddleYPosition() {
-			return objPaddles.get(playerIndex).getYPosition();
-		}
-
-		public Graphics getG() {
-			return g;
-		}
 	}
+	
+
+	
+	public void setPlayersPosition(int numberOfPlayers, int playerIndex) {
+        switch (numberOfPlayers) {
+        case 2: {
+        	if (playerIndex==0) {
+        		objPaddles.get(playerIndex).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, Utilities.INITIAL_POSITION_PADDLE_Y);
+        	}
+        	else objPaddles.get(playerIndex).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, 3);
+            break;
+        }
+        case 3: {
+        	if (playerIndex==0) {
+        		objPaddles.get(playerIndex).setPosition(50, 580);
+        		objPaddles.get(playerIndex).setLimits(0, 240);
+        	}
+        	else if (playerIndex==1) {
+        		objPaddles.get(playerIndex).setPosition(280, 580);
+        		objPaddles.get(playerIndex).setLimits(240, 495);
+        	}
+        	else {
+        		objPaddles.get(playerIndex).setPosition(280, 3);
+        		objPaddles.get(playerIndex).setLimits(0, 495);
+        	}
+            break;
+        }
+        case 4: {
+        	if (playerIndex==0) {
+        		objPaddles.get(playerIndex).setPosition(50, 580);
+        		objPaddles.get(playerIndex).setLimits(0, 240);
+        	}
+        	else if (playerIndex==1) {
+        		objPaddles.get(playerIndex).setPosition(280, 580);
+        		objPaddles.get(playerIndex).setLimits(240, 495);
+        	}
+        	else if (playerIndex==2) {
+        		objPaddles.get(playerIndex).setPosition(50, 3);
+        		objPaddles.get(playerIndex).setLimits(0, 240);
+        	}
+        	else {
+        		objPaddles.get(playerIndex).setPosition(280, 3);
+        		objPaddles.get(playerIndex).setLimits(240, 495);
+        	}
+            break;
+        }
+        }
+    }
+	
+	public void setLevel() {
+		
+		for(int i = 0; i < 4; i++) {//first 2 layers up
+			for (int j = 0; j < 2; j++) { 
+				
+				int[] posInitBrick = new int[2];
+				
+				// posizione di partenza dei Brick
+				posInitBrick[0] = i * 80 + 100;  //nell'asse x
+				posInitBrick[1] = j * 43 + 193; //nell'asse y
+		
+				// creo i Bricks
+				objBricks.add(new Brick(Utilities.BRICK_WIDTH, Utilities.BRICK_HEIGHT, posInitBrick));
+			}
+		}
+		for(int i = 0; i < 4; i++) {//first 2 layers down
+			for (int j = 0; j < 2; j++) { 
+				
+				int[] posInitBrick = new int[2];
+				
+				// posizione di partenza dei Brick
+				posInitBrick[0] = i * 80 + 100;  //nell'asse x
+				posInitBrick[1] = j * 45 + 325; //nell'asse y
+		
+				// creo i Bricks
+				objBricks.add(new Brick(Utilities.BRICK_WIDTH, Utilities.BRICK_HEIGHT, posInitBrick));
+			}
+		}
+		for (int i = 0; i < 1; i++) { //1 left bricks in the middle
+			int[] posInitBrick = new int[2];
+			posInitBrick[0] = i * 80+ 100;  //nell'asse x
+			posInitBrick[1] = 280; //nell'asse y
+			objBricks.add(new Brick(Utilities.BRICK_WIDTH, Utilities.BRICK_HEIGHT, posInitBrick));
+		}
+		
+		for (int i = 0; i < 1; i++) { //1 right bricks in the middle
+			int[] posInitBrick = new int[2];
+			posInitBrick[0] = i * 80+ 340;  //nell'asse x
+			posInitBrick[1] = 280; //nell'asse y
+			objBricks.add(new Brick(Utilities.BRICK_WIDTH, Utilities.BRICK_HEIGHT, posInitBrick));
+		}
+		
+		//1 central bricks in the middle
+		int[] posInitBrick = new int[2];
+		posInitBrick[0] = 210+ 10;  //nell'asse x
+		posInitBrick[1] = 280; //nell'asse y
+		objBricks.add(new Brick(Utilities.BRICK_WIDTH, Utilities.BRICK_HEIGHT, posInitBrick));
+		
+		PowerUp speedUp = new BallSpeedUp(objBall);
+		int[] posFastBrick = {175,275};//speed special brick
+		objBricks.add(new BrickPowerUp(Utilities.P_UP_BRICK_WIDTH, Utilities.P_UP_BRICK_HEIGHT, posFastBrick, speedUp));
+		
+		PowerUp flipUp = new SwitchPaddleDirection(objPaddles.get(0));
+		int[] posFlipBrick = {293,275};//change-direction special brick
+		objBricks.add(new BrickPowerUp(Utilities.P_UP_BRICK_WIDTH, Utilities.P_UP_BRICK_HEIGHT, posFlipBrick, flipUp));
+		
+	}
+	
+	public int getPaddleXPosition() {
+		return objPaddles.get(playerIndex).getXPosition();
+	}
+	
+	public int getPaddleYPosition() {
+		return objPaddles.get(playerIndex).getYPosition();
+	}
+	
+
+}

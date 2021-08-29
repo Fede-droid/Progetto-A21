@@ -131,6 +131,8 @@ public class PauseMenu extends JPanel {
 		label1.setVisible(true);
 		backgroundlabel.add(label1);
 		
+		
+		
 	}
 
 }

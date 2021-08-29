@@ -4,9 +4,13 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.JPanel;
+
 import GUI.menu.Graphics.GameFrame;
 import GUI.menu.Graphics.IntroPanel;
-import GUI.menu.Graphics.MainMenu;
+import GUI.menu.Graphics.*;
+
 import GUI.menu.Graphics.MultiplayerPanel;
 import GUI.menu.Graphics.PauseMenu;
 import GUI.menu.Graphics.WaitingForPlayerPanel;
@@ -68,21 +72,33 @@ public class BreakoutGame {
 			entered = true;
 			gameFrame.repaint();
 	
+		
+			LoginMain login = new LoginMain(this);
 			
-			this.m = new MainMenu(this);
-			gameFrame.add(m);
+			gameFrame.add(login);
 			gameFrame.pack();
 			gameFrame.setVisible(true);
 			gameFrame.repaint();
 			
-			this.screen = new Screen(this); //creazione schermo di gioco
+			
 	}
+	}
+	
+	public void openMain() {
+		
+		this.m = new MainMenu(this);
+		
+		gameFrame.add(m);
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+		gameFrame.repaint();
+		
 	}
 
 	
 	// inizializzazione gioco con un giocaore offline
 	public void gameSetupSinglePlayer(boolean botMode) {
-		
+		this.screen = new Screen(this); //creazione schermo di gioco
 		this.botMode = botMode;
 		
 		int n;
@@ -266,7 +282,7 @@ public class BreakoutGame {
 		screen.reset();
 		screen.setVisible(false);
 		
-		PauseMenu pause = new PauseMenu(this, win);
+		PauseMenu pause = new PauseMenu(this, !win);
 		gameFrame.add(pause);
 		gameFrame.pack(); 
 		gameFrame.setVisible(true);
@@ -294,6 +310,9 @@ public class BreakoutGame {
 
 		this.level++;
 		screen.reset();
+		
+		ScoreListPanel ll = new ScoreListPanel();
+		ll.updateData();
 		
 	}
 	public GameFrame getGameFrame() {
@@ -332,7 +351,10 @@ public class BreakoutGame {
 		showMain();	
 	}
 	
-	
+	public void setPlayerName(String name) {
+		
+		this.playerName = name;
+	}
 	
 	public Screen getScreen() {
 		
@@ -347,6 +369,10 @@ public class BreakoutGame {
 		return this.botMode;
 	}
 	
-	
+	public String getPlayerName() {
+		return playerName;
+		
+		
+	}
 	
 }

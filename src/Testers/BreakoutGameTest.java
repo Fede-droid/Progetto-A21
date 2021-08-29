@@ -1,4 +1,4 @@
-package Model;
+package Testers;
 
 
 import static org.junit.Assert.assertTrue;
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import GUI.menu.Graphics.GameFrame;
 import GUI.menu.Graphics.WaitingForPlayerPanel;
+import Model.BreakoutGame;
 
 
 // CLASSE DI TEST CHE SIMULA UNA LOBBY NEL MULTIPLAYER

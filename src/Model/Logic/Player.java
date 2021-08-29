@@ -13,7 +13,7 @@ public class Player {
 	private int numberPlayer;
 	private int idPlayer;
 	private Paddle objPaddle;
-	//private BufferedImage paddle;
+	private BufferedImage paddle;
 	//private ImagesLoader loader;
 	private InputAdapter inputHandler;
 	//private int playerScore;

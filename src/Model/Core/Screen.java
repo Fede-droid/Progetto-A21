@@ -18,6 +18,7 @@ import javax.management.timer.Timer;
 import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 
+import Database.PersistenceFacade;
 import GUI.ImagesLoader;
 import Model.BreakoutGame;
 import Model.Core.Levels.Levels;
@@ -36,6 +37,7 @@ import Model.Logic.Drawer;
 import Model.Logic.LifeAdvisor;
 import Model.Logic.Player;
 import Model.Logic.PowerUpListComparator;
+import Model.Logic.ScoreAdvisor;
 import Model.Logic.ScreenItemFactory;
 import Music.Music;
 import Music.MusicTypes;
@@ -45,30 +47,32 @@ public class Screen extends Canvas implements Runnable{
 	
 private static final long serialVersionUID = 1L;
 	
-	private boolean gameStatus = false;
-	private boolean gameOver = false;
-	private boolean gameWin = false;
-	private Ball objBall;
-	private ArrayList<Brick> objBricks;
-	private HashMap<PowerUp, ScreenItem> objPowerUp;
-	private ArrayList<Paddle> objPaddles;
-	private ScreenItem objSfondo, objHit, objBox, objSpeedUpLogo, objSwitchLogo, objLongerLogo, objShorterLogo, objWin, objLose;
-	private ScreenItem[] objLife;
-	private ScreenItem[] objOn;
+protected boolean gameStatus = false;
+	protected boolean gameOver = false;
+	protected boolean gameWin = false;
+	protected Ball objBall;
+	protected ArrayList<Brick> objBricks;
+	protected HashMap<PowerUp, ScreenItem> objPowerUp;
+	protected ArrayList<Paddle> objPaddles;
+	protected ScreenItem objSfondo, objHit, objBox, objSpeedUpLogo, objSwitchLogo, objLongerLogo, objShorterLogo, objWin, objLose;
+	protected ScreenItem[] objLife;
+	protected ScreenItem[] objOn;
 	//private ScreenItem[] objOff;
 	Clip win,hit;
-	boolean isMusicOn;
-	private Graphics g;
+	protected boolean isMusicOn;
+	protected Graphics g;
 	CollisionAdvisor advisor;
-	private Music mainMusic;
-	private BreakoutGame game;
-	private int score;
-	private Levels levels;
-	private ArrayList<Player> players;
+	protected Music mainMusic;
+	protected BreakoutGame game;
+	protected int score;
+	protected Levels levels;
+	protected ArrayList<Player> players;
 	double switchStart = 0;
-	private LifeAdvisor lifeAdvisor;
-	private int lastScore, numberOfPlayers;
-	private Drawer drawer;
+	protected LifeAdvisor lifeAdvisor;
+	protected int lastScore, numberOfPlayers, currentLevel;
+	protected Drawer drawer;
+	private ScoreAdvisor scoreAdvisor;
+	private PersistenceFacade db;
 
 	/*
 	 * Costruttore della classe screen, istanzia gli oggetti dello screen e il drawer per disegnare
@@ -83,6 +87,9 @@ private static final long serialVersionUID = 1L;
 		drawer = new Drawer();
 		this.mainMusic = new Music();
 		score=0;
+		this.db = new PersistenceFacade(this);
+
+		
 	}
 	
 	/*
@@ -129,7 +136,10 @@ private static final long serialVersionUID = 1L;
 	 *  inzializzazione della partita: creo gli oggetti ScreenItem che poi verranno aggiornati e disegnati.
 	 */
 	public void setLevel(int lv) {
-		
+		this.scoreAdvisor = new ScoreAdvisor();
+		currentLevel = lv;
+		this.score = 0;
+	
 		objBall = (Ball)ScreenItemFactory.getInstance().getScreenItem(Item.BALL);
 		
 		levels = new Levels(objBall, objPaddles);
@@ -203,7 +213,7 @@ private static final long serialVersionUID = 1L;
 		
 		/*
 		 * Game cycle: render(), renderizzo gli screenItem.
-		 * Ogni screen item è definito drawable e, attraverso la classe drawer, viene disegnato su un oggetto Canvas.
+		 * Ogni screen item ï¿½ definito drawable e, attraverso la classe drawer, viene disegnato su un oggetto Canvas.
 		 * Ogni oggetto per essere disegnato effettivamente utilizza la classe graphics con il quale bufferizzo tutte le coponenti di
 		 * un frame. Solo una volta composto il frame disegno. 
 		 */
@@ -286,6 +296,7 @@ private static final long serialVersionUID = 1L;
 					e.printStackTrace();
 				}
 				lastScore=score;
+				scoreAdvisor.getScoreEnd(score);
 				game.gameWin(false);	
 			}
 		}
@@ -297,8 +308,11 @@ private static final long serialVersionUID = 1L;
 				
 				e.printStackTrace();
 			}
-			lastScore=score;
-			game.gameWin(false);
+			
+			
+			lastScore = scoreAdvisor.getScoreEnd(score);
+			db.updateScore();
+			game.gameWin(true);
 		}
 		
 
@@ -326,10 +340,19 @@ private static final long serialVersionUID = 1L;
 			return levels.getNumberOfLevels();
 		}
 		
+		
 		public int getLastScore() {
 			return lastScore;
 		}
-
+		
+		public int getCurrentLevel() {
+			return currentLevel;
+		}
+		
+		public String playerName() {
+			return game.getPlayerName();
+		}
+		
 		public Graphics getG() {
 			return g;
 		}
