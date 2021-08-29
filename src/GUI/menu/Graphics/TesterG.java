@@ -6,14 +6,11 @@ public class TesterG {
 
 	public static void main(String[] args) {
 		
-		BreakoutGame g = new BreakoutGame();
-		
 		GameFrame f = new GameFrame();
+		f.setVisible(true);
 		
-		WaitingForPlayerPanel p = new WaitingForPlayerPanel(g);
-	
-		
-		f.add(p);
+		ScoreListPanel s = new ScoreListPanel();
+		f.add(s);
 		
 		f.pack();
 		f.setVisible(true);
