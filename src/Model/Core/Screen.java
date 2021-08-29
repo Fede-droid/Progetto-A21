@@ -11,7 +11,6 @@ import javax.sound.sampled.Clip;
 
 import Database.PersistenceFacade;
 import Model.BreakoutGame;
-import Model.Core.Levels.Levels;
 import Model.Items.Ball;
 import Model.Items.Brick;
 import Model.Items.BrickPowerUp;
@@ -26,6 +25,7 @@ import Model.Logic.Player;
 import Model.Logic.PowerUpListComparator;
 import Model.Logic.ScoreAdvisor;
 import Model.Logic.ScreenItemFactory;
+import Model.Logic.Levels.Levels;
 import Music.Music;
 import Music.MusicTypes;
 import Utility.Utilities;
@@ -33,8 +33,9 @@ import Utility.Utilities;
 public class Screen extends Canvas implements Runnable{
 	
 private static final long serialVersionUID = 1L;
-	
-protected boolean gameStatus = false;
+
+    protected BreakoutGame game;
+    protected boolean gameStatus = false;
 	protected boolean gameOver = false;
 	protected boolean gameWin = false;
 	protected Ball objBall;
@@ -44,17 +45,14 @@ protected boolean gameStatus = false;
 	protected ScreenItem objSfondo, objHit, objBox, objSpeedUpLogo, objSwitchLogo, objLongerLogo, objShorterLogo, objWin, objLose;
 	protected ScreenItem[] objLife;
 	protected ScreenItem[] objOn;
-	//private ScreenItem[] objOff;
-	Clip win,hit;
+	//Clip win,hit;
 	protected boolean isMusicOn;
 	protected Graphics g;
 	CollisionAdvisor advisor;
 	protected Music mainMusic;
-	protected BreakoutGame game;
 	protected int score;
 	protected Levels levels;
 	protected ArrayList<Player> players;
-	double switchStart = 0;
 	protected LifeAdvisor lifeAdvisor;
 	protected int lastScore, numberOfPlayers, currentLevel;
 	protected Drawer drawer;
@@ -75,8 +73,6 @@ protected boolean gameStatus = false;
 		this.mainMusic = new Music();
 		score=0;
 		this.db = new PersistenceFacade(this);
-
-		
 	}
 	
 	/*
@@ -100,9 +96,6 @@ protected boolean gameStatus = false;
 		double fps = 100.0;
 		double ns = 1e9/fps; // numero di nano secondi per fps
 		gameStatus = true;
-		
-		//switchare off/on
-		//if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOOP);
 		
 		while (gameStatus) {
 			double current = System.nanoTime();

@@ -1,4 +1,4 @@
-package Model.Core.Levels;
+package Model.Logic.Levels;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -119,7 +119,7 @@ public class Levels {
 
 	public void readFile() {
 		
-		 File levelsFile = new File("./src/Model/Core/Levels/levels.txt");
+		 File levelsFile = new File("./src/Model/Logic/Levels/levels.txt");
 	     try {
 			this.myReader = new Scanner(levelsFile);
 			System.out.println("LIVELLO CARICATO CORRETTAMENTE!");

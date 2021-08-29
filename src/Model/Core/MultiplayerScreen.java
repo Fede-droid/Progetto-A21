@@ -117,7 +117,7 @@ public class MultiplayerScreen extends Screen{
 		objOn = ScreenItemFactory.getInstance().getScreenItem(Item.ON, tempList.size());
 		
 		setPlayersPosition(numberOfPlayer, playerIndex);
-		setLevel();
+		// setLevel();
 		PowerUpListComparator c = new PowerUpListComparator();
 		tempList.sort(c);
 		for(int i=0; i < tempList.size(); i++) {
@@ -138,7 +138,7 @@ public class MultiplayerScreen extends Screen{
 		String gameStatusString= new String();
 		gameStatusString=gameStatus;
 		String gameStatusStringSplitted[] = gameStatusString.split(" ");
-		
+				
 		for (int i=0; i<2*numberOfPlayer; i++) {
 			paddlesPosition.set(i, Integer.parseInt(gameStatusStringSplitted[i]));
 		}

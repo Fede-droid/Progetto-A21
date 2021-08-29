@@ -228,8 +228,6 @@ public class BreakoutGame {
 		gameFrame.repaint();
 	}
 	
-	// getters e setters
-
 	public void multiplayerError() {
 		multiplayerPanel.showError();
 	}
@@ -252,6 +250,10 @@ public class BreakoutGame {
 	
 	public void setNumberOfMissingPlayer(int nof) {
 		numberOfMissingPlayer = nof;
+	}
+	
+	public void setNumberLevel(int nl) {
+		level = nl;
 	}
 	
 	public int getNumberOfMissingPlayer() {

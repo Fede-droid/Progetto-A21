@@ -23,7 +23,7 @@ public class Client {
 	private int serverPort;
 	private ClientThread thread;
 	private InetAddress address;
-	private int portNewPlayer, numberOfMissingPlayer, numberOfPlayer, playerIndex;
+	private int portNewPlayer, numberOfMissingPlayer, numberOfPlayer, playerIndex, numberLevel;
 		
 	public void join(BreakoutGame game, Boolean isHost, String gameCode, String playerName, int playerNumber) {
 		
@@ -71,6 +71,8 @@ public class Client {
 	                
 	                playerIndex = Integer.parseInt(AllInfos[4]);
 	                
+	                numberLevel = Integer.parseInt(AllInfos[5]);
+	                
 	                System.out.println(AllInfo);
 	                
 
@@ -92,6 +94,7 @@ public class Client {
 	            		   game.setNumberOfPlayer(numberOfPlayer);
 	            		   game.setPlayerIndex(playerIndex);
 	            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);
+	            		   game.setNumberLevel(numberLevel);
 	            		   game.startGame();
 	            	   }
 	            	   
@@ -140,6 +143,7 @@ public class Client {
 	            				   game.setNumberOfPlayer(numberOfPlayer);
 	      	            		   game.setPlayerIndex(playerIndex);
 	      	            		   game.setNumberOfMissingPlayer(numberOfMissingPlayer);
+	      	            		   game.setNumberLevel(numberLevel);
 	      	            		   game.startGame();
 	      	            		   
 	            					

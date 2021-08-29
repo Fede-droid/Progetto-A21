@@ -21,6 +21,12 @@ public class LifeAdvisor {
         life = Utilities.NUMBER_LIFE;
 	}
 	
+	public LifeAdvisor(CollisionAdvisor collision, Ball ball) {
+		this.collision = collision;
+		this.ball = ball;
+        life = Utilities.NUMBER_LIFE;
+	}
+	
 	// false se è ancora in vita, true se ha perso
 	
 	public boolean checkLife(int numberOfPlayers) {

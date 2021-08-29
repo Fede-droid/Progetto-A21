@@ -21,9 +21,10 @@ public class Player {
 
 	public Player() {
 		
-		this.numberPlayer = numberPlayer;
-		this.idPlayer = idPlayer;
+		//this.numberPlayer = numberPlayer;
+		//this.idPlayer = idPlayer;
 		inizialize();
+		paddle = ImagesLoader.getInstace().uploadImage("/Images/paddle.png");
 		this.inputHandler = new InputAdapter(objPaddle);
 		//this.life = 3;
 	}
