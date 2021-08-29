@@ -23,6 +23,14 @@ public class ShorterPaddle extends PowerUp {
 		((Paddle)affectedScreenItem).setImageWidth(affectedScreenItem.getImageWidth() + 30);
 		this.setActive(false);
 	}
+	
+	public void activateMultiplayer(boolean active) {
+		if(active) {
+			((Paddle)affectedScreenItem).setImageWidth(70);
+		} else {
+			((Paddle)affectedScreenItem).setImageWidth(100);
+		}
+	}
 
 	@Override
 	public PowerUpTypes whichPower() {

@@ -6,10 +6,12 @@ import Model.Items.ScreenItem;
 public class SwitchPaddleDirection extends PowerUp {
 	
 	private String path = "/Images/flip.png";
+	private boolean oneTimeMulti;
 	
 	public SwitchPaddleDirection(ScreenItem screenItem) {
 		super.affectedScreenItem = screenItem;
 		duringTime = 10e9;
+		oneTimeMulti = true;
 	}
 
 	@Override
@@ -22,6 +24,17 @@ public class SwitchPaddleDirection extends PowerUp {
 	public void disactivate() {
 			((Paddle)affectedScreenItem).switchDir();
 			this.setActive(false);
+	}
+	
+	public void activateMultiplayer(boolean active) {
+		if(!active&&!oneTimeMulti) ((Paddle)affectedScreenItem).switchDir();
+    	if (oneTimeMulti) {
+	    	if (active) {
+	    		((Paddle)affectedScreenItem).switchDir();
+	    		oneTimeMulti = false;
+	    	}
+    	}
+    	if (!active) oneTimeMulti = true;
 	}
 	
 	public PowerUpTypes whichPower() {

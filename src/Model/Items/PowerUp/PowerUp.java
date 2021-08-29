@@ -41,4 +41,6 @@ public abstract class PowerUp {
 	public abstract PowerUpTypes whichPower();
 	
 	public abstract String getPath();
+
+	public abstract void activateMultiplayer(boolean active);
 }

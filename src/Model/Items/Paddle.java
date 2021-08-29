@@ -98,15 +98,4 @@ public class Paddle extends ScreenItem {
     	isSwitched =!isSwitched;
     	switchConstant = -switchConstant;
     }
-    
-    public void switchDirectionMultiplayer(boolean isSwitched) {
-    	if(!isSwitched&&!oneTimeMulti) switchDir();
-    	if (oneTimeMulti) {
-	    	if (isSwitched) {
-	    		switchDir();
-	    		oneTimeMulti = false;
-	    	}
-    	}
-    	if (!isSwitched) oneTimeMulti = true;
-    }
 }

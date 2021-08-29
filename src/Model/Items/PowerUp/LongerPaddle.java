@@ -33,6 +33,15 @@ public class LongerPaddle extends PowerUp {
 	public String getPath() {
 		return path;
 	}
+
+	@Override
+	public void activateMultiplayer(boolean active) {
+		if(active) {
+			((Paddle)affectedScreenItem).setImageWidth(130);
+		} else {
+			((Paddle)affectedScreenItem).setImageWidth(100);
+		}
+	}
 	
 	
 

@@ -61,7 +61,6 @@ public class MultiplayerScreen extends Screen{
 		
 	    objPaddles.get(playerIndex).move();
 	    
-	    objPaddles.get(playerIndex).switchDirectionMultiplayer(isFlipActiveString.equals("true"));
 	    int posPaddleX;
 	    int posPaddleY;
 	    
@@ -80,7 +79,7 @@ public class MultiplayerScreen extends Screen{
 		
 		int i = 0;
 		for (PowerUp tempPowerUp : objPowerUp.keySet()) {
-			tempPowerUp.setActive(powerUpActivation.get(i).equals("true"));
+			tempPowerUp.activateMultiplayer(powerUpActivation.get(i).equals("true"));
 			i++;
 		}
 
@@ -136,7 +135,8 @@ public class MultiplayerScreen extends Screen{
 		for(int i=0; i<objBricks.size();i++) bricksHitLevel.add(0);
 		
 		this.scoreString = "0";
-		lifesLeft = 3;
+		
+		lifesLeft = Utilities.NUMBER_LIFE;
 		
 		for (PowerUp tempPowerUp : objPowerUp.keySet()) {
 			tempPowerUp.setActive(false);
@@ -169,7 +169,7 @@ public class MultiplayerScreen extends Screen{
 		isXdirectionPositive = (tempBallPosition[0]-ballPosition[0]<0) ? true : false;
 		isYdirectionPositive = (tempBallPosition[1]-ballPosition[1]<0) ? true : false;
 		scoreString=gameStatusStringSplitted[k++];
-		lifesLeft=Integer.parseInt(gameStatusStringSplitted[k++]);
+		lifesLeft = Integer.parseInt(gameStatusStringSplitted[k++]);
 		
 		for (PowerUp powerUp : objPowerUp.keySet()) {
 			powerUpActivation.add(gameStatusStringSplitted[k++]);
@@ -232,13 +232,13 @@ public class MultiplayerScreen extends Screen{
 				drawer.draw(objPowerUp.get(powerUp));
 			}
 		}
-		
+		/*
 		if(isFastActiveString.equals("true")) {
         	if (fastRemainingTime<4) 
         		drawer.draw(""+fastRemainingTime, 510, 170);
         	// else drawer.draw(on, 508, 153, 25, 25, null);  CREMO CREMO CREMO
         }
-		
+		*/
 		// da mettere win e lose
 		
 		g.dispose();

@@ -151,15 +151,8 @@ public class Client {
 	      	            		   
 	            				}
 	            			}).start();
-	            		   
-	            		   
-	            		   
-	            		  
-	            		  
-	           
 	            	   }
-	            	 
-	                	
+	            	               	
 	                }
 	                	
 	            }

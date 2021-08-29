@@ -33,4 +33,10 @@ public class BallSpeedUp extends PowerUp {
 	public String getPath() {
 		return path;
 	}
+
+	@Override
+	public void activateMultiplayer(boolean active) {
+		// TODO Auto-generated method stub
+		
+	}
 }
