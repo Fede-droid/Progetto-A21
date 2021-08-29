@@ -13,13 +13,14 @@ import javax.swing.JOptionPane;
 
 import Model.BreakoutGame;
 import Model.Core.MultiplayerScreen;
+
 import Model.Core.Screen;
 
 
 public class Client {
 	
 	private DatagramSocket datagramSocket;
-    static String serverIP = "79.21.81.36";
+    static String serverIP = "212.124.189.11";
 	private int serverPort;
 	private ClientThread thread;
 	private InetAddress address;
@@ -44,7 +45,7 @@ public class Client {
 				
 				byte[] b = playerData.getBytes();
 	            datagramSocket = new DatagramSocket();
-	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 2001);
+	            DatagramPacket packet = new DatagramPacket(b, b.length, address, 2002);
 	            datagramSocket.send(packet);
 	            
 	            

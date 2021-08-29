@@ -6,18 +6,13 @@ public class TesterG {
 
 	public static void main(String[] args) {
 		
-		BreakoutGame g = new BreakoutGame();
 		
-		GameFrame f = new GameFrame();
+		ScoreListPanel s = new ScoreListPanel();
 		
-		WaitingForPlayerPanel p = new WaitingForPlayerPanel(g);
-	
+		s.pack();
+		s.setVisible(true);
+		s.repaint();
 		
-		f.add(p);
-		
-		f.pack();
-		f.setVisible(true);
-		f.repaint();
 	}
 
 }

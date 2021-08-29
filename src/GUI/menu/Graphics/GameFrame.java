@@ -17,7 +17,7 @@ public class GameFrame extends JFrame{
 		Dimension dimension_screen = new Dimension(Utilities.SCREEN_WIDTH,Utilities.SCREEN_HEIGHT);
 		setPreferredSize(dimension_screen);
         setLocationRelativeTo(null);
-		setResizable(true);
+		setResizable(false);
 		inzialize();
 		
 	}

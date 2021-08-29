@@ -133,6 +133,28 @@ public class MainMenu extends JPanel{
 		musicButtonOFF.addActionListener(a5);
 		setMusicButton(false);
 		
+		JButton list = new JButton("CLASSIFICA PLAYERS");
+		
+		backgroundlabel.setLayout(new FlowLayout() );
+		backgroundlabel.add(list);
+		
+		
+		ActionListener listPlayer = new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	
+		    	ScoreListPanel list = new ScoreListPanel();
+		    	list.pack();
+		    	list.setVisible(true);
+		    	list.repaint();
+		    
+				
+		    }
+		};
+		
+		list.addActionListener(listPlayer);
+		
+		
 		
 		
 	}
