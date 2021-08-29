@@ -139,7 +139,11 @@ public class MultiplayerScreen extends Screen{
 		lifesLeft = Utilities.NUMBER_LIFE;
 		
 		for (PowerUp tempPowerUp : objPowerUp.keySet()) {
-			tempPowerUp.setActive(false);
+			tempPowerUp.activateMultiplayer(false);
+		}
+		
+		for(int i=0; i<objPowerUp.size(); i++) {
+			powerUpActivation.add("false");
 		}
 
 		
