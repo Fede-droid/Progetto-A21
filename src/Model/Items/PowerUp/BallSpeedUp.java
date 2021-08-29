@@ -30,6 +30,7 @@ public class BallSpeedUp extends PowerUp {
 		return PowerUpTypes.FAST;
 	}
 	
+	
 	public String getPath() {
 		return path;
 	}
