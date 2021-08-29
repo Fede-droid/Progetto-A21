@@ -134,6 +134,7 @@ public class MainMenu extends JPanel{
 		setMusicButton(false);
 		
 		JButton list = new JButton("CLASSIFICA PLAYERS");
+		
 		backgroundlabel.setLayout(new FlowLayout() );
 		backgroundlabel.add(list);
 		
@@ -142,14 +143,11 @@ public class MainMenu extends JPanel{
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		    	
-		    	removeAll();
-		    	setVisible(false);
-		    	ScoreListPanel li = new ScoreListPanel();
-		    	li.setVisible(true);
-				c.getGameFrame().add(li);
-				c.getGameFrame().pack();
-				c.getGameFrame().setVisible(true);
-				c.getGameFrame().repaint();
+		    	ScoreListPanel list = new ScoreListPanel();
+		    	list.pack();
+		    	list.setVisible(true);
+		    	list.repaint();
+		    
 				
 		    }
 		};

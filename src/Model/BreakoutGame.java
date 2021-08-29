@@ -36,7 +36,7 @@ public class BreakoutGame {
 	private Client client;
 	private WaitingForPlayerPanel waitingPanel;
 	private boolean botMode, entered;
-	private int level;
+	private int level, lastScore;
 	
 	// creazione del controller
 	
@@ -279,6 +279,7 @@ public class BreakoutGame {
 	// menu intermedio tra i livelli
 	public void gameWin(boolean win) {
 		
+		lastScore = screen.getLastScore();
 		screen.reset();
 		screen.setVisible(false);
 		
@@ -362,7 +363,7 @@ public class BreakoutGame {
 	}
 	
 	public int getLastScore() {
-		return screen.getLastScore();
+		return lastScore;
 	}
 	
 	public boolean getBotMode() {

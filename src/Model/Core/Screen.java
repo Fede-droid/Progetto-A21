@@ -44,7 +44,6 @@ protected boolean gameStatus = false;
 	protected ScreenItem objSfondo, objHit, objBox, objSpeedUpLogo, objSwitchLogo, objLongerLogo, objShorterLogo, objWin, objLose;
 	protected ScreenItem[] objLife;
 	protected ScreenItem[] objOn;
-	//private ScreenItem[] objOff;
 	Clip win,hit;
 	protected boolean isMusicOn;
 	protected Graphics g;
@@ -69,7 +68,6 @@ protected boolean gameStatus = false;
 		objBricks = new ArrayList<Brick>();
 		objPowerUp = new HashMap<PowerUp, ScreenItem>();
 		objPaddles = new ArrayList<Paddle>();
-		ScreenItem[] objLife = new ScreenItem[Utilities.NUMBER_LIFE];
 		players = new ArrayList<Player>();
 		drawer = new Drawer();
 		this.mainMusic = new Music();
@@ -124,6 +122,7 @@ protected boolean gameStatus = false;
 	 */
 	public void setLevel(int lv) {
 		this.scoreAdvisor = new ScoreAdvisor();
+		scoreAdvisor.start();
 		currentLevel = lv;
 		this.score = 0;
 	
@@ -282,8 +281,8 @@ protected boolean gameStatus = false;
 
 					e.printStackTrace();
 				}
-				lastScore=score;
-				scoreAdvisor.getScoreEnd(score);
+				
+				lastScore = scoreAdvisor.getScoreEnd(score);
 				game.gameWin(false);	
 			}
 		}
@@ -295,7 +294,6 @@ protected boolean gameStatus = false;
 				
 				e.printStackTrace();
 			}
-			
 			
 			lastScore = scoreAdvisor.getScoreEnd(score);
 			db.updateScore();
