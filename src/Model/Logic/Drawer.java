@@ -35,6 +35,8 @@ public class Drawer {
 		graphics.drawString(string, x, y);
 	}
 	
+	
+	
 	public void loadGraphics(Graphics graphics) {
 		
 		graphics.setFont(new Font("Courier", Font.BOLD, 20)); 

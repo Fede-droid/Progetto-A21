@@ -85,6 +85,10 @@ public class MultiplayerScreen extends Screen{
 
 	    objBall.setPosition(ballPosition[0], ballPosition[1]);
 	    
+	    
+	    if(victory) gameWin = true;
+	    
+	    if(loss) gameOver = true;
 		
 	}
 	
@@ -175,19 +179,13 @@ public class MultiplayerScreen extends Screen{
 		scoreString=gameStatusStringSplitted[k++];
 		lifesLeft = Integer.parseInt(gameStatusStringSplitted[k++]);
 		
+		System.out.println(lifesLeft);
 		int j = 0;
         for (PowerUp powerUp : objPowerUp.keySet()) {
             powerUpActivation.set(j, gameStatusStringSplitted[k++]);
             j++;
         }
 			
-		/*isFastActiveString=gameStatusStringSplitted[k++];
-		//this.fastRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
-		k++;
-		isFlipActiveString=gameStatusStringSplitted[k++];
-		//this.flipRemainingTime=Integer.parseInt(gameStatusStringSplitted[k++]);
-		k++;*/
-		
 		victory = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
 		loss = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
 		for (int i=0; i<numberOfPlayer; i++) {
@@ -237,17 +235,64 @@ public class MultiplayerScreen extends Screen{
 				drawer.draw(objPowerUp.get(powerUp));
 			}
 		}
-		/*
-		if(isFastActiveString.equals("true")) {
-        	if (fastRemainingTime<4) 
-        		drawer.draw(""+fastRemainingTime, 510, 170);
-        	// else drawer.draw(on, 508, 153, 25, 25, null);  CREMO CREMO CREMO
-        }
-		*/
-		// da mettere win e lose
+	
+		if(gameWin) {
+			drawer.draw(objWin);
+			g.dispose();
+			buffer.show();
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+			gameWin();
+		}
+		if(gameOver) {
+			drawer.draw(objLose);
+			g.dispose();
+			buffer.show();
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+			gameLose();
+		}
 		
 		g.dispose();
 		buffer.show();
+		
+	}
+	
+	
+	public void gameWin(){
+		
+		gameStatus = false;
+		game.inizializeMultiplayer();
+		
+		/*
+		
+		new Thread(new Runnable(){
+			@Override
+			public synchronized void run(){
+				
+				drawer.draw(objWin);
+				
+				
+			}
+		}).start();
+		
+		*/
+		
+	}
+	
+	public void gameLose() {
+		
+		gameStatus = false;
+		game.inizializeMultiplayer();
+		
 		
 	}
 	
@@ -297,63 +342,6 @@ public class MultiplayerScreen extends Screen{
         }
     }
 	
-	synchronized public void setLevel() {
-		
-		for(int i = 0; i < 4; i++) {//first 2 layers up
-			for (int j = 0; j < 2; j++) { 
-				
-				int[] posInitBrick = new int[2];
-				
-				// posizione di partenza dei Brick
-				posInitBrick[0] = i * 80 + 100;  //nell'asse x
-				posInitBrick[1] = j * 43 + 193; //nell'asse y
-		
-				// creo i Bricks
-				objBricks.add(new Brick(Utilities.BRICK_WIDTH, Utilities.BRICK_HEIGHT, posInitBrick));
-			}
-		}
-		for(int i = 0; i < 4; i++) {//first 2 layers down
-			for (int j = 0; j < 2; j++) { 
-				
-				int[] posInitBrick = new int[2];
-				
-				// posizione di partenza dei Brick
-				posInitBrick[0] = i * 80 + 100;  //nell'asse x
-				posInitBrick[1] = j * 45 + 325; //nell'asse y
-		
-				// creo i Bricks
-				objBricks.add(new Brick(Utilities.BRICK_WIDTH, Utilities.BRICK_HEIGHT, posInitBrick));
-			}
-		}
-		for (int i = 0; i < 1; i++) { //1 left bricks in the middle
-			int[] posInitBrick = new int[2];
-			posInitBrick[0] = i * 80+ 100;  //nell'asse x
-			posInitBrick[1] = 280; //nell'asse y
-			objBricks.add(new Brick(Utilities.BRICK_WIDTH, Utilities.BRICK_HEIGHT, posInitBrick));
-		}
-		
-		for (int i = 0; i < 1; i++) { //1 right bricks in the middle
-			int[] posInitBrick = new int[2];
-			posInitBrick[0] = i * 80+ 340;  //nell'asse x
-			posInitBrick[1] = 280; //nell'asse y
-			objBricks.add(new Brick(Utilities.BRICK_WIDTH, Utilities.BRICK_HEIGHT, posInitBrick));
-		}
-		
-		//1 central bricks in the middle
-		int[] posInitBrick = new int[2];
-		posInitBrick[0] = 210+ 10;  //nell'asse x
-		posInitBrick[1] = 280; //nell'asse y
-		objBricks.add(new Brick(Utilities.BRICK_WIDTH, Utilities.BRICK_HEIGHT, posInitBrick));
-		
-		PowerUp speedUp = new BallSpeedUp(objBall);
-		int[] posFastBrick = {175,275};//speed special brick
-		objBricks.add(new BrickPowerUp(Utilities.P_UP_BRICK_WIDTH, Utilities.P_UP_BRICK_HEIGHT, posFastBrick, speedUp));
-		
-		PowerUp flipUp = new SwitchPaddleDirection(objPaddles.get(0));
-		int[] posFlipBrick = {293,275};//change-direction special brick
-		objBricks.add(new BrickPowerUp(Utilities.P_UP_BRICK_WIDTH, Utilities.P_UP_BRICK_HEIGHT, posFlipBrick, flipUp));
-		
-	}
 	
 	synchronized public int getPaddleXPosition() {
 		return objPaddles.get(playerIndex).getXPosition();
