@@ -46,6 +46,7 @@ public class ScoreListPanel extends JFrame {
 		this.facade = new PersistenceFacade();
 		
 		
+		
 		table.setFont(new Font("Helvetica", Font.BOLD, 25));
 		model.addColumn("POSITION");
 		model.addColumn("PLAYER");
