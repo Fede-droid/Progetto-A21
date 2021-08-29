@@ -31,6 +31,7 @@ public class ScoreListPanel extends JFrame {
 	DefaultTableModel model;
 	JTable table;
 	
+	
 	public ScoreListPanel() {
 		
 		setTitle("CLASSIFICA");
