@@ -9,7 +9,7 @@ import Utility.Utilities;
 
 public class CollisionAdvisor {
 	
-	/*
+	/**
 	 * 
 	 * classe che gestisce le collisioni tra la pallina e i brick 
 	 * e tra la pallina e il/i paddle presenti nel gioco
@@ -18,7 +18,11 @@ public class CollisionAdvisor {
 	Music collisionMusic;
 	int ballSpeed;
 	
-	
+	/**
+	 * 
+	 * @param ball
+	 * @param collisionMusic
+	 */
 	public CollisionAdvisor(Ball ball, Music collisionMusic) {
 		this.ball = ball;
 		this.collisionMusic = collisionMusic;
@@ -26,7 +30,12 @@ public class CollisionAdvisor {
 		
 	}
 	
-	// se la pallina esce dai bordi, a seconda della modalità i bordi possono cambiare
+	/**se la pallina esce dai bordi, a seconda della modalità i bordi possono cambiare
+	 * 
+	 * @param numberOfPlayers
+	 * @return
+	 */
+	 
 	public boolean checkGameOver(int numberOfPlayers) {
 		if((ball.getPosition()[1] + ball.getImageHeight()) >= Utilities.SCREEN_HEIGHT-3) {
             return true;
@@ -37,6 +46,11 @@ public class CollisionAdvisor {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param numberOfPlayers
+	 * @return
+	 */
 	public boolean checkBorderCollision(int numberOfPlayers) {
         if (ball.getPosition()[0] <= 0) {
             ball.setXdir(1);
@@ -60,6 +74,12 @@ public class CollisionAdvisor {
  
     }
 	
+	/**
+	 * 
+	 * @param item
+	 * @return
+	 */
+	
 	public boolean checkCollisionLato(ScreenItem item) {
 		this.ballSpeed = ball.getSpeed();
 		if ((ball.getPosition()[1] + ball.getImageHeight()) > item.getPosition()[1]  &&  ball.getPosition()[1] < (item.getPosition()[1]+item.getImageHeight())) {  
@@ -75,6 +95,12 @@ public class CollisionAdvisor {
 		}
 		return false;
 	}
+	
+	/**
+	 * 
+	 * @param item
+	 * @return
+	 */
 	
 	public boolean checkCollision(ScreenItem item) {
 		this.ballSpeed = ball.getSpeed();
@@ -92,6 +118,11 @@ public class CollisionAdvisor {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param item
+	 * @return
+	 */
 	public boolean checkCollision(Paddle item) {
         this.ballSpeed = ball.getSpeed();
         if ((ball.getPosition()[0]+ball.getImageWidth()) > item.getPosition()[0] && ball.getPosition()[0] < (item.getPosition()[0] + item.getImageWidth())) {

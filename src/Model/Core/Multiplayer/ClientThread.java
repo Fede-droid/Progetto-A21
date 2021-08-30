@@ -72,11 +72,21 @@ public class ClientThread extends Thread {
 			}
         }
     }
+    
+    /**
+	 * messaggio rivevutp da server
+	 * @return messaggio
+	 */
 
     public String getMessage() {
         return message;
     }
      
+    
+    /**
+	 * interruzione thread
+	 *  
+	 */
 
     public void close() {
     	this.running = false;

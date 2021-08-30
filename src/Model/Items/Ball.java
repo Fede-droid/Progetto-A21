@@ -8,7 +8,7 @@ import Utility.Utilities;
 public class Ball extends ScreenItem{
 
 	
-	/*
+	/**
 	 * classe che definisce le funzionbalità della Ball
 	 */
     private boolean active;
@@ -25,10 +25,15 @@ public class Ball extends ScreenItem{
         
     }
 
+
+	/**
+	 * muovi pallina
+	 */
     public void move() {
         position[0] += xDirection + xDirection * speed;
         position[1] += yDirection + yDirection * speed;
     }
+    
     
     public void setXdir(int xdir) {
 		this.xDirection = xdir;
@@ -58,6 +63,9 @@ public class Ball extends ScreenItem{
     	this.speed = (int) defaultBallSpeed ;
     }
     
+    /**
+	 * refresh pallina posizione inziale
+	 */
     public void refresh() {
     	position[0] = Utilities.INITIAL_POSITION_PADDLE_X;
     	position[1] = Utilities.INITIAL_POSITION_BALL_Y;

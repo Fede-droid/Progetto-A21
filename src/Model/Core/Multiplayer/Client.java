@@ -28,6 +28,10 @@ public class Client {
 	private InetAddress address;
 	private int portNewPlayer, numberOfMissingPlayer, numberOfPlayer, playerIndex, numberLevel;
 		
+	
+	/**
+	 * @param BreakoutGame game, è host?, gameCode, nome player, numero giocatore
+	 */
 	public void join(BreakoutGame game, Boolean isHost, String gameCode, String playerName, int playerNumber) {		
 		
 			// connessione con il server ed inzializzazione giocatore
@@ -175,13 +179,20 @@ public class Client {
        
 	}
 	
-	// creazione client thread per la ricezione e aggiornamento dei dati durante la partita
+	/**
+	 * creazione client thread per la ricezione e aggiornamento dei dati durante la partita
+	 * @param multiplayerScreen
+	 */
+	
 	public void startThread(MultiplayerScreen multiplayerScreen) {
 		
 		thread = new ClientThread(address, portNewPlayer, datagramSocket, multiplayerScreen);
         thread.start();
 	}
 	
+	/**
+	 * chiusura connessione e stop thread
+	 */
 	public void stopConnection() {
 		
 		thread.close();

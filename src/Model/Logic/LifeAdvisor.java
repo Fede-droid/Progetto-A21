@@ -8,14 +8,23 @@ import Utility.Utilities;
 
 public class LifeAdvisor {
 	
-	// classe per la gestione delle vite 
-	// le vite si possono settare in utilities
+	/**
+	 *  classe per la gestione delle vite 
+	 *  le vite si possono settare in utilities
+	 */
+	 
 
 	private Music loseLifeMusic;
 	private CollisionAdvisor collision;
 	private Ball ball;
     private int life;
 	
+    /**
+     * 
+     * @param loseLife
+     * @param collision
+     * @param ball
+     */
 	public LifeAdvisor(Music loseLife, CollisionAdvisor collision, Ball ball) {
 		
 		this.loseLifeMusic = loseLife;
@@ -24,6 +33,11 @@ public class LifeAdvisor {
         life = Utilities.NUMBER_LIFE;
 	}
 	
+	/**
+	 * 
+	 * @param collision
+	 * @param ball
+	 */
 	public LifeAdvisor(CollisionAdvisor collision, Ball ball) {
 		this.collision = collision;
 		this.ball = ball;
@@ -31,7 +45,11 @@ public class LifeAdvisor {
         
 	}
 	
-	// false se è ancora in vita, true se ha perso
+	/**
+	 *  false se è ancora in vita, true se ha perso
+	 * @param numberOfPlayers
+	 * @return
+	 */
 	
 	public boolean checkLife(int numberOfPlayers) {
 		if(collision.checkGameOver(numberOfPlayers)) {
@@ -43,6 +61,10 @@ public class LifeAdvisor {
 		return false;	
 	}
 	
+	/**
+	 * 
+	 * @return numero life
+	 */
     public int getLife() {
         return life;
     }

@@ -6,7 +6,9 @@ import java.awt.event.KeyEvent;
 import Model.Items.Paddle;
 
 public class InputAdapter extends KeyAdapter {
-	// adattatore per le frecce della tastiera
+	/**
+	 *  adattatore per le frecce della tastiera
+	 */
 	
 	private Paddle objPaddle;
 	
@@ -15,12 +17,14 @@ public class InputAdapter extends KeyAdapter {
 		this.objPaddle = paddle;
 		
 	}
+	
 	 @Override
      public void keyReleased(KeyEvent e) {
 
 		 objPaddle.keyReleased(e);
      }
-
+	 
+	 
      @Override
      public void keyPressed(KeyEvent e) {
 
