@@ -10,10 +10,8 @@ import Model.Items.Ball;
 import Model.Items.Brick;
 import Model.Items.BrickPowerUp;
 import Model.Items.Item;
-import Model.Items.Paddle;
-import Model.Items.PowerUp.BallSpeedUp;
+
 import Model.Items.PowerUp.PowerUp;
-import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
 import Model.Logic.PowerUpListComparator;
 import Model.Logic.ScreenItemFactory;
@@ -21,6 +19,7 @@ import Model.Logic.Levels.Levels;
 import Music.Music;
 import Music.MusicTypes;
 import Utility.Utilities;
+
 
 public class MultiplayerScreen extends Screen{
 	

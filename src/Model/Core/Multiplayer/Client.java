@@ -20,7 +20,9 @@ import Model.Core.Screen;
 public class Client {
 	
 	private DatagramSocket datagramSocket;
-    static String serverIP = "78.134.15.159";
+    static String serverIP = "87.15.150.248";
+    //78.134.15.159
+    //
 	private int serverPort;
 	private ClientThread thread;
 	private InetAddress address;
