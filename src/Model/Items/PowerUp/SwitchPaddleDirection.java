@@ -1,5 +1,7 @@
 package Model.Items.PowerUp;
 
+import java.util.ArrayList;
+
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 
@@ -31,15 +33,18 @@ public class SwitchPaddleDirection extends PowerUp {
 			this.setActive(false);
 	}
 	
-	public void activateMultiplayer(boolean active) {
-		if(!active&&!oneTimeMulti) ((Paddle)affectedScreenItem).switchDir();
-    	if (oneTimeMulti) {
-	    	if (active) {
-	    		((Paddle)affectedScreenItem).switchDir();
-	    		oneTimeMulti = false;
+	public void activateMultiplayer(boolean active, ArrayList<Paddle> paddles) {
+		for(Paddle paddle: paddles) {
+			if(!active&&!oneTimeMulti) paddle.switchDir();
+	    	if (oneTimeMulti) {
+		    	if (active) {
+		    		paddle.switchDir();
+		    		oneTimeMulti = false;
+		    	}
 	    	}
-    	}
+		}
     	if (!active) oneTimeMulti = true;
+    	
 	}
 	
 	public PowerUpTypes whichPower() {

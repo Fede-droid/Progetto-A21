@@ -1,5 +1,7 @@
 package Model.Items.PowerUp;
 
+import java.util.ArrayList;
+
 import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 
@@ -40,11 +42,13 @@ public class LongerPaddle extends PowerUp {
 	}
 
 	@Override
-	public void activateMultiplayer(boolean active) {
-		if(active) {
-			((Paddle)affectedScreenItem).setImageWidth(130);
-		} else {
-			((Paddle)affectedScreenItem).setImageWidth(100);
+	public void activateMultiplayer(boolean active, ArrayList<Paddle> paddles) {
+		for(Paddle paddle: paddles) {
+			if(active) {
+				paddle.setImageWidth(130);
+			} else {
+				paddle.setImageWidth(100);
+			}
 		}
 	}
 	

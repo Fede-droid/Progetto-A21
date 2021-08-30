@@ -1,5 +1,8 @@
 package Model.Items.PowerUp;
 
+import java.util.ArrayList;
+
+import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 
 public abstract class PowerUp {
@@ -48,5 +51,5 @@ public abstract class PowerUp {
 	
 	public abstract String getPath();
 
-	public abstract void activateMultiplayer(boolean active);
+	public abstract void activateMultiplayer(boolean active, ArrayList<Paddle> paddles);
 }

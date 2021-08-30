@@ -1,6 +1,9 @@
 package Model.Items.PowerUp;
 
+import java.util.ArrayList;
+
 import Model.Items.Ball;
+import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 import Utility.Utilities;
 
@@ -39,8 +42,7 @@ public class BallSpeedUp extends PowerUp {
 	}
 
 	@Override
-	public void activateMultiplayer(boolean active) {
-		// TODO Auto-generated method stub
-		
+	public void activateMultiplayer(boolean active, ArrayList<Paddle> paddles) {
+		// TODO Auto-generated method stub		
 	}
 }
