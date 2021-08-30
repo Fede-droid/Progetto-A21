@@ -23,9 +23,9 @@ public class BreakoutGame {
 	
 	// PATTERN CONTROLLER
 	
-	private GameFrame gameFrame; //creazione nuova finestra
+	private GameFrame gameFrame; 
 	private Screen screen; 
-	private ArrayList<Player> players; // definizione dei giocatori
+	private ArrayList<Player> players; //  giocatori
 	private Boolean music; // setup musica
 	private MainMenu m;
 	private MultiplayerScreen multiplayerScreen;
@@ -129,6 +129,7 @@ public class BreakoutGame {
 		screen.setVisible(true);
 	}
 	
+	// GESTIONE MULTIPLAYER
 	
 	// menu multiplayer 
 	
