@@ -80,12 +80,9 @@ public class MultiplayerScreen extends Screen{
 		for (int i=0; i<objBricks.size(); i++) {
 			objBricks.get(i).setHitLevel(bricksHitLevel.get(i));
 		}
-		
-		int i = 0;
-		for (PowerUp tempPowerUp : objPowerUp.keySet()) {
-			tempPowerUp.activateMultiplayer(powerUpActivation.get(i).equals("true"), objPaddles);
-			i++;
-		}
+				
+		players.get(playerIndex).getObjPaddle().switchDirMultiplayer(Boolean.parseBoolean(powerUpActivation.get(0)));
+		System.out.println(powerUpActivation.get(0)+powerUpActivation.get(1));
 
 	    objBall.setPosition(ballPosition[0], ballPosition[1]);
 	    
@@ -201,7 +198,6 @@ public class MultiplayerScreen extends Screen{
 		victory = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
 		loss = Boolean.parseBoolean(gameStatusStringSplitted[k++]);
 		
-		System.out.println(victory + " " + loss);
 		for (int i=0; i<numberOfPlayer; i++) {
 			playersName.set(i, gameStatusStringSplitted[k++]);
 		}
