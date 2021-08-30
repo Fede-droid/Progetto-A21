@@ -1,5 +1,7 @@
 package Testers;
 
+
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,16 +13,14 @@ class ScoreAdviosrTest {
 
 	private ScoreAdvisor s;
 	
-	@BeforeEach
-	void startMatch() {
-		this.s = new ScoreAdvisor();
-		
-		s.start();
-		
-	}
 	
 	@Test
 	void test() {
+		
+	  this.s = new ScoreAdvisor();
+			
+	  s.start();
+			
 		
 		try {
 			Thread.sleep(10000);
@@ -30,7 +30,8 @@ class ScoreAdviosrTest {
 		}
 		
 		int score = s.getScoreEnd(100);
-		System.out.println(score);
+		
+		assertTrue("FAILS", (score == 100));
 		
 	}
 
