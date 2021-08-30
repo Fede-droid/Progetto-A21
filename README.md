@@ -35,12 +35,23 @@ Per poter verificare il corretto funzionamento del programma bisogna seguire i s
 >  [qui](https://github.com/IngSW-unipv/Progetto-A21.git)
 
 ### STEP 3:
+> scaricare mysql-connector da [qui](https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.26.zip)
+> premere con il tasto destro su ProgettoA21 -> properties -> built path -> Libraries, selezionare ClassPath, premere "Add External JARs" e 
+  selezionare il file appena scaricato. In caso ci fosse ancora un errore bisogna eliminare la libreria che segnala l'errore andando su Libraries 
+  sequendo i passaggi precedenti.
 
-> Aprire la cartella di test e avviare l'esecuzione del programma
+### STEP 4: 
+> Aprire la classe chiamata "Test" nel package "Model" e avviare l'esecuzione del programma
+
 
 #### ATTENZIONE
 > Se si desidera giocare in multiplayer bisogna effettuare un clone del server
 > utilizzando l'apposito [link](https://github.com/Corby25/BreakoutServer)
+
+#### ATTENZIONE PRIMA DEL PRIMO AVVIO DEL MULTIPLAYER 
+> assicurarsi che le porte corrispondano sia nella classe Client del ProgettoA21 che nella classe Server del Progetto Server. 
+> assicurarsi che l'indirizzo IP in Model>Core>Multiplayer>Client corrisposta all'indirizzo IP della macchina su cui è in esecuzione 
+  il server
 
 #### REQUISITI
 > Se si desidera giocare solamente nella modalità single player, l'unico requisito è avere 
@@ -50,8 +61,6 @@ Per poter verificare il corretto funzionamento del programma bisogna seguire i s
 > discreta connessione ad internet.
 
 ### ALCUNI SCREENSHOT DEL GIOCO
-
-
 
 **Free Game, Hell Yeah!**
 
