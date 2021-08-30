@@ -301,10 +301,12 @@ public class Screen extends Canvas implements Runnable{
 
 		//Aggiungo player alla partita
 		public void addPlayers(ArrayList<Player> players) {
-		
 			this.players = players;
 			for(Player tempPlayer : players) {
 				objPaddles.add(tempPlayer.getObjPaddle());	
+			}
+			if(numberOfPlayers != 1) {
+				objPaddles.get(1).setPosition(Utilities.INITIAL_POSITION_PADDLE_X, 3);
 			}
 		}
 		

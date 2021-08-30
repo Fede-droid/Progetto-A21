@@ -1,11 +1,7 @@
 package Model.Logic;
 
-
-import java.awt.image.BufferedImage;
-
-import GUI.ImagesLoader;
+import Model.Items.Item;
 import Model.Items.Paddle;
-import Utility.Utilities;
 
 public class Player {
 	/*
@@ -15,28 +11,13 @@ public class Player {
 	 * per tutta la durata del gioco
 	 */
 	private Paddle objPaddle;
-	private BufferedImage paddle;
 	private InputAdapter inputHandler;
 
 
 	public Player() {
 	
-		inizialize();
-		paddle = ImagesLoader.getInstace().uploadImage("/Images/paddle.png");
+		objPaddle = (Paddle)ScreenItemFactory.getInstance().getScreenItem(Item.PADDLE);
 		this.inputHandler = new InputAdapter(objPaddle);
-	}
-	
-	public void inizialize() {
-		
-		// posizione di partenza paddle
-		int[] posInitPaddle = new int[2];
-		posInitPaddle[0] = Utilities.INITIAL_POSITION_PADDLE_X;  // x
-		posInitPaddle[1] = Utilities.INITIAL_POSITION_PADDLE_Y;  // y
-					
-		// creo un paddle 
-		objPaddle = new Paddle(100, 30, posInitPaddle);
-
-		
 	}
 
 	public InputAdapter getInputHandler() {
@@ -50,6 +31,4 @@ public class Player {
 	public Paddle getObjPaddle() {	
 		return objPaddle;
 	}
-	
-
 }
