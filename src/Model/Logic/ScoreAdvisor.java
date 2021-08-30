@@ -19,8 +19,8 @@ public class ScoreAdvisor {
 	
 	/**
 	 * 
-	 * @param score
-	 * @return
+	 * @param lastScore
+	 * @return newScore
 	 */
 	public int getScoreEnd(int score) {
 		

@@ -229,7 +229,11 @@ public class MultiplayerPanel extends JPanel{
 	
 	
 	
-	// setta caratteristiche bottone 
+	/**
+	 *  setta caratteristiche bottone 
+	 * @param butt
+	 * @param imag
+	 */
 	
 		public void inizializeButton(JButton butt, ImageIcon imag) {
 			
@@ -240,7 +244,11 @@ public class MultiplayerPanel extends JPanel{
 		}
 
 	
-	
+	/**
+	 * 
+	 * @param text
+	 * @return false se non rispetta le regole
+	 */
 		public boolean controlText(String text) {
 		
 		if(text.contains(" ") ) {

@@ -12,6 +12,11 @@ public abstract class Listener implements ActionListener {
 	protected BreakoutGame game;
 	protected JPanel m;
 	
+	/**
+	 * 
+	 * @param game
+	 * @param m pannello
+	 */
 	public Listener(BreakoutGame game, JPanel m) {
 		
 		this.game = game;
@@ -19,6 +24,9 @@ public abstract class Listener implements ActionListener {
 		
 	}
 	
+	/**
+	 * rimuovi pannello
+	 */
 	public  void removeOldPanel() {
 		
 		m.removeAll();

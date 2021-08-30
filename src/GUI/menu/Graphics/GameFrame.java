@@ -7,7 +7,9 @@ import Utility.Utilities;
 public class GameFrame extends JFrame{
 
 	/**
-	 * 
+	 * FINESTRA PRINCIPALE
+	 * verrà utilizzata sia dagli screen 
+	 * e verrà usata per caricarci i pannelli
 	 */
 	private static final long serialVersionUID = 1L;
 	

@@ -159,7 +159,10 @@ public class MainMenu extends JPanel{
 		
 	}
 	
-	// gestione musica accesa o spenta
+	/**
+	 *  gestione musica accesa o spenta
+	 * @param bool music
+	 */
 	public void setMusicButton(boolean bool) {
 		
 		musicButtonON.setVisible(!bool);
@@ -167,7 +170,11 @@ public class MainMenu extends JPanel{
 		
 	}
 	
-	// setta caratteristiche bottone 
+	/**
+	 *  setta caratteristiche bottone 
+	 * @param button
+	 * @param imag
+	 */
 	
 	public void inizializeButton(JButton butt, ImageIcon imag) {
 		

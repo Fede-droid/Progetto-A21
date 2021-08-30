@@ -30,7 +30,11 @@ public class IntroPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Clip hit;
 	
-	// Pannello di intro al gioco
+	/**
+	 * Pannello di intro al gioco
+	 * @param c
+	 * @throws InterruptedException
+	 */
 	public IntroPanel(BreakoutGame c) throws InterruptedException {
 		
 		setLayout(null);
@@ -65,8 +69,9 @@ public class IntroPanel extends JPanel {
         setVisible(true);
         
   
-        // bottone "skip" per saltare la intro ed accedere direttamente al menu iniziale
-     	//	label.setLayout(new FlowLayout() );
+        /**
+         *  bottone "skip" per saltare la intro ed accedere direttamente al menu iniziale
+         */
      		JButton skip = new JButton("SKIP");     
      		skip.setLocation(Utilities.SCREEN_WIDTH - 90 - skip.getWidth(), 50);
      		skip.setSize(70, 30);

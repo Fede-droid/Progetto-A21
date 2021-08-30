@@ -23,7 +23,7 @@ public class BreakoutGame {
 	
 	// PATTERN CONTROLLER
 	
-	private GameFrame gameFrame; //creazione nuova finestra
+	private GameFrame gameFrame; 
 	private Screen screen; 
 	private ArrayList<Player> players; // definizione dei giocatori
 	private Boolean music; // setup musica
@@ -38,7 +38,9 @@ public class BreakoutGame {
 	private boolean botMode, entered;
 	private int level, lastScore;
 	
-	// creazione del controller
+	/**
+	 * creazione del controller
+	 */
 	
 	public BreakoutGame() {
 		
@@ -49,7 +51,9 @@ public class BreakoutGame {
 		this.level = 1;
 	}
 
-	// avvio del gioco a partire dalla intro
+	/*
+	 * avvio del gioco a partire dalla intro
+	 */
 	public void start() throws InterruptedException {		
 		
 		IntroPanel intro = new IntroPanel(this);
@@ -65,7 +69,9 @@ public class BreakoutGame {
 		
 	}
 	
-	// salta l'introduzione
+	/**
+	 *  salta l'introduzione
+	 */
 	public void skipIntro(){
 		
 		if(!entered) {
@@ -84,6 +90,9 @@ public class BreakoutGame {
 	}
 	}
 	
+	/**
+	 * apertura main
+	 */
 	public void openMain() {
 		
 		this.m = new MainMenu(this);
@@ -96,7 +105,10 @@ public class BreakoutGame {
 	}
 
 	
-	// inizializzazione gioco con un giocaore offline
+	/**
+	 *  inizializzazione gioco con un giocaore offline
+	 * @param botMode
+	 */
 	public void gameSetupSinglePlayer(boolean botMode) {
 		this.screen = new Screen(this); //creazione schermo di gioco
 		this.botMode = botMode;
@@ -130,7 +142,11 @@ public class BreakoutGame {
 	}
 	
 	
-	// menu multiplayer 
+	
+	//***************************** INZIO GESTIONE MULTIPLAYER ****************************//
+	/**
+	 *  menu multiplayer 
+	 */
 	
 	public void inizializeMultiplayer() {
 		
@@ -143,6 +159,9 @@ public class BreakoutGame {
 		gameFrame.repaint();
 	}
 	
+	/**
+	 * 
+	 */
 	public void inizializeMultiplayerAP() {
 		client.stopConnection();
 		multiplayerPanel =  new MultiplayerPanel(this);
@@ -153,7 +172,12 @@ public class BreakoutGame {
 		gameFrame.repaint();
 	}
 	
-	// dati giocatore 
+	/**
+	 * dati giocatore 
+	 * @param isHost
+	 * @param code
+	 * @param number
+	 */
 	public void setPlayerData(boolean isHost, String code, int number) {
 		
 		this.isHost = isHost;
@@ -163,7 +187,10 @@ public class BreakoutGame {
 		sendRequest();
 		
 	}
-	// invio al server i dati del giocatore
+	
+	/**
+	 * invio al server i dati del giocatore
+	 */
 	public void sendRequest() {
 		
 		client.join(this, isHost, gameCode, playerName, playerNumber);
@@ -171,7 +198,9 @@ public class BreakoutGame {
 	}
 	
 	
-	// inzio partita in multigiocatore
+	/*
+	 *  inzio partita in multigiocatore
+	 */
 	public void startGame() {
 		
 		multiplayerPanel.setVisible(false);
@@ -184,12 +213,14 @@ public class BreakoutGame {
 	}
 
 	
-	// inzializzazione gioco multiplayer 
+	/*
+	 * inzializzazione gioco multiplayer 
+	 */
 	public void gameSetupMultiplayer() {
 		
 		multiplayerScreen = new MultiplayerScreen(this, playerNumber, playerIndex ); 
 		
-		// creo un giocatore
+		// creo giocatore
 		for (int i=0; i<playerNumber; i++) {
 			players.add(new Player());
 
@@ -215,7 +246,9 @@ public class BreakoutGame {
 		multiplayerScreen.setVisible(true);
 	}
 	
-	// finestra di attesa giocatori
+	/**
+	 *  finestra di attesa giocatori
+	 */
 	public void waitingMissingPlayer() {
 
 		this.waitingPanel = new WaitingForPlayerPanel(this);
@@ -226,39 +259,69 @@ public class BreakoutGame {
 		gameFrame.repaint();
 	}
 	
+	/**
+	 * 
+	 */
 	public void multiplayerError() {
 		multiplayerPanel.showError();
 	}
 	
+	/**
+	 * 
+	 * @return numeroplayer
+	 */
 	public int getNumberOfPlayer() {
 		return playerNumber;
 	}
 	
+	/**
+	 * 
+	 * @param numero player
+	 */
 	public void setNumberOfPlayer(int n) {
 		playerNumber = n;
 	}
+	
 	
 	public int getPlayerIndex() {
 		return playerIndex;
 	}
 	
+	/**
+	 * 
+	 * @param player index
+	 */
 	public void setPlayerIndex(int pi) {
 		playerIndex = pi;
 	}
 	
+	/**
+	 * 
+	 * @param nof
+	 */
 	public void setNumberOfMissingPlayer(int nof) {
 		numberOfMissingPlayer = nof;
 	}
 	
+	/**
+	 * 
+	 * @param numero livello
+	 */
 	public void setNumberLevel(int nl) {
 		level = nl;
 	}
 	
+	/**
+	 * 
+	 * @return numberOfMissingPlayer
+	 */
 	public int getNumberOfMissingPlayer() {
 		return numberOfMissingPlayer;
 	}
 	
-	// aggiornemento giocatori mancanti
+	/**
+	 * aggiornamento giocatori rimanenti
+	 */
 	public void updateMissing() {
 		
 		waitingPanel.updateMissingPlayerText();
@@ -276,7 +339,10 @@ public class BreakoutGame {
 		
 	}
 	
-	// menu intermedio tra i livelli
+	/**
+	 *  menu intermedio tra i livelli
+	 * @param win yes or not
+	 */
 	public void gameWin(boolean win) {
 		
 		lastScore = screen.getLastScore();
@@ -291,7 +357,9 @@ public class BreakoutGame {
 		
 	}
 	
-	// ritorna al menu 
+	/**
+	 *  ritorna al menu 
+	 */
 
 	public void showMain() {
 		
@@ -306,41 +374,64 @@ public class BreakoutGame {
 	}
 	
 	
-	// incremento livello
+	/**
+	 * incremento livello
+	 */
 	public void nextLevel() {
 
 		this.level++;
 		screen.reset();
 		
 	}
+	
+	/**
+	 * 
+	 * @return gameFrame
+	 */
 	public GameFrame getGameFrame() {
 		return gameFrame;
 	}
 	
+	/**
+	 * 
+	 * @param bool
+	 */
 	public void setSound(boolean bool) {
 		
 		this.music = bool;
 		
 	}
 
+	/**
+	 * 
+	 * @return list players
+	 */
 	public List<Player> getPlayers() {
 		
 		return players;
 	}
 	
-	// aggiunta giocatori alla partita
+	/**
+	 *  aggiunta giocatori alla partita
+	 * @param players
+	 */
 	public void addPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
 	
-	// settaggio livello di gioco
+	/**
+	 * settaggio livello di gioco
+	 * @param level
+	 */
 	public void setLevel(int level) {
 		
 		this.level = level;
 		
 	}
 	
-	// reset del gioco
+	/**
+	 *  reset del gioco
+	 */
 	public void reset() {	
 		gameFrame.invalidate();
 		gameFrame.validate();
@@ -349,24 +440,44 @@ public class BreakoutGame {
 		showMain();	
 	}
 	
+	/**
+	 * 
+	 * @param name
+	 */
 	public void setPlayerName(String name) {
 		
 		this.playerName = name;
 	}
 	
+	/**
+	 * 
+	 * @return screen
+	 */
 	public Screen getScreen() {
 		
 		return this.screen;
 	}
 	
+	/**
+	 * 
+	 * @return last score
+	 */
 	public int getLastScore() {
 		return lastScore;
 	}
 	
+	/**
+	 * 
+	 * @return is bot mode
+	 */
 	public boolean getBotMode() {
 		return this.botMode;
 	}
 	
+	/**
+	 * 
+	 * @return playerName
+	 */
 	public String getPlayerName() {
 		return playerName;
 		

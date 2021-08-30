@@ -66,6 +66,9 @@ public class WaitingForPlayerPanel extends JPanel{
 		
 	}
 	
+	/**
+	 * aggiornamento player rimanenti
+	 */
 	public void updateMissingPlayerText() {
 		this.nMissingPlayer = game.getNumberOfMissingPlayer();
 		missingPlayer.setText("Giocatori rimanenti: " + nMissingPlayer);

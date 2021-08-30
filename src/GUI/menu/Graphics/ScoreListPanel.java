@@ -66,7 +66,9 @@ public class ScoreListPanel extends JFrame {
 		this.setVisible(true);
 	}
 	
-	
+	/**
+	 * aggiorno data da db
+	 */
 	public void updateData() {
 		allScore = new ArrayList<Integer>();
 		allPlayer = new ArrayList<String>();

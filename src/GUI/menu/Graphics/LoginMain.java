@@ -33,7 +33,9 @@ public class LoginMain extends JPanel {
 		setPreferredSize(dimension_screen);
 		
 		
-		// caricamento sfondo
+		/**
+		 *  caricamento sfondo
+		 */
 		BufferedImage background = ImagesLoader.getInstace().uploadImage("menu/menuImages/background.jpg");
 		JLabel backgroundlabel;
 		ImageIcon image = new ImageIcon(background);
@@ -126,6 +128,11 @@ public class LoginMain extends JPanel {
 	
 	}
 	
+	/**
+	 * 
+	 * @param text
+	 * @return false se non rispetta le regole
+	 */
 	public boolean controlChar(String text) {
 		
 		if(text.length() > 6 ) {
@@ -136,6 +143,11 @@ public class LoginMain extends JPanel {
 		return true;
 	}
 	
+	/**
+	 * 
+	 * @param text
+	 * @return false se non rispetta le regole
+	 */
 	public boolean controlText(String text) {
 		
 		if(text.contains(" ") ) {
