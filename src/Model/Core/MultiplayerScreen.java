@@ -146,7 +146,7 @@ public class MultiplayerScreen extends Screen{
 			if(!objPowerUp.containsKey(tempList.get(i))) objPowerUp.put(tempList.get(i), objOn[i]);
 		}
 		for (int i=0; i<numberOfPlayer; i++) playersName.add("Name");
-		for(int i=0; i<objBricks.size();i++) bricksHitLevel.add(4);
+		for(int i=0; i<objBricks.size();i++) bricksHitLevel.add(objBricks.get(i).getHitLevel());
 		
 		this.scoreString = "0";
 		

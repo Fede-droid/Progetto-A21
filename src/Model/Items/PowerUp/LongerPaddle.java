@@ -52,6 +52,5 @@ public class LongerPaddle extends PowerUp {
 		}
 	}
 	
-	
 
 }

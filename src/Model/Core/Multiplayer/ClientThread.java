@@ -17,7 +17,6 @@ public class ClientThread extends Thread {
     private byte[] buf=new byte[4096];
     private String message;
     private int serverPort;
-    private Boolean running;
     private DatagramSocket datagramSocket;
     private MultiplayerScreen screen;
 
@@ -28,7 +27,6 @@ public class ClientThread extends Thread {
         //this.player1=player1;
         this.datagramSocket=socket;
         this.screen=screen;
-        this.running = true;
         
     }
 
@@ -44,7 +42,7 @@ public class ClientThread extends Thread {
 			e1.printStackTrace();
 		}
     	
-        while (running) {
+        while (true) {
 			try {
 				byte[] b = new byte[1024];
 	        	b = (((Integer) screen.getPaddleXPosition()).toString()+" "+((Integer) screen.getPaddleYPosition()).toString()).getBytes();
@@ -78,10 +76,6 @@ public class ClientThread extends Thread {
         return message;
     }
      
-    public void close() {
-    	
-    	this.running = false;
-    	
-    }
+
 
 }
