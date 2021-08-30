@@ -6,7 +6,9 @@ import Model.Items.PowerUp.PowerUp;
 
 public class PowerUpListComparator implements Comparator<PowerUp> {
 
-	// ordinamento powerUp
+	/**
+	 *  ordinamento powerUp
+	 */
 	
 	@Override
 	public int compare(PowerUp o1, PowerUp o2) {

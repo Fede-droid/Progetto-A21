@@ -17,7 +17,11 @@ public class ScoreAdvisor {
 		time = System.currentTimeMillis();
 	}
 	
-
+	/**
+	 * 
+	 * @param score
+	 * @return
+	 */
 	public int getScoreEnd(int score) {
 		
 		long diff = (System.currentTimeMillis() - time)/300000;

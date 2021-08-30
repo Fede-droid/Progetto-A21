@@ -9,7 +9,7 @@ import Utility.Utilities;
 
 public class ScreenItemFactory {
 	
-	/*
+	/**
 	 * classe factory che permette la crezione di oggetti ScreenItem
 	 */
 	private static ScreenItemFactory instance;
@@ -101,10 +101,15 @@ public class ScreenItemFactory {
 		return obj;
 	}
 	
-	/*
-	 * Se aggiungo un terzo power Up position[1] = Utilities.POSITION_Y_POWER_UP + (3*parse)
-	 * On/off sono gia a posto.
-	 */
+	
+	
+	 /**
+	  *  Se aggiungo un terzo power Up position[1] = Utilities.POSITION_Y_POWER_UP + (3*parse)
+	 On/off sono gia a posto.
+	  * @param item
+	  * @param numberItem
+	  * @return
+	  */
 	public ScreenItem[] getScreenItem(Item item, int numberItem) {
 		ScreenItem[] obj = new ScreenItem[numberItem];
 		String path;

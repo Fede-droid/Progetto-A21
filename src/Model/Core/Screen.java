@@ -32,7 +32,10 @@ import Utility.Utilities;
 
 public class Screen extends Canvas implements Runnable{
 	
-	// Classe pirncipale per la gestione di una partita in single player
+	/**
+	 * 
+	 * Classe principale per la gestione di una partita in single player
+	 */
 	
     protected BreakoutGame game;
     protected boolean gameStatus = false;
@@ -59,7 +62,7 @@ public class Screen extends Canvas implements Runnable{
 	private ScoreAdvisor scoreAdvisor;
 	private PersistenceFacade db;
 
-	/*
+	/**
 	 * Costruttore della classe screen, istanzia gli oggetti dello screen e il drawer per disegnare
 	 */
 	public Screen(BreakoutGame game) {
@@ -74,15 +77,16 @@ public class Screen extends Canvas implements Runnable{
 		this.db = new PersistenceFacade(this);
 	}
 	
-	/*
+	/**
 	 * Setta il numero di giocatori
+	 * @param numeroPlayer
 	 */
 	public void setNumberOfPlayers(int n) {
 		
 		this.numberOfPlayers = n;
 	}
 	
-	/*
+	/**
 	 * Metodo run che definisce il thread screen, qui viene gestito il ciclo di gioco: attraverso il pattern game cycle
 	 * vengono chiamati update() e render(), per rispettivamente, aggiornare il model con le nuove posizioni e disegnare gli oggetti.
 	 * La variabile fps Stabilisce i frame per secondo.
@@ -113,8 +117,9 @@ public class Screen extends Canvas implements Runnable{
 		
 	}
 	
-	/*
+	/**
 	 *  inzializzazione della partita: creo gli oggetti ScreenItem che poi verranno aggiornati e disegnati.
+	 *  @param numero livello
 	 */
 	public void setLevel(int lv) {
 		this.scoreAdvisor = new ScoreAdvisor();
@@ -161,7 +166,7 @@ public class Screen extends Canvas implements Runnable{
 		}
 	}
 	
-		/*
+		/**
 		 *  Game cycle: update(), aggiorno il ciclo di gioco.
 		 *  Controllo le collisioni e gestisco cambiamenti nel model dovuto ad esse
 		 */
@@ -193,7 +198,7 @@ public class Screen extends Canvas implements Runnable{
 			if (objPaddles.size()>1) objPaddles.get(1).move(objBall.getXPosition(), objBall.getYPosition(),objBall.getImageWidth());// bot
 		}		
 		
-		/*
+		/**
 		 * Game cycle: render(), renderizzo gli screenItem.
 		 * Ogni screen item � definito drawable e, attraverso la classe drawer, viene disegnato su un oggetto Canvas.
 		 * Ogni oggetto per essere disegnato effettivamente utilizza la classe graphics con il quale bufferizzo tutte le coponenti di
@@ -254,6 +259,10 @@ public class Screen extends Canvas implements Runnable{
 			buffer.show();
 		}
 		
+		/**
+		 * @return conclusione partita
+		 */
+		
 		private boolean endGame() {
 			int win = 0;
 			for(Brick tempBrick : objBricks) {
@@ -265,7 +274,11 @@ public class Screen extends Canvas implements Runnable{
 				return true;
 			} else return false;
 		}
-
+		
+		/**
+		 * conclusione con gameOver
+		 */
+		
 		private void endGameOver() {
 			if(!gameStatus) {
 				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.LOSE);
@@ -283,6 +296,9 @@ public class Screen extends Canvas implements Runnable{
 			}
 		}
 		
+		/**
+		 * conclusione con gameWin
+		 */
 		private void endGameWin() {
 			try {
 				TimeUnit.SECONDS.sleep(1);
@@ -299,8 +315,11 @@ public class Screen extends Canvas implements Runnable{
 		}
 		
 
-		//Aggiungo player alla partita
-		public void addPlayers(ArrayList<Player> players) {
+		/** Aggiungo player alla partita
+		 * @param lista giocatori
+		 * 
+		 */	
+			public void addPlayers(ArrayList<Player> players) {
 			this.players = players;
 			for(Player tempPlayer : players) {
 				objPaddles.add(tempPlayer.getObjPaddle());	
@@ -310,34 +329,54 @@ public class Screen extends Canvas implements Runnable{
 			}
 		}
 		
-		//modifico musica 
+
+			/**
+			 * @param true se musica è ON
+			 */
 		public void setMusic(Boolean b) {
 			mainMusic.setMusic(b);
 		}
 		
+		/**
+		 * reset di screen
+		 */
 		public void reset() {
 			players.removeAll(players);
 			objPaddles.removeAll(objPaddles);
 		}
+		
+		/**
+		 * @return  numero di livelli
+		 */
 		
 		public int getNumberOfLevels() {
 			
 			return levels.getNumberOfLevels();
 		}
 		
-		
+		/**
+		 * @return  lastScore
+		 */
 		public int getLastScore() {
 			return lastScore;
 		}
-		
+		/**
+		 * @return  livello corrente
+		 */
 		public int getCurrentLevel() {
 			return currentLevel;
 		}
 		
+		/**
+		 * @return  nome player
+		 */
 		public String playerName() {
 			return game.getPlayerName();
 		}
 		
+		/**
+		 * @return grafica
+		 */
 		public Graphics getG() {
 			return g;
 		}
