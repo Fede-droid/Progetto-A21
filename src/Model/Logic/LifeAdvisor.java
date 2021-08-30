@@ -28,6 +28,7 @@ public class LifeAdvisor {
 		this.collision = collision;
 		this.ball = ball;
         life = Utilities.NUMBER_LIFE;
+        
 	}
 	
 	// false se è ancora in vita, true se ha perso
