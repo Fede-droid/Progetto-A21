@@ -184,8 +184,9 @@ public class Client {
 	
 	public void stopConnection() {
 		
+		thread.close();
 		datagramSocket.close();
-		thread.interrupt();
+	
 	}
 	
 

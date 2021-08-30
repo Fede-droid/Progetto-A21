@@ -19,6 +19,7 @@ public class ClientThread extends Thread {
     private int serverPort;
     private DatagramSocket datagramSocket;
     private MultiplayerScreen screen;
+    private Boolean running;
 
     public ClientThread(InetAddress address, int port,  DatagramSocket socket, MultiplayerScreen screen) {
         message = "";
@@ -27,7 +28,7 @@ public class ClientThread extends Thread {
         //this.player1=player1;
         this.datagramSocket=socket;
         this.screen=screen;
-        
+        this.running = true;
     }
 
     /**
@@ -42,7 +43,7 @@ public class ClientThread extends Thread {
 			e1.printStackTrace();
 		}
     	
-        while (true) {
+        while (running) {
 			try {
 				byte[] b = new byte[1024];
 	        	b = (((Integer) screen.getPaddleXPosition()).toString()+" "+((Integer) screen.getPaddleYPosition()).toString()).getBytes();
@@ -77,5 +78,8 @@ public class ClientThread extends Thread {
     }
      
 
+    public void close() {
+    	this.running = false;
+    }
 
 }
