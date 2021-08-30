@@ -15,6 +15,7 @@ import Model.Items.PowerUp.BallSpeedUp;
 import Model.Items.PowerUp.PowerUp;
 import Model.Items.PowerUp.SwitchPaddleDirection;
 import Model.Logic.CollisionAdvisor;
+import Model.Logic.Player;
 import Model.Logic.PowerUpListComparator;
 import Model.Logic.ScreenItemFactory;
 import Model.Logic.Levels.Levels;
@@ -136,9 +137,6 @@ public class MultiplayerScreen extends Screen{
 		objShorterLogo = ScreenItemFactory.getInstance().getScreenItem(Item.SHORT_UP);
 		
 		objOn = ScreenItemFactory.getInstance().getScreenItem(Item.ON, tempList.size());
-		
-		setPlayersPosition(numberOfPlayer, playerIndex);
-		
 		
 		PowerUpListComparator c = new PowerUpListComparator();
 		tempList.sort(c);
@@ -300,7 +298,7 @@ public class MultiplayerScreen extends Screen{
 	// set posizione paddle dei vari giocatori nelle varie parti dello screen 
 	// 2 sotto e 2 sopra (se 4 player), ognuno ha metà schermo per muoversi 
 	
-	synchronized public void setPlayersPosition(int numberOfPlayers, int playerIndex) {
+	synchronized private void setPlayersPosition() {
         switch (numberOfPlayers) {
         case 2: {
         	if (playerIndex==0) {
@@ -346,6 +344,13 @@ public class MultiplayerScreen extends Screen{
         }
     }
 	
+	public void addPlayers(ArrayList<Player> players) {
+		this.players = players;
+		for(Player tempPlayer : players) {
+			objPaddles.add(tempPlayer.getObjPaddle());	
+		}
+		setPlayersPosition();
+	}
 	
 	synchronized public int getPaddleXPosition() {
 		return objPaddles.get(playerIndex).getXPosition();

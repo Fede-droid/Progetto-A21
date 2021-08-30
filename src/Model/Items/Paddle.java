@@ -16,7 +16,6 @@ public class Paddle extends ScreenItem {
     private int dr, leftLimit, rightLimit;
     private boolean isSwitched;
     private int switchConstant;
-    private boolean oneTimeMulti;
 
     public Paddle(int width, int height, int[] position) {
     	super(width, height, position);
@@ -25,7 +24,6 @@ public class Paddle extends ScreenItem {
     	switchConstant = 1;
     	leftLimit = 0;
     	rightLimit = 495;
-    	oneTimeMulti = true;
     }
     
     public void setLimits(int leftLimit, int rightLimit) {

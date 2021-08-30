@@ -3,6 +3,7 @@ package Model.Logic;
 import Model.Core.Screen;
 import Model.Items.Ball;
 import Model.Items.Item;
+import Model.Items.Paddle;
 import Model.Items.ScreenItem;
 import Utility.Utilities;
 
@@ -63,6 +64,12 @@ public class ScreenItemFactory {
 			position[1] = 20;
 			path = "../Images/hit.png";
 			obj = new ScreenItem(path, Utilities.HIT_WIDTH, Utilities.HIT_HEIGHT, position);
+			break;
+		case PADDLE:
+			position[0] = Utilities.INITIAL_POSITION_PADDLE_X;
+			position[1] = Utilities.INITIAL_POSITION_PADDLE_Y;
+			path = "/Images/paddle.png";
+			obj = new Paddle(100, 30, position);
 			break;
 		case SWITCH:
 			position[0] = 508;
@@ -144,9 +151,6 @@ public class ScreenItemFactory {
 				path = "/Images/life.png";
 				obj[numberItem - n] = new ScreenItem(path, 20, 20, position);
 				break;
-			case PADDLE:
-				//position[0] = 200
-				//position[1] = 
 			default:
 				obj[numberItem - n] = null;
 			}
