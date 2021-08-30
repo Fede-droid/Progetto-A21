@@ -38,4 +38,10 @@ public class SwitchPaddleDirection extends PowerUp {
 	public String getPath() {
 		return path;
 	}
+
+	@Override
+	public void activateMultiplayer(boolean active, ArrayList<Paddle> paddles) {
+		// TODO Auto-generated method stub
+		
+	}
 }
