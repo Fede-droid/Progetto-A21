@@ -83,7 +83,7 @@ public class MultiplayerScreen extends Screen{
 		
 		int i = 0;
 		for (PowerUp tempPowerUp : objPowerUp.keySet()) {
-			tempPowerUp.activateMultiplayer(powerUpActivation.get(i).equals("true"));
+			tempPowerUp.activateMultiplayer(powerUpActivation.get(i).equals("true"), objPaddles);
 			i++;
 		}
 
@@ -153,12 +153,14 @@ public class MultiplayerScreen extends Screen{
 		lifesLeft = Utilities.NUMBER_LIFE;
 		
 		for (PowerUp tempPowerUp : objPowerUp.keySet()) {
-			tempPowerUp.activateMultiplayer(false);
+			tempPowerUp.activateMultiplayer(false, objPaddles);
 		}
 		
 		for(int i=0; i<objPowerUp.size(); i++) {
 			powerUpActivation.add("false");
 		}
+		
+		players.get(playerIndex).getObjPaddle().setImageMainPaddle();
 
 	
 	}

@@ -20,7 +20,7 @@ import Model.Core.Screen;
 public class Client {
 	
 	private DatagramSocket datagramSocket;
-    static String serverIP = "87.15.150.248";
+    static String serverIP = "79.21.81.36";
     //78.134.15.159
     //
 	private int serverPort;
@@ -28,10 +28,7 @@ public class Client {
 	private InetAddress address;
 	private int portNewPlayer, numberOfMissingPlayer, numberOfPlayer, playerIndex, numberLevel;
 		
-	public void join(BreakoutGame game, Boolean isHost, String gameCode, String playerName, int playerNumber) {
-		
-		//String playerName = "player1";
-		
+	public void join(BreakoutGame game, Boolean isHost, String gameCode, String playerName, int playerNumber) {		
 		
 			// connessione con il server ed inzializzazione giocatore
 			try {

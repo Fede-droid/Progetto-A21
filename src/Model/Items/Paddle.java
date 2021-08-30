@@ -98,4 +98,8 @@ public class Paddle extends ScreenItem {
     	isSwitched =!isSwitched;
     	switchConstant = -switchConstant;
     }
+    
+    public void setImageMainPaddle() {
+    	image = ImagesLoader.getInstace().uploadImage("/Images/paddleMain.png");
+    }
 }

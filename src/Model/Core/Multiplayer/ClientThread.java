@@ -16,7 +16,6 @@ public class ClientThread extends Thread {
     private DatagramSocket socket;
     private byte[] buf=new byte[4096];
     private String message;
-   //private Player player1;
     private int serverPort;
     private DatagramSocket datagramSocket;
     private MultiplayerScreen screen;
