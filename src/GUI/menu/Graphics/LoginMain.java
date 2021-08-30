@@ -60,7 +60,7 @@ public class LoginMain extends JPanel {
 		    public void actionPerformed(ActionEvent e) {
 		    	if(playerNamel.getText().isEmpty()) return;
 		    	
-		    	if(controlChar(playerNamel.getText())) {
+		    	if(controlChar(playerNamel.getText()) && controlText(playerNamel.getText())) {
 			    	
 		    		game.setPlayerName(playerNamel.getText());
 			    	game.openMain();
@@ -111,7 +111,16 @@ public class LoginMain extends JPanel {
 	public void showErrorCaracter() {
 		
 		JOptionPane.showMessageDialog(this,
-			    "Numero massimo di caratteri per il nome e' 10",
+			    "Numero massimo di caratteri per il nome e' 6",
+			    "ATTENZIONE",
+			    JOptionPane.ERROR_MESSAGE);
+	
+	}
+	
+	public void showErrorSpace() {
+	
+		JOptionPane.showMessageDialog(this,
+			    "Nome utente e/o game code non devono contenere spazi!",
 			    "ATTENZIONE",
 			    JOptionPane.ERROR_MESSAGE);
 	
@@ -119,12 +128,22 @@ public class LoginMain extends JPanel {
 	
 	public boolean controlChar(String text) {
 		
-		if(text.length() > 10 ) {
+		if(text.length() > 6 ) {
 			showErrorCaracter();
 			return false;
 		}
 		
 		return true;
-		
 	}
+	
+	public boolean controlText(String text) {
+		
+		if(text.contains(" ") ) {
+			showErrorSpace();
+			return false;
+		}
+		
+		return true;
+		
+		}
 }

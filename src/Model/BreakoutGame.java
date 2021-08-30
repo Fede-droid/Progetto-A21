@@ -154,10 +154,10 @@ public class BreakoutGame {
 	}
 	
 	// dati giocatore 
-	public void setPlayerData(boolean isHost, String name, String code, int number) {
+	public void setPlayerData(boolean isHost, String code, int number) {
 		
 		this.isHost = isHost;
-		playerName = name;
+		
 		gameCode = code;
 		playerNumber = number;
 		sendRequest();

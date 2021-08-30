@@ -110,7 +110,7 @@ public class Screen extends Canvas implements Runnable{
 			render();
 		}
 		
-		game.inizializeMultiplayerAP();
+		
 	}
 	
 	/*

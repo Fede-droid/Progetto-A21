@@ -89,9 +89,7 @@ public class MultiplayerPanel extends JPanel{
 			
 			
 			
-	        // label nome giocatore
-
-			JTextField playerNamel = new JTextField("NomePlayer");
+	    
 	        // label gameCode
 	        JTextField gameCodel = new JTextField("GameCode");
 	     
@@ -113,14 +111,14 @@ public class MultiplayerPanel extends JPanel{
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
 			    	
-			    	String playerName = playerNamel.getText();
+			    	
 			    	String gameCode = gameCodel.getText();
 			    	
-			    	if(controlText(playerName) && controlText(gameCode) && controlChar(playerName)) {
+			    	if(controlText(gameCode)) {
 			    	
 			    		int nPlay = nPl.getSelectedIndex() + 2;
 			    	
-			    		c.setPlayerData(buttonHostVisible, playerName, gameCode, nPlay);
+			    		c.setPlayerData(buttonHostVisible, gameCode, nPlay);
 				    
 			    	}
 
@@ -172,10 +170,7 @@ public class MultiplayerPanel extends JPanel{
 			Font f1 = new Font("Helvetica", Font.BOLD, 18);
 			nPl.setFont(f1);
 			
-			// nome player
-			playerNamel.setSize(160,30);
-			playerNamel.setLocation(Utilities.SCREEN_WIDTH/2 - 80, 270);
-			playerNamel.setFont(f);
+			
 			
 			// game code
 			gameCodel.setSize(160,30);
@@ -189,7 +184,7 @@ public class MultiplayerPanel extends JPanel{
 			
 			// random button
 			random.setSize(200, 50);
-			random.setLocation(Utilities.SCREEN_WIDTH/2 - 100, 500);
+			random.setLocation(Utilities.SCREEN_WIDTH/2 - 100, 270);
 			
 		
 			
@@ -198,7 +193,6 @@ public class MultiplayerPanel extends JPanel{
 			backgroundlabel.add(button2);
 			backgroundlabel.add(nPl);
 			backgroundlabel.add(numP);
-			backgroundlabel.add(playerNamel);
 			backgroundlabel.add(gameCodel);
 			backgroundlabel.add(submitButton);
 
@@ -233,15 +227,6 @@ public class MultiplayerPanel extends JPanel{
 	
 	}
 	
-	public void showErrorCaracter() {
-		
-		JOptionPane.showMessageDialog(this,
-			    "Numero massimo di caratteri per il nome è 5",
-			    "ATTENZIONE",
-			    JOptionPane.ERROR_MESSAGE);
-	
-	}
-	
 	
 	
 	// setta caratteristiche bottone 
@@ -256,7 +241,7 @@ public class MultiplayerPanel extends JPanel{
 
 	
 	
-	public boolean controlText(String text) {
+		public boolean controlText(String text) {
 		
 		if(text.contains(" ") ) {
 			showErrorSpace();
@@ -265,19 +250,10 @@ public class MultiplayerPanel extends JPanel{
 		
 		return true;
 		
-	}
-	
-	
-	public boolean controlChar(String text) {
-		
-		if(text.length() > 5 ) {
-			showErrorCaracter();
-			return false;
 		}
-		
-		return true;
-		
-	}
+	
+	
+	
 		
 	
 
