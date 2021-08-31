@@ -56,7 +56,7 @@ public class PersistenceFacade {
 	 */
 	public void updateScore() {
 		
-		db.updateScore(screen.playerName(), screen.getCurrentLevel(), screen.getCurrentLevel());
+		db.updateScore(screen.playerName(), screen.getCurrentLevel(), screen.getLastScore());
 		
 	}
 	

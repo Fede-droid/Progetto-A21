@@ -308,7 +308,8 @@ public class Screen extends Canvas implements Runnable{
 			}
 			
 			lastScore = scoreAdvisor.getScoreEnd(score);
-			if(db.getScoreByLVandUser() < score) {
+			if(db.getScoreByLVandUser() < lastScore) {
+				System.out.println("dbscore " + db.getScoreByLVandUser());
 				db.updateScore();
 			}
 			game.gameWin(true);

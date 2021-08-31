@@ -26,10 +26,8 @@ public class ScoreAdvisor {
 	public int getScoreEnd(int score) {
 		
 		long diff = (System.currentTimeMillis() - time)/30000;
-		System.out.println(System.currentTimeMillis());
 		
 		System.out.println((int)diff);
-		
 		
 		int newScore = (score-(int)diff);
 		
