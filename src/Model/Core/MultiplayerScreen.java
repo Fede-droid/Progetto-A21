@@ -90,6 +90,7 @@ public class MultiplayerScreen extends Screen{
 	    if(victory) gameWin = true;
 	    
 	    if(loss) gameOver = true;
+	   
 		
 	}
 	
@@ -245,19 +246,16 @@ public class MultiplayerScreen extends Screen{
 			drawer.draw(playersName.get(i), objPaddles.get(i).getXPosition()+7, objPaddles.get(i).getYPosition()+21);
 			}
 
-		
+		int p = 0;
 		 for(Brick tempBrick: objBricks) {
 				if(!tempBrick.isDestroyed()) drawer.draw(tempBrick);	
+				if(powerUpActivation.get(p).equals("true")) {
+					drawer.draw(objPowerUp.get(tempBrick));
+					p++;
+				}
 			}
 		
-		int j = 0;
-		for(PowerUp powerUp: objPowerUp.keySet()) {
-			if(powerUpActivation.get(j).equals("true")) {
-				drawer.draw(objPowerUp.get(powerUp));
-				j++;
-			}
-		}
-	
+		 
 		if(gameWin) {
 			drawer.draw(objWin);
 			g.dispose();
