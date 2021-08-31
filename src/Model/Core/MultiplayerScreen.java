@@ -129,7 +129,7 @@ public class MultiplayerScreen extends Screen{
 		
 		objSpeedUpLogo = ScreenItemFactory.getInstance().getScreenItem(Item.SPEED_UP);
 		objSwitchLogo = ScreenItemFactory.getInstance().getScreenItem(Item.SWITCH);
-		objSfondo = ScreenItemFactory.getInstance().getScreenItem(Item.SFONDO);
+		objSfondo = ScreenItemFactory.getInstance().getScreenItem(Item.SFONDOMULTIPLAYER);
 		objBox = ScreenItemFactory.getInstance().getScreenItem(Item.BOX);
 		objHit = ScreenItemFactory.getInstance().getScreenItem(Item.HIT);
 		objWin = ScreenItemFactory.getInstance().getScreenItem(Item.WIN);
