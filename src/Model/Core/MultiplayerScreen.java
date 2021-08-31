@@ -256,6 +256,8 @@ public class MultiplayerScreen extends Screen{
 			}
 		
 		 
+		 //drawer.draw(String.valueOf((Integer)score).toString(), 517, 60);
+
 		if(gameWin) {
 			drawer.draw(objWin);
 			g.dispose();

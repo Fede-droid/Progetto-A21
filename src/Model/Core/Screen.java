@@ -195,6 +195,9 @@ public class Screen extends Canvas implements Runnable{
 			}
 			
 			objPaddles.get(0).move();
+			
+			
+			
 			if (objPaddles.size()>1) objPaddles.get(1).move(objBall.getXPosition(), objBall.getYPosition(),objBall.getImageWidth());// bot
 		}		
 		
@@ -244,8 +247,11 @@ public class Screen extends Canvas implements Runnable{
 			
 			
 			
+			
 			if(endGame()) {
 				drawer.draw(objWin);
+				g.dispose();
+				buffer.show();
 				if (mainMusic.isMusicOn()) mainMusic.playMusic(MusicTypes.WIN);
 				gameStatus = false;
 				gameWin = true;
@@ -258,6 +264,8 @@ public class Screen extends Canvas implements Runnable{
 			g.dispose();
 			buffer.show();
 		}
+		
+		
 		
 		/**
 		 * @return conclusione partita
@@ -314,6 +322,7 @@ public class Screen extends Canvas implements Runnable{
 			}
 			game.gameWin(true);
 		}
+		
 		
 
 		/** Aggiungo player alla partita
