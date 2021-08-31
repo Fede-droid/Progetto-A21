@@ -7,7 +7,9 @@ import Model.Items.PowerUp.PowerUp;
 
 public class BrickPowerUp extends Brick {
 	
-	// Brick speciale che implementa le funzioni di un powerUP
+	/**
+	 *  Brick speciale che implementa le funzioni di un powerUP
+	 */
 	
 	private PowerUp powerUp;
 
@@ -18,6 +20,9 @@ public class BrickPowerUp extends Brick {
 		hitLevel = 1;
 	}
 
+	/**
+	 *  attiva power up
+	 */
 	public boolean activatePowerUP() {
 		if(powerUp != null && !powerUp.isActive()) {
 			powerUp.startPowerUp();
@@ -26,11 +31,17 @@ public class BrickPowerUp extends Brick {
 		return false;
 	}
 	
-	
+	/**
+	 * disattiva power uè
+	 */
 	public void disactivatePowerUp() {
 		if(powerUp != null && powerUp.isActive()) powerUp.disactivate();
 	}
 	
+	/**
+	 * 
+	 * @return active
+	 */
 	public boolean hasActivePowerUp() {
 		return powerUp.isActive();
 	}

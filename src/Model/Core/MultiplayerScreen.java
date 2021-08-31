@@ -57,9 +57,12 @@ public class MultiplayerScreen extends Screen{
 	}
 	
 	
-	// PATTERN GAME LOOP -> UPDATE, RENDER 
-	// tutte le informazioni rivebute dal server saranno utilizzate per aggiornare 
-	// le varie componenti (Update) che saranno successivamente disegnate (Render)
+	
+	/**
+	 *  PATTERN GAME LOOP -> UPDATE, RENDER 
+	 tutte le informazioni rivebute dal server saranno utilizzate per aggiornare 
+	 le varie componenti (Update) che saranno successivamente disegnate (Render)
+	 */
 	@Override
 	synchronized public void update() {
 		
@@ -82,7 +85,6 @@ public class MultiplayerScreen extends Screen{
 		}
 				
 		players.get(playerIndex).getObjPaddle().switchDirMultiplayer(Boolean.parseBoolean(powerUpActivation.get(0)));
-		System.out.println(powerUpActivation.get(0)+powerUpActivation.get(1));
 
 	    objBall.setPosition(ballPosition[0], ballPosition[1]);
 	    
@@ -93,10 +95,14 @@ public class MultiplayerScreen extends Screen{
 		
 	}
 	
-	// inzializzazione livello per il multiplayer
-	// inzializzazione componenti
-	// costruzione degli oggetti utilizzati
 	
+	
+	/**
+	 *  inzializzazione livello per il multiplayer
+	 *   inzializzazione componenti
+	 costruzione degli oggetti utilizzati
+	 @return lv
+	 */
 	synchronized public void setLevel(int lv) {
 		
 		objBall = (Ball)ScreenItemFactory.getInstance().getScreenItem(Item.BALL);
@@ -162,7 +168,10 @@ public class MultiplayerScreen extends Screen{
 	
 	}
 	
-	// Lettura informazioni rivevute dal server
+	/**
+	 *  Lettura informazioni rivevute dal server
+	 * @param gameStatus
+	 */
 	synchronized public void setStringGameStatus(String gameStatus) {
 		String gameStatusString= new String();
 		gameStatusString=gameStatus;
@@ -204,7 +213,9 @@ public class MultiplayerScreen extends Screen{
 	}
 	
 	
-	// disegno oggetti dopo aggiornamento
+	/**
+	 *  disegno oggetti dopo aggiornamento
+	 */
 	@Override 
 	synchronized public void render() {
 		
@@ -235,24 +246,11 @@ public class MultiplayerScreen extends Screen{
 			drawer.draw(objPaddles.get(i));
 			drawer.draw(playersName.get(i), objPaddles.get(i).getXPosition()+7, objPaddles.get(i).getYPosition()+21);
 			}
-		
 
-		for(Brick tempBrick: objBricks) {
-			
-			try {
-				
-			// if (((BrickPowerUp)tempBrick).getClass() == null && !tempBrick.isDestroyed()) drawer.draw(tempBrick);	
-			
-				if(!tempBrick.isDestroyed() && ((BrickPowerUp)tempBrick).getClass() != null) {
-					drawer.draw((BrickPowerUp)tempBrick);
-					System.out.println("è power");
-				}
-			
-			}catch(ClassCastException e) {
-				
+		
+		 for(Brick tempBrick: objBricks) {
+				if(!tempBrick.isDestroyed()) drawer.draw(tempBrick);	
 			}
-			
-		}
 		
 		for(PowerUp powerUp: objPowerUp.keySet()) {
 			if(powerUp.isActive()) {
@@ -291,7 +289,9 @@ public class MultiplayerScreen extends Screen{
 		
 	}
 	
-	
+	/**
+	 * vittoria
+	 */
 	public void gameWin(){
 		
 		gameStatus = false;
@@ -299,7 +299,9 @@ public class MultiplayerScreen extends Screen{
 		
 		
 	}
-	
+	/**
+	 * sconfitta
+	 */
 	public void gameLose() {
 		
 		gameStatus = false;
@@ -308,8 +310,11 @@ public class MultiplayerScreen extends Screen{
 		
 	}
 	
-	// set posizione paddle dei vari giocatori nelle varie parti dello screen 
-	// 2 sotto e 2 sopra (se 4 player), ognuno ha metà schermo per muoversi 
+	/**
+	 *  set posizione paddle dei vari giocatori nelle varie parti dello screen 
+	 *  2 sotto e 2 sopra (se 4 player), ognuno ha metà schermo per muoversi 
+	 */
+	
 	
 	synchronized public void setPlayersPosition(int numberOfPlayers, int playerIndex) {
         switch (numberOfPlayers) {
