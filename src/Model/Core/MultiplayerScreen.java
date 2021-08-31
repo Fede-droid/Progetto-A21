@@ -260,6 +260,8 @@ public class MultiplayerScreen extends Screen{
 			drawer.draw(objWin);
 			g.dispose();
 			buffer.show();
+			mainMusic.playMusic(MusicTypes.WIN);
+
 			try {
 				Thread.sleep(3000);
 				gameWin();
@@ -272,6 +274,8 @@ public class MultiplayerScreen extends Screen{
 			drawer.draw(objLose);
 			g.dispose();
 			buffer.show();
+			mainMusic.playMusic(MusicTypes.LOSE);
+
 			try {
 				Thread.sleep(3000);
 				gameLose();
