@@ -37,8 +37,6 @@ public class MultiplayerScreen extends Screen{
 	private Music mainMusic;
 	private String scoreString;
 	private int lifesLeft;
-	private String isFastActiveString, isFlipActiveString;
-	private int fastRemainingTime, flipRemainingTime;
 	boolean victory, loss;
 	private ArrayList<Integer> bricksHitLevel;
 
@@ -252,9 +250,11 @@ public class MultiplayerScreen extends Screen{
 				if(!tempBrick.isDestroyed()) drawer.draw(tempBrick);	
 			}
 		
+		int j = 0;
 		for(PowerUp powerUp: objPowerUp.keySet()) {
-			if(powerUp.isActive()) {
+			if(powerUpActivation.get(j).equals("true")) {
 				drawer.draw(objPowerUp.get(powerUp));
+				j++;
 			}
 		}
 	
