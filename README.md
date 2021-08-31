@@ -43,15 +43,14 @@ Per poter verificare il corretto funzionamento del programma bisogna seguire i s
 ### STEP 4: 
 > Aprire la classe chiamata "Test" nel package "Model" e avviare l'esecuzione del programma
 
-
-#### ATTENZIONE
-> Se si desidera giocare in multiplayer bisogna effettuare un clone del server
-> utilizzando l'apposito [link](https://github.com/Corby25/BreakoutServer)
-
-#### ATTENZIONE PRIMA DEL PRIMO AVVIO DEL MULTIPLAYER 
+#### ATTENZIONE - AVVIO DEL MULTIPLAYER 
 > assicurarsi che le porte corrispondano sia nella classe Client del ProgettoA21 che nella classe Server del Progetto Server. 
 > assicurarsi che l'indirizzo IP in Model>Core>Multiplayer>Client corrisposta all'indirizzo IP della macchina su cui è in esecuzione 
   il server
+  
+#### SERVER - INFO
+> Se si desidera giocare in multiplayer bisogna effettuare un clone del server
+> utilizzando l'apposito [link](https://github.com/Corby25/BreakoutServer)
 
 #### REQUISITI
 > Se si desidera giocare solamente nella modalità single player, l'unico requisito è avere 
