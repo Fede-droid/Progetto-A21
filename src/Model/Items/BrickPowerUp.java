@@ -1,5 +1,7 @@
 package Model.Items;
 
+import java.awt.image.BufferedImage;
+
 import GUI.ImagesLoader;
 import Model.Items.PowerUp.PowerUp;
 
@@ -24,6 +26,7 @@ public class BrickPowerUp extends Brick {
 		return false;
 	}
 	
+	
 	public void disactivatePowerUp() {
 		if(powerUp != null && powerUp.isActive()) powerUp.disactivate();
 	}
@@ -35,5 +38,11 @@ public class BrickPowerUp extends Brick {
 	public PowerUp getPowerUp() {
 		return powerUp;
 	}
+	
+	
+	@Override
+	public BufferedImage getImage() {
+    	return ImagesLoader.getInstace().uploadImage(powerUp.getPath());
+    }
 
 }

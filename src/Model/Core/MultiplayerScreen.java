@@ -238,7 +238,20 @@ public class MultiplayerScreen extends Screen{
 		
 
 		for(Brick tempBrick: objBricks) {
-			if(!tempBrick.isDestroyed()) drawer.draw(tempBrick);	
+			
+			try {
+				
+			// if (((BrickPowerUp)tempBrick).getClass() == null && !tempBrick.isDestroyed()) drawer.draw(tempBrick);	
+			
+				if(!tempBrick.isDestroyed() && ((BrickPowerUp)tempBrick).getClass() != null) {
+					drawer.draw((BrickPowerUp)tempBrick);
+					System.out.println("è power");
+				}
+			
+			}catch(ClassCastException e) {
+				
+			}
+			
 		}
 		
 		for(PowerUp powerUp: objPowerUp.keySet()) {
