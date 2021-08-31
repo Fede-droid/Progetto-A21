@@ -15,6 +15,7 @@ public class ScoreAdvisor {
 	public void start() {
 		
 		time = System.currentTimeMillis();
+		System.out.println(time);
 	}
 	
 	/**
@@ -24,7 +25,8 @@ public class ScoreAdvisor {
 	 */
 	public int getScoreEnd(int score) {
 		
-		long diff = (System.currentTimeMillis() - time)/300000;
+		long diff = (System.currentTimeMillis() - time)/30000;
+		System.out.println(System.currentTimeMillis());
 		
 		System.out.println((int)diff);
 		

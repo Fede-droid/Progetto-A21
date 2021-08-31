@@ -12,28 +12,33 @@ import Model.Logic.ScoreAdvisor;
 class ScoreAdviosrTest {
 
 	private ScoreAdvisor s;
+	private int score;
 	
-	
-	@Test
-	void test() {
+	@BeforeEach
+	void run() {
 		
-	  this.s = new ScoreAdvisor();
+		  this.s = new ScoreAdvisor();
 			
-	  s.start();
-			
+		  s.start();
+		
+		
+	}
+
+	@Test
+	synchronized void test() {
+		
 		
 		try {
-			Thread.sleep(10000);
+			wait(60000);
 		} catch (InterruptedException e) {
 			
 			e.printStackTrace();
-			
 		}
 		
-		int score = s.getScoreEnd(100);
+		 score = s.getScoreEnd(20);
+		 assertTrue("FAILS", (score != 20));
 		
-		assertTrue("FAILS", (score == 100));
-		
+
 		
 	}
 
