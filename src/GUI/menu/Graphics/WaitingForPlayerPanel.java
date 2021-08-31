@@ -46,21 +46,34 @@ public class WaitingForPlayerPanel extends JPanel{
 		//creazione label per testo
 		this.missingPlayer = new JLabel("Giocatori rimanenti: " + game.getNumberOfMissingPlayer());
 		missingPlayer.setFont(new Font("Courier", Font.BOLD, 35)); 
-		missingPlayer.setLocation(100, 1000);
 		missingPlayer.setOpaque(false);
 		backgroundlabel.setLayout(new FlowLayout());
 	
 		
-		backgroundlabel.add(missingPlayer);
+	
 		
 		Image image2 = new ImageIcon(this.getClass().getResource("waiting3.gif")).getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT);
 		ImageIcon imageI2 = new ImageIcon(image2);
 		JLabel waitLabel = new JLabel(imageI2);
 		
 		
+	
+		backgroundlabel.setLayout(null);
+		
+		waitLabel.setSize(200, 300);
+		waitLabel.setLocation(Utilities.SCREEN_WIDTH/2 - 100, Utilities.SCREEN_HEIGHT/2 - 150);
+		
+		
+		missingPlayer.setSize(600, 30);
+		
+
+		missingPlayer.setLocation(Utilities.SCREEN_WIDTH/2 - 235, Utilities.SCREEN_HEIGHT/2 - 200);
+
+		
+		
+		backgroundlabel.add(missingPlayer);
 		backgroundlabel.add(waitLabel);
 		
-		backgroundlabel.setLayout(new FlowLayout());
 
 
 		
