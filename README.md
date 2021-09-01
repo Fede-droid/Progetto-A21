@@ -60,6 +60,9 @@ Per poter verificare il corretto funzionamento del programma bisogna seguire i s
 > discreta connessione ad internet.
 
 ### ALCUNI SCREENSHOT DEL GIOCO
+()
+()
+()
 
 **Free Game, Hell Yeah!**
 
