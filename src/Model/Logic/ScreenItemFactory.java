@@ -98,7 +98,7 @@ public class ScreenItemFactory {
 		case SFONDOMULTIPLAYER:
 			position[0] = 0;
 			position[1] = 0;
-			path = "/Images/sfondoMultiplayer.jpg";
+			path = "/Images/sfondoMultiplayer.jpeg";
 			obj = new ScreenItem(path, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT, position);
 			break;
 		default:
