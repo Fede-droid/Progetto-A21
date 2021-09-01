@@ -74,7 +74,7 @@ public class Screen extends Canvas implements Runnable{
 		drawer = new Drawer();
 		this.mainMusic = new Music();
 		score=0;
-		this.db = new PersistenceFacade(this);
+		this.db = new PersistenceFacade();
 	}
 	
 	/**
@@ -316,9 +316,8 @@ public class Screen extends Canvas implements Runnable{
 			}
 			
 			lastScore = scoreAdvisor.getScoreEnd(score);
-			if(db.getScoreByLVandUser() < lastScore) {
-				System.out.println("dbscore " + db.getScoreByLVandUser());
-				db.updateScore();
+			if(db.getScoreByLVandUser(this) < lastScore) {
+				db.updateScore(this);
 			}
 			game.gameWin(true);
 		}

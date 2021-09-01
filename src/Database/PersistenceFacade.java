@@ -8,21 +8,16 @@ import Model.Core.Screen;
 public class PersistenceFacade {
 	// Facade che permette di fare da tramite tra la logica del dominio e i DAO
 	
-	private Screen screen;
 	private SqlDAO db;
 	
 	
-	public PersistenceFacade(Screen s) {
-		
-		this.screen = s;
-		this.db = new SqlDAO();
-	}
-	
-	
 	public PersistenceFacade() {
-		this.db = new SqlDAO();
 		
+		this.db = new SqlDAO();
 	}
+	
+	
+
 	
 	/**
 	 * 
@@ -45,7 +40,7 @@ public class PersistenceFacade {
 	/**
 	 * @return il punteggio migliore memorizzato del db del giocatore che sta giocando 
 	 */
-	public int getScoreByLVandUser() {
+	public int getScoreByLVandUser(Screen screen) {
 	   
 		return  db.getScoreByUserAndLV(screen.getName(), screen.getCurrentLevel());
 	       
@@ -54,7 +49,7 @@ public class PersistenceFacade {
 	/*
 	 * aggiorna punteggi db 
 	 */
-	public void updateScore() {
+	public void updateScore(Screen screen) {
 		
 		db.updateScore(screen.playerName(), screen.getCurrentLevel(), screen.getLastScore());
 		
