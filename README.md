@@ -60,7 +60,9 @@ Per poter verificare il corretto funzionamento del programma bisogna seguire i s
 > discreta connessione ad internet.
 
 ### ALCUNI SCREENSHOT DEL GIOCO
+![Alt Text](https://cdn.discordapp.com/attachments/880214894337720341/882759275666079784/Sep-02-2021_00-47-32.gif)
 ![Alt Text](https://cdn.discordapp.com/attachments/880214894337720341/882754737986998332/Sep-02-2021_00-30-48.gif)
+
 
 
 
