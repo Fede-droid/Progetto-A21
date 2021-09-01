@@ -20,7 +20,7 @@ import Utility.Utilities;
 public class MultiplayerPanel extends JPanel{ 
 	
 	private static final long serialVersionUID = 1L;
-	BufferedImage background, button1, button2, submit, random;
+	BufferedImage background, button1, button2, submit, random, back;
 	ImagesLoader loader;
 	private Boolean buttonHostVisible = true;
 	private BreakoutGame c;
@@ -39,6 +39,25 @@ public class MultiplayerPanel extends JPanel{
 			backgroundlabel.setBounds(0, 0, Utilities.SCREEN_WIDTH, Utilities.SCREEN_HEIGHT);
 			add(backgroundlabel);
 			
+			// caricamento sfondo
+			this.back = loader.uploadImage("menu/menuImages/back.png");
+			ImageIcon imageBack = new ImageIcon(back);
+			JButton buttonBack = new JButton();
+			inizializeButton(buttonBack,imageBack);
+
+
+			// ritorno al main
+			ActionListener returnBack = new ActionListener() {
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			    	
+			    	setVisible(false);
+			    	c.openMain();
+			    	repaint();
+			    }
+			};
+			
+			buttonBack.addActionListener(returnBack);
 			
 			// bottone 1 HOST
 			this.button1 = loader.uploadImage("menu/menuImages/buttonHost.png");
@@ -149,6 +168,13 @@ public class MultiplayerPanel extends JPanel{
 			
 			backgroundlabel.setLayout(null);
 
+			
+			
+			//posizione backButton
+			buttonBack.setSize(imageBack.getIconWidth(), imageBack.getIconHeight());
+			buttonBack.setLocation(10, 10);
+			
+			
 			// posizione bottone Host/Joiner
 			button.setSize(400, 100);
 			button2.setSize(400, 100);
@@ -190,6 +216,8 @@ public class MultiplayerPanel extends JPanel{
 			
 			
 			backgroundlabel.add(button);
+			backgroundlabel.add(buttonBack);
+
 			backgroundlabel.add(button2);
 			backgroundlabel.add(nPl);
 			backgroundlabel.add(numP);
