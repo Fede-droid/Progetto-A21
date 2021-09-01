@@ -247,14 +247,18 @@ public class MultiplayerScreen extends Screen{
 			}
 
 		int p = 0;
+		
 		 for(Brick tempBrick: objBricks) {
 				if(!tempBrick.isDestroyed()) drawer.draw(tempBrick);	
-				if(powerUpActivation.get(p).equals("true")) {
-					drawer.draw(objPowerUp.get(tempBrick));
-					p++;
-				}
 			}
-		
+
+		int j = 0;
+		for(PowerUp powerUp: objPowerUp.keySet()) {
+			if(powerUpActivation.get(j).equals("true")) {
+				drawer.draw(objPowerUp.get(powerUp));
+				j++;
+			}
+		}
 		 
 		 //drawer.draw(String.valueOf((Integer)score).toString(), 517, 60);
 
