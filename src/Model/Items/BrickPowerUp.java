@@ -12,6 +12,8 @@ public class BrickPowerUp extends Brick {
 	 */
 	
 	private PowerUp powerUp;
+	private boolean loaded;
+	private BufferedImage images;
 
 	public BrickPowerUp(int width, int height, int[] position, PowerUp powerUp) {
 		super(width, height, position);
@@ -53,7 +55,14 @@ public class BrickPowerUp extends Brick {
 	
 	@Override
 	public BufferedImage getImage() {
-    	return ImagesLoader.getInstace().uploadImage(powerUp.getPath());
+		
+		if(!loaded){
+			this.loaded = true;
+			this.images = ImagesLoader.getInstace().uploadImage(powerUp.getPath());
+		}
+    	
+		return images;
     }
+    
 
 }
